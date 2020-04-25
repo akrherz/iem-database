@@ -1,13 +1,18 @@
 """Provide some basic data to allow for better testing"""
 import requests
-from pyiem.util import get_dbconn
+
+try:
+    # Lovely hack here to use my custom connection when possible
+    from pyiem.util import get_dbconn
+except ImportError:
+    from psycopg2 import connect as get_dbconn
 
 NETWORKS = ["IA_ASOS", "AWOS", "IACLIMATE", "IA_COOP"]
 
 
 def fake_asos(station):
     """hack"""
-    pgconn = get_dbconn("asos", user="mesonet")
+    pgconn = get_dbconn(database="asos", user="mesonet")
     cursor = pgconn.cursor()
     for year in range(1995, 1997):
         cursor.execute(
@@ -26,7 +31,7 @@ def fake_asos(station):
 
 def do_stations(network):
     """hack"""
-    pgconn = get_dbconn("mesosite", user="mesonet")
+    pgconn = get_dbconn(database="mesosite", user="mesonet")
     cursor = pgconn.cursor()
     req = requests.get(
         ("http://mesonet.agron.iastate.edu/geojson/network/" "%s.geojson")
