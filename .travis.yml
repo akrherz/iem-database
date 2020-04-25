@@ -1,6 +1,11 @@
 sudo: required
 dist: bionic
 addons:
+  apt:
+    update: true
+    packages:
+      - python3-pip
+      - python3-psycopg2
   hosts:
     - iemdb2.local
     - iemdb-hads.local
@@ -42,4 +47,4 @@ install:
 
 script:
   - sh bootstrap.sh
-  - python schema_manager.py
+  - python3 schema_manager.py

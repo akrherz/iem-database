@@ -4,10 +4,14 @@
 
      python schema_manager.py
 """
-from __future__ import print_function
 import os
 import sys
-from pyiem.util import get_dbconn
+
+try:
+    # Lovely hack here to use my custom connection when possible
+    from pyiem.util import get_dbconn
+except ImportError:
+    from psycopg2 import connect as get_dbconn
 
 
 def check_management(cursor):
@@ -33,7 +37,7 @@ def check_management(cursor):
 
 def run_db(dbname):
     """ Lets do an actual database """
-    dbconn = get_dbconn(dbname)
+    dbconn = get_dbconn(database=dbname)
     cursor = dbconn.cursor()
 
     check_management(cursor)
