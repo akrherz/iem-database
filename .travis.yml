@@ -47,4 +47,4 @@ install:
 
 script:
   - sh bootstrap.sh
-  - python3 schema_manager.py
+  - /usr/bin/python3 schema_manager.py
