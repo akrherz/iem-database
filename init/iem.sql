@@ -597,8 +597,6 @@ $do$;
 --- Hourly precip
 ---
 CREATE TABLE hourly(
-  station varchar(20),
-  network varchar(10),
   valid timestamptz,
   phour real,
   iemid int references stations(iemid)
@@ -625,20 +623,6 @@ begin
             references stations(iemid) ON DELETE CASCADE;
         $f$, mytable);
         execute format($f$
-CREATE RULE replace_%s as
-    ON INSERT TO %s
-   WHERE (EXISTS ( SELECT 1
-           FROM %s
-          WHERE %s.station::text = new.station::text
-          AND %s.network::text = new.network::text
-          AND %s.valid = new.valid)) DO INSTEAD
-         UPDATE %s SET phour = new.phour
-  WHERE %s.station::text = new.station::text AND
-  %s.network::text = new.network::text AND
-  %s.valid = new.valid
-        $f$, mytable, mytable, mytable, mytable, mytable,
-        mytable, mytable, mytable, mytable, mytable);
-        execute format($f$
             ALTER TABLE %s OWNER to mesonet
         $f$, mytable);
         execute format($f$
@@ -649,7 +633,7 @@ CREATE RULE replace_%s as
         $f$, mytable);
         -- Indices
         execute format($f$
-            CREATE INDEX %s_idx on %s(station, network, valid)
+            CREATE INDEX %s_idx on %s(iemid, valid)
         $f$, mytable, mytable);
         execute format($f$
             CREATE INDEX %s_valid_idx on %s(valid)
