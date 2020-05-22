@@ -172,7 +172,7 @@ $do$;
 --- One Minute ASOS data
 ---
 CREATE TABLE alldata_1minute(
-  station char(4),
+  station varchar(4),
   valid timestamptz,
   vis1_coeff real,
   vis1_nd char(1),
