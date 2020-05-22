@@ -5,7 +5,7 @@ CREATE EXTENSION postgis;
 CREATE TABLE iem_schema_manager_version(
 	version int,
 	updated timestamptz);
-INSERT into iem_schema_manager_version values (11, now());
+INSERT into iem_schema_manager_version values (12, now());
 
 ---
 --- Store unknown stations
@@ -172,7 +172,7 @@ $do$;
 --- One Minute ASOS data
 ---
 CREATE TABLE alldata_1minute(
-  station char(3),
+  station char(4),
   valid timestamptz,
   vis1_coeff real,
   vis1_nd char(1),
@@ -198,29 +198,28 @@ do
 $do$
 declare
      year int;
+     month int;
 begin
     for year in 2000..2030
     loop
-        execute format($f$
-            create table t%s_1minute partition of alldata_1minute
-            for values from ('%s-01-01 00:00+00') to ('%s-01-01 00:00+00')
-            $f$, year, year, year + 1);
-        execute format($f$
-            ALTER TABLE t%s_1minute OWNER to mesonet
-        $f$, year);
-        execute format($f$
-            GRANT ALL on t%s_1minute to ldm
-        $f$, year);
-        execute format($f$
-            GRANT SELECT on t%s_1minute to nobody,apache
-        $f$, year);
-        -- Indices
-        execute format($f$
-            CREATE INDEX t%s_1minute_valid_idx on t%s(valid)
-        $f$, year, year);
-        execute format($f$
-            CREATE INDEX t%s_1minute_station_idx on t%s(station)
-        $f$, year, year);
+        for month in 1..12
+        loop
+            execute format($f$
+                create table t%s%s_1minute partition of alldata_1minute
+                for values from ('%s-%s-01 00:00+00') to ('%s-%s-01 00:00+00')
+            $f$, year, lpad(month::text, 2, '0'), year, month,
+            case when month = 12 then year + 1 else year end,
+            case when month = 12 then 1 else month + 1 end);
+            execute format($f$
+                GRANT ALL on t%s%s_1minute to mesonet,ldm
+            $f$, year, lpad(month::text, 2, '0'));
+            execute format($f$
+                GRANT SELECT on t%s%s_1minute to nobody,apache
+            $f$, year, lpad(month::text, 2, '0'));
+            execute format($f$
+                CREATE INDEX on t%s%s_1minute(station, valid)
+            $f$, year, lpad(month::text, 2, '0'));
+        end loop;
     end loop;
 end;
 $do$;
