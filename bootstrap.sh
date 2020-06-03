@@ -8,7 +8,7 @@
 /usr/bin/psql -c 'create user apiuser;' -h localhost -U postgres
 
 for db in afos mesosite postgis snet \
-asos hads  mos        rwis     squaw \
+asos asos1min hads  mos        rwis     squaw \
 awos iem   other      scan     wepp \
 coop isuag portfolio  smos     iemre radar nldn
 do
