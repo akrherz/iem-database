@@ -1,23 +1,4 @@
 
--- Boilerplate IEM schema_manager_version, the version gets incremented each
--- time we make an upgrade script
-CREATE TABLE iem_schema_manager_version(
-	version int,
-	updated timestamptz);
-INSERT into iem_schema_manager_version values (9, now());
-
-CREATE TABLE products(
-  data text,
-  pil char(6),
-  entered timestamptz,
-  source char(4),
-  wmo char(6)
-) PARTITION by RANGE (entered);
-ALTER TABLE products OWNER to mesonet;
-GRANT ALL on products to ldm;
-GRANT SELECT on products to nobody,apache;
-
-
 do
 $do$
 declare
@@ -25,7 +6,7 @@ declare
      month int;
      mytable varchar;
 begin
-    for year in 1984..2030
+    for year in 1984..1992
     loop
         for month in 1..2
         loop
@@ -49,9 +30,6 @@ begin
                 GRANT SELECT on %s to nobody,apache
             $f$, mytable);
             -- Indices
-            execute format($f$
-                CREATE INDEX on %s(substr(pil, 1, 3))
-            $f$, mytable);
             execute format($f$
                 CREATE INDEX %s_pil_idx on %s(pil)
             $f$, mytable, mytable);
