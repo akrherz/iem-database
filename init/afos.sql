@@ -25,7 +25,7 @@ declare
      month int;
      mytable varchar;
 begin
-    for year in 1984..2030
+    for year in 1982..2030
     loop
         for month in 1..2
         loop
