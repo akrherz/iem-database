@@ -1,0 +1,76 @@
+-- cull unused HUC12s
+-- with a as (select huc_12 from ia_huc12), valid as 
+-- (select distinct huc_12 from results_by_huc12) 
+-- SELECT a.huc_12 from a LEFT JOIN valid v on (a.huc_12 = v.huc_12)
+-- WHERE v.huc_12 is null
+
+ DELETE from ia_huc12 WHERE huc_12 = '070801041007';
+ DELETE from ia_huc12 WHERE huc_12 = '102802010407';
+ DELETE from ia_huc12 WHERE huc_12 = '070600011003';
+ DELETE from ia_huc12 WHERE huc_12 = '070801041103';
+ DELETE from ia_huc12 WHERE huc_12 = '102300010611';
+ DELETE from ia_huc12 WHERE huc_12 = '101702032507';
+ DELETE from ia_huc12 WHERE huc_12 = '102801030701';
+ DELETE from ia_huc12 WHERE huc_12 = '070801040603';
+ DELETE from ia_huc12 WHERE huc_12 = '102801010602';
+ DELETE from ia_huc12 WHERE huc_12 = '102802010302';
+ DELETE from ia_huc12 WHERE huc_12 = '102300060504';
+ DELETE from ia_huc12 WHERE huc_12 = '102300010407';
+ DELETE from ia_huc12 WHERE huc_12 = '070600030708';
+ DELETE from ia_huc12 WHERE huc_12 = '101702032102';
+ DELETE from ia_huc12 WHERE huc_12 = '071100010601';
+ DELETE from ia_huc12 WHERE huc_12 = '071100010206';
+ DELETE from ia_huc12 WHERE huc_12 = '071100010102';
+ DELETE from ia_huc12 WHERE huc_12 = '102300060502';
+ DELETE from ia_huc12 WHERE huc_12 = '071100010802';
+ DELETE from ia_huc12 WHERE huc_12 = '102400040102';
+ DELETE from ia_huc12 WHERE huc_12 = '070600050205';
+ DELETE from ia_huc12 WHERE huc_12 = '102400040101';
+ DELETE from ia_huc12 WHERE huc_12 = '071100020104';
+ DELETE from ia_huc12 WHERE huc_12 = '070600030704';
+ DELETE from ia_huc12 WHERE huc_12 = '101702032506';
+ DELETE from ia_huc12 WHERE huc_12 = '101702032504';
+ DELETE from ia_huc12 WHERE huc_12 = '102300060505';
+ DELETE from ia_huc12 WHERE huc_12 = '102300060601';
+ DELETE from ia_huc12 WHERE huc_12 = '071100020101';
+ DELETE from ia_huc12 WHERE huc_12 = '102801020603';
+ DELETE from ia_huc12 WHERE huc_12 = '070600030707';
+ DELETE from ia_huc12 WHERE huc_12 = '071000091210';
+ DELETE from ia_huc12 WHERE huc_12 = '071100010306';
+ DELETE from ia_huc12 WHERE huc_12 = '070700051804';
+ DELETE from ia_huc12 WHERE huc_12 = '102400010307';
+ DELETE from ia_huc12 WHERE huc_12 = '102400010310';
+ DELETE from ia_huc12 WHERE huc_12 = '070801041806';
+ DELETE from ia_huc12 WHERE huc_12 = '102802010501';
+ DELETE from ia_huc12 WHERE huc_12 = '070801041505';
+ DELETE from ia_huc12 WHERE huc_12 = '102400010305';
+ DELETE from ia_huc12 WHERE huc_12 = '070600020104';
+ DELETE from ia_huc12 WHERE huc_12 = '102801030703';
+ DELETE from ia_huc12 WHERE huc_12 = '102400050301';
+ DELETE from ia_huc12 WHERE huc_12 = '102801030204';
+ DELETE from ia_huc12 WHERE huc_12 = '102801021101';
+ DELETE from ia_huc12 WHERE huc_12 = '102400100206';
+ DELETE from ia_huc12 WHERE huc_12 = '102801030101';
+ DELETE from ia_huc12 WHERE huc_12 = '102400050504';
+ DELETE from ia_huc12 WHERE huc_12 = '102400050608';
+ DELETE from ia_huc12 WHERE huc_12 = '102801020704';
+ DELETE from ia_huc12 WHERE huc_12 = '102801020604';
+ DELETE from ia_huc12 WHERE huc_12 = '102400100204';
+ DELETE from ia_huc12 WHERE huc_12 = '102801020602';
+ DELETE from ia_huc12 WHERE huc_12 = '102801010903';
+ DELETE from ia_huc12 WHERE huc_12 = '102400100203';
+ DELETE from ia_huc12 WHERE huc_12 = '102801010904';
+ DELETE from ia_huc12 WHERE huc_12 = '102400130302';
+ DELETE from ia_huc12 WHERE huc_12 = '102400130301';
+ DELETE from ia_huc12 WHERE huc_12 = '102801010406';
+ DELETE from ia_huc12 WHERE huc_12 = '102400120204';
+ DELETE from ia_huc12 WHERE huc_12 = '101702031908';
+ DELETE from ia_huc12 WHERE huc_12 = '101702031905';
+ DELETE from ia_huc12 WHERE huc_12 = '101702031705';
+ DELETE from ia_huc12 WHERE huc_12 = '070600010707';
+ DELETE from ia_huc12 WHERE huc_12 = '070600010705';
+ DELETE from ia_huc12 WHERE huc_12 = '102300030103';
+ DELETE from ia_huc12 WHERE huc_12 = '070600010402';
+ DELETE from ia_huc12 WHERE huc_12 = '070802010503';
+ DELETE from ia_huc12 WHERE huc_12 = '070400080804';
+ 
