@@ -3,7 +3,7 @@
 CREATE TABLE iem_schema_manager_version(
 	version int,
 	updated timestamptz);
-INSERT into iem_schema_manager_version values (6, now());
+INSERT into iem_schema_manager_version values (7, now());
 
 CREATE TABLE model_gridpoint (
     station character varying(4),
@@ -93,7 +93,14 @@ CREATE TABLE alldata(
   twd smallint,
   tws smallint,
   hid smallint,
-  sol smallint
+  sol smallint,
+  q24 smallint,
+  p24 smallint,
+  t24 smallint,
+  ccg smallint,
+  ppo smallint,
+  pco char(1),
+  cvs smallint
 ) PARTITION by range(runtime);
 ALTER TABLE alldata OWNER to mesonet;
 GRANT ALL on alldata to ldm;
