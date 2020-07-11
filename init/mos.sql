@@ -100,7 +100,11 @@ CREATE TABLE alldata(
   ccg smallint,
   ppo smallint,
   pco char(1),
-  cvs smallint
+  cvs smallint,
+  lp1 smallint,
+  lc1 char(1),
+  cp1 smallint,
+  cc1 char(1)
 ) PARTITION by range(runtime);
 ALTER TABLE alldata OWNER to mesonet;
 GRANT ALL on alldata to ldm;
