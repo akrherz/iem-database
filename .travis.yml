@@ -20,6 +20,7 @@ addons:
     - iemdb-afos.local
     - iemdb-asos.local
     - iemdb-asos1min.local
+    - iemdb-idep.local
     - iemdb-snet.local
     - iemdb-mos.local
     - iemdb-rwis.local
@@ -33,6 +34,8 @@ addons:
     - iemdb-isuag.local
     - iemdb-portfolio.local
     - iemdb-smos.local
+    - iemdb-sustainablecorn.local
+    - iemdb-td.local
 language: python
 env:
   global:
