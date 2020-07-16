@@ -54,7 +54,7 @@ GRANT SELECT on huc12 to nobody,apache;
 ---
 CREATE TABLE results(
   huc_12 varchar(12),
-  scenario int references scenario(id),
+  scenario int references scenarios(id),
   hs_id int,
   valid date,
   runoff real,
@@ -70,7 +70,7 @@ CREATE INDEX results_huc_12_idx on results(huc_12);
 ---
 CREATE TABLE results_by_huc12(
   huc_12 varchar(12),
-  scenario int references scenario(id),
+  scenario int references scenarios(id),
   valid date,
   min_precip real,
   avg_precip real,
@@ -95,7 +95,7 @@ GRANT SELECT on results_by_huc12 to nobody,apache;
 
 CREATE TABLE flowpaths(
   fid serial UNIQUE,
-  scenario int references scenario(id),
+  scenario int references scenarios(id),
   huc_12 char(12),
   fpath int,
   climate_file varchar(128),
@@ -112,7 +112,7 @@ CREATE INDEX flowpaths_idx on flowpaths USING GIST(geom);
 ---
 CREATE  TABLE flowpath_points(
   flowpath int references flowpaths(fid),
-  scenario int references scenario(id),
+  scenario int references scenarios(id),
   segid int,
   elevation real,
   length real,
