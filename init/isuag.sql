@@ -4,7 +4,7 @@
 CREATE TABLE iem_schema_manager_version(
 	version int,
 	updated timestamptz);
-INSERT into iem_schema_manager_version values (10, now());
+INSERT into iem_schema_manager_version values (11, now());
 
 CREATE TABLE sm_daily (
   station char(5),
@@ -252,7 +252,11 @@ lwmcon_highbare_tot_f char(1),
 lwmwet_highbare_tot real,
 lwmwet_highbare_tot_qc real,
 lwmwet_highbare_tot_f char(1),
-obs_count int
+obs_count int,
+  -- Precip total from second bucket
+  rain_in_2_tot real,
+  rain_in_2_tot_qc real,
+  rain_in_2_tot_f char(1)
 );
 CREATE UNIQUE index sm_daily_idx on sm_daily(station, valid);
 GRANT SELECT on sm_daily to nobody;
@@ -526,7 +530,11 @@ lwmcon_highbare_tot_f char(1),
 lwmwet_highbare_tot real,
 lwmwet_highbare_tot_qc real,
 lwmwet_highbare_tot_f char(1),
-obs_count int
+obs_count int,
+  -- Precip total from second bucket
+  rain_in_2_tot real,
+  rain_in_2_tot_qc real,
+  rain_in_2_tot_f char(1)
 );
 CREATE UNIQUE index sm_hourly_idx on sm_hourly(station, valid);
 GRANT SELECT on sm_hourly to nobody;
