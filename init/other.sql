@@ -3,7 +3,7 @@
 CREATE TABLE iem_schema_manager_version(
 	version int,
 	updated timestamptz);
-INSERT into iem_schema_manager_version values (11, now());
+INSERT into iem_schema_manager_version values (12, now());
 
 -- Storage of USCRN sub-hourly data
 
@@ -36,7 +36,7 @@ declare
      year int;
      mytable varchar;
 begin
-    for year in 2006..2030
+    for year in 2001..2030
     loop
         mytable := format($f$uscrn_t%s$f$, year);
         execute format($f$
