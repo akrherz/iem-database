@@ -5,7 +5,7 @@ CREATE EXTENSION postgis;
 CREATE TABLE iem_schema_manager_version(
 	version int,
 	updated timestamptz);
-INSERT into iem_schema_manager_version values (41, now());
+INSERT into iem_schema_manager_version values (42, now());
 
 ---
 --- TABLES THAT ARE LOADED VIA shp2pgsql
@@ -459,6 +459,9 @@ CREATE TABLE warnings (
     phenomena character(2) NOT NULL,
     significance character(1) NOT NULL,
     hvtec_nwsli character(5),
+    hvtec_severity char(1),
+    hvtec_cause char(2),
+    hvtec_record char(2),
     gid int references ugcs(gid),
     init_expire timestamp with time zone not null,
     product_issue timestamp with time zone not null,
@@ -567,7 +570,10 @@ create table sbw(
   geom geometry(MultiPolygon, 4326),
   tml_geom geometry(Point, 4326),
   tml_geom_line geometry(Linestring, 4326),
-  hvtec_nwsli text
+  hvtec_nwsli text,
+  hvtec_severity char(1),
+  hvtec_cause char(2),
+  hvtec_record char(2)
 );
 ALTER TABLE sbw OWNER to mesonet;
 GRANT ALL on sbw to ldm;
