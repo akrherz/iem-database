@@ -570,7 +570,10 @@ create table sbw(
   geom geometry(MultiPolygon, 4326),
   tml_geom geometry(Point, 4326),
   tml_geom_line geometry(Linestring, 4326),
-  hvtec_nwsli text
+  hvtec_nwsli text,
+  hvtec_severity char(1),
+  hvtec_cause char(2),
+  hvtec_record char(2)
 );
 ALTER TABLE sbw OWNER to mesonet;
 GRANT ALL on sbw to ldm;
