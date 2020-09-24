@@ -36,6 +36,7 @@ addons:
     - iemdb-smos.local
     - iemdb-sustainablecorn.local
     - iemdb-td.local
+    - iemdb-hml.local
 language: python
 env:
   global:
