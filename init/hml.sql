@@ -68,6 +68,7 @@ CREATE TABLE hml_forecast(
   secondaryunits varchar(64));
 CREATE INDEX hml_forecast_idx on hml_forecast(station, generationtime);
 GRANT SELECT on hml_forecast to nobody,apache;
+CREATE INDEX hml_forecast_issued_idx on hml_forecast(issued);
 
 
 CREATE TABLE hml_observed_keys(
@@ -122,29 +123,32 @@ declare
 begin
     for year in 2012..2030
     loop
-        mytable := format($f$hml_observed_data_%s$f$, year);
-        execute format($f$
-            create table %s partition of hml_observed_data
-            for values from ('%s-01-01 00:00+00') to ('%s-01-01 00:00+00')
-            $f$, mytable, year, year + 1);
-        execute format($f$
-            ALTER TABLE %s OWNER to mesonet
-        $f$, mytable);
-        execute format($f$
-            GRANT ALL on %s to ldm
-        $f$, mytable);
-        execute format($f$
-            GRANT SELECT on %s to nobody,apache
-        $f$, mytable);
-        -- Indices
-        execute format($f$
-            CREATE INDEX %s_idx on %s(station, valid)
-        $f$, mytable, mytable);
+        for month in 1..12
+        loop
+            mytable := format($f$hml_observed_data_%s%s$f$, year, lpad(month::text, 2, '0'));
+            execute format($f$
+                create table %s partition of hml_observed_data
+                for values from ('%s-%s-01 00:00+00') to ('%s-%s-01 00:00+00')
+                $f$, mytable, year, month,
+                case when month = 12 then year + 1 else year end,
+                case when month = 12 then 1 else month + 1 end);
+            execute format($f$
+                ALTER TABLE %s OWNER to mesonet
+            $f$, mytable);
+            execute format($f$
+                GRANT ALL on %s to ldm
+            $f$, mytable);
+            execute format($f$
+                GRANT SELECT on %s to nobody,apache
+            $f$, mytable);
+            -- Indices
+            execute format($f$
+                CREATE INDEX %s_idx on %s(station, valid)
+            $f$, mytable, mytable);
+        end loop;
     end loop;
 end;
 $do$;
-
-CREATE INDEX hml_forecast_issued_idx on hml_forecast(issued);
 
 -- HML forecast data is kind of a one-off with no inheritence
 do
