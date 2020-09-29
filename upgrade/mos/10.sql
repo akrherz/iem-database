@@ -10,3 +10,4 @@ ALTER TABLE alldata add ifv smallint;
 ALTER TABLE alldata add mvc smallint;
 ALTER TABLE alldata add mvv smallint;
 ALTER TABLE alldata add liv smallint;
+ALTER TABLE alldata add wsd smallint;

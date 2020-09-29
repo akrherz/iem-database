@@ -120,7 +120,8 @@ CREATE TABLE alldata(
   ifv smallint,
   mvc smallint,
   mvv smallint,
-  liv smallint
+  liv smallint,
+  wsd smallint
 ) PARTITION by range(runtime);
 ALTER TABLE alldata OWNER to mesonet;
 GRANT ALL on alldata to ldm;
