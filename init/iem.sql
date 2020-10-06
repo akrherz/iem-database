@@ -583,7 +583,7 @@ begin
         $f$, mytable);
         -- Indices
         execute format($f$
-            CREATE INDEX %s_idx on %s(iemid, day)
+            CREATE UNIQUE INDEX %s_idx on %s(iemid, day)
         $f$, mytable, mytable);
         execute format($f$
             CREATE INDEX %s_day_idx on %s(day)
