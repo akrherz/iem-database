@@ -5,7 +5,7 @@ CREATE EXTENSION postgis;
 CREATE TABLE iem_schema_manager_version(
 	version int,
 	updated timestamptz);
-INSERT into iem_schema_manager_version values (22, now());
+INSERT into iem_schema_manager_version values (23, now());
 
 -- Storage of CF6 data
 CREATE TABLE cf6_data(
@@ -420,7 +420,8 @@ CREATE TABLE current (
     ice_accretion_6hr real,
     peak_wind_gust real,
     peak_wind_drct real,
-    peak_wind_time timestamptz
+    peak_wind_time timestamptz,
+    updated timestamptz DEFAULT now()
 );
 CREATE UNIQUE index current_iemid_idx on current(iemid);
 GRANT SELECT on current to apache,nobody;
@@ -494,7 +495,8 @@ CREATE TABLE current_log (
     ice_accretion_6hr real,
     peak_wind_gust real,
     peak_wind_drct real,
-    peak_wind_time timestamptz
+    peak_wind_time timestamptz,
+    updated timestamptz DEFAULT now()
 );
 GRANT ALL on current_log to mesonet,ldm;
 GRANT SELECT on current_log to apache,nobody;
