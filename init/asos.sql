@@ -175,7 +175,8 @@ CREATE TABLE scp_alldata(
  high varchar(3),
  cldtop1 int,
  cldtop2 int,
- eca smallint
+ eca smallint,
+ source char(1)
 ) PARTITION by range(valid);
 ALTER TABLE scp_alldata OWNER to mesonet;
 GRANT ALL on scp_alldata to ldm;
