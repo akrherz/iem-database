@@ -186,7 +186,7 @@ $do$
 declare
      year int;
 begin
-    for year in 2003..2030
+    for year in 1993..2030
     loop
         execute format($f$
             create table scp%s partition of scp_alldata
