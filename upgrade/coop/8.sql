@@ -1,0 +1,26 @@
+-- Round out the schema
+ALTER TABLE ncdc_climate81 add snow real;
+ALTER TABLE ncdc_climate81 add max_high real;
+ALTER TABLE ncdc_climate81 add max_low real;
+ALTER TABLE ncdc_climate81 add min_high real;
+ALTER TABLE ncdc_climate81 add min_low real;
+ALTER TABLE ncdc_climate81 add max_precip real;
+ALTER TABLE ncdc_climate81 add years int;
+ALTER TABLE ncdc_climate81 add gdd32 real;
+ALTER TABLE ncdc_climate81 add gdd41 real;
+ALTER TABLE ncdc_climate81 add gdd46 real;
+ALTER TABLE ncdc_climate81 add gdd48 real;
+ALTER TABLE ncdc_climate81 add gdd50 real;
+ALTER TABLE ncdc_climate81 add gdd51 real;
+ALTER TABLE ncdc_climate81 add gdd52 real;
+ALTER TABLE ncdc_climate81 add sdd86 real;
+ALTER TABLE ncdc_climate81 add max_high_yr int;
+ALTER TABLE ncdc_climate81 add max_low_yr int;
+ALTER TABLE ncdc_climate81 add min_high_yr int;
+ALTER TABLE ncdc_climate81 add min_low_yr int;
+ALTER TABLE ncdc_climate81 add max_precip_yr int;
+ALTER TABLE ncdc_climate81 add max_range smallint;
+ALTER TABLE ncdc_climate81 add min_range smallint;
+ALTER TABLE ncdc_climate81 add hdd65 real;
+ALTER TABLE ncdc_climate81 add cdd65 real;
+ALTER TABLE ncdc_climate81 add srad real;
