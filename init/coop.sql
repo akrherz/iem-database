@@ -5,7 +5,7 @@ CREATE EXTENSION postgis;
 CREATE TABLE iem_schema_manager_version(
 	version int,
 	updated timestamptz);
-INSERT into iem_schema_manager_version values (7, now());
+INSERT into iem_schema_manager_version values (8, now());
 
 ---
 --- Storage of climoweek
@@ -636,7 +636,32 @@ CREATE TABLE ncdc_climate81(
   valid date,
   high real,
   low real,
-  precip real 
+  precip real,
+  snow real,
+  max_high real,
+  max_low real,
+  min_high real,
+  min_low real,
+  max_precip real,
+  years int,
+  gdd32 real,
+  gdd41 real,
+  gdd46 real,
+  gdd48 real,
+  gdd50 real,
+  gdd51 real,
+  gdd52 real,
+  sdd86 real,
+  max_high_yr   int,
+  max_low_yr    int,
+  min_high_yr   int,
+  min_low_yr    int,
+  max_precip_yr int,
+  max_range     smallint,
+  min_range smallint,
+  hdd65 real,
+  cdd65 real,
+  srad real
 );
 CREATE UNIQUE INDEX ncdc_climate81_idx on ncdc_climate81(station,valid);
 GRANT SELECT on ncdc_climate81 to nobody,apache;
