@@ -5,7 +5,7 @@ CREATE EXTENSION postgis;
 CREATE TABLE iem_schema_manager_version(
 	version int,
 	updated timestamptz);
-INSERT into iem_schema_manager_version values (8, now());
+INSERT into iem_schema_manager_version values (9, now());
 
 ---
 --- Storage of climoweek
@@ -95,7 +95,10 @@ CREATE TABLE alldata(
   year int,
   month smallint,
   snowd real,
-  estimated boolean,
+  temp_estimated boolean,
+  precip_estimated boolean,
+  temp_hour smallint,
+  precip_hour smallint,
   narr_srad real,
   merra_srad real,
   merra_srad_cs real,
