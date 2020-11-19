@@ -5,7 +5,7 @@ CREATE EXTENSION postgis;
 CREATE TABLE iem_schema_manager_version(
 	version int,
 	updated timestamptz);
-INSERT into iem_schema_manager_version values (42, now());
+INSERT into iem_schema_manager_version values (43, now());
 
 ---
 --- TABLES THAT ARE LOADED VIA shp2pgsql
@@ -635,7 +635,9 @@ CREATE TABLE lsrs (
     remark text,
     wfo character(3),
     typetext character varying(40),
-    geom geometry(Point, 4326)
+    geom geometry(Point, 4326),
+    product_id text,
+    updated timestamptz DEFAULT now()
 ) PARTITION by range(valid);
 ALTER TABLE lsrs OWNER to mesonet;
 GRANT ALL on lsrs to ldm;
