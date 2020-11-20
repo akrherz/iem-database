@@ -191,9 +191,43 @@ GRANT ALL on iemapps_tags to nobody,apache;
 CREATE TABLE camera_log(
 	cam varchar(11),
 	valid timestamp with time zone,
-	drct smallint);
-CREATE INDEX camera_log_idx on camera_log(valid);
+	drct smallint
+) PARTITION by range(valid);
+ALTER TABLE camera_log OWNER to mesonet;
+GRANT ALL on camera_log to ldm;
 GRANT SELECT on camera_log to apache,nobody;
+
+
+do
+$do$
+declare
+     year int;
+     mytable varchar;
+begin
+    for year in 2003..2030
+    loop
+        mytable := format($f$camera_log_%s$f$, year);
+        execute format($f$
+            create table %s partition of camera_log
+            for values from ('%s-01-01 00:00+00') to ('%s-01-01 00:00+00')
+            $f$, mytable, year, year + 1);
+        execute format($f$
+            ALTER TABLE %s OWNER to mesonet
+        $f$, mytable);
+        execute format($f$
+            GRANT ALL on %s to ldm
+        $f$, mytable);
+        execute format($f$
+            GRANT SELECT on %s to nobody,apache
+        $f$, mytable);
+        -- Indices
+        execute format($f$
+            CREATE INDEX %s_valid_idx on %s(valid)
+        $f$, mytable, mytable);
+    end loop;
+end;
+$do$;
+
 
 ---
 --- webcam currents
