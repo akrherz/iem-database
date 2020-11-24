@@ -690,6 +690,8 @@ CREATE TABLE hvtec_nwsli (
     state character(2),
     geom geometry(Point, 4326)
 );
+ALTER TABLE hvtec_nwsli OWNER to mesonet;
+GRANT ALL on hvtec_nwsli to ldm;
 grant select on hvtec_nwsli to apache,nobody;
 
 ---
