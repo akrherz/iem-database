@@ -858,6 +858,8 @@ CREATE TABLE spc_outlooks (
   day smallint,
   outlook_type char(1)
 );
+ALTER TABLE spc_outlooks OWNER to mesonet;
+GRANT ALL on spc_outlooks to ldm;
 SELECT addGeometryColumn('', 'spc_outlooks', 'geom', 4326, 'MULTIPOLYGON', 2);
 GRANT SELECT on spc_outlooks to apache,nobody;
 CREATE index spc_outlooks_valid_idx on spc_outlooks(product_issue);
@@ -900,6 +902,8 @@ CREATE TABLE watches (
     num smallint,
     geom geometry(MultiPolygon, 4326)
 );
+ALTER TABLE watches OWNER to mesonet;
+GRANT ALL on watches to ldm;
 grant select on watches to apache,nobody;
 
 CREATE UNIQUE INDEX watches_idx ON watches USING btree (issued, num);
