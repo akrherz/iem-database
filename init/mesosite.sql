@@ -260,7 +260,9 @@ CREATE TABLE properties(
   propname varchar,
   propvalue varchar
 );
-GRANT ALL on properties to apache,nobody;
+ALTER TABLE properties OWNER to mesonet;
+-- TODO: fix this permissions
+GRANT ALL on properties to apache,nobody,ldm;
 CREATE UNIQUE index properties_idx on properties(propname, propvalue);
 
 --- Alias for pyWWA nwschat support
