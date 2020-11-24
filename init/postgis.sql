@@ -139,6 +139,8 @@ CREATE TABLE ugcs(
 	end_ts timestamptz,
 	area2163 real
 );
+ALTER TABLE ugcs OWNER to mesonet;
+GRANT ALL on ugcs to ldm;
 SELECT AddGeometryColumn('ugcs', 'geom', 4326, 'MULTIPOLYGON', 2);
 SELECT AddGeometryColumn('ugcs', 'simple_geom', 4326, 'MULTIPOLYGON', 2);
 SELECT AddGeometryColumn('ugcs', 'centroid', 4326, 'POINT', 2);
@@ -719,6 +721,8 @@ CREATE TABLE sigmets_current(
 	expire timestamp with time zone,
 	raw text
 );
+ALTER TABLE sigmets_current OWNER to mesonet;
+GRANT ALL on sigmets_current to ldm;
 SELECT AddGeometryColumn('sigmets_current', 'geom', 4326, 'POLYGON', 2);
 GRANT SELECT on sigmets_current to nobody,apache;
 

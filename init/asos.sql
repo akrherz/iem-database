@@ -14,6 +14,9 @@ CREATE TABLE unknown(
   id varchar(5),
   valid timestamptz
 );
+ALTER TABLE unknown OWNER to mesonet;
+GRANT ALL on unknown to ldm;
+GRANT SELECT on unknown to nobody,apache;
 
 ---
 --- Some skycoverage metadata

@@ -236,6 +236,8 @@ CREATE TABLE cli_data(
   highest_gust_direction real,
   average_wind_speed real
 );
+ALTER TABLE cli_data OWNER to mesonet;
+GRANT ALL on cli_data to ldm;
 CREATE UNIQUE index cli_data_idx on cli_data(station,valid);
 GRANT SELECT on cli_data to nobody,apache;
 
