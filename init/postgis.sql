@@ -141,6 +141,7 @@ CREATE TABLE ugcs(
 );
 ALTER TABLE ugcs OWNER to mesonet;
 GRANT ALL on ugcs to ldm;
+GRANT ALL on ugcs_gid_seq to ldm;
 SELECT AddGeometryColumn('ugcs', 'geom', 4326, 'MULTIPOLYGON', 2);
 SELECT AddGeometryColumn('ugcs', 'simple_geom', 4326, 'MULTIPOLYGON', 2);
 SELECT AddGeometryColumn('ugcs', 'centroid', 4326, 'POINT', 2);
