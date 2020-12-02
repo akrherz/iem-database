@@ -1,0 +1,27 @@
+name: Install and Test
+on: [push, pull_request]
+jobs:
+  build-linux:
+    name: Build
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Add /etc/hosts entries
+      run: |
+        cat .github/workflows/etchosts.txt | sudo tee -a /etc/hosts
+
+    - name: Install Ubuntu Deps
+      run: |
+        sudo apt-get update
+        sudo apt-get install python3-psycopg2
+
+    - name: Do Work
+      run: |
+        git clone --depth 1 https://github.com/akrherz/ci_tooling.git .ci_tooling
+        . .ci_tooling/postgres.sh
+        export PATH="/usr/lib/postgresql/11/bin:$PATH"
+        psql -c 'CREATE ROLE runner SUPERUSER LOGIN CREATEDB;' -U postgres || true
+        sh bootstrap.sh
+        /usr/bin/python3 schema_manager.py

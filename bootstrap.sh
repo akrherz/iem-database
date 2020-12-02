@@ -1,5 +1,5 @@
 # setup databases
-# we want this script to exit 2 so that travis will report any failures
+# we want this script to exit 2 so that CI will report any failures
 
 for myuser in nobody apache mesonet ldm apiuser \
 tt_web tt_admin tt_script
