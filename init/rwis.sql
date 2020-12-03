@@ -3,7 +3,7 @@
 CREATE TABLE iem_schema_manager_version(
 	version int,
 	updated timestamptz);
-INSERT into iem_schema_manager_version values (5, now());
+INSERT into iem_schema_manager_version values (6, now());
 
 CREATE TABLE sensors(
   station varchar(5),
@@ -28,10 +28,10 @@ CREATE TABLE alldata(
   tfs3 real,
   subf real,
   gust real,
-  tfs0_text varchar(20),
-  tfs1_text varchar(20),
-  tfs2_text varchar(20),
-  tfs3_text varchar(20),
+  tfs0_text text,
+  tfs1_text text,
+  tfs2_text text,
+  tfs3_text text,
   pcpn real,
   vsby real
 ) PARTITION by range(valid);
