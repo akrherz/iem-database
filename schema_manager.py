@@ -12,6 +12,7 @@ try:
     from pyiem.util import get_dbconn
 except ImportError:
     from psycopg2 import connect as get_dbconn
+import psycopg2
 
 
 def check_management(cursor):
@@ -37,7 +38,13 @@ def check_management(cursor):
 
 def run_db(dbname):
     """ Lets do an actual database """
-    dbconn = get_dbconn(database=dbname)
+    # the pyiem version of get_dbconn does hostname magic, the psycopg2
+    # does not, so we need to account for that.
+    try:
+        dbconn = get_dbconn(database=dbname)
+    except psycopg2.OperationalError:
+        dbconn = get_dbconn(database=dbname, host=f"iemdb-{dbname}.local")
+
     cursor = dbconn.cursor()
 
     check_management(cursor)
