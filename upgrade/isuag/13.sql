@@ -26,3 +26,31 @@
  ALTER TABLE sm_minute ADD ec40_qc real;
  ALTER TABLE sm_minute ADD ec40_f char(1);
  
+ ALTER TABLE sm_minute ADD vwc2 real;
+ ALTER TABLE sm_minute ADD vwc2_qc real;
+ ALTER TABLE sm_minute ADD vwc2_f char(1);
+ ALTER TABLE sm_minute ADD vwc4 real;
+ ALTER TABLE sm_minute ADD vwc4_qc real;
+ ALTER TABLE sm_minute ADD vwc4_f char(1);
+ ALTER TABLE sm_minute ADD vwc8 real;
+ ALTER TABLE sm_minute ADD vwc8_qc real;
+ ALTER TABLE sm_minute ADD vwc8_f char(1);
+ ALTER TABLE sm_minute ADD vwc12 real;
+ ALTER TABLE sm_minute ADD vwc12_qc real;
+ ALTER TABLE sm_minute ADD vwc12_f char(1);
+ ALTER TABLE sm_minute ADD vwc16 real;
+ ALTER TABLE sm_minute ADD vwc16_qc real;
+ ALTER TABLE sm_minute ADD vwc16_f char(1);
+ ALTER TABLE sm_minute ADD vwc20 real;
+ ALTER TABLE sm_minute ADD vwc20_qc real;
+ ALTER TABLE sm_minute ADD vwc20_f char(1);
+ ALTER TABLE sm_minute ADD vwc24 real;
+ ALTER TABLE sm_minute ADD vwc24_qc real;
+ ALTER TABLE sm_minute ADD vwc24_f char(1);
+ ALTER TABLE sm_minute ADD vwc30 real;
+ ALTER TABLE sm_minute ADD vwc30_qc real;
+ ALTER TABLE sm_minute ADD vwc30_f char(1);
+ ALTER TABLE sm_minute ADD vwc40 real;
+ ALTER TABLE sm_minute ADD vwc40_qc real;
+ ALTER TABLE sm_minute ADD vwc40_f char(1);
+
