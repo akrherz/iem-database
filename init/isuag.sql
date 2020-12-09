@@ -4,7 +4,7 @@
 CREATE TABLE iem_schema_manager_version(
 	version int,
 	updated timestamptz);
-INSERT into iem_schema_manager_version values (12, now());
+INSERT into iem_schema_manager_version values (13, now());
 
 CREATE TABLE sm_daily (
   station char(5),
@@ -673,6 +673,35 @@ CREATE TABLE sm_minute (
   T50_C_Avg real,
   T50_C_Avg_qc real,
   T50_C_Avg_f char(1),
+
+  -- Soil EC Values
+  ec2 real,
+  ec2_qc real,
+  ec2_f char(1),
+  ec4 real,
+  ec4_qc real,
+  ec4_f char(1),
+  ec8 real,
+  ec8_qc real,
+  ec8_f char(1),
+  ec12 real,
+  ec12_qc real,
+  ec12_f char(1),
+  ec16 real,
+  ec16_qc real,
+  ec16_f char(1),
+  ec20 real,
+  ec20_qc real,
+  ec20_f char(1),
+  ec24 real,
+  ec24_qc real,
+  ec24_f char(1),
+  ec30 real,
+  ec30_qc real,
+  ec30_f char(1),
+  ec40 real,
+  ec40_qc real,
+  ec40_f char(1),
 
     lwmv_1_qc real,
     lwmv_1_f character(1),
