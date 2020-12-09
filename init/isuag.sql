@@ -4,7 +4,7 @@
 CREATE TABLE iem_schema_manager_version(
 	version int,
 	updated timestamptz);
-INSERT into iem_schema_manager_version values (11, now());
+INSERT into iem_schema_manager_version values (12, now());
 
 CREATE TABLE sm_daily (
   station char(5),
@@ -629,6 +629,16 @@ CREATE TABLE sm_minute (
   calcVWC24_Avg_qc real,
   calcVWC24_Avg_f char(1),
 
+  -- 30 inch VWC
+  calcVWC30_Avg real,
+  calcVWC30_Avg_qc real,
+  calcVWC30_Avg_f char(1),
+
+  -- 40 inch VWC
+  calcVWC40_Avg real,
+  calcVWC40_Avg_qc real,
+  calcVWC40_Avg_f char(1),
+
   -- 50 inch VWC
   calcVWC50_Avg real,
   calcVWC50_Avg_qc real,
@@ -648,6 +658,16 @@ CREATE TABLE sm_minute (
   T24_C_Avg real,
   T24_C_Avg_qc real,
   T24_C_Avg_f char(1),
+
+  -- 30 inch temp
+  T30_C_Avg real,
+  T30_C_Avg_qc real,
+  T30_C_Avg_f char(1),
+
+  -- 40 inch temp
+  T40_C_Avg real,
+  T40_C_Avg_qc real,
+  T40_C_Avg_f char(1),
 
   -- 50 inch temp
   T50_C_Avg real,
