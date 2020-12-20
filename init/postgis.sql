@@ -640,7 +640,8 @@ CREATE TABLE lsrs (
     geom geometry(Point, 4326),
     product_id text,
     updated timestamptz DEFAULT now(),
-    unit varchar(32)
+    unit varchar(32),
+    qualifer char(1)
 ) PARTITION by range(valid);
 ALTER TABLE lsrs OWNER to mesonet;
 GRANT ALL on lsrs to ldm;
