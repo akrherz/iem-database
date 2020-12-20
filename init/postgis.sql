@@ -641,7 +641,7 @@ CREATE TABLE lsrs (
     product_id text,
     updated timestamptz DEFAULT now(),
     unit varchar(32),
-    qualifer char(1)
+    qualifier char(1)
 ) PARTITION by range(valid);
 ALTER TABLE lsrs OWNER to mesonet;
 GRANT ALL on lsrs to ldm;
