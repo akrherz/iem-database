@@ -5,7 +5,7 @@ CREATE EXTENSION postgis;
 CREATE TABLE iem_schema_manager_version(
 	version int,
 	updated timestamptz);
-INSERT into iem_schema_manager_version values (23, now());
+INSERT into iem_schema_manager_version values (24, now());
 
 -- Storage of CF6 data
 CREATE TABLE cf6_data(
@@ -29,7 +29,9 @@ CREATE TABLE cf6_data(
     cloud_ss real,
     wxcodes text,
     gust_smph real,
-    gust_drct real
+    gust_drct real,
+    product_id text,
+    updated timestamptz
 ) PARTITION by range(valid);
 CREATE UNIQUE INDEX on cf6_data(station, valid);
 ALTER TABLE cf6_data OWNER to mesonet;
