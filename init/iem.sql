@@ -30,7 +30,6 @@ CREATE TABLE cf6_data(
     wxcodes text,
     gust_smph real,
     gust_drct real,
-    product_id text,
     updated timestamptz
 ) PARTITION by range(valid);
 CREATE UNIQUE INDEX on cf6_data(station, valid);
