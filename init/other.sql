@@ -3,7 +3,7 @@
 CREATE TABLE iem_schema_manager_version(
 	version int,
 	updated timestamptz);
-INSERT into iem_schema_manager_version values (12, now());
+INSERT into iem_schema_manager_version values (13, now());
 
 -- Storage of USCRN sub-hourly data
 
@@ -303,7 +303,10 @@ station            character varying(10),
  t real,
  p real,
  pa real,
- vr real
+ vr real,
+ lithium_bv_avg real,
+ solarrad_mj_tot real,
+ par_tot_tot real
 ) PARTITION by range(valid);
 ALTER TABLE flux_data OWNER to mesonet;
 GRANT ALL on flux_data to ldm;
