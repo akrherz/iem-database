@@ -5,7 +5,7 @@ CREATE EXTENSION postgis;
 CREATE TABLE iem_schema_manager_version(
 	version int,
 	updated timestamptz);
-INSERT into iem_schema_manager_version values (9, now());
+INSERT into iem_schema_manager_version values (10, now());
 
 ---
 --- Storage of climoweek
@@ -182,6 +182,8 @@ GRANT select on alldata to nobody,apache;
  GRANT SELECT on alldata_or to nobody,apache;
  CREATE TABLE alldata_pa() inherits (alldata); 
  GRANT SELECT on alldata_pa to nobody,apache;
+ CREATE TABLE alldata_pr() inherits (alldata); 
+ GRANT SELECT on alldata_pr to nobody,apache;
  CREATE TABLE alldata_ri() inherits (alldata); 
  GRANT SELECT on alldata_ri to nobody,apache;
  CREATE TABLE alldata_sc() inherits (alldata); 
@@ -368,7 +370,13 @@ CREATE UNIQUE index alldata_PA_idx on alldata_PA(station, day);
     CREATE INDEX alldata_PA_sday_idx on alldata_PA(sday);
     CREATE INDEX alldata_PA_stationid_idx on alldata_PA(station);
     CREATE INDEX alldata_PA_year_idx on alldata_PA(year);
-  
+
+CREATE UNIQUE index alldata_PR_idx on alldata_PR(station, day);
+    CREATE INDEX alldata_PR_day_idx on alldata_PR(day);
+    CREATE INDEX alldata_PR_sday_idx on alldata_PR(sday);
+    CREATE INDEX alldata_PR_stationid_idx on alldata_PR(station);
+    CREATE INDEX alldata_PR_year_idx on alldata_PR(year);
+
 CREATE UNIQUE index alldata_RI_idx on alldata_RI(station, day);
     CREATE INDEX alldata_RI_day_idx on alldata_RI(day);
     CREATE INDEX alldata_RI_sday_idx on alldata_RI(sday);
