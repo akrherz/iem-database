@@ -17,3 +17,11 @@ CREATE INDEX alldata_VI_sday_idx on alldata_VI(sday);
 CREATE INDEX alldata_VI_stationid_idx on alldata_VI(station);
 CREATE INDEX alldata_VI_year_idx on alldata_VI(year);
 
+CREATE TABLE alldata_gu() inherits (alldata);
+GRANT SELECT on alldata_gu to nobody,apache;
+
+CREATE UNIQUE index alldata_GU_idx on alldata_GU(station, day);
+CREATE INDEX alldata_GU_day_idx on alldata_GU(day);
+CREATE INDEX alldata_GU_sday_idx on alldata_GU(sday);
+CREATE INDEX alldata_GU_stationid_idx on alldata_GU(station);
+CREATE INDEX alldata_GU_year_idx on alldata_GU(year);
