@@ -31,9 +31,15 @@ CREATE TABLE states(
 GRANT ALL on states to mesonet,ldm;
 GRANT SELECT on states to nobody,apache;
 
----
---- cwsu table, manually got this at some point :/
----  pg_dump -t cwsu -h localhost -p 5555 postgis | psql postgis
+-- CWSU Boundaries, circa 2005 providence
+CREATE TABLE cwsu(
+    gid serial,
+    id varchar(3),
+    geom geometry(MultiPolygon, 4326)
+);
+ALTER TABLE cwsu OWNER to mesonet;
+GRANT ALL on cwsu to ldm;
+GRANT SELECT on cwsu to nobody,apache;
 
 ---
 --- Quasi synced from mesosite database
