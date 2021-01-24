@@ -5,7 +5,7 @@ CREATE EXTENSION postgis;
 CREATE TABLE iem_schema_manager_version(
 	version int,
 	updated timestamptz);
-INSERT into iem_schema_manager_version values (44, now());
+INSERT into iem_schema_manager_version values (45, now());
 
 ---
 --- TABLES THAT ARE LOADED VIA shp2pgsql
@@ -864,7 +864,9 @@ CREATE TABLE spc_outlooks (
   threshold varchar(4),
   category varchar(64),
   day smallint,
-  outlook_type char(1)
+  outlook_type char(1),
+  product_id varchar(32),
+  updated timestamptz DEFAULT now()
 );
 ALTER TABLE spc_outlooks OWNER to mesonet;
 GRANT ALL on spc_outlooks to ldm;
