@@ -946,8 +946,10 @@ CREATE TABLE pireps(
   aircraft_type varchar,
   report varchar
 );
+ALTER TABLE pireps OWNER to mesonet;
 CREATE INDEX pireps_valid_idx on pireps(valid);
 GRANT SELECT on pireps to nobody,apache;
+GRANT ALL on pireps to ldm;
 
 CREATE TABLE ffg(
   ugc char(6),
