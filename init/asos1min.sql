@@ -5,7 +5,7 @@ CREATE EXTENSION postgis;
 CREATE TABLE iem_schema_manager_version(
 	version int,
 	updated timestamptz);
-INSERT into iem_schema_manager_version values (-1, now());
+INSERT into iem_schema_manager_version values (0, now());
 
 
 ---
@@ -65,6 +65,8 @@ CREATE TABLE alldata_1minute(
   vis1_nd char(1),
   vis2_coeff real,
   vis2_nd char(1),
+  vis3_coeff real,
+  vis3_nd char(1),
   drct smallint,
   sknt smallint,
   gust_drct smallint,
