@@ -5,7 +5,7 @@ CREATE EXTENSION postgis;
 CREATE TABLE iem_schema_manager_version(
 	version int,
 	updated timestamptz);
-INSERT into iem_schema_manager_version values (45, now());
+INSERT into iem_schema_manager_version values (46, now());
 
 ---
 --- TABLES THAT ARE LOADED VIA shp2pgsql
@@ -797,8 +797,10 @@ GRANT SELECT on roads_base to nobody,apache;
 
 CREATE TABLE roads_conditions(
   code smallint unique,
-  label varchar(128)
+  label varchar(128),
+  color char(6) DEFAULT '000000' NOT NULL
   );
+ALTER TABLE roads_conditions OWNER to mesonet;
 GRANT SELECT on roads_conditions TO nobody,apache;
 
 CREATE TABLE roads_current(
