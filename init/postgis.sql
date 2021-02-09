@@ -798,7 +798,7 @@ GRANT SELECT on roads_base to nobody,apache;
 CREATE TABLE roads_conditions(
   code smallint unique,
   label varchar(128),
-  color char(6) DEFAULT '000000' NOT NULL
+  color char(7) DEFAULT '#000000' NOT NULL
   );
 ALTER TABLE roads_conditions OWNER to mesonet;
 GRANT SELECT on roads_conditions TO nobody,apache;
