@@ -1,0 +1,16 @@
+-- Update soil storage per upstream changes
+ALTER TABLE alldata_soil RENAME s0temp to tmpf_1in;
+ALTER TABLE alldata_soil RENAME s1temp to tmpf_3in;
+ALTER TABLE alldata_soil RENAME s2temp to tmpf_6in;
+ALTER TABLE alldata_soil RENAME s3temp to tmpf_9in;
+ALTER TABLE alldata_soil RENAME s4temp to tmpf_12in;
+ALTER TABLE alldata_soil RENAME s5temp to tmpf_18in;
+ALTER TABLE alldata_soil RENAME s6temp to tmpf_24in;
+ALTER TABLE alldata_soil RENAME s7temp to tmpf_30in;
+ALTER TABLE alldata_soil RENAME s8temp to tmpf_36in;
+ALTER TABLE alldata_soil RENAME s9temp to tmpf_42in;
+ALTER TABLE alldata_soil RENAME s10temp to tmpf_48in;
+ALTER TABLE alldata_soil RENAME s11temp to tmpf_54in;
+ALTER TABLE alldata_soil RENAME s12temp to tmpf_60in;
+ALTER TABLE alldata_soil RENAME s13temp to tmpf_66in;
+ALTER TABLE alldata_soil RENAME s14temp to tmpf_72in;
