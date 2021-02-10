@@ -3,7 +3,7 @@
 CREATE TABLE iem_schema_manager_version(
 	version int,
 	updated timestamptz);
-INSERT into iem_schema_manager_version values (6, now());
+INSERT into iem_schema_manager_version values (7, now());
 
 CREATE TABLE sensors(
   station varchar(5),
@@ -57,21 +57,21 @@ GRANT select on alldata_traffic to nobody,apache;
 CREATE TABLE alldata_soil(
   station char(5),
   valid timestamp with time zone,
-  s0temp real,
-  s1temp real,
-  s2temp real,
-  s3temp real,
-  s4temp real,
-  s5temp real,
-  s6temp real,
-  s7temp real,
-  s8temp real,
-  s9temp real,
-  s10temp real,
-  s11temp real,
-  s12temp real,
-  s13temp real,
-  s14temp real
+  tmpf_1in real,
+  tmpf_3in real,
+  tmpf_6in real,
+  tmpf_9in real,
+  tmpf_12in real,
+  tmpf_18in real,
+  tmpf_24in real,
+  tmpf_30in real,
+  tmpf_36in real,
+  tmpf_42in real,
+  tmpf_48in real,
+  tmpf_54in real,
+  tmpf_60in real,
+  tmpf_66in real,
+  tmpf_72in real
 ) PARTITION by range(valid);
 ALTER TABLE alldata_soil OWNER to mesonet;
 GRANT ALL on alldata_soil to ldm;
