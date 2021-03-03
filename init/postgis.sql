@@ -5,7 +5,7 @@ CREATE EXTENSION postgis;
 CREATE TABLE iem_schema_manager_version(
 	version int,
 	updated timestamptz);
-INSERT into iem_schema_manager_version values (46, now());
+INSERT into iem_schema_manager_version values (47, now());
 
 ---
 --- TABLES THAT ARE LOADED VIA shp2pgsql
@@ -143,7 +143,8 @@ CREATE TABLE ugcs(
 	wfo varchar(9),
 	begin_ts timestamptz NOT NULL,
 	end_ts timestamptz,
-	area2163 real
+	area2163 real,
+    wfo_firewx char(3)
 );
 ALTER TABLE ugcs OWNER to mesonet;
 GRANT ALL on ugcs to ldm;
