@@ -164,7 +164,8 @@ RETURNS int
 LANGUAGE sql
 AS $_$
   select gid from ugcs WHERE ugc = $1 and begin_ts <= $2 and
-  (end_ts is null or end_ts > $2) and source != 'fz' LIMIT 1
+  (end_ts is null or end_ts > $2) and
+  (source != 'fz' or source is null) LIMIT 1
 $_$;
 
 -- Explicit source version
