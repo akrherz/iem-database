@@ -413,6 +413,21 @@ CREATE TABLE vtec_missing_events(
 GRANT ALL on vtec_missing_events to mesonet,ldm;
 GRANT select on vtec_missing_events to nobody,apache;
 
+-- Legacy table supporting NWSChat, sigh
+CREATE TABLE text_products (
+    product_id varchar(32),
+￼   product text,
+    geom geometry(MultiPolygon, 4326)
+);
+ALTER TABLE text_products OWNER to mesonet;
+GRANT ALL on text_products to ldm;
+grant select on text_products to apache,nobody;
+
+create index text_products_idx  on text_products(product_id);
+CREATE INDEX text_products_issue_idx on text_products(issue);
+CREATE INDEX text_products_expire_idx on text_products(expire);
+create index text_products_pil_idx  on text_products(pil);
+
 -- Special Weather Statements
 CREATE TABLE sps(
     product_id varchar(32),
