@@ -416,8 +416,11 @@ GRANT select on vtec_missing_events to nobody,apache;
 -- Legacy table supporting NWSChat, sigh
 CREATE TABLE text_products (
     product_id varchar(32),
-￼   product text,
-    geom geometry(MultiPolygon, 4326)
+    product text,
+    geom geometry(MultiPolygon, 4326),
+    issue timestamptz,
+    expire timestamptz,
+    pil char(6)
 );
 ALTER TABLE text_products OWNER to mesonet;
 GRANT ALL on text_products to ldm;
