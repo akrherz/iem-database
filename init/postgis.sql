@@ -461,7 +461,7 @@ declare
      year int;
      mytable varchar;
 begin
-    for year in 1980..2030
+    for year in 1993..2030
     loop
         mytable := format($f$sps_%s$f$, year);
         execute format($f$
