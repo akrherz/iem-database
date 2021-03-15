@@ -5,7 +5,7 @@ CREATE EXTENSION postgis;
 CREATE TABLE iem_schema_manager_version(
 	version int,
 	updated timestamptz);
-INSERT into iem_schema_manager_version values (24, now());
+INSERT into iem_schema_manager_version values (25, now());
 
 -- Storage of CF6 data
 CREATE TABLE cf6_data(
@@ -216,6 +216,7 @@ CREATE TABLE cli_data(
   precip_record_years int[],
   precip_month_normal real,
   snow float,
+  snow_normal float,
   snow_month float,
   snow_jun1 float,
   snow_jul1 float,
