@@ -5,7 +5,7 @@ CREATE EXTENSION postgis;
 CREATE TABLE iem_schema_manager_version(
 	version int,
 	updated timestamptz);
-INSERT into iem_schema_manager_version values (50, now());
+INSERT into iem_schema_manager_version values (51, now());
 
 ---
 --- TABLES THAT ARE LOADED VIA shp2pgsql
@@ -435,6 +435,7 @@ create index text_products_pil_idx  on text_products(pil);
 CREATE TABLE sps(
     product_id varchar(32),
     product text,
+    segmentnum smallint,
     pil char(6),
     wfo char(3),
     issue timestamptz,
