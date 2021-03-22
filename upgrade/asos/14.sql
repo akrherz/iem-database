@@ -45,7 +45,7 @@ begin
             $f$, year, year, year + 1);
         execute format($f$
             ALTER TABLE taf%s ADD foreign key(taf_id)
-            references taf(id) ON DELETE CASCADE;
+            references taf(id);
         $f$, year);
         execute format($f$
             ALTER TABLE taf%s OWNER to mesonet
