@@ -10,6 +10,7 @@ ALTER TABLE taf OWNER to mesonet;
 GRANT ALL on taf to ldm;
 GRANT SELECT on taf to nobody,apache;
 CREATE INDEX taf_idx on taf(station, valid);
+grant all on taf_id_seq to ldm;
 
 CREATE TABLE taf_forecast(
     taf_id int REFERENCES taf(id),
