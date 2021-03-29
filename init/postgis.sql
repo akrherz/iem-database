@@ -5,7 +5,7 @@ CREATE EXTENSION postgis;
 CREATE TABLE iem_schema_manager_version(
 	version int,
 	updated timestamptz);
-INSERT into iem_schema_manager_version values (51, now());
+INSERT into iem_schema_manager_version values (52, now());
 
 ---
 --- TABLES THAT ARE LOADED VIA shp2pgsql
@@ -929,32 +929,29 @@ begin
 end;
 $do$;
 
-
----
---- SPC Convective Outlooks
----
-CREATE TABLE spc_outlooks (
-  issue timestamp with time zone,
-  product_issue timestamp with time zone,
-  expire timestamp with time zone,
-  threshold varchar(4),
-  category varchar(64),
-  day smallint,
-  outlook_type char(1),
-  product_id varchar(32),
-  updated timestamptz DEFAULT now()
+--
+-- SPC Convective Outlooks
+CREATE TABLE spc_outlook(
+    id SERIAL UNIQUE NOT NULL,
+    issue timestamptz,
+    product_issue timestamptz,
+    expire timestamptz,
+    updated timestamptz DEFAULT now(),
+    product_id varchar(32),
+    outlook_type char(1),
+    day smallint
 );
-ALTER TABLE spc_outlooks OWNER to mesonet;
-GRANT ALL on spc_outlooks to ldm;
-SELECT addGeometryColumn('', 'spc_outlooks', 'geom', 4326, 'MULTIPOLYGON', 2);
-GRANT SELECT on spc_outlooks to apache,nobody;
-CREATE index spc_outlooks_valid_idx on spc_outlooks(product_issue);
-CREATE INDEX spc_outlooks_gix ON spc_outlooks USING GIST (geom);
+CREATE INDEX spc_outlook_product_issue on spc_outlook(product_issue);
+CREATE INDEX spc_outlook_expire on spc_outlook(expire);
+ALTER TABLE spc_outlook OWNER to mesonet;
+GRANT ALL on spc_outlook to ldm;
+GRANT SELECT on spc_outlook to nobody,apache;
+GRANT ALL on spc_outlook_id_seq to mesonet,ldm;
 
 -- Numeric prioritization of SPC Outlook Thresholds
 CREATE TABLE spc_outlook_thresholds(
   priority smallint UNIQUE,
-  threshold varchar(4));
+  threshold varchar(4) UNIQUE);
 GRANT SELECT on spc_outlook_thresholds to nobody,apache;
 GRANT ALL on spc_outlook_thresholds to ldm,mesonet;
 
@@ -969,15 +966,36 @@ INSERT into spc_outlook_thresholds VALUES
  (80, '0.40'),
  (90, '0.45'),
  (100, '0.60'),
+ (101, 'SIGN'),
  (110, 'TSTM'),
  (120, 'MRGL'),
  (130, 'SLGT'),
  (140, 'ENH'),
  (150, 'MDT'),
  (160, 'HIGH'),
+ (165, 'ELEV'),
  (170, 'CRIT'),
- (180, 'EXTM');
+ (180, 'EXTM'),
+ (185, 'IDRT'),
+ (190, 'SDRT');
 
+CREATE TABLE spc_outlook_geometries(
+    spc_outlook_id int REFERENCES spc_outlook(id),
+    threshold varchar(4) REFERENCES spc_outlook_thresholds(threshold),
+    category varchar(64),
+    geom geometry(MultiPolygon, 4326)
+);
+CREATE INDEX spc_outlook_geometries_idx
+    on spc_outlook_geometries(spc_outlook_id);
+CREATE INDEX spc_outlook_geometries_gix
+    ON spc_outlook_geometries USING GIST (geom);
+ALTER TABLE spc_outlook_geometries OWNER to mesonet;
+GRANT ALL on spc_outlook_geometries to ldm;
+GRANT SELECT on spc_outlook_geometries to nobody,apache;
+
+
+--
+-- Convective Watches
 CREATE TABLE watches (
 	fid serial,
     sel character(5),
