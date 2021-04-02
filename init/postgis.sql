@@ -933,14 +933,17 @@ $do$;
 -- SPC Convective Outlooks
 CREATE TABLE spc_outlook(
     id SERIAL UNIQUE NOT NULL,
-    issue timestamptz,
-    product_issue timestamptz,
-    expire timestamptz,
+    issue timestamptz NOT NULL,
+    product_issue timestamptz NOT NULL,
+    expire timestamptz NOT NULL,
     updated timestamptz DEFAULT now(),
-    product_id varchar(32),
-    outlook_type char(1),
-    day smallint
+    product_id varchar(32) NOT NULL,
+    outlook_type char(1) NOT NULL,
+    day smallint NOT NULL,
+    cycle smallint NOT NULL
 );
+CREATE UNIQUE INDEX spc_outlook_idx
+    on spc_outlook(cycle, issue, day, outlook_type);
 CREATE INDEX spc_outlook_product_issue on spc_outlook(product_issue);
 CREATE INDEX spc_outlook_expire on spc_outlook(expire);
 ALTER TABLE spc_outlook OWNER to mesonet;
