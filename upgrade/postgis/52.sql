@@ -10,8 +10,6 @@ CREATE TABLE spc_outlook(
     day smallint NOT NULL,
     cycle smallint NOT NULL
 );
-CREATE UNIQUE INDEX spc_outlook_idx
-    on spc_outlook(cycle, issue, day, outlook_type);
 CREATE INDEX spc_outlook_product_issue on spc_outlook(product_issue);
 CREATE INDEX spc_outlook_expire on spc_outlook(expire);
 ALTER TABLE spc_outlook OWNER to mesonet;
