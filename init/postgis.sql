@@ -5,7 +5,7 @@ CREATE EXTENSION postgis;
 CREATE TABLE iem_schema_manager_version(
 	version int,
 	updated timestamptz);
-INSERT into iem_schema_manager_version values (52, now());
+INSERT into iem_schema_manager_version values (53, now());
 
 ---
 --- TABLES THAT ARE LOADED VIA shp2pgsql
@@ -18,6 +18,20 @@ INSERT into iem_schema_manager_version values (52, now());
 ---   + tz
 ---   + uscounties
 ---   + warnings_import
+
+CREATE TABLE cwa(
+  gid int,
+  wfo varchar,
+  cwa varchar,
+  lon numeric,
+  lat numeric,
+  the_geom geometry(MultiPolygon, 4326),
+  avg_county_size real,
+  region varchar(2)
+);
+ALTER TABLE cwa OWNER to mesonet;
+GRANT ALL on cwa to ldm;
+GRANT SELECT on cwa to nobody,apache;
 
 --- states table is loaded by some shp2pgsql load that has unknown origins :(
 CREATE TABLE states(
