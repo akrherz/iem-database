@@ -5,7 +5,8 @@ CREATE EXTENSION postgis;
 CREATE TABLE iem_schema_manager_version(
 	version int,
 	updated timestamptz);
-INSERT into iem_schema_manager_version values (-1, now());
+ALTER TABLE iem_schema_manager_version OWNER to mesonet;
+INSERT into iem_schema_manager_version values (0, now());
 
 CREATE TABLE stations(
 	id varchar(20),
@@ -40,9 +41,11 @@ CREATE TABLE stations(
 	ugc_county char(6),
 	ugc_zone char(6),
 	ncdc81 varchar(11),
+    ncei91 varchar(11),
 	temp24_hour smallint,
 	precip24_hour smallint
 );
+ALTER TABLE stations OWNER to mesonet;
 CREATE UNIQUE index stations_idx on stations(id, network);
 create UNIQUE index stations_iemid_idx on stations(iemid);
 SELECT AddGeometryColumn('stations', 'geom', 4326, 'POINT', 2);

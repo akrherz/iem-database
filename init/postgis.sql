@@ -5,7 +5,7 @@ CREATE EXTENSION postgis;
 CREATE TABLE iem_schema_manager_version(
 	version int,
 	updated timestamptz);
-INSERT into iem_schema_manager_version values (53, now());
+INSERT into iem_schema_manager_version values (54, now());
 
 ---
 --- TABLES THAT ARE LOADED VIA shp2pgsql
@@ -91,6 +91,7 @@ CREATE TABLE stations(
 	ugc_county char(6),
 	ugc_zone char(6),
 	ncdc81 varchar(11),
+    ncei91 varchar(11),
 	temp24_hour smallint,
 	precip24_hour smallint
 );

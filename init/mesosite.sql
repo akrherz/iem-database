@@ -5,7 +5,7 @@ CREATE EXTENSION postgis;
 CREATE TABLE iem_schema_manager_version(
 	version int,
 	updated timestamptz);
-INSERT into iem_schema_manager_version values (21, now());
+INSERT into iem_schema_manager_version values (22, now());
 
 --- ==== TABLES TO investigate deleting
 --- counties
@@ -333,9 +333,11 @@ CREATE TABLE stations(
 	ugc_county char(6),
 	ugc_zone char(6),
 	ncdc81 varchar(11),
+    ncei91 varchar(11),
 	temp24_hour smallint,
 	precip24_hour smallint
 );
+ALTER TABLE stations OWNER to mesonet;
 -- no commas in name please
 alter table stations add constraint stations_nocommas check(strpos(name, ',') = 0);
 CREATE UNIQUE index stations_idx on stations(id, network);
