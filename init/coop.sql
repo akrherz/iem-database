@@ -5,7 +5,7 @@ CREATE EXTENSION postgis;
 CREATE TABLE iem_schema_manager_version(
 	version int,
 	updated timestamptz);
-INSERT into iem_schema_manager_version values (12, now());
+INSERT into iem_schema_manager_version values (13, now());
 
 ---
 --- Storage of climoweek
@@ -694,6 +694,41 @@ CREATE TABLE ncdc_climate81(
 CREATE UNIQUE INDEX ncdc_climate81_idx on ncdc_climate81(station,valid);
 GRANT SELECT on ncdc_climate81 to nobody,apache;
 
+CREATE TABLE ncei_climate91(
+  station varchar(11),
+  valid date,
+  high real,
+  low real,
+  precip real,
+  snow real,
+  max_high real,
+  max_low real,
+  min_high real,
+  min_low real,
+  max_precip real,
+  years int,
+  gdd32 real,
+  gdd41 real,
+  gdd46 real,
+  gdd48 real,
+  gdd50 real,
+  gdd51 real,
+  gdd52 real,
+  sdd86 real,
+  max_high_yr   int[],
+  max_low_yr    int[],
+  min_high_yr   int[],
+  min_low_yr    int[],
+  max_precip_yr int[],
+  max_range     smallint,
+  min_range smallint,
+  hdd65 real,
+  cdd65 real,
+  srad real
+);
+ALTER TABLE ncei_climate91 OWNER to mesonet;
+CREATE UNIQUE INDEX ncei_climate91_idx on ncei_climate91(station,valid);
+GRANT SELECT on ncei_climate91 to nobody,apache;
 
 CREATE TABLE climate81(
   station varchar(6),
