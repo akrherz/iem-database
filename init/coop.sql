@@ -5,7 +5,7 @@ CREATE EXTENSION postgis;
 CREATE TABLE iem_schema_manager_version(
 	version int,
 	updated timestamptz);
-INSERT into iem_schema_manager_version values (11, now());
+INSERT into iem_schema_manager_version values (12, now());
 
 ---
 --- Storage of climoweek
@@ -510,6 +510,7 @@ CREATE TABLE stations(
 	ugc_county char(6),
 	ugc_zone char(6),
 	ncdc81 varchar(11),
+    ncei91 varchar(11),
 	temp24_hour smallint,
 	precip24_hour smallint
 );
