@@ -44,10 +44,12 @@ $_$;
 
 --
 -- base, max, high, low
- CREATE FUNCTION gddxx(real, real, real, real) RETURNS numeric
+ CREATE OR REPLACE FUNCTION gddxx(real, real, real, real) RETURNS numeric
     LANGUAGE sql
-    AS $_$select (( (CASE WHEN $3 > $1 THEN (case when $3 > $2 THEN $2 ELSE $3 END ) - $1 ELSE 0 END) + 
-    (CASE WHEN $4 > $1 THEN $4 - $1 ELSE 0 END) ) / 2.0)::numeric$_$;
+    AS $_$
+    select case when $3 is null or $4 is null then null else (( (CASE WHEN $3 > $1 THEN (case when $3 > $2 THEN $2 ELSE $3 END ) - $1 ELSE 0 END) + 
+		(CASE WHEN $4 > $1 THEN $4 - $1 ELSE 0 END) ) / 2.0)::numeric end
+    $_$;
 
 --
 -- Growing Degree Days (only base, no floor nor ceiling)
