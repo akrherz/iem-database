@@ -50,6 +50,7 @@ CREATE TABLE nass_quickstats(
     value varchar(24), -- raw value from service
     cv varchar(7), -- CV % from service
     num_value real, -- converted by IEM numeric
+    county_ansi varchar(3), -- county code
     short_desc text -- KEY: commodity_desc, class_desc, prodn_practice_desc,
                     -- util_practice_desc, statisticcat_desc, and unit_desc
 );
