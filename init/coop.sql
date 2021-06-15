@@ -5,7 +5,7 @@ CREATE EXTENSION postgis;
 CREATE TABLE iem_schema_manager_version(
 	version int,
 	updated timestamptz);
-INSERT into iem_schema_manager_version values (13, now());
+INSERT into iem_schema_manager_version values (14, now());
 
 ---
 --- Storage of climoweek
@@ -31,34 +31,32 @@ GRANT SELECT on hayhoe_daily to nobody,apache;
 CREATE INDEX hayhoe_daily_station_idx on hayhoe_daily(station);
 
 CREATE TABLE nass_quickstats(
-        source_desc varchar(60),
-        sector_desc varchar(60),
-        group_desc varchar(80),
-        commodity_desc varchar(80),
-        class_desc varchar(180),
-        prodn_practice_desc varchar(180),
-        util_practice_desc varchar(180),
-        statisticcat_desc varchar(80),
-        unit_desc varchar(60),
-        agg_level_desc varchar(40),
-        state_alpha varchar(2),
-        asd_code smallint,
-        county_ansi smallint,
-        zip_5 int,
-        watershed_code int,
-        country_code smallint,
-        year int,
-        freq_desc varchar(30),
-        begin_code int,
-        end_code int,
-        week_ending date,
-        load_time timestamptz,
-        value varchar(24),
-        cv varchar(7),
-        num_value real
+    sector_desc varchar(60), -- CROPS, ENVIRONMENTAL, etc
+    group_desc varchar(80), -- FIELD_CROPS
+    commodity_desc varchar(80), -- CORN, SOIL, SOYBEANS
+    class_desc varchar(180), -- SUBSOIL, TOPSOIL, ALL CLASSES
+    prodn_practice_desc varchar(180), -- ALL PRODUCTION PRACTICES
+    util_practice_desc varchar(180), -- SILAGE, GRAIN
+    statisticcat_desc varchar(80), -- PROGRESS, CONDITION, etc
+    unit_desc varchar(60), -- PCT MATURE, PCT, etc
+    agg_level_desc varchar(40), -- STATE
+    state_alpha varchar(2), -- IA
+    year int, -- important
+    freq_desc varchar(30), -- WEEKLY
+    begin_code int, -- Start of period
+    end_code int, -- end of period
+    week_ending date, -- date of WEEKLY data
+    load_time timestamptz, -- version of data row
+    value varchar(24), -- raw value from service
+    cv varchar(7), -- CV % from service
+    num_value real, -- converted by IEM numeric
+    short_desc text -- KEY: commodity_desc, class_desc, prodn_practice_desc,
+                    -- util_practice_desc, statisticcat_desc, and unit_desc
 );
+ALTER TABLE nass_quickstats OWNER to mesonet;
 GRANT SELECT on nass_quickstats to nobody,apache;
-
+create index nass_quickstats_year_idx on nass_quickstats(year);
+create index nass_quickstats_idx on nass_quickstats(year, short_desc);
 
 ---
 --- Temp table
