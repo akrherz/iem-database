@@ -5,7 +5,7 @@ CREATE EXTENSION postgis;
 CREATE TABLE iem_schema_manager_version(
 	version int,
 	updated timestamptz);
-INSERT into iem_schema_manager_version values (54, now());
+INSERT into iem_schema_manager_version values (55, now());
 
 ---
 --- TABLES THAT ARE LOADED VIA shp2pgsql
@@ -1028,6 +1028,15 @@ ALTER TABLE spc_outlook_geometries OWNER to mesonet;
 GRANT ALL on spc_outlook_geometries to ldm;
 GRANT SELECT on spc_outlook_geometries to nobody,apache;
 
+--
+-- SPC Outlooks View joining the two tables together
+CREATE VIEW spc_outlooks AS
+    select id, issue, product_issue, expire, threshold, category, day,
+    outlook_type, geom, product_id, updated
+    from spc_outlook o JOIN spc_outlook_geometries g
+    on (o.id = g.spc_outlook_id);
+ALTER VIEW spc_outlooks OWNER to mesonet;
+GRANT SELECT on spc_outlooks to ldm,nobody,apache;
 
 --
 -- Convective Watches
