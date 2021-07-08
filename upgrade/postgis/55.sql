@@ -7,3 +7,9 @@ CREATE OR REPLACE VIEW spc_outlooks AS
     on (o.id = g.spc_outlook_id);
 ALTER VIEW spc_outlooks OWNER to mesonet;
 GRANT SELECT on spc_outlooks to ldm,nobody,apache;
+
+create index spc_outlook_combo_idx
+     on spc_outlook(outlook_type, day, cycle);
+create index spc_outlook_geometries_combo_idx
+    on spc_outlook_geometries(threshold, category);
+

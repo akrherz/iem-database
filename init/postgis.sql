@@ -978,6 +978,8 @@ CREATE TABLE spc_outlook(
 );
 CREATE INDEX spc_outlook_product_issue on spc_outlook(product_issue);
 CREATE INDEX spc_outlook_expire on spc_outlook(expire);
+create index spc_outlook_combo_idx
+     on spc_outlook(outlook_type, day, cycle);
 ALTER TABLE spc_outlook OWNER to mesonet;
 GRANT ALL on spc_outlook to ldm;
 GRANT SELECT on spc_outlook to nobody,apache;
@@ -1024,6 +1026,8 @@ CREATE INDEX spc_outlook_geometries_idx
     on spc_outlook_geometries(spc_outlook_id);
 CREATE INDEX spc_outlook_geometries_gix
     ON spc_outlook_geometries USING GIST (geom);
+create index spc_outlook_geometries_combo_idx
+    on spc_outlook_geometries(threshold, category);
 ALTER TABLE spc_outlook_geometries OWNER to mesonet;
 GRANT ALL on spc_outlook_geometries to ldm;
 GRANT SELECT on spc_outlook_geometries to nobody,apache;
