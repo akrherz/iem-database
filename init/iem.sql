@@ -5,7 +5,7 @@ CREATE EXTENSION postgis;
 CREATE TABLE iem_schema_manager_version(
 	version int,
 	updated timestamptz);
-INSERT into iem_schema_manager_version values (26, now());
+INSERT into iem_schema_manager_version values (27, now());
 
 -- Storage of CF6 data
 CREATE TABLE cf6_data(
@@ -556,7 +556,9 @@ CREATE TABLE summary (
     min_water_tmpf real,
     max_feel real,
     avg_feel real,
-    min_feel real
+    min_feel real,
+    min_rstage real,
+    max_rstage real
 ) PARTITION by range(day);
 ALTER TABLE summary OWNER to mesonet;
 GRANT ALL on summary to ldm;
