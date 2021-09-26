@@ -5,7 +5,7 @@ CREATE EXTENSION postgis;
 CREATE TABLE iem_schema_manager_version(
 	version int,
 	updated timestamptz);
-INSERT into iem_schema_manager_version values (16, now());
+INSERT into iem_schema_manager_version values (17, now());
 
 CREATE TABLE stations(
 	id varchar(20),
@@ -59,12 +59,42 @@ CREATE TABLE unknown(
 	network varchar(24)
 );
 
+CREATE TABLE raw_inbound(
+	station varchar(8),
+	valid timestamptz,
+	key varchar(11),
+	value real,
+    depth smallint,
+    unit_convention char(1),
+    qualifier char(1),
+    dv_interval interval
+);
+ALTER TABLE raw_inbound OWNER to mesonet;
+GRANT ALL on raw_inbound to ldm;
+
+CREATE TABLE raw_inbound_tmp(
+	station varchar(8),
+	valid timestamptz,
+	key varchar(11),
+	value real,
+    depth smallint,
+    unit_convention char(1),
+    qualifier char(1),
+    dv_interval interval
+);
+ALTER TABLE raw_inbound_tmp OWNER to mesonet;
+GRANT ALL on raw_inbound_tmp to ldm;
+
 -- Create the raw partitioned tables
 CREATE TABLE raw(
     station varchar(8),
     valid timestamptz,
     key varchar(11),
-    value real
+    value real,
+    depth smallint,
+    unit_convention char(1),
+    qualifier char(1),
+    dv_interval interval
 ) PARTITION by range(valid);
 ALTER TABLE raw OWNER to mesonet;
 GRANT ALL on raw to ldm;
