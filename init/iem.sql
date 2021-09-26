@@ -5,7 +5,7 @@ CREATE EXTENSION postgis;
 CREATE TABLE iem_schema_manager_version(
 	version int,
 	updated timestamptz);
-INSERT into iem_schema_manager_version values (27, now());
+INSERT into iem_schema_manager_version values (28, now());
 
 -- Storage of CF6 data
 CREATE TABLE cf6_data(
@@ -264,7 +264,10 @@ GRANT SELECT on offline to nobody,apache;
    extremum char(1),
    probability char(1),
    value real,
-   depth smallint
+   depth smallint,
+   dv_interval interval,
+   qualifier char(1),
+   unit_convention char(1)
    );
  create index current_shef_station_idx on current_shef(station);
  GRANT SELECT on current_shef to nobody;
@@ -277,10 +280,12 @@ CREATE OR REPLACE RULE replace_current_shef AS ON
         duration = new.duration and source = new.source and 
         extremum = new.extremum and ((new.depth is null and depth is null) or 
         depth = new.depth))) DO INSTEAD 
-        UPDATE current_shef SET value = new.value, valid = new.valid 
+        UPDATE current_shef SET value = new.value, valid = new.valid,
+        dv_interval = new.dv_interval, qualifier = new.qualifier,
+        unit_convention = new.unit_convention 
         WHERE station = new.station and physical_code = new.physical_code and
         duration = new.duration and source = new.source and 
-        extremum = new.extremum and valid < new.valid and 
+        extremum = new.extremum and valid < new.valid and
         ((new.depth is null and depth is null) or depth = new.depth);
 
 
@@ -558,7 +563,8 @@ CREATE TABLE summary (
     avg_feel real,
     min_feel real,
     min_rstage real,
-    max_rstage real
+    max_rstage real,
+    report text
 ) PARTITION by range(day);
 ALTER TABLE summary OWNER to mesonet;
 GRANT ALL on summary to ldm;
