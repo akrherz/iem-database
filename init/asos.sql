@@ -5,7 +5,7 @@ CREATE EXTENSION postgis;
 CREATE TABLE iem_schema_manager_version(
 	version int,
 	updated timestamptz);
-INSERT into iem_schema_manager_version values (15, now());
+INSERT into iem_schema_manager_version values (16, now());
 
 ---
 --- Store unknown stations
@@ -223,7 +223,7 @@ CREATE TABLE taf(
     id SERIAL UNIQUE,
     station char(4),
     valid timestamptz,
-    product_id varchar(32)
+    product_id varchar(34)
 );
 ALTER TABLE taf OWNER to mesonet;
 GRANT ALL on taf to ldm;

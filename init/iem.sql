@@ -5,7 +5,7 @@ CREATE EXTENSION postgis;
 CREATE TABLE iem_schema_manager_version(
 	version int,
 	updated timestamptz);
-INSERT into iem_schema_manager_version values (28, now());
+INSERT into iem_schema_manager_version values (29, now());
 
 -- Storage of CF6 data
 CREATE TABLE cf6_data(
@@ -268,7 +268,8 @@ GRANT SELECT on offline to nobody,apache;
    depth smallint,
    dv_interval interval,
    qualifier char(1),
-   unit_convention char(1)
+   unit_convention char(1),
+   product_id varchar(34)
    );
  create index current_shef_station_idx on current_shef(station);
  GRANT SELECT on current_shef to nobody;
@@ -283,7 +284,7 @@ CREATE OR REPLACE RULE replace_current_shef AS ON
         depth = new.depth))) DO INSTEAD 
         UPDATE current_shef SET value = new.value, valid = new.valid,
         dv_interval = new.dv_interval, qualifier = new.qualifier,
-        unit_convention = new.unit_convention 
+        unit_convention = new.unit_convention, product_id = new.product_id
         WHERE station = new.station and physical_code = new.physical_code and
         duration = new.duration and source = new.source and
         type = new.type and extremum = new.extremum and valid < new.valid and

@@ -6,7 +6,7 @@ CREATE TABLE iem_schema_manager_version(
 	version int,
 	updated timestamptz);
 ALTER TABLE iem_schema_manager_version OWNER to mesonet;
-INSERT into iem_schema_manager_version values (0, now());
+INSERT into iem_schema_manager_version values (1, now());
 
 CREATE TABLE stations(
 	id varchar(20),
@@ -64,7 +64,7 @@ CREATE TABLE hml_forecast(
   forecast_sts timestamptz,
   forecast_ets timestamptz,
   originator varchar(8),
-  product_id varchar(32),
+  product_id varchar(34),
   primaryname varchar(64),
   primaryunits varchar(64),
   secondaryname varchar(64),
