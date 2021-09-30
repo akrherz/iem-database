@@ -67,7 +67,8 @@ CREATE TABLE raw_inbound(
     depth smallint,
     unit_convention char(1),
     qualifier char(1),
-    dv_interval interval
+    dv_interval interval,
+    updated timestamptz default now()
 );
 ALTER TABLE raw_inbound OWNER to mesonet;
 GRANT ALL on raw_inbound to ldm;
