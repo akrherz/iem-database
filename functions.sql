@@ -13,12 +13,6 @@ CREATE AGGREGATE sumtxt(text) (
     INITCOND = ''
 );
 
-CREATE AGGREGATE array_accum (anyelement)
-(
-    sfunc = array_append,
-    stype = anyarray,
-    initcond = '{}'
-);
 
 CREATE FUNCTION sdd86(real, real) RETURNS numeric
     LANGUAGE sql
