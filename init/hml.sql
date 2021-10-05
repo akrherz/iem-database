@@ -64,7 +64,7 @@ CREATE TABLE hml_forecast(
   forecast_sts timestamptz,
   forecast_ets timestamptz,
   originator varchar(8),
-  product_id varchar(34),
+  product_id varchar(35),
   primaryname varchar(64),
   primaryunits varchar(64),
   secondaryname varchar(64),

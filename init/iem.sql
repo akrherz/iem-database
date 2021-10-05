@@ -269,7 +269,7 @@ GRANT SELECT on offline to nobody,apache;
    dv_interval interval,
    qualifier char(1),
    unit_convention char(1),
-   product_id varchar(34)
+   product_id varchar(35)
    );
  create index current_shef_station_idx on current_shef(station);
  GRANT SELECT on current_shef to nobody;

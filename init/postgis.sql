@@ -359,7 +359,7 @@ GRANT select on vtec_missing_events to nobody,apache;
 
 -- Legacy table supporting NWSChat, sigh
 CREATE TABLE text_products (
-    product_id varchar(34),
+    product_id varchar(35),
     product text,
     geom geometry(MultiPolygon, 4326),
     issue timestamptz,
@@ -377,7 +377,7 @@ create index text_products_pil_idx  on text_products(pil);
 
 -- Special Weather Statements
 CREATE TABLE sps(
-    product_id varchar(34),
+    product_id varchar(35),
     product text,
     segmentnum smallint,
     pil char(6),
@@ -881,7 +881,7 @@ CREATE TABLE spc_outlook(
     product_issue timestamptz NOT NULL,
     expire timestamptz NOT NULL,
     updated timestamptz DEFAULT now(),
-    product_id varchar(34) NOT NULL,
+    product_id varchar(35) NOT NULL,
     outlook_type char(1) NOT NULL,
     day smallint NOT NULL,
     cycle smallint NOT NULL
@@ -1062,7 +1062,7 @@ GRANT ALL on usdm to mesonet,ldm;
 
 -- Storage of MCDs
 CREATE TABLE mcd(
-    product_id varchar(34),
+    product_id varchar(35),
     geom geometry(Polygon,4326),
     product text,
     year int NOT NULL,
@@ -1082,7 +1082,7 @@ CREATE INDEX mcd_geom_index on mcd USING GIST(geom);
 
 -- Storage of MPDs
 CREATE TABLE mpd(
-    product_id varchar(34),
+    product_id varchar(35),
     geom geometry(Polygon,4326),
     product text,
     year int NOT NULL,

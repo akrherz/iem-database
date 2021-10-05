@@ -223,7 +223,7 @@ CREATE TABLE taf(
     id SERIAL UNIQUE,
     station char(4),
     valid timestamptz,
-    product_id varchar(34)
+    product_id varchar(35)
 );
 ALTER TABLE taf OWNER to mesonet;
 GRANT ALL on taf to ldm;
