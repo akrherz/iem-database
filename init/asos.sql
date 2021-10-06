@@ -5,7 +5,7 @@ CREATE EXTENSION postgis;
 CREATE TABLE iem_schema_manager_version(
 	version int,
 	updated timestamptz);
-INSERT into iem_schema_manager_version values (16, now());
+INSERT into iem_schema_manager_version values (17, now());
 
 ---
 --- Store unknown stations
@@ -135,7 +135,8 @@ CREATE TABLE alldata(
   relh real,
   peak_wind_gust real,
   peak_wind_drct real,
-  peak_wind_time timestamptz
+  peak_wind_time timestamptz,
+  snowdepth smallint
 ) PARTITION by range(valid);
 ALTER TABLE alldata OWNER to mesonet;
 GRANT ALL on alldata to ldm;
