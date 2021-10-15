@@ -378,6 +378,7 @@ CREATE TABLE station_attributes(
   value varchar NOT NULL);
 GRANT ALL on station_attributes to mesonet,ldm;
 CREATE UNIQUE index station_attributes_idx on station_attributes(iemid, attr);
+create index station_attributes_iemid_idx on station_attributes(iemid);
 GRANT SELECT on station_attributes to nobody,apache;
 
 ---
