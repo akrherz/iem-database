@@ -2,11 +2,13 @@
 -- are generally all now empty.
 CREATE EXTENSION postgis;
 
-CREATE TABLE iem_version(
-  name varchar(50) UNIQUE,
-  version int);
-  
-insert into iem_version values ('schema', 21);
+-- Boilerplate IEM schema_manager_version, the version gets incremented each
+-- time we make an upgrade script
+CREATE TABLE iem_schema_manager_version(
+	version int,
+	updated timestamptz);
+ALTER TABLE iem_schema_manager_version OWNER to mesonet;
+INSERT into iem_schema_manager_version values (22, now());
 
 create table scenarios(
     id int UNIQUE,
@@ -107,6 +109,18 @@ create index flowpaths_huc12_fpath_idx on flowpaths(huc_12,fpath);
 GRANT SELECT on flowpaths to nobody,apache;
 CREATE INDEX flowpaths_idx on flowpaths USING GIST(geom);
 
+--
+-- genlu column in flowpath_points
+--
+CREATE TABLE general_landuse(
+    id smallint,
+    label text
+);
+CREATE UNIQUE index general_landuse_idx on general_landuse(id);
+ALTER TABLE general_landuse OWNER to mesonet;
+GRANT SELECT on general_landuse to nobody,apache;
+
+
 ---
 --- Raw Points on each flowpath
 ---
@@ -121,7 +135,10 @@ CREATE  TABLE flowpath_points(
   slope real,
   landuse varchar(32),
   geom geometry(POINT, 5070),
-  gridorder smallint
+  gridorder smallint,
+  fbndid int,
+  genlu smallint references general_landuse(id),
+  ofe smallint
 );
 create index flowpath_points_flowpath_idx on flowpath_points(flowpath);
 GRANT SELECT on flowpath_points to nobody,apache;
