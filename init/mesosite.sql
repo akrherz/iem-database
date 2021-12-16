@@ -38,6 +38,14 @@ CREATE TABLE archive_products(
 	avail_lag int);
 GRANT SELECT on archive_products to nobody,apache;
 
+-- Mostly for slack at the moment
+CREATE TABLE iembot_webhooks(
+  channel varchar,
+  url varchar);
+ALTER TABLE iembot_webhooks OWNER to mesonet;
+GRANT ALL on iembot_webhooks to nobody,apache;
+
+
 CREATE TABLE iembot_room_syndications (
 	roomname character varying(64),    
 	endpoint character varying(64),    
