@@ -18,9 +18,10 @@ create table scenarios(
     flowpath_scenario int
     );
 GRANT SELECT on scenarios to nobody,apache;
+ALTER TABLE scenarios OWNER to mesonet;
 
-insert into scenarios(id, label) values (0, 'Production');
-
+-- Default entry that is used for testing.
+insert into scenarios values (0, 'Production', 0, 0, 0);
 
 CREATE TABLE huc12(
     gid SERIAL,
