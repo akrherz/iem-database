@@ -5,7 +5,7 @@ CREATE EXTENSION postgis;
 CREATE TABLE iem_schema_manager_version(
 	version int,
 	updated timestamptz);
-INSERT into iem_schema_manager_version values (22, now());
+INSERT into iem_schema_manager_version values (23, now());
 
 --- ==== TABLES TO investigate deleting
 --- counties
@@ -417,7 +417,9 @@ CREATE table feature(
   appurl varchar(1024),
   javascripturl varchar(1024),
   views int default 0,
-  mediasuffix varchar(8) DEFAULT 'png'
+  mediasuffix varchar(8) DEFAULT 'png',
+  media_height int,
+  media_width int
 );
 CREATE unique index feature_title_check_idx on feature(title);
 CREATE index feature_valid_idx on feature(valid);
