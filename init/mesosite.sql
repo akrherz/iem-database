@@ -112,7 +112,8 @@ CREATE TABLE iembot_twitter_oauth(
   access_token text,
   access_token_secret text,
   created timestamptz DEFAULT now(),
-  updated timestamptz DEFAULT now()
+  updated timestamptz DEFAULT now(),
+  disabled bool default 'f'
 );
 GRANT ALL on iembot_twitter_oauth to nobody,apache;
 
