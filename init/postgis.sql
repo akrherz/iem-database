@@ -5,7 +5,7 @@ CREATE EXTENSION postgis;
 CREATE TABLE iem_schema_manager_version(
 	version int,
 	updated timestamptz);
-INSERT into iem_schema_manager_version values (56, now());
+INSERT into iem_schema_manager_version values (57, now());
 
 ---
 --- TABLES THAT ARE LOADED VIA shp2pgsql
@@ -19,6 +19,53 @@ INSERT into iem_schema_manager_version values (56, now());
 ---   + uscounties
 ---   + warnings_import
 
+-- Grid Population of the World
+-- https://sedac.ciesin.columbia.edu/data/set/gpw-v4-population-count-rev11/data-download
+CREATE TABLE gpw2020(
+    geom geometry(Point,4326),
+    population int
+);
+create index gpw2020_gix on gpw2020 USING GIST(geom);
+ALTER TABLE gpw2020 OWNER to mesonet;
+GRANT SELECT on gpw2020 to nobody;
+
+--
+CREATE TABLE gpw2015(
+    geom geometry(Point,4326),
+    population int
+);
+create index gpw2015_gix on gpw2015 USING GIST(geom);
+ALTER TABLE gpw2015 OWNER to mesonet;
+GRANT SELECT on gpw2015 to nobody;
+
+--
+CREATE TABLE gpw2010(
+    geom geometry(Point,4326),
+    population int
+);
+create index gpw2010_gix on gpw2010 USING GIST(geom);
+ALTER TABLE gpw2010 OWNER to mesonet;
+GRANT SELECT on gpw2010 to nobody;
+
+--
+CREATE TABLE gpw2005(
+    geom geometry(Point,4326),
+    population int
+);
+create index gpw2005_gix on gpw2005 USING GIST(geom);
+ALTER TABLE gpw2005 OWNER to mesonet;
+GRANT SELECT on gpw2005 to nobody;
+
+--
+CREATE TABLE gpw2000(
+    geom geometry(Point,4326),
+    population int
+);
+create index gpw2000_gix on gpw2000 USING GIST(geom);
+ALTER TABLE gpw2000 OWNER to mesonet;
+GRANT SELECT on gpw2000 to nobody;
+
+--
 CREATE TABLE cwa(
   gid int,
   wfo varchar,
@@ -159,7 +206,12 @@ CREATE TABLE ugcs(
 	begin_ts timestamptz NOT NULL,
 	end_ts timestamptz,
 	area2163 real,
-    source varchar(2)
+    source varchar(2),
+    gpw_population_2000 int,
+    gpw_population_2005 int,
+    gpw_population_2010 int,
+    gpw_population_2015 int,
+    gpw_population_2020 int
 );
 ALTER TABLE ugcs OWNER to mesonet;
 GRANT ALL on ugcs to ldm;
