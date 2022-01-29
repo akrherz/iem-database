@@ -6,6 +6,7 @@ CREATE TABLE gpw2020(
 );
 create index gpw2020_gix on gpw2020 USING GIST(geom);
 ALTER TABLE gpw2020 OWNER to mesonet;
+GRANT ALL on gpw2020 to ldm;
 GRANT SELECT on gpw2020 to nobody;
 
 --
@@ -15,6 +16,7 @@ CREATE TABLE gpw2015(
 );
 create index gpw2015_gix on gpw2015 USING GIST(geom);
 ALTER TABLE gpw2015 OWNER to mesonet;
+GRANT ALL on gpw2015 to ldm;
 GRANT SELECT on gpw2015 to nobody;
 
 --
@@ -24,6 +26,7 @@ CREATE TABLE gpw2010(
 );
 create index gpw2010_gix on gpw2010 USING GIST(geom);
 ALTER TABLE gpw2010 OWNER to mesonet;
+GRANT ALL on gpw2010 to ldm;
 GRANT SELECT on gpw2010 to nobody;
 
 --
@@ -33,6 +36,7 @@ CREATE TABLE gpw2005(
 );
 create index gpw2005_gix on gpw2005 USING GIST(geom);
 ALTER TABLE gpw2005 OWNER to mesonet;
+GRANT ALL on gpw2005 to ldm;
 GRANT SELECT on gpw2005 to nobody;
 
 --
@@ -42,6 +46,7 @@ CREATE TABLE gpw2000(
 );
 create index gpw2000_gix on gpw2000 USING GIST(geom);
 ALTER TABLE gpw2000 OWNER to mesonet;
+GRANT ALL on gpw2000 to ldm;
 GRANT SELECT on gpw2000 to nobody;
 
 --
