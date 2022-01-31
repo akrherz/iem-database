@@ -5,7 +5,7 @@ CREATE EXTENSION postgis;
 CREATE TABLE iem_schema_manager_version(
 	version int,
 	updated timestamptz);
-INSERT into iem_schema_manager_version values (30, now());
+INSERT into iem_schema_manager_version values (31, now());
 
 -- Storage of CF6 data
 CREATE TABLE cf6_data(
@@ -237,7 +237,8 @@ CREATE TABLE cli_data(
   highest_wind_direction real,
   highest_gust_speed real,
   highest_gust_direction real,
-  average_wind_speed real
+  average_wind_speed real,
+  snowdepth real
 );
 ALTER TABLE cli_data OWNER to mesonet;
 GRANT ALL on cli_data to ldm;
