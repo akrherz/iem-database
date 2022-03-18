@@ -1,6 +1,7 @@
 -- Storage of AIRMETs / Graphical AIRMET
 
 CREATE TABLE airmets(
+    gml_id varchar(32),
     label varchar(4) NOT NULL,
     valid_from timestamptz,
     valid_to timestamptz,
@@ -21,6 +22,7 @@ GRANT ALL on TABLE airmets to ldm;
 -- Storage of Freezing Level found in AIRMETs
 
 CREATE TABLE airmet_freezing_levels(
+    gml_id varchar(32),
     valid_at timestamptz,
     product_id text,
     level int,
