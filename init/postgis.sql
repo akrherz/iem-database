@@ -27,6 +27,7 @@ CREATE TABLE airmets(
     valid_from timestamptz,
     valid_to timestamptz,
     valid_at timestamptz,
+    issuetime timestamptz,
     product_id text,
     hazard_type text,
     weather_conditions text[],
