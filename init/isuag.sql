@@ -4,7 +4,7 @@
 CREATE TABLE iem_schema_manager_version(
 	version int,
 	updated timestamptz);
-INSERT into iem_schema_manager_version values (16, now());
+INSERT into iem_schema_manager_version values (17, now());
 
 CREATE EXTENSION postgis;
 
@@ -563,31 +563,49 @@ CREATE TABLE sm_minute (
     sv_ec4 real, sv_ec4_qc real, sv_ec4_f char(1),
     sv_ec8 real, sv_ec8_qc real, sv_ec8_f char(1),
     sv_ec12 real, sv_ec12_qc real, sv_ec12_f char(1),
+    sv_ec14 real, sv_ec14_qc real, sv_ec14_f char(1),
     sv_ec16 real, sv_ec16_qc real, sv_ec16_f char(1),
     sv_ec20 real, sv_ec20_qc real, sv_ec20_f char(1),
     sv_ec24 real, sv_ec24_qc real, sv_ec24_f char(1),
+    sv_ec28 real, sv_ec28_qc real, sv_ec28_f char(1),
     sv_ec30 real, sv_ec30_qc real, sv_ec30_f char(1),
+    sv_ec32 real, sv_ec32_qc real, sv_ec32_f char(1),
+    sv_ec36 real, sv_ec36_qc real, sv_ec36_f char(1),
     sv_ec40 real, sv_ec40_qc real, sv_ec40_f char(1),
+    sv_ec42 real, sv_ec42_qc real, sv_ec42_f char(1),
+    sv_ec52 real, sv_ec52_qc real, sv_ec52_f char(1),
     -- SoilVue Temp Values
     sv_t2 real, sv_t2_qc real, sv_t2_f char(1),
     sv_t4 real, sv_t4_qc real, sv_t4_f char(1),
     sv_t8 real, sv_t8_qc real, sv_t8_f char(1),
     sv_t12 real, sv_t12_qc real, sv_t12_f char(1),
+    sv_t14 real, sv_t14_qc real, sv_t14_f char(1),
     sv_t16 real, sv_t16_qc real, sv_t16_f char(1),
     sv_t20 real, sv_t20_qc real, sv_t20_f char(1),
     sv_t24 real, sv_t24_qc real, sv_t24_f char(1),
+    sv_t28 real, sv_t28_qc real, sv_t28_f char(1),
     sv_t30 real, sv_t30_qc real, sv_t30_f char(1),
+    sv_t32 real, sv_t32_qc real, sv_t32_f char(1),
+    sv_t36 real, sv_t36_qc real, sv_t36_f char(1),
     sv_t40 real, sv_t40_qc real, sv_t40_f char(1),
+    sv_t42 real, sv_t42_qc real, sv_t42_f char(1),
+    sv_t52 real, sv_t52_qc real, sv_t52_f char(1),
     -- SoilVue VWC Values
     sv_vwc2 real, sv_vwc2_qc real, sv_vwc2_f char(1),
     sv_vwc4 real, sv_vwc4_qc real, sv_vwc4_f char(1),
     sv_vwc8 real, sv_vwc8_qc real, sv_vwc8_f char(1),
     sv_vwc12 real, sv_vwc12_qc real, sv_vwc12_f char(1),
+    sv_vwc14 real, sv_vwc14_qc real, sv_vwc14_f char(1),
     sv_vwc16 real, sv_vwc16_qc real, sv_vwc16_f char(1),
     sv_vwc20 real, sv_vwc20_qc real, sv_vwc20_f char(1),
     sv_vwc24 real, sv_vwc24_qc real, sv_vwc24_f char(1),
+    sv_vwc28 real, sv_vwc28_qc real, sv_vwc28_f char(1),
     sv_vwc30 real, sv_vwc30_qc real, sv_vwc30_f char(1),
+    sv_vwc32 real, sv_vwc32_qc real, sv_vwc32_f char(1),
+    sv_vwc36 real, sv_vwc36_qc real, sv_vwc36_f char(1),
     sv_vwc40 real, sv_vwc40_qc real, sv_vwc40_f char(1),
+    sv_vwc42 real, sv_vwc42_qc real, sv_vwc42_f char(1),
+    sv_vwc52 real, sv_vwc52_qc real, sv_vwc52_f char(1),
 
     lwmv_1_qc real,
     lwmv_1_f character(1),
