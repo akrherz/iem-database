@@ -7,4 +7,4 @@ CREATE TABLE station_threading(
 );
 ALTER TABLE station_threading OWNER to mesonet;
 GRANT ALL on station_threading to ldm;
-GRANT SELECT on station_threading to nobody,apache;
+GRANT SELECT on station_threading to nobody;

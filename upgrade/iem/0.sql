@@ -5,7 +5,7 @@ create table hourly_2015(
   INHERITS (hourly);
 CREATE INDEX hourly_2015_idx on hourly_2015(station, network, valid);
 CREATE INDEX hourly_2015_valid_idx on hourly_2015(valid);
-GRANT SELECT on hourly_2015 to nobody,apache;
+GRANT SELECT on hourly_2015 to nobody;
 CREATE RULE replace_hourly_2015 as 
     ON INSERT TO hourly_2015
    WHERE (EXISTS ( SELECT 1
@@ -25,7 +25,7 @@ create table summary_2015(
   INHERITS (summary);
 CREATE INDEX summary_2015_day_idx on summary_2015(day);
 CREATE INDEX summary_2015_iemid_day_idx on summary_2015(iemid, day);
-GRANT SELECT on summary_2015 to nobody,apache;
+GRANT SELECT on summary_2015 to nobody;
 alter table summary_2015 alter max_tmpf set default -99;
 alter table summary_2015 alter min_tmpf set default 99;
 alter table summary_2015 alter max_sknt set default 0;

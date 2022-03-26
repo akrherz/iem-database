@@ -5,7 +5,7 @@ create table t2015_01(
   INHERITS (alldata);
 CREATE INDEX t2015_01_station on t2015_01(station);
 CREATE INDEX t2015_01_valid_idx on t2015_01(valid);
-GRANT SELECT on t2015_01 to nobody,apache;
+GRANT SELECT on t2015_01 to nobody;
 
 
  create table t2015_02( 
@@ -15,7 +15,7 @@ GRANT SELECT on t2015_01 to nobody,apache;
   INHERITS (alldata);
 CREATE INDEX t2015_02_station on t2015_02(station);
 CREATE INDEX t2015_02_valid_idx on t2015_02(valid);
-GRANT SELECT on t2015_02 to nobody,apache;
+GRANT SELECT on t2015_02 to nobody;
 
 
  create table t2015_03( 
@@ -25,7 +25,7 @@ GRANT SELECT on t2015_02 to nobody,apache;
   INHERITS (alldata);
 CREATE INDEX t2015_03_station on t2015_03(station);
 CREATE INDEX t2015_03_valid_idx on t2015_03(valid);
-GRANT SELECT on t2015_03 to nobody,apache;
+GRANT SELECT on t2015_03 to nobody;
 
 
  create table t2015_04( 
@@ -35,7 +35,7 @@ GRANT SELECT on t2015_03 to nobody,apache;
   INHERITS (alldata);
 CREATE INDEX t2015_04_station on t2015_04(station);
 CREATE INDEX t2015_04_valid_idx on t2015_04(valid);
-GRANT SELECT on t2015_04 to nobody,apache;
+GRANT SELECT on t2015_04 to nobody;
 
 
  create table t2015_05( 
@@ -45,7 +45,7 @@ GRANT SELECT on t2015_04 to nobody,apache;
   INHERITS (alldata);
 CREATE INDEX t2015_05_station on t2015_05(station);
 CREATE INDEX t2015_05_valid_idx on t2015_05(valid);
-GRANT SELECT on t2015_05 to nobody,apache;
+GRANT SELECT on t2015_05 to nobody;
 
 
  create table t2015_06( 
@@ -55,7 +55,7 @@ GRANT SELECT on t2015_05 to nobody,apache;
   INHERITS (alldata);
 CREATE INDEX t2015_06_station on t2015_06(station);
 CREATE INDEX t2015_06_valid_idx on t2015_06(valid);
-GRANT SELECT on t2015_06 to nobody,apache;
+GRANT SELECT on t2015_06 to nobody;
 
 
  create table t2015_07( 
@@ -65,7 +65,7 @@ GRANT SELECT on t2015_06 to nobody,apache;
   INHERITS (alldata);
 CREATE INDEX t2015_07_station on t2015_07(station);
 CREATE INDEX t2015_07_valid_idx on t2015_07(valid);
-GRANT SELECT on t2015_07 to nobody,apache;
+GRANT SELECT on t2015_07 to nobody;
 
 
  create table t2015_08( 
@@ -75,7 +75,7 @@ GRANT SELECT on t2015_07 to nobody,apache;
   INHERITS (alldata);
 CREATE INDEX t2015_08_station on t2015_08(station);
 CREATE INDEX t2015_08_valid_idx on t2015_08(valid);
-GRANT SELECT on t2015_08 to nobody,apache;
+GRANT SELECT on t2015_08 to nobody;
 
 
  create table t2015_09( 
@@ -85,7 +85,7 @@ GRANT SELECT on t2015_08 to nobody,apache;
   INHERITS (alldata);
 CREATE INDEX t2015_09_station on t2015_09(station);
 CREATE INDEX t2015_09_valid_idx on t2015_09(valid);
-GRANT SELECT on t2015_09 to nobody,apache;
+GRANT SELECT on t2015_09 to nobody;
 
 
  create table t2015_10( 
@@ -95,7 +95,7 @@ GRANT SELECT on t2015_09 to nobody,apache;
   INHERITS (alldata);
 CREATE INDEX t2015_10_station on t2015_10(station);
 CREATE INDEX t2015_10_valid_idx on t2015_10(valid);
-GRANT SELECT on t2015_10 to nobody,apache;
+GRANT SELECT on t2015_10 to nobody;
 
 
  create table t2015_11( 
@@ -105,7 +105,7 @@ GRANT SELECT on t2015_10 to nobody,apache;
   INHERITS (alldata);
 CREATE INDEX t2015_11_station on t2015_11(station);
 CREATE INDEX t2015_11_valid_idx on t2015_11(valid);
-GRANT SELECT on t2015_11 to nobody,apache;
+GRANT SELECT on t2015_11 to nobody;
 
 
  create table t2015_12( 
@@ -115,4 +115,4 @@ GRANT SELECT on t2015_11 to nobody,apache;
   INHERITS (alldata);
 CREATE INDEX t2015_12_station on t2015_12(station);
 CREATE INDEX t2015_12_valid_idx on t2015_12(valid);
-GRANT SELECT on t2015_12 to nobody,apache;
+GRANT SELECT on t2015_12 to nobody;

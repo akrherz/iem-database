@@ -10,7 +10,7 @@ CREATE TABLE daily_rainfall(
   hr_cnt smallint
 ) PARTITION by range(valid);
 ALTER TABLE daily_rainfall OWNER to mesonet;
-GRANT SELECT on daily_rainfall to nobody,apache;
+GRANT SELECT on daily_rainfall to nobody;
 
 do
 $do$
@@ -55,7 +55,7 @@ begin
             GRANT ALL on %s to ldm
         $f$, mytable);
         execute format($f$
-            GRANT SELECT on %s to nobody,apache
+            GRANT SELECT on %s to nobody
         $f$, mytable);
         execute format($f$
             CREATE INDEX %s_valid_idx on %s(valid)
@@ -81,7 +81,7 @@ CREATE TABLE monthly_rainfall(
   hr_cnt smallint
 ) PARTITION by range(valid);
 ALTER TABLE monthly_rainfall OWNER to mesonet;
-GRANT SELECT on monthly_rainfall to nobody,apache;
+GRANT SELECT on monthly_rainfall to nobody;
 
 
 do
@@ -126,7 +126,7 @@ begin
             GRANT ALL on %s to ldm
         $f$, mytable);
         execute format($f$
-            GRANT SELECT on %s to nobody,apache
+            GRANT SELECT on %s to nobody
         $f$, mytable);
         execute format($f$
             CREATE INDEX %s_valid_idx on %s(valid)

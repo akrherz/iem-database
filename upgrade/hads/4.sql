@@ -15,7 +15,7 @@ CREATE TABLE hml_forecast(
   secondaryname varchar(64),
   secondaryunits varchar(64));
 CREATE INDEX hml_forecast_idx on hml_forecast(station, generationtime);
-GRANT SELECT on hml_forecast to nobody,apache;
+GRANT SELECT on hml_forecast to nobody;
 
 CREATE TABLE hml_forecast_data_2016(
   hml_forecast_id int REFERENCES hml_forecast(id),
@@ -24,12 +24,12 @@ CREATE TABLE hml_forecast_data_2016(
   secondary_value real);
 CREATE INDEX hml_forecast_data_2016_idx on
   hml_forecast_data_2016(hml_forecast_id);
-GRANT SELECT on hml_forecast_data_2016 to nobody,apache;
+GRANT SELECT on hml_forecast_data_2016 to nobody;
 
 CREATE TABLE hml_observed_keys(
   id smallint UNIQUE,
   label varchar(32));
-GRANT SELECT on hml_observed_keys to nobody,apache;
+GRANT SELECT on hml_observed_keys to nobody;
 
 INSERT into hml_observed_keys values
  (0, 'Depth Below Sfc[ft]'),
@@ -67,7 +67,7 @@ CREATE TABLE hml_observed_data(
 	valid timestamptz,
 	key smallint REFERENCES hml_observed_keys(id),
 	value real);
-GRANT SELECT on hml_observed_data to nobody,apache;
+GRANT SELECT on hml_observed_data to nobody;
 
 create table hml_observed_data_2016(
   key smallint REFERENCES hml_observed_keys(id),
@@ -77,4 +77,4 @@ create table hml_observed_data_2016(
   INHERITS (hml_observed_data);
 CREATE INDEX hml_observed_data_2016_idx on
 	hml_observed_data_2016(station, valid);
-GRANT SELECT on hml_observed_data_2016 to nobody,apache;
+GRANT SELECT on hml_observed_data_2016 to nobody;

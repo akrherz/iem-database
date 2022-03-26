@@ -49,8 +49,8 @@ ALTER TABLE stations OWNER to mesonet;
 CREATE UNIQUE index stations_idx on stations(id, network);
 create UNIQUE index stations_iemid_idx on stations(iemid);
 SELECT AddGeometryColumn('stations', 'geom', 4326, 'POINT', 2);
-GRANT SELECT on stations to apache,nobody;
-grant all on stations_iemid_seq to nobody,apache;
+GRANT SELECT on stations to nobody;
+grant all on stations_iemid_seq to nobody;
 GRANT ALL on stations to mesonet,ldm;
 GRANT ALL on stations_iemid_seq to mesonet,ldm;
 
@@ -70,14 +70,14 @@ CREATE TABLE hml_forecast(
   secondaryname varchar(64),
   secondaryunits varchar(64));
 CREATE INDEX hml_forecast_idx on hml_forecast(station, generationtime);
-GRANT SELECT on hml_forecast to nobody,apache;
+GRANT SELECT on hml_forecast to nobody;
 CREATE INDEX hml_forecast_issued_idx on hml_forecast(issued);
 
 
 CREATE TABLE hml_observed_keys(
   id smallint UNIQUE,
   label varchar(32));
-GRANT SELECT on hml_observed_keys to nobody,apache;
+GRANT SELECT on hml_observed_keys to nobody;
 
 INSERT into hml_observed_keys values
  (0, 'Depth Below Sfc[ft]'),
@@ -116,7 +116,7 @@ CREATE TABLE hml_observed_data(
     PARTITION by range(valid);
 ALTER TABLE hml_observed_data OWNER to mesonet;
 GRANT ALL on hml_observed_data to ldm;
-GRANT SELECT on hml_observed_data to nobody,apache;
+GRANT SELECT on hml_observed_data to nobody;
 
 do
 $do$
@@ -142,7 +142,7 @@ begin
                 GRANT ALL on %s to ldm
             $f$, mytable);
             execute format($f$
-                GRANT SELECT on %s to nobody,apache
+                GRANT SELECT on %s to nobody
             $f$, mytable);
             -- Indices
             execute format($f$
@@ -177,7 +177,7 @@ begin
             GRANT ALL on %s to ldm
         $f$, mytable);
         execute format($f$
-            GRANT SELECT on %s to nobody,apache
+            GRANT SELECT on %s to nobody
         $f$, mytable);
         execute format($f$
             CREATE INDEX on %s(hml_forecast_id)

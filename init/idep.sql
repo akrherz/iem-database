@@ -17,7 +17,7 @@ create table scenarios(
     huc12_scenario int,
     flowpath_scenario int
     );
-GRANT SELECT on scenarios to nobody,apache;
+GRANT SELECT on scenarios to nobody;
 ALTER TABLE scenarios OWNER to mesonet;
 
 -- Default entry that is used for testing.
@@ -50,7 +50,7 @@ CREATE TABLE huc12(
     mlra_id smallint
 );
 CREATE UNIQUE INDEX huc12_idx on huc12(huc_12, scenario);
-GRANT SELECT on huc12 to nobody,apache;
+GRANT SELECT on huc12 to nobody;
 
 ---
 --- Storage of raw results, temp table, more-or-less
@@ -94,7 +94,7 @@ CREATE TABLE results_by_huc12(
 CREATE INDEX results_by_huc12_huc_12_idx on results_by_huc12(huc_12);
 CREATE INDEX results_by_huc12_valid_idx on results_by_huc12(valid);
 
-GRANT SELECT on results_by_huc12 to nobody,apache;
+GRANT SELECT on results_by_huc12 to nobody;
 
 CREATE TABLE flowpaths(
   fid serial UNIQUE,
@@ -107,7 +107,7 @@ CREATE TABLE flowpaths(
   max_slope real
 );
 create index flowpaths_huc12_fpath_idx on flowpaths(huc_12,fpath);
-GRANT SELECT on flowpaths to nobody,apache;
+GRANT SELECT on flowpaths to nobody;
 CREATE INDEX flowpaths_idx on flowpaths USING GIST(geom);
 
 --
@@ -119,7 +119,7 @@ CREATE TABLE general_landuse(
 );
 CREATE UNIQUE index general_landuse_idx on general_landuse(id);
 ALTER TABLE general_landuse OWNER to mesonet;
-GRANT SELECT on general_landuse to nobody,apache;
+GRANT SELECT on general_landuse to nobody;
 
 
 ---
@@ -142,7 +142,7 @@ CREATE  TABLE flowpath_points(
   ofe smallint
 );
 create index flowpath_points_flowpath_idx on flowpath_points(flowpath);
-GRANT SELECT on flowpath_points to nobody,apache;
+GRANT SELECT on flowpath_points to nobody;
 
 ---
 --- xref of surgo values to soils file
@@ -158,7 +158,7 @@ CREATE TABLE properties(
   key varchar UNIQUE NOT NULL,
   value varchar
 );
-GRANT SELECT on properties to nobody,apache;
+GRANT SELECT on properties to nobody;
 
 -- Storage of harvest information
 CREATE TABLE harvest(
@@ -173,4 +173,4 @@ CREATE TABLE harvest(
 CREATE INDEX harvest_huc12_idx on harvest(huc12);
 CREATE INDEX harvest_valid_idx on harvest(valid);
 GRANT ALL on harvest to ldm,mesonet;
-GRANT SELECT on harvest to nobody,apache;
+GRANT SELECT on harvest to nobody;

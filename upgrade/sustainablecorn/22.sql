@@ -18,5 +18,5 @@ CREATE TABLE ipm_data(
   ipm12 varchar,
   ipm13 varchar,
   ipm14 varchar);
-GRANT SELECT on ipm_data to nobody,apache;
+GRANT SELECT on ipm_data to nobody;
 GRANT ALL on ipm_data to mesonet,ldm;

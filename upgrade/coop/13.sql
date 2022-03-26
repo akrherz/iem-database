@@ -32,4 +32,4 @@ CREATE TABLE ncei_climate91(
 );
 ALTER TABLE ncei_climate91 OWNER to mesonet;
 CREATE UNIQUE INDEX ncei_climate91_idx on ncei_climate91(station,valid);
-GRANT SELECT on ncei_climate91 to nobody,apache;
+GRANT SELECT on ncei_climate91 to nobody;

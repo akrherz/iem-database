@@ -49,8 +49,8 @@ CREATE TABLE stations(
 );
 CREATE UNIQUE index stations_idx on stations(id, network);
 create UNIQUE index stations_iemid_idx on stations(iemid);
-GRANT SELECT on stations to apache,nobody;
-grant all on stations_iemid_seq to nobody,apache;
+GRANT SELECT on stations to nobody;
+grant all on stations_iemid_seq to nobody;
 GRANT ALL on stations to mesonet,ldm;
 GRANT ALL on stations_iemid_seq to mesonet,ldm;
 
@@ -676,7 +676,7 @@ begin
             GRANT ALL on sm_minute_%s to mesonet,ldm
         $f$, year);
         execute format($f$
-            GRANT SELECT on sm_minute_%s to nobody,apache
+            GRANT SELECT on sm_minute_%s to nobody
         $f$, year);
     end loop;
 end;
@@ -727,7 +727,7 @@ CREATE TABLE daily (
     c930_f character(1)
 );
 CREATE UNIQUE INDEX daily_idx ON daily USING btree (station, valid);
-grant select on daily to nobody,apache;
+grant select on daily to nobody;
 
 CREATE TABLE hourly (
     station character varying(7),
@@ -752,7 +752,7 @@ CREATE TABLE hourly (
     c900_f character(1)
 );
 CREATE UNIQUE INDEX hourly_idx ON hourly USING btree (station, valid);
-grant select on hourly to nobody,apache;
+grant select on hourly to nobody;
 
 CREATE TABLE sm_inversion(
     station varchar(5),
@@ -776,7 +776,7 @@ CREATE TABLE sm_inversion(
     duration smallint DEFAULT 1
 );
 ALTER TABLE sm_inversion OWNER to mesonet;
-GRANT SELECT on sm_inversion to nobody,apache;
+GRANT SELECT on sm_inversion to nobody;
 CREATE UNIQUE INDEX sm_inversion_idx on sm_inversion(station, valid);
 
 --- Clever hack to map data around!
@@ -785,4 +785,4 @@ create or replace view alldata as
 	winddir_d1_wvt as drct, rain_in_tot as phour,
     c2f(tair_c_avg) as tmpf, rh_avg as relh
     from sm_hourly;
-grant select on alldata to nobody,apache;
+grant select on alldata to nobody;

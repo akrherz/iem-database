@@ -9,7 +9,7 @@ CREATE INDEX products_2017_0106_pil_idx on products_2017_0106(pil);
 CREATE INDEX products_2017_0106_entered_idx on products_2017_0106(entered);
 CREATE INDEX products_2017_0106_source_idx on products_2017_0106(source);
 create index products_2017_0106_pe_idx on products_2017_0106(pil, entered);
-grant select on products_2017_0106 to nobody,apache;
+grant select on products_2017_0106 to nobody;
 
 -- ________________________________________________________________
 create table products_2017_0712( 
@@ -22,4 +22,4 @@ CREATE INDEX products_2017_0712_pil_idx on products_2017_0712(pil);
 CREATE INDEX products_2017_0712_entered_idx on products_2017_0712(entered);
 CREATE INDEX products_2017_0712_source_idx on products_2017_0712(source);
 create index products_2017_0712_pe_idx on products_2017_0712(pil, entered);
-grant select on products_2017_0712 to nobody,apache;
+grant select on products_2017_0712 to nobody;

@@ -39,7 +39,7 @@ CREATE TABLE stations(
 );
 CREATE UNIQUE index stations_idx on stations(id, network);
 create UNIQUE index stations_iemid_idx on stations(iemid);
-GRANT SELECT on stations to apache,nobody;
-grant all on stations_iemid_seq to nobody,apache;
+GRANT SELECT on stations to nobody;
+grant all on stations_iemid_seq to nobody;
 GRANT ALL on stations to mesonet,ldm;
 GRANT ALL on stations_iemid_seq to mesonet,ldm;

@@ -11,7 +11,7 @@ CREATE INDEX products_1996_0106_entered_idx on products_1996_0106(entered);
 CREATE INDEX products_1996_0106_source_idx on products_1996_0106(source);
 create index products_1996_0106_pe_idx on products_1996_0106(pil, entered);
 GRANT all on products_1996_0106 to mesonet,ldm;
-grant select on products_1996_0106 to nobody,apache;
+grant select on products_1996_0106 to nobody;
 
 -- ________________________________________________________________
 create table products_1996_0712(
@@ -25,7 +25,7 @@ CREATE INDEX products_1996_0712_entered_idx on products_1996_0712(entered);
 CREATE INDEX products_1996_0712_source_idx on products_1996_0712(source);
 create index products_1996_0712_pe_idx on products_1996_0712(pil, entered);
 GRANT all on products_1996_0712 to mesonet,ldm;
-grant select on products_1996_0712 to nobody,apache;
+grant select on products_1996_0712 to nobody;
     
 
 -- ________________________________________________________________
@@ -40,7 +40,7 @@ CREATE INDEX products_1997_0106_entered_idx on products_1997_0106(entered);
 CREATE INDEX products_1997_0106_source_idx on products_1997_0106(source);
 create index products_1997_0106_pe_idx on products_1997_0106(pil, entered);
 GRANT all on products_1997_0106 to mesonet,ldm;
-grant select on products_1997_0106 to nobody,apache;
+grant select on products_1997_0106 to nobody;
 
 -- ________________________________________________________________
 create table products_1997_0712(
@@ -54,7 +54,7 @@ CREATE INDEX products_1997_0712_entered_idx on products_1997_0712(entered);
 CREATE INDEX products_1997_0712_source_idx on products_1997_0712(source);
 create index products_1997_0712_pe_idx on products_1997_0712(pil, entered);
 GRANT all on products_1997_0712 to mesonet,ldm;
-grant select on products_1997_0712 to nobody,apache;
+grant select on products_1997_0712 to nobody;
     
 
 -- ________________________________________________________________
@@ -69,7 +69,7 @@ CREATE INDEX products_1998_0106_entered_idx on products_1998_0106(entered);
 CREATE INDEX products_1998_0106_source_idx on products_1998_0106(source);
 create index products_1998_0106_pe_idx on products_1998_0106(pil, entered);
 GRANT all on products_1998_0106 to mesonet,ldm;
-grant select on products_1998_0106 to nobody,apache;
+grant select on products_1998_0106 to nobody;
 
 -- ________________________________________________________________
 create table products_1998_0712(
@@ -83,7 +83,7 @@ CREATE INDEX products_1998_0712_entered_idx on products_1998_0712(entered);
 CREATE INDEX products_1998_0712_source_idx on products_1998_0712(source);
 create index products_1998_0712_pe_idx on products_1998_0712(pil, entered);
 GRANT all on products_1998_0712 to mesonet,ldm;
-grant select on products_1998_0712 to nobody,apache;
+grant select on products_1998_0712 to nobody;
     
 
 -- ________________________________________________________________
@@ -98,7 +98,7 @@ CREATE INDEX products_1999_0106_entered_idx on products_1999_0106(entered);
 CREATE INDEX products_1999_0106_source_idx on products_1999_0106(source);
 create index products_1999_0106_pe_idx on products_1999_0106(pil, entered);
 GRANT all on products_1999_0106 to mesonet,ldm;
-grant select on products_1999_0106 to nobody,apache;
+grant select on products_1999_0106 to nobody;
 
 -- ________________________________________________________________
 create table products_1999_0712(
@@ -112,4 +112,4 @@ CREATE INDEX products_1999_0712_entered_idx on products_1999_0712(entered);
 CREATE INDEX products_1999_0712_source_idx on products_1999_0712(source);
 create index products_1999_0712_pe_idx on products_1999_0712(pil, entered);
 GRANT all on products_1999_0712 to mesonet,ldm;
-grant select on products_1999_0712 to nobody,apache;
+grant select on products_1999_0712 to nobody;

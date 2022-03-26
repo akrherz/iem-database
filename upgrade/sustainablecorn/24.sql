@@ -10,7 +10,7 @@ CREATE TABLE dwm(
  updated varchar,
  editedby varchar
 );
-GRANT SELECT on dwm to nobody,apache;
+GRANT SELECT on dwm to nobody;
 GRANT ALL on dwm to mesonet;
 
 CREATE TABLE notes(
@@ -21,5 +21,5 @@ CREATE TABLE notes(
  updated varchar,
  editedby varchar
 );
-GRANT SELECT on notes to nobody,apache;
+GRANT SELECT on notes to nobody;
 GRANT ALL on notes to mesonet;

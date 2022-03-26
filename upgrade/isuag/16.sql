@@ -21,5 +21,5 @@ CREATE TABLE sm_inversion(
     duration smallint DEFAULT 1
 );
 ALTER TABLE sm_inversion OWNER to mesonet;
-GRANT SELECT on sm_inversion to nobody,apache;
+GRANT SELECT on sm_inversion to nobody;
 CREATE UNIQUE INDEX sm_inversion_idx on sm_inversion(station, valid);

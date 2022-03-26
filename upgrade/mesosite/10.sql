@@ -5,5 +5,5 @@ CREATE TABLE autoplot_timing(
 	timing real NOT NULL,
 	uri varchar,
 	hostname varchar(24) NOT NULL);
-GRANT SELECT on autoplot_timing to nobody,apache;
+GRANT SELECT on autoplot_timing to nobody;
 CREATE INDEX autoplot_timing_idx on autoplot_timing(appid);

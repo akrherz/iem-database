@@ -5,7 +5,7 @@
   INHERITS (data);
 CREATE INDEX data_2017_01_grid_idx on data_2017_01(grid_idx);
 CREATE INDEX data_2017_01_valid_idx on data_2017_01(valid);
-GRANT SELECT on data_2017_01 to nobody,apache;
+GRANT SELECT on data_2017_01 to nobody;
 
 
  create table data_2017_02( 
@@ -15,7 +15,7 @@ GRANT SELECT on data_2017_01 to nobody,apache;
   INHERITS (data);
 CREATE INDEX data_2017_02_grid_idx on data_2017_02(grid_idx);
 CREATE INDEX data_2017_02_valid_idx on data_2017_02(valid);
-GRANT SELECT on data_2017_02 to nobody,apache;
+GRANT SELECT on data_2017_02 to nobody;
 
 
  create table data_2017_03( 
@@ -25,7 +25,7 @@ GRANT SELECT on data_2017_02 to nobody,apache;
   INHERITS (data);
 CREATE INDEX data_2017_03_grid_idx on data_2017_03(grid_idx);
 CREATE INDEX data_2017_03_valid_idx on data_2017_03(valid);
-GRANT SELECT on data_2017_03 to nobody,apache;
+GRANT SELECT on data_2017_03 to nobody;
 
 
  create table data_2017_04( 
@@ -35,7 +35,7 @@ GRANT SELECT on data_2017_03 to nobody,apache;
   INHERITS (data);
 CREATE INDEX data_2017_04_grid_idx on data_2017_04(grid_idx);
 CREATE INDEX data_2017_04_valid_idx on data_2017_04(valid);
-GRANT SELECT on data_2017_04 to nobody,apache;
+GRANT SELECT on data_2017_04 to nobody;
 
 
  create table data_2017_05( 
@@ -45,7 +45,7 @@ GRANT SELECT on data_2017_04 to nobody,apache;
   INHERITS (data);
 CREATE INDEX data_2017_05_grid_idx on data_2017_05(grid_idx);
 CREATE INDEX data_2017_05_valid_idx on data_2017_05(valid);
-GRANT SELECT on data_2017_05 to nobody,apache;
+GRANT SELECT on data_2017_05 to nobody;
 
 
  create table data_2017_06( 
@@ -55,7 +55,7 @@ GRANT SELECT on data_2017_05 to nobody,apache;
   INHERITS (data);
 CREATE INDEX data_2017_06_grid_idx on data_2017_06(grid_idx);
 CREATE INDEX data_2017_06_valid_idx on data_2017_06(valid);
-GRANT SELECT on data_2017_06 to nobody,apache;
+GRANT SELECT on data_2017_06 to nobody;
 
 
  create table data_2017_07( 
@@ -65,7 +65,7 @@ GRANT SELECT on data_2017_06 to nobody,apache;
   INHERITS (data);
 CREATE INDEX data_2017_07_grid_idx on data_2017_07(grid_idx);
 CREATE INDEX data_2017_07_valid_idx on data_2017_07(valid);
-GRANT SELECT on data_2017_07 to nobody,apache;
+GRANT SELECT on data_2017_07 to nobody;
 
 
  create table data_2017_08( 
@@ -75,7 +75,7 @@ GRANT SELECT on data_2017_07 to nobody,apache;
   INHERITS (data);
 CREATE INDEX data_2017_08_grid_idx on data_2017_08(grid_idx);
 CREATE INDEX data_2017_08_valid_idx on data_2017_08(valid);
-GRANT SELECT on data_2017_08 to nobody,apache;
+GRANT SELECT on data_2017_08 to nobody;
 
 
  create table data_2017_09( 
@@ -85,7 +85,7 @@ GRANT SELECT on data_2017_08 to nobody,apache;
   INHERITS (data);
 CREATE INDEX data_2017_09_grid_idx on data_2017_09(grid_idx);
 CREATE INDEX data_2017_09_valid_idx on data_2017_09(valid);
-GRANT SELECT on data_2017_09 to nobody,apache;
+GRANT SELECT on data_2017_09 to nobody;
 
 
  create table data_2017_10( 
@@ -95,7 +95,7 @@ GRANT SELECT on data_2017_09 to nobody,apache;
   INHERITS (data);
 CREATE INDEX data_2017_10_grid_idx on data_2017_10(grid_idx);
 CREATE INDEX data_2017_10_valid_idx on data_2017_10(valid);
-GRANT SELECT on data_2017_10 to nobody,apache;
+GRANT SELECT on data_2017_10 to nobody;
 
 
  create table data_2017_11( 
@@ -105,7 +105,7 @@ GRANT SELECT on data_2017_10 to nobody,apache;
   INHERITS (data);
 CREATE INDEX data_2017_11_grid_idx on data_2017_11(grid_idx);
 CREATE INDEX data_2017_11_valid_idx on data_2017_11(valid);
-GRANT SELECT on data_2017_11 to nobody,apache;
+GRANT SELECT on data_2017_11 to nobody;
 
 
  create table data_2017_12( 
@@ -115,4 +115,4 @@ GRANT SELECT on data_2017_11 to nobody,apache;
   INHERITS (data);
 CREATE INDEX data_2017_12_grid_idx on data_2017_12(grid_idx);
 CREATE INDEX data_2017_12_valid_idx on data_2017_12(valid);
-GRANT SELECT on data_2017_12 to nobody,apache;
+GRANT SELECT on data_2017_12 to nobody;

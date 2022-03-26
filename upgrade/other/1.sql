@@ -8,7 +8,7 @@ CREATE TABLE feel_data_daily(
 	Windspeed_Max real,
 	SolarRad_MJ_Tot real
 );
-GRANT SELECT on feel_data_daily to nobody,apache;
+GRANT SELECT on feel_data_daily to nobody;
 
 CREATE TABLE feel_data_hourly(
 	valid timestamptz UNIQUE,
@@ -34,4 +34,4 @@ CREATE TABLE feel_data_hourly(
 	LWS2_Ohms_Hst real,
 	LWS3_Ohms_Hst real
 );
-GRANT SELECT on feel_data_hourly to nobody,apache;
+GRANT SELECT on feel_data_hourly to nobody;

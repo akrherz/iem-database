@@ -17,7 +17,7 @@ CREATE TABLE grid(
   geom geometry(Point, 4326)
   );
   CREATE index grid_idx on grid(idx);
- GRANT SELECT on grid to apache,nobody;
+ GRANT SELECT on grid to nobody;
  
  ---
  --- Lookup table of observation events
@@ -25,7 +25,7 @@ CREATE TABLE grid(
  CREATE TABLE obtimes(
    valid timestamp with time zone UNIQUE
  );
- GRANT SELECT on obtimes to apache,nobody;
+ GRANT SELECT on obtimes to nobody;
  
  ---
  --- Store the actual data, will have partitioned tables
@@ -38,7 +38,7 @@ CREATE TABLE grid(
  ) PARTITION by range(valid);
  ALTER TABLE data OWNER to mesonet;
  GRANT ALL on data to ldm;
- GRANT SELECT on data to apache,nobody;
+ GRANT SELECT on data to nobody;
  
  do
 $do$
@@ -67,7 +67,7 @@ begin
                 GRANT ALL on %s to ldm
             $f$, mytable);
             execute format($f$
-                GRANT SELECT on %s to nobody,apache
+                GRANT SELECT on %s to nobody
             $f$, mytable);
             execute format($f$
                 CREATE INDEX %s_grid_idx on %s(grid_idx)

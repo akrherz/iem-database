@@ -10,7 +10,7 @@ CREATE TABLE iemre_daily_forecast(
 );
 ALTER TABLE iemre_daily_forecast OWNER to mesonet;
 GRANT ALL on iemre_daily_forecast to mesonet,ldm;
-GRANT SELECT on iemre_daily_forecast to nobody,apache;
+GRANT SELECT on iemre_daily_forecast to nobody;
 
 CREATE INDEX on iemre_daily_forecast(valid);
 CREATE INDEX on iemre_daily_forecast(gid);

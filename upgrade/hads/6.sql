@@ -6,7 +6,7 @@ CREATE TABLE hml_forecast_data_2012(
   secondary_value real);
 CREATE INDEX hml_forecast_data_2012_idx on
   hml_forecast_data_2012(hml_forecast_id);
-GRANT SELECT on hml_forecast_data_2012 to nobody,apache;
+GRANT SELECT on hml_forecast_data_2012 to nobody;
 
 CREATE TABLE hml_forecast_data_2013(
   hml_forecast_id int REFERENCES hml_forecast(id),
@@ -15,7 +15,7 @@ CREATE TABLE hml_forecast_data_2013(
   secondary_value real);
 CREATE INDEX hml_forecast_data_2013_idx on
   hml_forecast_data_2013(hml_forecast_id);
-GRANT SELECT on hml_forecast_data_2013 to nobody,apache;
+GRANT SELECT on hml_forecast_data_2013 to nobody;
 
 create table hml_observed_data_2012(
   key smallint REFERENCES hml_observed_keys(id),
@@ -25,7 +25,7 @@ create table hml_observed_data_2012(
   INHERITS (hml_observed_data);
 CREATE INDEX hml_observed_data_2012_idx on
 	hml_observed_data_2012(station, valid);
-GRANT SELECT on hml_observed_data_2012 to nobody,apache;
+GRANT SELECT on hml_observed_data_2012 to nobody;
 
 create table hml_observed_data_2013(
   key smallint REFERENCES hml_observed_keys(id),
@@ -35,6 +35,6 @@ create table hml_observed_data_2013(
   INHERITS (hml_observed_data);
 CREATE INDEX hml_observed_data_2013_idx on
 	hml_observed_data_2013(station, valid);
-GRANT SELECT on hml_observed_data_2013 to nobody,apache;
+GRANT SELECT on hml_observed_data_2013 to nobody;
 
 CREATE INDEX hml_forecast_issued_idx on hml_forecast(issued);

@@ -11,7 +11,7 @@ CREATE TABLE products(
 ) PARTITION by RANGE (entered);
 ALTER TABLE products OWNER to mesonet;
 GRANT ALL on products to ldm;
-GRANT SELECT on products to nobody,apache;
+GRANT SELECT on products to nobody;
 
 do
 $do$
@@ -71,7 +71,7 @@ begin
                 GRANT ALL on %s to ldm
             $f$, mytable);
             execute format($f$
-                GRANT SELECT on %s to nobody,apache
+                GRANT SELECT on %s to nobody
             $f$, mytable);
             -- Indices
             execute format($f$

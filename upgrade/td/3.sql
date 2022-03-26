@@ -8,4 +8,4 @@ CREATE TABLE nitrateload_data(
   wat20 real,
   wat26 real);
 CREATE INDEX nitrateload_data_idx on nitrateload_data(uniqueid, valid);
-GRANT SELECT on nitrateload_data to nobody,apache;
+GRANT SELECT on nitrateload_data to nobody;

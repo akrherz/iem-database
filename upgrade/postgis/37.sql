@@ -29,7 +29,7 @@ begin
             GRANT ALL on %s to ldm
         $f$, mytable);
         execute format($f$
-            GRANT SELECT on %s to nobody,apache
+            GRANT SELECT on %s to nobody
         $f$, mytable);
         -- Indices
         execute format($f$
@@ -81,7 +81,7 @@ begin
             GRANT ALL on %s to ldm
         $f$, mytable);
         execute format($f$
-            GRANT SELECT on %s to nobody,apache
+            GRANT SELECT on %s to nobody
         $f$, mytable);
         -- Indices
         execute format($f$
@@ -122,7 +122,7 @@ CREATE TABLE lsrs (
 ) PARTITION by range(valid);
 ALTER TABLE lsrs OWNER to mesonet;
 GRANT ALL on lsrs to ldm;
-grant select on lsrs to apache,nobody;
+grant select on lsrs to nobody;
 
 do
 $do$
@@ -164,7 +164,7 @@ begin
             GRANT ALL on %s to ldm
         $f$, mytable);
         execute format($f$
-            GRANT SELECT on %s to nobody,apache
+            GRANT SELECT on %s to nobody
         $f$, mytable);
         -- Indices
         execute format($f$
@@ -193,7 +193,7 @@ CREATE TABLE ffg(
   hour24 real)
   PARTITION by range(valid);
 ALTER TABLE ffg OWNER to mesonet;
-GRANT SELECT on ffg to nobody,apache;
+GRANT SELECT on ffg to nobody;
 GRANT ALL on ffg to ldm;
 
 
@@ -237,7 +237,7 @@ begin
             GRANT ALL on %s to ldm
         $f$, mytable);
         execute format($f$
-            GRANT SELECT on %s to nobody,apache
+            GRANT SELECT on %s to nobody
         $f$, mytable);
         -- Indices
         execute format($f$

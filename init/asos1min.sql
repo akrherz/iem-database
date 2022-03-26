@@ -52,8 +52,8 @@ ALTER TABLE stations OWNER to mesonet;
 CREATE UNIQUE index stations_idx on stations(id, network);
 create UNIQUE index stations_iemid_idx on stations(iemid);
 SELECT AddGeometryColumn('stations', 'geom', 4326, 'POINT', 2);
-GRANT SELECT on stations to apache,nobody;
-grant all on stations_iemid_seq to nobody,apache;
+GRANT SELECT on stations to nobody;
+grant all on stations_iemid_seq to nobody;
 GRANT ALL on stations to mesonet,ldm;
 GRANT ALL on stations_iemid_seq to mesonet,ldm;
 
@@ -83,7 +83,7 @@ CREATE TABLE alldata_1minute(
 ) PARTITION by range(valid);
 ALTER TABLE alldata_1minute OWNER to mesonet;
 GRANT ALL on alldata_1minute to ldm;
-GRANT SELECT on alldata_1minute to nobody,apache;
+GRANT SELECT on alldata_1minute to nobody;
 
 do
 $do$
@@ -105,7 +105,7 @@ begin
                 GRANT ALL on t%s%s_1minute to mesonet,ldm
             $f$, year, lpad(month::text, 2, '0'));
             execute format($f$
-                GRANT SELECT on t%s%s_1minute to nobody,apache
+                GRANT SELECT on t%s%s_1minute to nobody
             $f$, year, lpad(month::text, 2, '0'));
             execute format($f$
                 CREATE INDEX on t%s%s_1minute(station, valid)

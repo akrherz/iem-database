@@ -8,7 +8,7 @@ CREATE TABLE hpd_alldata(
   battery real,
   calc_precip real
 );
-GRANT SELECT on hpd_alldata to nobody,apache;
+GRANT SELECT on hpd_alldata to nobody;
 
 -- Individual years
 CREATE TABLE hpd_2009(
@@ -17,7 +17,7 @@ CREATE TABLE hpd_2009(
 	      and valid < '2010-01-01 00:00+00'::timestamptz)
 	)
 	INHERITS (hpd_alldata);
-GRANT SELECT on hpd_2009 to nobody,apache;
+GRANT SELECT on hpd_2009 to nobody;
 CREATE INDEX hpd_2009_station_idx on hpd_2009(station);
 
 CREATE TABLE hpd_2010(
@@ -26,7 +26,7 @@ CREATE TABLE hpd_2010(
 	      and valid < '2011-01-01 00:00+00'::timestamptz)
 	)
 	INHERITS (hpd_alldata);
-GRANT SELECT on hpd_2010 to nobody,apache;
+GRANT SELECT on hpd_2010 to nobody;
 CREATE INDEX hpd_2010_station_idx on hpd_2010(station);
 
 CREATE TABLE hpd_2011(
@@ -35,7 +35,7 @@ CREATE TABLE hpd_2011(
 	      and valid < '2012-01-01 00:00+00'::timestamptz)
 	)
 	INHERITS (hpd_alldata);
-GRANT SELECT on hpd_2011 to nobody,apache;
+GRANT SELECT on hpd_2011 to nobody;
 CREATE INDEX hpd_2011_station_idx on hpd_2011(station);
 
 CREATE TABLE hpd_2012(
@@ -44,7 +44,7 @@ CREATE TABLE hpd_2012(
 	      and valid < '2013-01-01 00:00+00'::timestamptz)
 	)
 	INHERITS (hpd_alldata);
-GRANT SELECT on hpd_2012 to nobody,apache;
+GRANT SELECT on hpd_2012 to nobody;
 CREATE INDEX hpd_2012_station_idx on hpd_2012(station);
 
 CREATE TABLE hpd_2013(
@@ -53,7 +53,7 @@ CREATE TABLE hpd_2013(
 	      and valid < '2014-01-01 00:00+00'::timestamptz)
 	)
 	INHERITS (hpd_alldata);
-GRANT SELECT on hpd_2013 to nobody,apache;
+GRANT SELECT on hpd_2013 to nobody;
 CREATE INDEX hpd_2013_station_idx on hpd_2013(station);
 
 CREATE TABLE hpd_2014(
@@ -62,7 +62,7 @@ CREATE TABLE hpd_2014(
 	      and valid < '2015-01-01 00:00+00'::timestamptz)
 	)
 	INHERITS (hpd_alldata);
-GRANT SELECT on hpd_2014 to nobody,apache;
+GRANT SELECT on hpd_2014 to nobody;
 CREATE INDEX hpd_2014_station_idx on hpd_2014(station);
 
 CREATE TABLE hpd_2015(
@@ -71,5 +71,5 @@ CREATE TABLE hpd_2015(
 	      and valid < '2016-01-01 00:00+00'::timestamptz)
 	)
 	INHERITS (hpd_alldata);
-GRANT SELECT on hpd_2015 to nobody,apache;
+GRANT SELECT on hpd_2015 to nobody;
 CREATE INDEX hpd_2015_station_idx on hpd_2015(station);

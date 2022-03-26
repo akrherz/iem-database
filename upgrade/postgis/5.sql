@@ -9,4 +9,4 @@ CREATE TABLE pireps(
   report varchar
 );
 CREATE INDEX pireps_valid_idx on pireps(valid);
-GRANT SELECT on pireps to nobody,apache;
+GRANT SELECT on pireps to nobody;

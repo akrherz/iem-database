@@ -1,10 +1,10 @@
 CREATE TABLE monthly_rainfall_2018() inherits (monthly_rainfall);
-GRANT SELECT on monthly_rainfall_2018 to nobody,apache;
+GRANT SELECT on monthly_rainfall_2018 to nobody;
 ALTER TABLE monthly_rainfall_2018 add constraint __monthly_rainfall_2018__constraint
   CHECK(valid >= '2018-01-01'::date and valid < '2019-01-01'::date);
 
 CREATE TABLE daily_rainfall_2018() inherits (daily_rainfall);
-GRANT SELECT on daily_rainfall_2018 to nobody,apache;
+GRANT SELECT on daily_rainfall_2018 to nobody;
 ALTER TABLE daily_rainfall_2018 add constraint __daily_rainfall_2018__constraint
   CHECK(valid >= '2018-01-01'::date and valid < '2019-01-01'::date);
 CREATE INDEX daily_rainfall_2018_hrap_i_idx on

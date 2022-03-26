@@ -28,7 +28,7 @@ CREATE TABLE uscrn_alldata(
   PARTITION by range(valid);
 ALTER TABLE uscrn_alldata OWNER to mesonet;
 GRANT ALL on uscrn_alldata to ldm;
-GRANT SELECT on uscrn_alldata to nobody,apache;
+GRANT SELECT on uscrn_alldata to nobody;
 
 do
 $do$
@@ -50,7 +50,7 @@ begin
             GRANT ALL on %s to ldm
         $f$, mytable);
         execute format($f$
-            GRANT SELECT on %s to nobody,apache
+            GRANT SELECT on %s to nobody
         $f$, mytable);
         -- Indices
         execute format($f$
@@ -73,7 +73,7 @@ CREATE TABLE ss_bubbler(
   units varchar(32)
 );
 CREATE INDEX ss_bubbler_idx on ss_bubbler(valid);
-GRANT SELECT on ss_bubbler to nobody,apache;
+GRANT SELECT on ss_bubbler to nobody;
 
 ---
 --- Stuart Smith Park Hydrology Learning Lab
@@ -96,7 +96,7 @@ CREATE TABLE ss_logger_data(
   ch4_data_c real
 );
 CREATE INDEX ss_logger_data_idx on ss_logger_data(valid);
-GRANT SELECT on ss_logger_data to nobody,apache;
+GRANT SELECT on ss_logger_data to nobody;
 
 CREATE TABLE asi_data (
   station char(7),
@@ -151,8 +151,6 @@ CREATE TABLE asi_data (
   ch12min real);
 CREATE unique index asi_data_idx on asi_data(station, valid);
 GRANT SELECT on asi_data to nobody;
-GRANT SELECT on asi_data to apache;
-  
 
 CREATE TABLE alldata (
     station character varying(6),
@@ -191,7 +189,7 @@ begin
             GRANT ALL on %s to ldm
         $f$, mytable);
         execute format($f$
-            GRANT SELECT on %s to nobody,apache
+            GRANT SELECT on %s to nobody
         $f$, mytable);
         -- Indices
         execute format($f$
@@ -310,7 +308,7 @@ station            character varying(10),
 ) PARTITION by range(valid);
 ALTER TABLE flux_data OWNER to mesonet;
 GRANT ALL on flux_data to ldm;
-GRANT SELECT on flux_data to nobody,apache;
+GRANT SELECT on flux_data to nobody;
 
 do
 $do$
@@ -332,7 +330,7 @@ begin
             GRANT ALL on %s to ldm
         $f$, mytable);
         execute format($f$
-            GRANT SELECT on %s to nobody,apache
+            GRANT SELECT on %s to nobody
         $f$, mytable);
         -- Indices
         execute format($f$
@@ -352,7 +350,7 @@ CREATE TABLE feel_data_daily(
         Windspeed_Max real,
         SolarRad_MJ_Tot real
 );
-GRANT SELECT on feel_data_daily to nobody,apache;
+GRANT SELECT on feel_data_daily to nobody;
 
 CREATE TABLE feel_data_hourly(
         valid timestamptz UNIQUE,
@@ -378,7 +376,7 @@ CREATE TABLE feel_data_hourly(
         LWS2_Ohms_Hst real,
         LWS3_Ohms_Hst real
 );
-GRANT SELECT on feel_data_hourly to nobody,apache;
+GRANT SELECT on feel_data_hourly to nobody;
 
 -- Storage of ncdc HPD data
 --
@@ -392,7 +390,7 @@ CREATE TABLE hpd_alldata(
 ) PARTITION by range(valid);
 ALTER TABLE hpd_alldata OWNER to mesonet;
 GRANT ALL on hpd_alldata to ldm;
-GRANT SELECT on hpd_alldata to nobody,apache;
+GRANT SELECT on hpd_alldata to nobody;
 
 do
 $do$
@@ -414,7 +412,7 @@ begin
             GRANT ALL on %s to ldm
         $f$, mytable);
         execute format($f$
-            GRANT SELECT on %s to nobody,apache
+            GRANT SELECT on %s to nobody
         $f$, mytable);
         -- Indices
         execute format($f$

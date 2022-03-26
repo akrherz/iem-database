@@ -2,7 +2,7 @@
 CREATE TABLE alldata_report_type(
   id smallint UNIQUE NOT NULL,
   label varchar);
-GRANT SELECT on alldata_report_type to nobody,apache;
+GRANT SELECT on alldata_report_type to nobody;
 
 INSERT into alldata_report_type VALUES
 	(0, 'Unknown'),

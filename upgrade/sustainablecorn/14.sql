@@ -9,9 +9,9 @@ CREATE TABLE website_edits(
   edit_column varchar(64),
   newvalue real,
   comment text);
-GRANT ALL on website_edits to nobody,apache;
+GRANT ALL on website_edits to nobody;
 
 -- Allow editing
-GRANT ALL on tileflow_data to nobody,apache;
-GRANT ALL on decagon_data to nobody,apache;
-GRANT ALL on watertable_data to nobody,apache;
+GRANT ALL on tileflow_data to nobody;
+GRANT ALL on decagon_data to nobody;
+GRANT ALL on watertable_data to nobody;

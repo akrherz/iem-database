@@ -18,7 +18,7 @@ CREATE TABLE model_gridpoint (
 ) PARTITION by range(runtime);
 ALTER TABLE model_gridpoint OWNER to mesonet;
 GRANT ALL on model_gridpoint to ldm;
-GRANT SELECT on model_gridpoint to nobody,apache;
+GRANT SELECT on model_gridpoint to nobody;
 
 do
 $do$
@@ -40,7 +40,7 @@ begin
             GRANT ALL on %s to ldm
         $f$, mytable);
         execute format($f$
-            GRANT SELECT on %s to nobody,apache
+            GRANT SELECT on %s to nobody
         $f$, mytable);
         -- Indices
         execute format($f$
@@ -127,7 +127,7 @@ CREATE TABLE alldata(
 ) PARTITION by range(runtime);
 ALTER TABLE alldata OWNER to mesonet;
 GRANT ALL on alldata to ldm;
-GRANT SELECT on alldata to nobody,apache;
+GRANT SELECT on alldata to nobody;
 
 do
 $do$
@@ -149,7 +149,7 @@ begin
             GRANT ALL on %s to ldm
         $f$, mytable);
         execute format($f$
-            GRANT SELECT on %s to nobody,apache
+            GRANT SELECT on %s to nobody
         $f$, mytable);
         -- Indices
         execute format($f$

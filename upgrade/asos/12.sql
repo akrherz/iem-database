@@ -23,7 +23,7 @@ CREATE TABLE alldata_1minute(
 ) PARTITION by range(valid);
 ALTER TABLE alldata_1minute OWNER to mesonet;
 GRANT ALL on alldata_1minute to ldm;
-GRANT SELECT on alldata_1minute to nobody,apache;
+GRANT SELECT on alldata_1minute to nobody;
 
 do
 $do$
@@ -45,7 +45,7 @@ begin
                 GRANT ALL on t%s%s_1minute to mesonet,ldm
             $f$, year, lpad(month::text, 2, '0'));
             execute format($f$
-                GRANT SELECT on t%s%s_1minute to nobody,apache
+                GRANT SELECT on t%s%s_1minute to nobody
             $f$, year, lpad(month::text, 2, '0'));
             execute format($f$
                 CREATE INDEX on t%s%s_1minute(station, valid)

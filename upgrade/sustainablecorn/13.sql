@@ -3,7 +3,7 @@ CREATE TABLE website_access_levels(
   access_level smallint UNIQUE NOT NULL,
   appid varchar,
   label varchar);
-GRANT SELECT on website_access_levels to nobody,apache;
+GRANT SELECT on website_access_levels to nobody;
 INSERT into website_access_levels VALUES (0, 'admin', 'Administrators');
 INSERT into website_access_levels VALUES (1, 'cscap', 'Sustainable Corn CAP');
 INSERT into website_access_levels VALUES (2, 'td', 'Transforming Drainage');

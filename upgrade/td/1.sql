@@ -39,5 +39,5 @@ CREATE TABLE decagon_data(
 	d5temp_qc real
 );
 CREATE INDEX decagon_valid_idx on decagon_data(valid);
-GRANT ALL on decagon_data to nobody,apache;
+GRANT ALL on decagon_data to nobody;
 create index decagon_data_idx on decagon_data(uniqueid, plotid);

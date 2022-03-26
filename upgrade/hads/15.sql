@@ -22,7 +22,7 @@ begin
             GRANT ALL on %s to ldm
         $f$, mytable);
         execute format($f$
-            GRANT SELECT on %s to nobody,apache
+            GRANT SELECT on %s to nobody
         $f$, mytable);
         execute format($f$
             CREATE INDEX on %s(hml_forecast_id)

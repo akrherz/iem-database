@@ -19,7 +19,7 @@ CREATE TABLE iemre_grid(
     gridy int
 );
 GRANT ALL on iemre_grid to mesonet,ldm;
-GRANT SELECT on iemre_grid to nobody,apache;
+GRANT SELECT on iemre_grid to nobody;
 
 -- fill out the grid, since we can
 do
@@ -78,7 +78,7 @@ CREATE TABLE iemre_daily(
 ) PARTITION by RANGE (valid);
 ALTER TABLE iemre_daily OWNER to mesonet;
 GRANT ALL on iemre_daily to ldm;
-GRANT SELECT on iemre_daily to nobody,apache;
+GRANT SELECT on iemre_daily to nobody;
 
 CREATE INDEX on iemre_daily(valid);
 CREATE INDEX on iemre_daily(gid);
@@ -99,7 +99,7 @@ begin
             GRANT ALL on iemre_daily_%s to mesonet,ldm
         $f$, year);
         execute format($f$
-            GRANT SELECT on iemre_daily_%s to nobody,apache
+            GRANT SELECT on iemre_daily_%s to nobody
         $f$, year);
     end loop;
 end;
@@ -117,7 +117,7 @@ CREATE TABLE iemre_daily_forecast(
 );
 ALTER TABLE iemre_daily_forecast OWNER to mesonet;
 GRANT ALL on iemre_daily_forecast to mesonet,ldm;
-GRANT SELECT on iemre_daily_forecast to nobody,apache;
+GRANT SELECT on iemre_daily_forecast to nobody;
 
 CREATE INDEX on iemre_daily_forecast(valid);
 CREATE INDEX on iemre_daily_forecast(gid);
@@ -133,7 +133,7 @@ CREATE TABLE iemre_dailyc(
 );
 ALTER TABLE iemre_dailyc OWNER to mesonet;
 GRANT ALL on iemre_dailyc to mesonet,ldm;
-GRANT SELECT on iemre_dailyc to nobody,apache;
+GRANT SELECT on iemre_dailyc to nobody;
 
 CREATE INDEX on iemre_dailyc(valid);
 CREATE INDEX on iemre_dailyc(gid);

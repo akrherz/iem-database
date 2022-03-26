@@ -4,7 +4,7 @@ CREATE TABLE alldata(
   valid timestamptz,
   key varchar(11),
   value real);
-GRANT SELECT on alldata to nobody,apache;
+GRANT SELECT on alldata to nobody;
 
 alter table raw2002 inherit alldata;
 alter table raw2003 inherit alldata;

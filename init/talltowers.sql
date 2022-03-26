@@ -11,7 +11,7 @@ CREATE TABLE towers(
   name varchar);
 INSERT into towers values(0, 'Hamilton');
 INSERT into towers values(1, 'Story');
-GRANT SELECT on towers to nobody,apache;
+GRANT SELECT on towers to nobody;
 GRANT ALL on towers to mesonet,ldm;
 
 -- 1 hertz data
@@ -89,7 +89,7 @@ begin
                 GRANT ALL on data_analog_%s%s to mesonet,ldm,tt_script,tt_admin
             $f$, year, lpad(month::text, 2, '0'));
             execute format($f$
-                GRANT SELECT on data_analog_%s%s to nobody,apache,tt_web
+                GRANT SELECT on data_analog_%s%s to nobody,tt_web
             $f$, year, lpad(month::text, 2, '0'));
             execute format($f$
                 CREATE INDEX on data_analog_%s%s(tower, valid)
@@ -162,7 +162,7 @@ begin
                 GRANT ALL on data_sonic_%s%s to mesonet,ldm,tt_script,tt_admin
             $f$, year, lpad(month::text, 2, '0'));
             execute format($f$
-                GRANT SELECT on data_sonic_%s%s to nobody,apache,tt_web
+                GRANT SELECT on data_sonic_%s%s to nobody,tt_web
             $f$, year, lpad(month::text, 2, '0'));
             execute format($f$
                 CREATE INDEX on data_sonic_%s%s(tower, valid)

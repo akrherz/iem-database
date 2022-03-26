@@ -13,7 +13,7 @@ CREATE TABLE climoweek(
   sday char(4) UNIQUE,
   climoweek smallint
 );
-GRANT SELECT on climoweek to nobody,apache;
+GRANT SELECT on climoweek to nobody;
 
 ---
 --- Storage of Hayhoe downscaled data
@@ -27,7 +27,7 @@ CREATE TABLE hayhoe_daily(
   low real,
   precip real
 );
-GRANT SELECT on hayhoe_daily to nobody,apache;
+GRANT SELECT on hayhoe_daily to nobody;
 CREATE INDEX hayhoe_daily_station_idx on hayhoe_daily(station);
 
 CREATE TABLE nass_quickstats(
@@ -55,7 +55,7 @@ CREATE TABLE nass_quickstats(
                     -- util_practice_desc, statisticcat_desc, and unit_desc
 );
 ALTER TABLE nass_quickstats OWNER to mesonet;
-GRANT SELECT on nass_quickstats to nobody,apache;
+GRANT SELECT on nass_quickstats to nobody;
 create index nass_quickstats_year_idx on nass_quickstats(year);
 create index nass_quickstats_idx on nass_quickstats(year, short_desc);
 
@@ -103,114 +103,114 @@ CREATE TABLE alldata(
   merra_srad_cs real,
   hrrr_srad real
   );
-GRANT select on alldata to nobody,apache;
+GRANT select on alldata to nobody;
 
  CREATE TABLE alldata_ak() inherits (alldata); 
- GRANT SELECT on alldata_ak to nobody,apache;
+ GRANT SELECT on alldata_ak to nobody;
  CREATE TABLE alldata_al() inherits (alldata); 
- GRANT SELECT on alldata_al to nobody,apache;
+ GRANT SELECT on alldata_al to nobody;
  CREATE TABLE alldata_ar() inherits (alldata); 
- GRANT SELECT on alldata_ar to nobody,apache;
+ GRANT SELECT on alldata_ar to nobody;
  CREATE TABLE alldata_az() inherits (alldata); 
- GRANT SELECT on alldata_az to nobody,apache;
+ GRANT SELECT on alldata_az to nobody;
  CREATE TABLE alldata_ca() inherits (alldata); 
- GRANT SELECT on alldata_ca to nobody,apache;
+ GRANT SELECT on alldata_ca to nobody;
  CREATE TABLE alldata_co() inherits (alldata); 
- GRANT SELECT on alldata_co to nobody,apache;
+ GRANT SELECT on alldata_co to nobody;
  CREATE TABLE alldata_ct() inherits (alldata); 
- GRANT SELECT on alldata_ct to nobody,apache;
+ GRANT SELECT on alldata_ct to nobody;
  CREATE TABLE alldata_de() inherits (alldata); 
- GRANT SELECT on alldata_de to nobody,apache;
+ GRANT SELECT on alldata_de to nobody;
  CREATE TABLE alldata_fl() inherits (alldata); 
- GRANT SELECT on alldata_fl to nobody,apache;
+ GRANT SELECT on alldata_fl to nobody;
  CREATE TABLE alldata_ga() inherits (alldata); 
- GRANT SELECT on alldata_ga to nobody,apache;
+ GRANT SELECT on alldata_ga to nobody;
  CREATE TABLE alldata_gu() inherits (alldata);
- GRANT SELECT on alldata_gu to nobody,apache;
+ GRANT SELECT on alldata_gu to nobody;
  CREATE TABLE alldata_hi() inherits (alldata); 
- GRANT SELECT on alldata_hi to nobody,apache;
+ GRANT SELECT on alldata_hi to nobody;
  CREATE TABLE alldata_ia() inherits (alldata); 
- GRANT SELECT on alldata_ia to nobody,apache,apiuser;
+ GRANT SELECT on alldata_ia to nobody,apiuser;
  CREATE TABLE alldata_id() inherits (alldata); 
- GRANT SELECT on alldata_id to nobody,apache;
+ GRANT SELECT on alldata_id to nobody;
  CREATE TABLE alldata_il() inherits (alldata); 
- GRANT SELECT on alldata_il to nobody,apache;
+ GRANT SELECT on alldata_il to nobody;
  CREATE TABLE alldata_in() inherits (alldata); 
- GRANT SELECT on alldata_in to nobody,apache;
+ GRANT SELECT on alldata_in to nobody;
  CREATE TABLE alldata_ks() inherits (alldata); 
- GRANT SELECT on alldata_ks to nobody,apache;
+ GRANT SELECT on alldata_ks to nobody;
  CREATE TABLE alldata_ky() inherits (alldata); 
- GRANT SELECT on alldata_ky to nobody,apache;
+ GRANT SELECT on alldata_ky to nobody;
  CREATE TABLE alldata_la() inherits (alldata); 
- GRANT SELECT on alldata_la to nobody,apache;
+ GRANT SELECT on alldata_la to nobody;
  CREATE TABLE alldata_ma() inherits (alldata); 
- GRANT SELECT on alldata_ma to nobody,apache;
+ GRANT SELECT on alldata_ma to nobody;
  CREATE TABLE alldata_md() inherits (alldata); 
- GRANT SELECT on alldata_md to nobody,apache;
+ GRANT SELECT on alldata_md to nobody;
  CREATE TABLE alldata_me() inherits (alldata); 
- GRANT SELECT on alldata_me to nobody,apache;
+ GRANT SELECT on alldata_me to nobody;
  CREATE TABLE alldata_mi() inherits (alldata); 
- GRANT SELECT on alldata_mi to nobody,apache;
+ GRANT SELECT on alldata_mi to nobody;
  CREATE TABLE alldata_mn() inherits (alldata); 
- GRANT SELECT on alldata_mn to nobody,apache;
+ GRANT SELECT on alldata_mn to nobody;
  CREATE TABLE alldata_mo() inherits (alldata); 
- GRANT SELECT on alldata_mo to nobody,apache;
+ GRANT SELECT on alldata_mo to nobody;
  CREATE TABLE alldata_ms() inherits (alldata); 
- GRANT SELECT on alldata_ms to nobody,apache;
+ GRANT SELECT on alldata_ms to nobody;
  CREATE TABLE alldata_mt() inherits (alldata); 
- GRANT SELECT on alldata_mt to nobody,apache;
+ GRANT SELECT on alldata_mt to nobody;
  CREATE TABLE alldata_nc() inherits (alldata); 
- GRANT SELECT on alldata_nc to nobody,apache;
+ GRANT SELECT on alldata_nc to nobody;
  CREATE TABLE alldata_nd() inherits (alldata); 
- GRANT SELECT on alldata_nd to nobody,apache;
+ GRANT SELECT on alldata_nd to nobody;
  CREATE TABLE alldata_ne() inherits (alldata); 
- GRANT SELECT on alldata_ne to nobody,apache;
+ GRANT SELECT on alldata_ne to nobody;
  CREATE TABLE alldata_nh() inherits (alldata); 
- GRANT SELECT on alldata_nh to nobody,apache;
+ GRANT SELECT on alldata_nh to nobody;
  CREATE TABLE alldata_nj() inherits (alldata); 
- GRANT SELECT on alldata_nj to nobody,apache;
+ GRANT SELECT on alldata_nj to nobody;
  CREATE TABLE alldata_nm() inherits (alldata); 
- GRANT SELECT on alldata_nm to nobody,apache;
+ GRANT SELECT on alldata_nm to nobody;
  CREATE TABLE alldata_nv() inherits (alldata); 
- GRANT SELECT on alldata_nv to nobody,apache;
+ GRANT SELECT on alldata_nv to nobody;
  CREATE TABLE alldata_ny() inherits (alldata); 
- GRANT SELECT on alldata_ny to nobody,apache;
+ GRANT SELECT on alldata_ny to nobody;
  CREATE TABLE alldata_oh() inherits (alldata); 
- GRANT SELECT on alldata_oh to nobody,apache;
+ GRANT SELECT on alldata_oh to nobody;
  CREATE TABLE alldata_ok() inherits (alldata); 
- GRANT SELECT on alldata_ok to nobody,apache;
+ GRANT SELECT on alldata_ok to nobody;
  CREATE TABLE alldata_or() inherits (alldata); 
- GRANT SELECT on alldata_or to nobody,apache;
+ GRANT SELECT on alldata_or to nobody;
  CREATE TABLE alldata_pa() inherits (alldata); 
- GRANT SELECT on alldata_pa to nobody,apache;
+ GRANT SELECT on alldata_pa to nobody;
  CREATE TABLE alldata_pr() inherits (alldata); 
- GRANT SELECT on alldata_pr to nobody,apache;
+ GRANT SELECT on alldata_pr to nobody;
  CREATE TABLE alldata_ri() inherits (alldata); 
- GRANT SELECT on alldata_ri to nobody,apache;
+ GRANT SELECT on alldata_ri to nobody;
  CREATE TABLE alldata_sc() inherits (alldata); 
- GRANT SELECT on alldata_sc to nobody,apache;
+ GRANT SELECT on alldata_sc to nobody;
  CREATE TABLE alldata_sd() inherits (alldata); 
- GRANT SELECT on alldata_sd to nobody,apache;
+ GRANT SELECT on alldata_sd to nobody;
  CREATE TABLE alldata_tn() inherits (alldata); 
- GRANT SELECT on alldata_tn to nobody,apache;
+ GRANT SELECT on alldata_tn to nobody;
  CREATE TABLE alldata_tx() inherits (alldata); 
- GRANT SELECT on alldata_tx to nobody,apache;
+ GRANT SELECT on alldata_tx to nobody;
  CREATE TABLE alldata_ut() inherits (alldata); 
- GRANT SELECT on alldata_ut to nobody,apache;
+ GRANT SELECT on alldata_ut to nobody;
  CREATE TABLE alldata_va() inherits (alldata); 
- GRANT SELECT on alldata_va to nobody,apache;
+ GRANT SELECT on alldata_va to nobody;
  CREATE TABLE alldata_vi() inherits (alldata); 
- GRANT SELECT on alldata_vi to nobody,apache;
+ GRANT SELECT on alldata_vi to nobody;
  CREATE TABLE alldata_vt() inherits (alldata); 
- GRANT SELECT on alldata_vt to nobody,apache;
+ GRANT SELECT on alldata_vt to nobody;
  CREATE TABLE alldata_wa() inherits (alldata); 
- GRANT SELECT on alldata_wa to nobody,apache;
+ GRANT SELECT on alldata_wa to nobody;
  CREATE TABLE alldata_wi() inherits (alldata); 
- GRANT SELECT on alldata_wi to nobody,apache;
+ GRANT SELECT on alldata_wi to nobody;
  CREATE TABLE alldata_wv() inherits (alldata); 
- GRANT SELECT on alldata_wv to nobody,apache;
+ GRANT SELECT on alldata_wv to nobody;
  CREATE TABLE alldata_wy() inherits (alldata); 
- GRANT SELECT on alldata_wy to nobody,apache;
+ GRANT SELECT on alldata_wy to nobody;
 
 CREATE UNIQUE index alldata_AK_idx on alldata_AK(station, day);
     CREATE INDEX alldata_AK_day_idx on alldata_AK(day);
@@ -471,7 +471,7 @@ CREATE TABLE alldata_estimates(
   merra_srad_cs real,
   hrrr_srad real
   );
-GRANT select on alldata_estimates to nobody,apache;
+GRANT select on alldata_estimates to nobody;
 
 ---
 --- Quasi synced from mesosite database
@@ -516,8 +516,8 @@ CREATE TABLE stations(
 CREATE UNIQUE index stations_idx on stations(id, network);
 create UNIQUE index stations_iemid_idx on stations(iemid);
 SELECT AddGeometryColumn('stations', 'geom', 4326, 'POINT', 2);
-GRANT SELECT on stations to apache,nobody;
-grant all on stations_iemid_seq to nobody,apache;
+GRANT SELECT on stations to nobody;
+grant all on stations_iemid_seq to nobody;
 GRANT ALL on stations to mesonet,ldm;
 GRANT ALL on stations_iemid_seq to mesonet,ldm;
 
@@ -557,7 +557,7 @@ CREATE TABLE climate(
   srad real
 );
 CREATE UNIQUE INDEX climate_idx on climate(station,valid);
-GRANT SELECT on climate to nobody,apache;
+GRANT SELECT on climate to nobody;
 
 CREATE TABLE climate51(
   station varchar(6),
@@ -594,7 +594,7 @@ CREATE TABLE climate51(
 CREATE UNIQUE INDEX climate51_idx on climate51(station,valid);
 CREATE INDEX climate51_station_idx on climate51(station);
 CREATE INDEX climate51_valid_idx on climate51(valid);
-GRANT SELECT on climate51 to nobody,apache;
+GRANT SELECT on climate51 to nobody;
 
 CREATE TABLE climate71(
   station varchar(6),
@@ -629,7 +629,7 @@ CREATE TABLE climate71(
   srad real
 );
 CREATE UNIQUE INDEX climate71_idx on climate71(station,valid);
-GRANT SELECT on climate71 to nobody,apache;
+GRANT SELECT on climate71 to nobody;
 
 CREATE TABLE ncdc_climate71(
   station varchar(6),
@@ -656,7 +656,7 @@ CREATE TABLE ncdc_climate71(
   hdd65 real 
 );
 CREATE UNIQUE INDEX ncdc_climate71_idx on ncdc_climate71(station,valid);
-GRANT SELECT on ncdc_climate71 to nobody,apache;
+GRANT SELECT on ncdc_climate71 to nobody;
 
 CREATE TABLE ncdc_climate81(
   station varchar(11),
@@ -691,7 +691,7 @@ CREATE TABLE ncdc_climate81(
   srad real
 );
 CREATE UNIQUE INDEX ncdc_climate81_idx on ncdc_climate81(station,valid);
-GRANT SELECT on ncdc_climate81 to nobody,apache;
+GRANT SELECT on ncdc_climate81 to nobody;
 
 CREATE TABLE ncei_climate91(
   station varchar(11),
@@ -727,7 +727,7 @@ CREATE TABLE ncei_climate91(
 );
 ALTER TABLE ncei_climate91 OWNER to mesonet;
 CREATE UNIQUE INDEX ncei_climate91_idx on ncei_climate91(station,valid);
-GRANT SELECT on ncei_climate91 to nobody,apache;
+GRANT SELECT on ncei_climate91 to nobody;
 
 CREATE TABLE climate81(
   station varchar(6),
@@ -762,7 +762,7 @@ CREATE TABLE climate81(
   srad real
 );
 CREATE UNIQUE INDEX climate81_idx on climate81(station,valid);
-GRANT SELECT on climate81 to nobody,apache;
+GRANT SELECT on climate81 to nobody;
 
 COPY climoweek (sday, climoweek) FROM stdin;
 0101	44
@@ -1139,7 +1139,7 @@ CREATE TABLE elnino(
         anom_34 real,
         soi_3m real
 );
-GRANT SELECT on elnino to nobody,apache;
+GRANT SELECT on elnino to nobody;
 
 -- Storage of Point Extracted Forecast Data
 CREATE TABLE forecast_inventory(
@@ -1147,7 +1147,7 @@ CREATE TABLE forecast_inventory(
   model varchar(32),
   modelts timestamptz
 );
-GRANT SELECT on forecast_inventory to nobody,apache;
+GRANT SELECT on forecast_inventory to nobody;
 
 CREATE TABLE alldata_forecast(
   modelid int REFERENCES forecast_inventory(id),
@@ -1158,7 +1158,7 @@ CREATE TABLE alldata_forecast(
   precip real,
   srad real
 );
-GRANT SELECT on alldata_forecast to nobody,apache;
+GRANT SELECT on alldata_forecast to nobody;
 CREATE INDEX alldata_forecast_idx on alldata_forecast(station, day);
 
 -- Storage of baseline yield forecast data
@@ -1171,4 +1171,4 @@ CREATE TABLE yieldfx_baseline(
   rain real,
   windspeed real,
   rh real);
-GRANT SELECT on yieldfx_baseline to nobody,apache;
+GRANT SELECT on yieldfx_baseline to nobody;

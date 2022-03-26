@@ -25,7 +25,7 @@ CREATE TABLE alldata(
 	dwpf real,
 	sknt real,
 	drct real);
-GRANT SELECT on alldata to nobody,apache;
+GRANT SELECT on alldata to nobody;
 
 create table t2002( 
   CONSTRAINT __t2002_check 
@@ -34,7 +34,7 @@ create table t2002(
   INHERITS (alldata);
 CREATE INDEX t2002_idx on t2002(station, valid);
 CREATE INDEX t2002_valid_idx on t2002(valid);
-grant select on t2002 to nobody,apache;
+grant select on t2002 to nobody;
 
 create table t2003( 
   CONSTRAINT __t2003_check 
@@ -43,7 +43,7 @@ create table t2003(
   INHERITS (alldata);
 CREATE INDEX t2003_idx on t2003(station, valid);
 CREATE INDEX t2003_valid_idx on t2003(valid);
-grant select on t2003 to nobody,apache;
+grant select on t2003 to nobody;
 
 
 create table t2004( 
@@ -53,7 +53,7 @@ create table t2004(
   INHERITS (alldata);
 CREATE INDEX t2004_idx on t2004(station, valid);
 CREATE INDEX t2004_valid_idx on t2004(valid);
-grant select on t2004 to nobody,apache;
+grant select on t2004 to nobody;
 
 
 create table t2005( 
@@ -63,7 +63,7 @@ create table t2005(
   INHERITS (alldata);
 CREATE INDEX t2005_idx on t2005(station, valid);
 CREATE INDEX t2005_valid_idx on t2005(valid);
-grant select on t2005 to nobody,apache;
+grant select on t2005 to nobody;
 
 
 create table t2006( 
@@ -73,7 +73,7 @@ create table t2006(
   INHERITS (alldata);
 CREATE INDEX t2006_idx on t2006(station, valid);
 CREATE INDEX t2006_valid_idx on t2006(valid);
-grant select on t2006 to nobody,apache;
+grant select on t2006 to nobody;
 
 
 create table t2007( 
@@ -83,7 +83,7 @@ create table t2007(
   INHERITS (alldata);
 CREATE INDEX t2007_idx on t2007(station, valid);
 CREATE INDEX t2007_valid_idx on t2007(valid);
-grant select on t2007 to nobody,apache;
+grant select on t2007 to nobody;
 
 
 create table t2008( 
@@ -93,7 +93,7 @@ create table t2008(
   INHERITS (alldata);
 CREATE INDEX t2008_idx on t2008(station, valid);
 CREATE INDEX t2008_valid_idx on t2008(valid);
-grant select on t2008 to nobody,apache;
+grant select on t2008 to nobody;
 
 
 create table t2009( 
@@ -103,7 +103,7 @@ create table t2009(
   INHERITS (alldata);
 CREATE INDEX t2009_idx on t2009(station, valid);
 CREATE INDEX t2009_valid_idx on t2009(valid);
-grant select on t2009 to nobody,apache;
+grant select on t2009 to nobody;
 
 
 create table t2010( 
@@ -113,7 +113,7 @@ create table t2010(
   INHERITS (alldata);
 CREATE INDEX t2010_idx on t2010(station, valid);
 CREATE INDEX t2010_valid_idx on t2010(valid);
-grant select on t2010 to nobody,apache;
+grant select on t2010 to nobody;
 
 
 create table t2011( 
@@ -123,7 +123,7 @@ create table t2011(
   INHERITS (alldata);
 CREATE INDEX t2011_idx on t2011(station, valid);
 CREATE INDEX t2011_valid_idx on t2011(valid);
-grant select on t2011 to nobody,apache;
+grant select on t2011 to nobody;
 
 
 create table t2012( 
@@ -133,7 +133,7 @@ create table t2012(
   INHERITS (alldata);
 CREATE INDEX t2012_idx on t2012(station, valid);
 CREATE INDEX t2012_valid_idx on t2012(valid);
-grant select on t2012 to nobody,apache;
+grant select on t2012 to nobody;
 
 
 create table t2013( 
@@ -143,7 +143,7 @@ create table t2013(
   INHERITS (alldata);
 CREATE INDEX t2013_idx on t2013(station, valid);
 CREATE INDEX t2013_valid_idx on t2013(valid);
-grant select on t2013 to nobody,apache;
+grant select on t2013 to nobody;
 
 
 create table t2014( 
@@ -153,7 +153,7 @@ create table t2014(
   INHERITS (alldata);
 CREATE INDEX t2014_idx on t2014(station, valid);
 CREATE INDEX t2014_valid_idx on t2014(valid);
-grant select on t2014 to nobody,apache;
+grant select on t2014 to nobody;
 
 
 create table t2015( 
@@ -163,7 +163,7 @@ create table t2015(
   INHERITS (alldata);
 CREATE INDEX t2015_idx on t2015(station, valid);
 CREATE INDEX t2015_valid_idx on t2015(valid);
-grant select on t2015 to nobody,apache;
+grant select on t2015 to nobody;
 
 
 create table t2016( 
@@ -173,7 +173,7 @@ create table t2016(
   INHERITS (alldata);
 CREATE INDEX t2016_idx on t2016(station, valid);
 CREATE INDEX t2016_valid_idx on t2016(valid);
-grant select on t2016 to nobody,apache;
+grant select on t2016 to nobody;
 
 
 create table t2017( 
@@ -183,4 +183,4 @@ create table t2017(
   INHERITS (alldata);
 CREATE INDEX t2017_idx on t2017(station, valid);
 CREATE INDEX t2017_valid_idx on t2017(valid);
-grant select on t2017 to nobody,apache;
+grant select on t2017 to nobody;

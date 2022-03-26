@@ -137,7 +137,7 @@ CREATE TABLE cwa(
 );
 ALTER TABLE cwa OWNER to mesonet;
 GRANT ALL on cwa to ldm;
-GRANT SELECT on cwa to nobody,apache;
+GRANT SELECT on cwa to nobody;
 
 --- states table is loaded by some shp2pgsql load that has unknown origins :(
 CREATE TABLE states(
@@ -149,7 +149,7 @@ CREATE TABLE states(
   simple_geom geometry(MultiPolygon, 4326)
 );
 GRANT ALL on states to mesonet,ldm;
-GRANT SELECT on states to nobody,apache;
+GRANT SELECT on states to nobody;
 
 -- CWSU Boundaries, circa 2005 providence
 CREATE TABLE cwsu(
@@ -159,7 +159,7 @@ CREATE TABLE cwsu(
 );
 ALTER TABLE cwsu OWNER to mesonet;
 GRANT ALL on cwsu to ldm;
-GRANT SELECT on cwsu to nobody,apache;
+GRANT SELECT on cwsu to nobody;
 
 ---
 --- Quasi synced from mesosite database
@@ -204,8 +204,8 @@ CREATE TABLE stations(
 CREATE UNIQUE index stations_idx on stations(id, network);
 create UNIQUE index stations_iemid_idx on stations(iemid);
 SELECT AddGeometryColumn('stations', 'geom', 4326, 'POINT', 2);
-GRANT SELECT on stations to apache,nobody;
-grant all on stations_iemid_seq to nobody,apache;
+GRANT SELECT on stations to nobody;
+grant all on stations_iemid_seq to nobody;
 GRANT ALL on stations to mesonet,ldm;
 GRANT ALL on stations_iemid_seq to mesonet,ldm;
 
@@ -243,7 +243,7 @@ CREATE TABLE bot_warnings(
   windtag int
 );
 SELECT AddGeometryColumn('bot_warnings', 'geom', 4326, 'MULTIPOLYGON', 2);
-GRANT SELECT on bot_warnings to nobody,apache;
+GRANT SELECT on bot_warnings to nobody;
 
 CREATE TABLE robins(
   id SERIAL,
@@ -278,7 +278,7 @@ GRANT ALL on ugcs_gid_seq to ldm;
 SELECT AddGeometryColumn('ugcs', 'geom', 4326, 'MULTIPOLYGON', 2);
 SELECT AddGeometryColumn('ugcs', 'simple_geom', 4326, 'MULTIPOLYGON', 2);
 SELECT AddGeometryColumn('ugcs', 'centroid', 4326, 'POINT', 2);
-GRANT SELECT on ugcs to nobody,apache;
+GRANT SELECT on ugcs to nobody;
 CREATE INDEX ugcs_ugc_idx on ugcs(ugc);
 create index ugcs_gix on ugcs USING GIST(geom);
 
@@ -332,7 +332,7 @@ CREATE TABLE idot_dashcam_current(
 	idnum int
 );
 SELECT AddGeometryColumn('idot_dashcam_current', 'geom', 4326, 'POINT', 2);
-GRANT SELECT on idot_dashcam_current to nobody,apache;
+GRANT SELECT on idot_dashcam_current to nobody;
 
 CREATE TABLE idot_dashcam_log(
 	label varchar(20) not null,
@@ -342,7 +342,7 @@ CREATE TABLE idot_dashcam_log(
 SELECT AddGeometryColumn('idot_dashcam_log', 'geom', 4326, 'POINT', 2);
 CREATE INDEX idot_dashcam_log_valid_idx on idot_dashcam_log(valid);
 CREATE INDEX idot_dashcam_log_label_idx on idot_dashcam_log(label);
-GRANT SELECT on idot_dashcam_current to nobody,apache;
+GRANT SELECT on idot_dashcam_current to nobody;
 
 CREATE OR REPLACE FUNCTION idot_dashcam_insert_before_F()
 RETURNS TRIGGER
@@ -405,7 +405,7 @@ CREATE TABLE idot_snowplow_current(
 	road_temp_code smallint
 );
 SELECT AddGeometryColumn('idot_snowplow_current', 'geom', 4326, 'POINT', 2);
-GRANT SELECT on idot_snowplow_current to nobody,apache;
+GRANT SELECT on idot_snowplow_current to nobody;
 
 CREATE TABLE idot_snowplow_archive(
 	label varchar(20) not null,
@@ -432,7 +432,7 @@ CREATE INDEX on idot_snowplow_archive(label);
 CREATE INDEX on idot_snowplow_archive(valid);
 ALTER TABLE idot_snowplow_archive OWNER to mesonet;
 GRANT ALL on idot_snowplow_archive to ldm;
-GRANT SELECT on idot_snowplow_archive to nobody,apache;
+GRANT SELECT on idot_snowplow_archive to nobody;
 
 do
 $do$
@@ -449,7 +449,7 @@ begin
             GRANT ALL on idot_snowplow_%s to mesonet,ldm
         $f$, year);
         execute format($f$
-            GRANT SELECT on idot_snowplow_%s to nobody,apache
+            GRANT SELECT on idot_snowplow_%s to nobody
         $f$, year);
     end loop;
 end;
@@ -466,7 +466,7 @@ CREATE TABLE vtec_missing_events(
   eventid int
 );
 GRANT ALL on vtec_missing_events to mesonet,ldm;
-GRANT select on vtec_missing_events to nobody,apache;
+GRANT select on vtec_missing_events to nobody;
 
 -- Legacy table supporting NWSChat, sigh
 CREATE TABLE text_products (
@@ -479,7 +479,7 @@ CREATE TABLE text_products (
 );
 ALTER TABLE text_products OWNER to mesonet;
 GRANT ALL on text_products to ldm;
-grant select on text_products to apache,nobody;
+grant select on text_products to nobody;
 
 create index text_products_idx  on text_products(product_id);
 CREATE INDEX text_products_issue_idx on text_products(issue);
@@ -509,7 +509,7 @@ CREATE TABLE sps(
 ) PARTITION by range(issue);
 ALTER TABLE sps OWNER to mesonet;
 GRANT ALL on sps to ldm;
-GRANT SELECT on sps to apache,nobody;
+GRANT SELECT on sps to nobody;
 
 do
 $do$
@@ -531,7 +531,7 @@ begin
             GRANT ALL on %s to ldm
         $f$, mytable);
         execute format($f$
-            GRANT SELECT on %s to nobody,apache
+            GRANT SELECT on %s to nobody
         $f$, mytable);
         -- Indices
         execute format($f$
@@ -562,7 +562,7 @@ CREATE TABLE riverpro (
     impact_text text
 );
 
-grant select on riverpro to apache,nobody;
+grant select on riverpro to nobody;
 
 CREATE UNIQUE INDEX riverpro_nwsli_idx ON riverpro USING btree (nwsli);
 
@@ -605,7 +605,7 @@ CREATE TABLE warnings (
 );
 ALTER TABLE warnings OWNER to mesonet;
 GRANT ALL on warnings to ldm;
-grant select on warnings to apache,nobody;
+grant select on warnings to nobody;
 
 
 do
@@ -639,7 +639,7 @@ begin
             GRANT ALL on %s to ldm
         $f$, mytable);
         execute format($f$
-            GRANT SELECT on %s to nobody,apache
+            GRANT SELECT on %s to nobody
         $f$, mytable);
         -- Indices
         execute format($f$
@@ -714,7 +714,7 @@ create table sbw(
 );
 ALTER TABLE sbw OWNER to mesonet;
 GRANT ALL on sbw to ldm;
-grant select on sbw to apache,nobody;
+grant select on sbw to nobody;
 
 do
 $do$
@@ -735,7 +735,7 @@ begin
             GRANT ALL on %s to ldm
         $f$, mytable);
         execute format($f$
-            GRANT SELECT on %s to nobody,apache
+            GRANT SELECT on %s to nobody
         $f$, mytable);
         -- Indices
         execute format($f$
@@ -780,7 +780,7 @@ CREATE TABLE lsrs (
 ) PARTITION by range(valid);
 ALTER TABLE lsrs OWNER to mesonet;
 GRANT ALL on lsrs to ldm;
-grant select on lsrs to apache,nobody;
+grant select on lsrs to nobody;
 
 
 do
@@ -803,7 +803,7 @@ begin
             GRANT ALL on %s to ldm
         $f$, mytable);
         execute format($f$
-            GRANT SELECT on %s to nobody,apache
+            GRANT SELECT on %s to nobody
         $f$, mytable);
         -- Indices
         execute format($f$
@@ -829,7 +829,7 @@ CREATE TABLE hvtec_nwsli (
 );
 ALTER TABLE hvtec_nwsli OWNER to mesonet;
 GRANT ALL on hvtec_nwsli to ldm;
-grant select on hvtec_nwsli to apache,nobody;
+grant select on hvtec_nwsli to nobody;
 
 ---
 --- UGC Lookup Table
@@ -848,7 +848,7 @@ CREATE TABLE nws_ugc (
     simple_geom geometry(MultiPolygon, 4326)
 );
 
-grant select on nws_ugc to apache,nobody;
+grant select on nws_ugc to nobody;
 
 ---
 --- SIGMET Convective Outlook
@@ -863,7 +863,7 @@ CREATE TABLE sigmets_current(
 ALTER TABLE sigmets_current OWNER to mesonet;
 GRANT ALL on sigmets_current to ldm;
 SELECT AddGeometryColumn('sigmets_current', 'geom', 4326, 'POLYGON', 2);
-GRANT SELECT on sigmets_current to nobody,apache;
+GRANT SELECT on sigmets_current to nobody;
 
 CREATE TABLE sigmets_archive(
 	sigmet_type char(1),
@@ -873,7 +873,7 @@ CREATE TABLE sigmets_archive(
 	raw text
 );
 SELECT AddGeometryColumn('sigmets_archive', 'geom', 4326, 'POLYGON', 2);
-GRANT SELECT on sigmets_archive to nobody,apache;
+GRANT SELECT on sigmets_archive to nobody;
 
 
 ---
@@ -884,7 +884,7 @@ CREATE TABLE nexrad_n0r_tindex(
  filepath varchar
  );
 SELECT AddGeometryColumn('nexrad_n0r_tindex', 'the_geom', 4326, 'MULTIPOLYGON', 2);
-GRANT SELECT on nexrad_n0r_tindex to nobody,apache;
+GRANT SELECT on nexrad_n0r_tindex to nobody;
 CREATE INDEX nexrad_n0r_tindex_idx on nexrad_n0r_tindex(datetime);
 create index nexrad_n0r_tindex_date_trunc on nexrad_n0r_tindex( date_trunc('minute', datetime) );
 
@@ -897,7 +897,7 @@ CREATE TABLE nexrad_n0q_tindex(
  filepath varchar
  );
 SELECT AddGeometryColumn('nexrad_n0q_tindex', 'the_geom', 4326, 'MULTIPOLYGON', 2);
-GRANT SELECT on nexrad_n0q_tindex to nobody,apache;
+GRANT SELECT on nexrad_n0q_tindex to nobody;
 CREATE INDEX nexrad_n0q_tindex_idx on nexrad_n0q_tindex(datetime);
 create index nexrad_n0q_tindex_date_trunc on nexrad_n0q_tindex( date_trunc('minute', datetime) );
 
@@ -922,7 +922,7 @@ CREATE table roads_base(
 SELECT AddGeometryColumn('roads_base', 'geom', 26915, 'MULTILINESTRING', 2);
 SELECT AddGeometryColumn('roads_base', 'simple_geom', 26915, 'MULTILINESTRING', 2);
 
-GRANT SELECT on roads_base to nobody,apache;
+GRANT SELECT on roads_base to nobody;
 
 CREATE TABLE roads_conditions(
   code smallint unique,
@@ -930,7 +930,7 @@ CREATE TABLE roads_conditions(
   color char(7) DEFAULT '#000000' NOT NULL
   );
 ALTER TABLE roads_conditions OWNER to mesonet;
-GRANT SELECT on roads_conditions TO nobody,apache;
+GRANT SELECT on roads_conditions TO nobody;
 
 CREATE TABLE roads_current(
   segid int REFERENCES roads_base(segid),
@@ -939,7 +939,7 @@ CREATE TABLE roads_current(
   towing_prohibited boolean,
   limited_vis boolean,
   raw varchar);
-GRANT SELECT on roads_current to nobody,apache;
+GRANT SELECT on roads_current to nobody;
 
 ---
 --- road conditions archive
@@ -956,7 +956,7 @@ CREATE INDEX on roads_log(valid);
 CREATE INDEX on roads_log(segid);
 ALTER TABLE roads_log OWNER to mesonet;
 GRANT ALL on roads_log to ldm;
-GRANT SELECT on roads_log to nobody,apache;
+GRANT SELECT on roads_log to nobody;
 
 do
 $do$
@@ -978,7 +978,7 @@ begin
             GRANT ALL on %s to ldm
         $f$, mytable);
         execute format($f$
-            GRANT SELECT on %s to nobody,apache
+            GRANT SELECT on %s to nobody
         $f$, mytable);
     end loop;
 end;
@@ -1003,14 +1003,14 @@ create index spc_outlook_combo_idx
      on spc_outlook(outlook_type, day, cycle);
 ALTER TABLE spc_outlook OWNER to mesonet;
 GRANT ALL on spc_outlook to ldm;
-GRANT SELECT on spc_outlook to nobody,apache;
+GRANT SELECT on spc_outlook to nobody;
 GRANT ALL on spc_outlook_id_seq to mesonet,ldm;
 
 -- Numeric prioritization of SPC Outlook Thresholds
 CREATE TABLE spc_outlook_thresholds(
   priority smallint UNIQUE,
   threshold varchar(4) UNIQUE);
-GRANT SELECT on spc_outlook_thresholds to nobody,apache;
+GRANT SELECT on spc_outlook_thresholds to nobody;
 GRANT ALL on spc_outlook_thresholds to ldm,mesonet;
 
 INSERT into spc_outlook_thresholds VALUES 
@@ -1051,7 +1051,7 @@ create index spc_outlook_geometries_combo_idx
     on spc_outlook_geometries(threshold, category);
 ALTER TABLE spc_outlook_geometries OWNER to mesonet;
 GRANT ALL on spc_outlook_geometries to ldm;
-GRANT SELECT on spc_outlook_geometries to nobody,apache;
+GRANT SELECT on spc_outlook_geometries to nobody;
 
 --
 -- SPC Outlooks View joining the two tables together
@@ -1061,7 +1061,7 @@ CREATE OR REPLACE VIEW spc_outlooks AS
     from spc_outlook o LEFT JOIN spc_outlook_geometries g
     on (o.id = g.spc_outlook_id);
 ALTER VIEW spc_outlooks OWNER to mesonet;
-GRANT SELECT on spc_outlooks to ldm,nobody,apache;
+GRANT SELECT on spc_outlooks to ldm,nobody;
 
 --
 -- Convective Watches
@@ -1077,7 +1077,7 @@ CREATE TABLE watches (
 );
 ALTER TABLE watches OWNER to mesonet;
 GRANT ALL on watches to ldm;
-grant select on watches to apache,nobody;
+grant select on watches to nobody;
 
 CREATE UNIQUE INDEX watches_idx ON watches USING btree (issued, num);
 
@@ -1091,7 +1091,7 @@ CREATE TABLE watches_current (
     geom geometry(MultiPolygon, 4326)
 );
 GRANT ALL on watches_current to mesonet,ldm;
-grant select on watches_current to apache,nobody;
+grant select on watches_current to nobody;
 
 
 
@@ -1111,7 +1111,7 @@ CREATE TABLE pireps(
 );
 ALTER TABLE pireps OWNER to mesonet;
 CREATE INDEX pireps_valid_idx on pireps(valid);
-GRANT SELECT on pireps to nobody,apache;
+GRANT SELECT on pireps to nobody;
 GRANT ALL on pireps to ldm;
 
 CREATE TABLE ffg(
@@ -1124,7 +1124,7 @@ CREATE TABLE ffg(
   hour24 real)
   PARTITION by range(valid);
 ALTER TABLE ffg OWNER to mesonet;
-GRANT SELECT on ffg to nobody,apache;
+GRANT SELECT on ffg to nobody;
 GRANT ALL on ffg to ldm;
 
 do
@@ -1147,7 +1147,7 @@ begin
             GRANT ALL on %s to ldm
         $f$, mytable);
         execute format($f$
-            GRANT SELECT on %s to nobody,apache
+            GRANT SELECT on %s to nobody
         $f$, mytable);
         -- Indices
         execute format($f$
@@ -1168,7 +1168,7 @@ CREATE TABLE usdm(
   dm smallint,
   geom geometry(MultiPolygon, 4326));
 CREATE INDEX usdm_valid_idx on usdm(valid);
-GRANT SELECT on usdm to nobody,apache;
+GRANT SELECT on usdm to nobody;
 GRANT ALL on usdm to mesonet,ldm;
 
 -- Storage of MCDs

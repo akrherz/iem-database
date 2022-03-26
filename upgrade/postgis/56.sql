@@ -12,7 +12,7 @@ CREATE OR REPLACE VIEW spc_outlooks AS
     from spc_outlook o LEFT JOIN spc_outlook_geometries g
     on (o.id = g.spc_outlook_id);
 ALTER VIEW spc_outlooks OWNER to mesonet;
-GRANT SELECT on spc_outlooks to ldm,nobody,apache;
+GRANT SELECT on spc_outlooks to ldm,nobody;
 
 ALTER TABLE mcd alter product_id type varchar(34);
 ALTER TABLE mpd alter product_id type varchar(34);

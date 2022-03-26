@@ -47,8 +47,8 @@ CREATE TABLE stations(
 CREATE UNIQUE index stations_idx on stations(id, network);
 create UNIQUE index stations_iemid_idx on stations(iemid);
 SELECT AddGeometryColumn('stations', 'geom', 4326, 'POINT', 2);
-GRANT SELECT on stations to apache,nobody;
-grant all on stations_iemid_seq to nobody,apache;
+GRANT SELECT on stations to nobody;
+grant all on stations_iemid_seq to nobody;
 GRANT ALL on stations to mesonet,ldm;
 GRANT ALL on stations_iemid_seq to mesonet,ldm;
 
@@ -99,7 +99,7 @@ CREATE TABLE raw(
 ) PARTITION by range(valid);
 ALTER TABLE raw OWNER to mesonet;
 GRANT ALL on raw to ldm;
-GRANT SELECT on raw to nobody,apache;
+GRANT SELECT on raw to nobody;
 
 do
 $do$
@@ -122,7 +122,7 @@ begin
             GRANT ALL on raw%s to ldm
         $f$, year);
         execute format($f$
-            GRANT SELECT on raw%s to nobody,apache
+            GRANT SELECT on raw%s to nobody
         $f$, year);
         -- Indices
         execute format($f$
@@ -150,7 +150,7 @@ begin
                 GRANT ALL on %s to ldm
             $f$, mytable);
             execute format($f$
-                GRANT SELECT on %s to nobody,apache
+                GRANT SELECT on %s to nobody
             $f$, mytable);
 
         end loop;
@@ -169,7 +169,7 @@ CREATE TABLE alldata(
     PARTITION by range(valid);
 ALTER TABLE alldata OWNER to mesonet;
 GRANT ALL on alldata to ldm;
-GRANT SELECT on alldata to nobody,apache;
+GRANT SELECT on alldata to nobody;
 
 do
 $do$
@@ -191,7 +191,7 @@ begin
             GRANT ALL on %s to ldm
         $f$, mytable);
         execute format($f$
-            GRANT SELECT on %s to nobody,apache
+            GRANT SELECT on %s to nobody
         $f$, mytable);
         -- Indices
         execute format($f$
