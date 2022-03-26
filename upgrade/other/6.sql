@@ -18,7 +18,7 @@ CREATE TABLE uscrn_alldata(
   wetness_flag char(1),
   wind_mps real,
   wind_mps_flag char(1));
-GRANT SELECT on uscrn_alldata to nobody,apache;
+GRANT SELECT on uscrn_alldata to nobody;
 GRANT ALL on uscrn_alldata to mesonet,ldm;
 
 create table uscrn_t2006( 
@@ -28,7 +28,7 @@ create table uscrn_t2006(
   INHERITS (uscrn_alldata);
 CREATE INDEX uscrn_t2006_station_idx on uscrn_t2006(station);
 CREATE INDEX uscrn_t2006_valid_idx on uscrn_t2006(valid);
-GRANT SELECT on uscrn_t2006 to nobody,apache;
+GRANT SELECT on uscrn_t2006 to nobody;
 GRANT ALL on uscrn_t2006 to ldm,mesonet;
     
 
@@ -39,7 +39,7 @@ create table uscrn_t2007(
   INHERITS (uscrn_alldata);
 CREATE INDEX uscrn_t2007_station_idx on uscrn_t2007(station);
 CREATE INDEX uscrn_t2007_valid_idx on uscrn_t2007(valid);
-GRANT SELECT on uscrn_t2007 to nobody,apache;
+GRANT SELECT on uscrn_t2007 to nobody;
 GRANT ALL on uscrn_t2007 to ldm,mesonet;
     
 
@@ -50,7 +50,7 @@ create table uscrn_t2008(
   INHERITS (uscrn_alldata);
 CREATE INDEX uscrn_t2008_station_idx on uscrn_t2008(station);
 CREATE INDEX uscrn_t2008_valid_idx on uscrn_t2008(valid);
-GRANT SELECT on uscrn_t2008 to nobody,apache;
+GRANT SELECT on uscrn_t2008 to nobody;
 GRANT ALL on uscrn_t2008 to ldm,mesonet;
     
 
@@ -61,7 +61,7 @@ create table uscrn_t2009(
   INHERITS (uscrn_alldata);
 CREATE INDEX uscrn_t2009_station_idx on uscrn_t2009(station);
 CREATE INDEX uscrn_t2009_valid_idx on uscrn_t2009(valid);
-GRANT SELECT on uscrn_t2009 to nobody,apache;
+GRANT SELECT on uscrn_t2009 to nobody;
 GRANT ALL on uscrn_t2009 to ldm,mesonet;
     
 
@@ -72,7 +72,7 @@ create table uscrn_t2010(
   INHERITS (uscrn_alldata);
 CREATE INDEX uscrn_t2010_station_idx on uscrn_t2010(station);
 CREATE INDEX uscrn_t2010_valid_idx on uscrn_t2010(valid);
-GRANT SELECT on uscrn_t2010 to nobody,apache;
+GRANT SELECT on uscrn_t2010 to nobody;
 GRANT ALL on uscrn_t2010 to ldm,mesonet;
     
 
@@ -83,7 +83,7 @@ create table uscrn_t2011(
   INHERITS (uscrn_alldata);
 CREATE INDEX uscrn_t2011_station_idx on uscrn_t2011(station);
 CREATE INDEX uscrn_t2011_valid_idx on uscrn_t2011(valid);
-GRANT SELECT on uscrn_t2011 to nobody,apache;
+GRANT SELECT on uscrn_t2011 to nobody;
 GRANT ALL on uscrn_t2011 to ldm,mesonet;
     
 
@@ -94,7 +94,7 @@ create table uscrn_t2012(
   INHERITS (uscrn_alldata);
 CREATE INDEX uscrn_t2012_station_idx on uscrn_t2012(station);
 CREATE INDEX uscrn_t2012_valid_idx on uscrn_t2012(valid);
-GRANT SELECT on uscrn_t2012 to nobody,apache;
+GRANT SELECT on uscrn_t2012 to nobody;
 GRANT ALL on uscrn_t2012 to ldm,mesonet;
     
 
@@ -105,7 +105,7 @@ create table uscrn_t2013(
   INHERITS (uscrn_alldata);
 CREATE INDEX uscrn_t2013_station_idx on uscrn_t2013(station);
 CREATE INDEX uscrn_t2013_valid_idx on uscrn_t2013(valid);
-GRANT SELECT on uscrn_t2013 to nobody,apache;
+GRANT SELECT on uscrn_t2013 to nobody;
 GRANT ALL on uscrn_t2013 to ldm,mesonet;
     
 
@@ -116,7 +116,7 @@ create table uscrn_t2014(
   INHERITS (uscrn_alldata);
 CREATE INDEX uscrn_t2014_station_idx on uscrn_t2014(station);
 CREATE INDEX uscrn_t2014_valid_idx on uscrn_t2014(valid);
-GRANT SELECT on uscrn_t2014 to nobody,apache;
+GRANT SELECT on uscrn_t2014 to nobody;
 GRANT ALL on uscrn_t2014 to ldm,mesonet;
     
 
@@ -127,7 +127,7 @@ create table uscrn_t2015(
   INHERITS (uscrn_alldata);
 CREATE INDEX uscrn_t2015_station_idx on uscrn_t2015(station);
 CREATE INDEX uscrn_t2015_valid_idx on uscrn_t2015(valid);
-GRANT SELECT on uscrn_t2015 to nobody,apache;
+GRANT SELECT on uscrn_t2015 to nobody;
 GRANT ALL on uscrn_t2015 to ldm,mesonet;
     
 
@@ -138,7 +138,7 @@ create table uscrn_t2016(
   INHERITS (uscrn_alldata);
 CREATE INDEX uscrn_t2016_station_idx on uscrn_t2016(station);
 CREATE INDEX uscrn_t2016_valid_idx on uscrn_t2016(valid);
-GRANT SELECT on uscrn_t2016 to nobody,apache;
+GRANT SELECT on uscrn_t2016 to nobody;
 GRANT ALL on uscrn_t2016 to ldm,mesonet;
     
 
@@ -149,7 +149,7 @@ create table uscrn_t2017(
   INHERITS (uscrn_alldata);
 CREATE INDEX uscrn_t2017_station_idx on uscrn_t2017(station);
 CREATE INDEX uscrn_t2017_valid_idx on uscrn_t2017(valid);
-GRANT SELECT on uscrn_t2017 to nobody,apache;
+GRANT SELECT on uscrn_t2017 to nobody;
 GRANT ALL on uscrn_t2017 to ldm,mesonet;
     
 
@@ -160,6 +160,6 @@ create table uscrn_t2018(
   INHERITS (uscrn_alldata);
 CREATE INDEX uscrn_t2018_station_idx on uscrn_t2018(station);
 CREATE INDEX uscrn_t2018_valid_idx on uscrn_t2018(valid);
-GRANT SELECT on uscrn_t2018 to nobody,apache;
+GRANT SELECT on uscrn_t2018 to nobody;
 GRANT ALL on uscrn_t2018 to ldm,mesonet;
     

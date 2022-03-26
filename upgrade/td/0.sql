@@ -7,4 +7,4 @@ CREATE TABLE weather_hourly(
   relhum_percent real,
   airtemp_c real,
   windspeed_mps real);
-GRANT SELECT on weather_hourly to nobody,apache;
+GRANT SELECT on weather_hourly to nobody;

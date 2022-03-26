@@ -11,7 +11,7 @@ CREATE TABLE scp_alldata(
 ) PARTITION by range(valid);
 ALTER TABLE scp_alldata OWNER to mesonet;
 GRANT ALL on scp_alldata to ldm;
-GRANT SELECT on scp_alldata to nobody,apache;
+GRANT SELECT on scp_alldata to nobody;
 
 do
 $do$
@@ -31,7 +31,7 @@ begin
             GRANT ALL on scp%s to ldm
         $f$, year);
         execute format($f$
-            GRANT SELECT on scp%s to nobody,apache
+            GRANT SELECT on scp%s to nobody
         $f$, year);
         -- Indices
         execute format($f$

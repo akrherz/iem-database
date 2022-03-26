@@ -13,7 +13,7 @@ editedby varchar,
 operation varchar
 );
 GRANT ALL on plant_harvest to mesonet;
-GRANT SELECT on plant_harvest to nobody,apache;
+GRANT SELECT on plant_harvest to nobody;
 
 CREATE TABLE soil_fert(
 stabilizername varchar,
@@ -59,7 +59,7 @@ iron varchar,
 potassiumelem varchar
 );
 GRANT ALL on soil_fert to mesonet;
-GRANT select on soil_fert to nobody,apache;
+GRANT select on soil_fert to nobody;
 
 CREATE TABLE pesticides(
 crop varchar,
@@ -88,7 +88,7 @@ rateunit1 varchar,
 rateunit3 varchar,
 rateunit2 varchar);
 GRANT ALL on pesticides to mesonet;
-GRANT select on pesticides to nobody,apache;
+GRANT select on pesticides to nobody;
 
 CREATE TABLE residue_mngt(
 updated varchar,
@@ -100,7 +100,7 @@ editedby varchar,
 calendaryear varchar,
 uniqueid varchar);
 GRANT ALL on residue_mngt to mesonet;
-GRANT select on residue_mngt to nobody,apache;
+GRANT select on residue_mngt to nobody;
 
 CREATE TABLE dwm(
 updated varchar,
@@ -113,7 +113,7 @@ editedby varchar,
 calendaryear varchar,
 uniqueid varchar);
 GRANT ALL on dwm to mesonet;
-GRANT select on dwm to nobody,apache;
+GRANT select on dwm to nobody;
 
 CREATE TABLE irrigation(
 updated varchar,
@@ -128,7 +128,7 @@ irrstartdate varchar,
 irrstructure varchar,
 irrenddate varchar);
 GRANT ALL on irrigation to mesonet;
-GRANT select on irrigation to nobody,apache;
+GRANT select on irrigation to nobody;
 
 CREATE TABLE notes(
 updated varchar,
@@ -138,4 +138,4 @@ editedby varchar,
 calendaryear varchar,
 uniqueid varchar);
 GRANT ALL on notes to mesonet;
-GRANT select on notes to nobody,apache;
+GRANT select on notes to nobody;

@@ -6,7 +6,7 @@ CREATE TABLE raw(
 ) PARTITION by range(valid);
 ALTER TABLE raw OWNER to mesonet;
 GRANT ALL on raw to ldm;
-GRANT SELECT on raw to nobody,apache;
+GRANT SELECT on raw to nobody;
 
 do
 $do$
@@ -32,7 +32,7 @@ begin
             GRANT ALL on raw%s to ldm
         $f$, year);
         execute format($f$
-            GRANT SELECT on raw%s to nobody,apache
+            GRANT SELECT on raw%s to nobody
         $f$, year);
         -- Indices
         execute format($f$
@@ -84,7 +84,7 @@ begin
             GRANT ALL on raw%s to ldm
         $f$, year);
         execute format($f$
-            GRANT SELECT on raw%s to nobody,apache
+            GRANT SELECT on raw%s to nobody
         $f$, year);
         -- Indices
         execute format($f$
@@ -112,7 +112,7 @@ begin
                 GRANT ALL on %s to ldm
             $f$, mytable);
             execute format($f$
-                GRANT SELECT on %s to nobody,apache
+                GRANT SELECT on %s to nobody
             $f$, mytable);
 
         end loop;

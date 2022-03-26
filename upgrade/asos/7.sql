@@ -6,7 +6,7 @@ create table t2019(
   INHERITS (alldata);
 CREATE INDEX t2019_station_idx on t2019(station);
 CREATE INDEX t2019_valid_idx on t2019(valid);
-GRANT SELECT on t2019 to nobody,apache;
+GRANT SELECT on t2019 to nobody;
 GRANT ALL on t2019 to ldm,mesonet;
 
 ---
@@ -17,4 +17,4 @@ create table t2019_1minute(
   INHERITS (alldata_1minute);
 CREATE INDEX t2019_1minte_station_idx on t2019_1minute(station);
 CREATE INDEX t2019_1minute_valid_idx on t2019_1minute(valid);
-GRANT SELECT on t2019_1minute to nobody,apache;
+GRANT SELECT on t2019_1minute to nobody;

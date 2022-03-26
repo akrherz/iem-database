@@ -6,7 +6,7 @@ create table hourly_2019(
   INHERITS (hourly);
 CREATE INDEX hourly_2019_idx on hourly_2019(station, network, valid);
 CREATE INDEX hourly_2019_valid_idx on hourly_2019(valid);
-GRANT SELECT on hourly_2019 to nobody,apache;
+GRANT SELECT on hourly_2019 to nobody;
 CREATE RULE replace_hourly_2019 as
     ON INSERT TO hourly_2019
    WHERE (EXISTS ( SELECT 1
@@ -26,7 +26,7 @@ create table summary_2019(
   INHERITS (summary);
 CREATE INDEX summary_2019_day_idx on summary_2019(day);
 CREATE UNIQUE INDEX summary_2019_iemid_day_idx on summary_2019(iemid, day);
-GRANT SELECT on summary_2019 to nobody,apache;
+GRANT SELECT on summary_2019 to nobody;
 alter table summary_2019
   add foreign key(iemid)
   references stations(iemid) ON DELETE CASCADE;

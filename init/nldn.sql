@@ -18,7 +18,7 @@ CREATE TABLE nldn_all(
 	ellipse smallint,
 	chisqr smallint) PARTITION by RANGE (valid);
 GRANT ALL on nldn_all to mesonet,ldm;
-GRANT SELECT on nldn_all to apache,nobody;
+GRANT SELECT on nldn_all to nobody;
 CREATE INDEX on nldn_all(valid);
 
 do
@@ -40,7 +40,7 @@ begin
                 GRANT ALL on nldn%s_%s to mesonet,ldm
             $f$, year, lpad(month::text, 2, '0'));
             execute format($f$
-                GRANT SELECT on nldn%s_%s to nobody,apache
+                GRANT SELECT on nldn%s_%s to nobody
             $f$, year, lpad(month::text, 2, '0'));
         end loop;
     end loop;

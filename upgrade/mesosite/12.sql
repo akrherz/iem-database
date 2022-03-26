@@ -8,4 +8,4 @@ CREATE TABLE talltowers_analog_queue
     aff varchar(256),
     filled boolean DEFAULT 'f',
     valid timestamptz DEFAULT now());
-GRANT ALL on talltowers_analog_queue to apache, mesonet;
+GRANT ALL on talltowers_analog_queue to mesonet;

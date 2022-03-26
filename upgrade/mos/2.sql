@@ -5,7 +5,7 @@ create table model_gridpoint_2017(
   INHERITS (model_gridpoint);
 CREATE INDEX model_gridpoint_2017_idx 
 	on model_gridpoint_2017(station, model, runtime);
-GRANT SELECT on model_gridpoint_2017 to nobody,apache;
+GRANT SELECT on model_gridpoint_2017 to nobody;
 
 create table t2017( 
   CONSTRAINT __t2017_check 
@@ -14,4 +14,4 @@ create table t2017(
   INHERITS (alldata);
 CREATE INDEX t2017_idx on t2017(station, model, runtime);
 CREATE INDEX t2017_runtime_idx on t2017(runtime);
-GRANT SELECT on t2017 to nobody,apache;
+GRANT SELECT on t2017 to nobody;

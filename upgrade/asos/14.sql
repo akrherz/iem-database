@@ -8,7 +8,7 @@ CREATE TABLE taf(
 );
 ALTER TABLE taf OWNER to mesonet;
 GRANT ALL on taf to ldm;
-GRANT SELECT on taf to nobody,apache;
+GRANT SELECT on taf to nobody;
 CREATE INDEX taf_idx on taf(station, valid);
 grant all on taf_id_seq to ldm;
 
@@ -31,7 +31,7 @@ CREATE TABLE taf_forecast(
 ) PARTITION by range(valid);
 ALTER TABLE taf_forecast OWNER to mesonet;
 GRANT ALL on taf_forecast to ldm;
-GRANT SELECT on taf_forecast to nobody,apache;
+GRANT SELECT on taf_forecast to nobody;
 
 do
 $do$
@@ -55,7 +55,7 @@ begin
             GRANT ALL on taf%s to ldm
         $f$, year);
         execute format($f$
-            GRANT SELECT on taf%s to nobody,apache
+            GRANT SELECT on taf%s to nobody
         $f$, year);
         -- Indices
         execute format($f$

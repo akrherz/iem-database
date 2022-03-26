@@ -28,7 +28,7 @@ CREATE TABLE plotids(
 	south varchar,
 	plotid varchar
 );
-GRANT SELECT on plotids to nobody,apache;
+GRANT SELECT on plotids to nobody;
 
 ---=========================================================================
 --- Storage of Management
@@ -51,7 +51,7 @@ CREATE TABLE management(
     organicamendmentstext varchar,
     irrigationamount varchar
 );
-GRANT SELECT on management to nobody,apache;
+GRANT SELECT on management to nobody;
 
 --- Storage of Pesticides
 ---
@@ -95,7 +95,7 @@ CREATE TABLE pesticides(
     rateunit3 varchar,
     rateunit2 varchar
 );
-GRANT SELECT on pesticides to nobody,apache;
+GRANT SELECT on pesticides to nobody;
 
 --- Storage of Operations
 ---
@@ -140,7 +140,7 @@ CREATE TABLE operations(
     iron varchar,
     biomassdate1 date
 );
-GRANT SELECT on operations to nobody,apache;
+GRANT SELECT on operations to nobody;
 
 --- ========================================================================
 --- Storage of Soil Data
@@ -221,7 +221,7 @@ CREATE TRIGGER soil_insert_before_T
   
 CREATE UNIQUE index soil_data_idx on 
 	soil_data(site, plotid, varname, year, depth, subsample);
-GRANT SELECT on soil_data to nobody,apache;
+GRANT SELECT on soil_data to nobody;
 
 
 
@@ -296,4 +296,4 @@ CREATE TRIGGER agronomic_insert_before_T
   
 CREATE UNIQUE index agronomic_data_idx on 
 	agronomic_data(site, plotid, varname, year);
-GRANT SELECT on agronomic_data to nobody,apache;
+GRANT SELECT on agronomic_data to nobody;

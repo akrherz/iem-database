@@ -30,7 +30,7 @@ CREATE TABLE nexrad_attributes(
     geom geometry(Point, 4326)
  );
 GRANT ALL on nexrad_attributes to ldm,mesonet;
-GRANT SELECT on nexrad_attributes to apache,nobody;
+GRANT SELECT on nexrad_attributes to nobody;
 
 
 CREATE TABLE nexrad_attributes_log(
@@ -53,7 +53,7 @@ CREATE TABLE nexrad_attributes_log(
     geom geometry(Point, 4326)
  ) PARTITION by RANGE (valid);
 GRANT ALL on nexrad_attributes_log to ldm,mesonet;
-GRANT SELECT on nexrad_attributes_log to apache,nobody;
+GRANT SELECT on nexrad_attributes_log to nobody;
 CREATE INDEX on nexrad_attributes_log(valid);
 CREATE INDEX on nexrad_attributes_log(nexrad);
 
@@ -72,7 +72,7 @@ begin
             GRANT ALL on nexrad_attributes_%s to mesonet,ldm
         $f$, year);
         execute format($f$
-            GRANT SELECT on nexrad_attributes_%s to nobody,apache
+            GRANT SELECT on nexrad_attributes_%s to nobody
         $f$, year);
     end loop;
 end;

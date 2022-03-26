@@ -4,7 +4,7 @@ create table t2017(
         and valid < '2018-01-01 00:00+00'::timestamptz)) 
   INHERITS (alldata);
 CREATE INDEX t2017_idx on t2017(station, valid);
-GRANT SELECT on t2017 to nobody,apache;
+GRANT SELECT on t2017 to nobody;
 
 create table flux2017( 
   CONSTRAINT __flux2017_check 
@@ -12,7 +12,7 @@ create table flux2017(
         and valid < '2018-01-01 00:00+00'::timestamptz)) 
   INHERITS (flux_data);
 CREATE UNIQUE INDEX flux2017_idx on flux2017(station, valid);
-GRANT SELECT on flux2017 to nobody,apache;
+GRANT SELECT on flux2017 to nobody;
 
 CREATE TABLE hpd_2017(
         CONSTRAINT __hpd_2017_check
@@ -20,6 +20,6 @@ CREATE TABLE hpd_2017(
               and valid < '2018-01-01 00:00+00'::timestamptz)
         )
         INHERITS (hpd_alldata);
-GRANT SELECT on hpd_2017 to nobody,apache;
+GRANT SELECT on hpd_2017 to nobody;
 CREATE INDEX hpd_2017_station_idx on hpd_2017(station);
 

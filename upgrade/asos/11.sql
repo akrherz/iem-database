@@ -44,7 +44,7 @@ CREATE TABLE alldata(
 ) PARTITION by RANGE (valid);
 ALTER TABLE alldata OWNER to mesonet;
 GRANT ALL on alldata to ldm;
-GRANT SELECT on alldata to nobody,apache;
+GRANT SELECT on alldata to nobody;
 
 do
 $do$
@@ -82,7 +82,7 @@ begin
             GRANT ALL on t%s to ldm
         $f$, year);
         execute format($f$
-            GRANT SELECT on t%s to nobody,apache
+            GRANT SELECT on t%s to nobody
         $f$, year);
         -- Indices
         execute format($f$
@@ -120,7 +120,7 @@ CREATE TABLE alldata_1minute(
 ) PARTITION by range(valid);
 ALTER TABLE alldata_1minute OWNER to mesonet;
 GRANT ALL on alldata_1minute to ldm;
-GRANT SELECT on alldata_1minute to nobody,apache;
+GRANT SELECT on alldata_1minute to nobody;
 
 
 do
@@ -162,7 +162,7 @@ begin
             GRANT ALL on t%s_1minute to ldm
         $f$, year);
         execute format($f$
-            GRANT SELECT on t%s_1minute to nobody,apache
+            GRANT SELECT on t%s_1minute to nobody
         $f$, year);
         -- Indices
         execute format($f$

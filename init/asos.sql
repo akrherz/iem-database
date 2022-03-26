@@ -16,7 +16,7 @@ CREATE TABLE unknown(
 );
 ALTER TABLE unknown OWNER to mesonet;
 GRANT ALL on unknown to ldm;
-GRANT SELECT on unknown to nobody,apache;
+GRANT SELECT on unknown to nobody;
 
 ---
 --- Some skycoverage metadata
@@ -24,7 +24,7 @@ GRANT SELECT on unknown to nobody,apache;
 CREATE TABLE skycoverage(
   code char(3),
   value smallint);
-GRANT SELECT on skycoverage to nobody,apache;
+GRANT SELECT on skycoverage to nobody;
 INSERT into skycoverage values('CLR', 0);
 INSERT into skycoverage values('FEW', 25);
 INSERT into skycoverage values('SCT', 50);
@@ -80,8 +80,8 @@ CREATE TABLE stations(
 CREATE UNIQUE index stations_idx on stations(id, network);
 create UNIQUE index stations_iemid_idx on stations(iemid);
 SELECT AddGeometryColumn('stations', 'geom', 4326, 'POINT', 2);
-GRANT SELECT on stations to apache,nobody;
-grant all on stations_iemid_seq to nobody,apache;
+GRANT SELECT on stations to nobody;
+grant all on stations_iemid_seq to nobody;
 GRANT ALL on stations to mesonet,ldm;
 GRANT ALL on stations_iemid_seq to mesonet,ldm;
 
@@ -89,7 +89,7 @@ GRANT ALL on stations_iemid_seq to mesonet,ldm;
 CREATE TABLE alldata_report_type(
   id smallint UNIQUE NOT NULL,
   label varchar);
-GRANT SELECT on alldata_report_type to nobody,apache;
+GRANT SELECT on alldata_report_type to nobody;
 
 INSERT into alldata_report_type VALUES
         (0, 'Unknown'),
@@ -140,7 +140,7 @@ CREATE TABLE alldata(
 ) PARTITION by range(valid);
 ALTER TABLE alldata OWNER to mesonet;
 GRANT ALL on alldata to ldm;
-GRANT SELECT on alldata to nobody,apache;
+GRANT SELECT on alldata to nobody;
 
 do
 $do$
@@ -160,7 +160,7 @@ begin
             GRANT ALL on t%s to ldm
         $f$, year);
         execute format($f$
-            GRANT SELECT on t%s to nobody,apache
+            GRANT SELECT on t%s to nobody
         $f$, year);
         -- Indices
         execute format($f$
@@ -185,7 +185,7 @@ CREATE TABLE scp_alldata(
 ) PARTITION by range(valid);
 ALTER TABLE scp_alldata OWNER to mesonet;
 GRANT ALL on scp_alldata to ldm;
-GRANT SELECT on scp_alldata to nobody,apache;
+GRANT SELECT on scp_alldata to nobody;
 
 do
 $do$
@@ -205,7 +205,7 @@ begin
             GRANT ALL on scp%s to ldm
         $f$, year);
         execute format($f$
-            GRANT SELECT on scp%s to nobody,apache
+            GRANT SELECT on scp%s to nobody
         $f$, year);
         -- Indices
         execute format($f$
@@ -228,7 +228,7 @@ CREATE TABLE taf(
 );
 ALTER TABLE taf OWNER to mesonet;
 GRANT ALL on taf to ldm;
-GRANT SELECT on taf to nobody,apache;
+GRANT SELECT on taf to nobody;
 CREATE INDEX taf_idx on taf(station, valid);
 grant all on taf_id_seq to ldm;
 
@@ -251,7 +251,7 @@ CREATE TABLE taf_forecast(
 ) PARTITION by range(valid);
 ALTER TABLE taf_forecast OWNER to mesonet;
 GRANT ALL on taf_forecast to ldm;
-GRANT SELECT on taf_forecast to nobody,apache;
+GRANT SELECT on taf_forecast to nobody;
 
 do
 $do$
@@ -275,7 +275,7 @@ begin
             GRANT ALL on taf%s to ldm
         $f$, year);
         execute format($f$
-            GRANT SELECT on taf%s to nobody,apache
+            GRANT SELECT on taf%s to nobody
         $f$, year);
         -- Indices
         execute format($f$

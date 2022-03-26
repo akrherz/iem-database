@@ -8,4 +8,4 @@ CREATE TABLE weblog(
     http_status int
 );
 ALTER TABLE weblog OWNER to mesonet;
-GRANT ALL on weblog to nobody,apache;
+GRANT ALL on weblog to nobody;

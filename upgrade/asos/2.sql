@@ -6,7 +6,7 @@ create table t2016(
   INHERITS (alldata);
 CREATE INDEX t2016_station_idx on t2016(station);
 CREATE INDEX t2016_valid_idx on t2016(valid);
-GRANT SELECT on t2016 to nobody,apache;
+GRANT SELECT on t2016 to nobody;
 
 
 ---
@@ -17,4 +17,4 @@ create table t2016_1minute(
   INHERITS (alldata_1minute);
 CREATE INDEX t2016_1minte_station_idx on t2016_1minute(station);
 CREATE INDEX t2016_1minute_valid_idx on t2016_1minute(valid);
-GRANT SELECT on t2016_1minute to nobody,apache;
+GRANT SELECT on t2016_1minute to nobody;

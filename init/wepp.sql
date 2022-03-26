@@ -66,7 +66,7 @@ CREATE TABLE nri(
 CREATE UNIQUE INDEX nri_id_idx on nri(id);
 CREATE INDEX nri_man_id on nri(man_id);
 CREATE INDEX nri_model_twp_idx on nri(model_twp);
-GRANT SELECT on nri to apache,nobody;
+GRANT SELECT on nri to nobody;
 
 CREATE TABLE layers(
  soil_id int,
@@ -134,7 +134,7 @@ CREATE TABLE results_twp_year(
 	ve_runoff real,
 	ve_loss real
 );
-GRANT SELECT on results_twp_year to nobody,apache;
+GRANT SELECT on results_twp_year to nobody;
 
 ---
 --- Results by township by month
@@ -151,7 +151,7 @@ CREATE TABLE results_twp_month(
 	ve_runoff real,
 	ve_loss real
 );
-GRANT SELECT on results_twp_month to nobody,apache;
+GRANT SELECT on results_twp_month to nobody;
 
 ---
 --- Combinations
@@ -168,7 +168,7 @@ CREATE UNIQUE INDEX combos_idx on combos(nri_id, model_twp, hrap_i);
 CREATE INDEX combos_hrap_i_idx on combos(hrap_i);
 CREATE INDEX combos_model_twp_idx on combos(model_twp);
 CREATE INDEX combos_nri_id_idx on combos(nri_id);
-GRANT SELECT on combos to nobody,apache;
+GRANT SELECT on combos to nobody;
 
 ---
 --- Store run results
@@ -182,7 +182,7 @@ CREATE TABLE results(
 );
 CREATE INDEX results_run_id_idx on results(run_id);
 CREATE INDEX results_valid_idx on results(valid);
-GRANT SELECT on results to nobody,apache;
+GRANT SELECT on results to nobody;
 
 ---
 --- Store Results by Township
@@ -206,7 +206,7 @@ CREATE TABLE results_by_twp(
 );
 CREATE INDEX results_by_twp_model_twp_idx on results_by_twp(model_twp);
 CREATE INDEX results_by_twp_valid_idx on results_by_twp(valid);
-GRANT SELECT on results_by_twp to nobody,apache;
+GRANT SELECT on results_by_twp to nobody;
 
 ---
 --- Rainfall log
@@ -215,7 +215,7 @@ CREATE TABLE rainfall_log(
   valid date,
   max_rainfall real
 );
-GRANT SELECT on rainfall_log to nobody,apache;
+GRANT SELECT on rainfall_log to nobody;
 
 ---
 --- Yearly Rainfall
@@ -227,7 +227,7 @@ CREATE TABLE yearly_rainfall(
   peak_15min real,
   hr_cnt smallint
 );
-GRANT SELECT on yearly_rainfall to nobody,apache;
+GRANT SELECT on yearly_rainfall to nobody;
 
 ---
 --- Monthly Rainfall
@@ -240,7 +240,7 @@ CREATE TABLE monthly_rainfall(
   hr_cnt smallint
 ) PARTITION by range(valid);
 ALTER TABLE monthly_rainfall OWNER to mesonet;
-GRANT SELECT on monthly_rainfall to nobody,apache;
+GRANT SELECT on monthly_rainfall to nobody;
 
 
  do
@@ -265,7 +265,7 @@ begin
             GRANT ALL on %s to ldm
         $f$, mytable);
         execute format($f$
-            GRANT SELECT on %s to nobody,apache
+            GRANT SELECT on %s to nobody
         $f$, mytable);
         execute format($f$
             CREATE INDEX %s_valid_idx on %s(valid)
@@ -285,7 +285,7 @@ CREATE TABLE daily_rainfall(
   hr_cnt smallint
 ) PARTITION by range(valid);
 ALTER TABLE daily_rainfall OWNER to mesonet;
-GRANT SELECT on daily_rainfall to nobody,apache;
+GRANT SELECT on daily_rainfall to nobody;
 
  do
 $do$
@@ -309,7 +309,7 @@ begin
             GRANT ALL on %s to ldm
         $f$, mytable);
         execute format($f$
-            GRANT SELECT on %s to nobody,apache
+            GRANT SELECT on %s to nobody
         $f$, mytable);
         execute format($f$
             CREATE INDEX %s_valid_idx on %s(valid)

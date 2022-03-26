@@ -57,7 +57,7 @@ begin
             GRANT ALL on %s to ldm
         $f$, mytable);
         execute format($f$
-            GRANT SELECT on %s to nobody,apache
+            GRANT SELECT on %s to nobody
         $f$, mytable);
     end loop;
 end;
@@ -103,8 +103,8 @@ CREATE TABLE stations(
 CREATE UNIQUE index stations_idx on stations(id, network);
 create UNIQUE index stations_iemid_idx on stations(iemid);
 SELECT AddGeometryColumn('stations', 'geom', 4326, 'POINT', 2);
-GRANT SELECT on stations to apache,nobody;
-grant all on stations_iemid_seq to nobody,apache;
+GRANT SELECT on stations to nobody;
+grant all on stations_iemid_seq to nobody;
 GRANT ALL on stations to mesonet,ldm;
 GRANT ALL on stations_iemid_seq to mesonet,ldm;
 
@@ -115,7 +115,7 @@ GRANT ALL on stations_iemid_seq to mesonet,ldm;
 CREATE TABLE skycoverage(
   code char(3),
   value smallint);
-GRANT SELECT on skycoverage to nobody,apache;
+GRANT SELECT on skycoverage to nobody;
 INSERT into skycoverage values('CLR', 0);
 INSERT into skycoverage values('FEW', 25);
 INSERT into skycoverage values('SCT', 50);
@@ -133,7 +133,7 @@ CREATE TABLE events(
   magnitude real,
   iemid int REFERENCES stations(iemid)
 );
-GRANT SELECT on events to nobody,apache;
+GRANT SELECT on events to nobody;
 
 ---
 --- Current QC data
@@ -154,7 +154,7 @@ CREATE TABLE current_qc(
   iemid int REFERENCES stations(iemid)
  );
 CREATE UNIQUE INDEX current_qc_idx on current_qc(station, network);
-GRANT SELECT on current_qc to nobody,apache;
+GRANT SELECT on current_qc to nobody;
 
 ---
 --- Copy of the climate51 table that is in the coop database
@@ -186,7 +186,7 @@ CREATE TABLE climate51(
 CREATE UNIQUE INDEX climate51_idx on climate51(station,valid);
 CREATE INDEX climate51_station_idx on climate51(station);
 CREATE INDEX climate51_valid_idx on climate51(valid);
-GRANT SELECT on climate51 to nobody,apache;
+GRANT SELECT on climate51 to nobody;
 
 ---
 --- Storage of information we parse from CLI products
@@ -243,7 +243,7 @@ CREATE TABLE cli_data(
 ALTER TABLE cli_data OWNER to mesonet;
 GRANT ALL on cli_data to ldm;
 CREATE UNIQUE index cli_data_idx on cli_data(station,valid);
-GRANT SELECT on cli_data to nobody,apache;
+GRANT SELECT on cli_data to nobody;
 
 ---
 --- Offline metadata
@@ -253,7 +253,7 @@ CREATE TABLE offline(
 	network varchar(10),
 	trackerid int,
 	valid timestamptz);
-GRANT SELECT on offline to nobody,apache;
+GRANT SELECT on offline to nobody;
 
 
  create table current_shef(
@@ -274,7 +274,6 @@ GRANT SELECT on offline to nobody,apache;
    );
  create index current_shef_station_idx on current_shef(station);
  GRANT SELECT on current_shef to nobody;
- GRANT SELECT on current_shef to apache;
  
 CREATE OR REPLACE RULE replace_current_shef AS ON 
     INSERT TO current_shef WHERE (EXISTS 
@@ -438,7 +437,7 @@ CREATE TABLE current (
     snowdepth real
 );
 CREATE UNIQUE index current_iemid_idx on current(iemid);
-GRANT SELECT on current to apache,nobody;
+GRANT SELECT on current to nobody;
 
 CREATE TABLE current_log (
     iemid int REFERENCES stations(iemid),
@@ -514,7 +513,7 @@ CREATE TABLE current_log (
     snowdepth real
 );
 GRANT ALL on current_log to mesonet,ldm;
-GRANT SELECT on current_log to apache,nobody;
+GRANT SELECT on current_log to nobody;
 
 CREATE OR REPLACE FUNCTION current_update_log() RETURNS trigger
     LANGUAGE plpgsql
@@ -573,7 +572,7 @@ CREATE TABLE summary (
 ) PARTITION by range(day);
 ALTER TABLE summary OWNER to mesonet;
 GRANT ALL on summary to ldm;
-GRANT SELECT on summary to nobody,apache;
+GRANT SELECT on summary to nobody;
 
 do
 $do$
@@ -599,7 +598,7 @@ begin
             GRANT ALL on %s to ldm
         $f$, mytable);
         execute format($f$
-            GRANT SELECT on %s to nobody,apache
+            GRANT SELECT on %s to nobody
         $f$, mytable);
         -- Indices
         execute format($f$
@@ -623,7 +622,7 @@ CREATE TABLE hourly(
 ) PARTITION by range(valid);
 ALTER TABLE hourly OWNER to mesonet;
 GRANT ALL on hourly to ldm;
-GRANT SELECT on hourly to apache,nobody;
+GRANT SELECT on hourly to nobody;
 
 do
 $do$
@@ -649,7 +648,7 @@ begin
             GRANT ALL on %s to ldm
         $f$, mytable);
         execute format($f$
-            GRANT SELECT on %s to nobody,apache
+            GRANT SELECT on %s to nobody
         $f$, mytable);
         -- Indices
         execute format($f$
@@ -668,7 +667,7 @@ CREATE TABLE rwis_locations(
   id smallint UNIQUE,
   nwsli char(5)
 );
-grant select on rwis_locations to nobody,apache;
+grant select on rwis_locations to nobody;
 
 --
 -- RWIS Deep Soil Probe Data
@@ -688,7 +687,7 @@ CREATE TABLE rwis_soil_data_log(
   moisture real
 );
 
-GRANT select on rwis_soil_data to apache,nobody;
+GRANT select on rwis_soil_data to nobody;
 
 CREATE FUNCTION rwis_soil_update_log() RETURNS trigger
     LANGUAGE plpgsql
@@ -768,10 +767,10 @@ CREATE VIEW rwis_traffic AS
   rwis_traffic_sensors s, rwis_traffic_data d
   WHERE d.sensor_id = s.id;
 
-GRANT SELECT on rwis_traffic_data to apache,nobody;
-GRANT SELECT on rwis_traffic_data_log to apache,nobody;
-GRANT SELECT on rwis_traffic_sensors to apache,nobody;
-GRANT SELECT on rwis_traffic to apache,nobody;
+GRANT SELECT on rwis_traffic_data to nobody;
+GRANT SELECT on rwis_traffic_data_log to nobody;
+GRANT SELECT on rwis_traffic_sensors to nobody;
+GRANT SELECT on rwis_traffic to nobody;
 
 INSERT into rwis_locations values (58, 'RPFI4');
 INSERT into rwis_locations values (30, 'RMCI4');

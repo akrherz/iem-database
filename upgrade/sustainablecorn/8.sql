@@ -10,4 +10,4 @@ CREATE TABLE tileflow_data(
   discharge_mm_qcflag char(1),
   discharge_mm_qc real);
 CREATE INDEX tileflow_data_idx on tileflow_data(uniqueid, plotid, valid);
-GRANT SELECT on tileflow_data to nobody,apache;
+GRANT SELECT on tileflow_data to nobody;

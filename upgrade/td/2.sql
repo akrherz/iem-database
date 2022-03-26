@@ -10,4 +10,4 @@ CREATE TABLE weather_observations(
   srad_wms real,
   winddir_deg real,
   windgust_mps real);
-GRANT SELECT on weather_observations to nobody,apache;
+GRANT SELECT on weather_observations to nobody;

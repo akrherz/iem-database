@@ -13,7 +13,7 @@ CREATE TABLE iemrasters(
   units varchar(12),
   interval int
 );
-GRANT SELECT on iemrasters to nobody,apache;
+GRANT SELECT on iemrasters to nobody;
 
 -- Storage of color tables and values
 CREATE TABLE iemrasters_lookup(
@@ -24,4 +24,4 @@ CREATE TABLE iemrasters_lookup(
   g smallint,
   b smallint
 );
-GRANT SELECT on iemrasters_lookup to nobody,apache;
+GRANT SELECT on iemrasters_lookup to nobody;

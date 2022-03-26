@@ -8,4 +8,4 @@ CREATE TABLE yieldfx_baseline(
   rain real,
   windspeed real,
   rh real);
-GRANT SELECT on yieldfx_baseline to nobody,apache;
+GRANT SELECT on yieldfx_baseline to nobody;

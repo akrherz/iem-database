@@ -14,7 +14,7 @@ CREATE INDEX spc_outlook_product_issue on spc_outlook(product_issue);
 CREATE INDEX spc_outlook_expire on spc_outlook(expire);
 ALTER TABLE spc_outlook OWNER to mesonet;
 GRANT ALL on spc_outlook to ldm;
-GRANT SELECT on spc_outlook to nobody,apache;
+GRANT SELECT on spc_outlook to nobody;
 GRANT ALL on spc_outlook_id_seq to mesonet,ldm;
 
 CREATE TABLE spc_outlook_geometries(
@@ -29,4 +29,4 @@ CREATE INDEX spc_outlook_geometries_gix
     ON spc_outlook_geometries USING GIST (geom);
 ALTER TABLE spc_outlook_geometries OWNER to mesonet;
 GRANT ALL on spc_outlook_geometries to ldm;
-GRANT SELECT on spc_outlook_geometries to nobody,apache;
+GRANT SELECT on spc_outlook_geometries to nobody;

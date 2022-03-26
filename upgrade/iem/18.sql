@@ -41,7 +41,7 @@ CREATE TABLE summary (
 ) PARTITION by range(day);
 ALTER TABLE summary OWNER to mesonet;
 GRANT ALL on summary to ldm;
-GRANT SELECT on summary to nobody,apache;
+GRANT SELECT on summary to nobody;
 
 do
 $do$
@@ -87,7 +87,7 @@ begin
             GRANT ALL on %s to ldm
         $f$, mytable);
         execute format($f$
-            GRANT SELECT on %s to nobody,apache
+            GRANT SELECT on %s to nobody
         $f$, mytable);
         -- Indices
         execute format($f$

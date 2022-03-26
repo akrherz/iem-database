@@ -7,10 +7,10 @@ create table lsrs_2015(
   INHERITS (lsrs);
 CREATE INDEX lsrs_2015_valid_idx on lsrs_2015(valid);
 CREATE INDEX lsrs_2015_wfo_idx on lsrs_2015(wfo);
-GRANT SELECT on lsrs_2015 to nobody,apache;
+GRANT SELECT on lsrs_2015 to nobody;
 
 CREATE TABLE raob_profile_2015() inherits (raob_profile);
-GRANT SELECT on raob_profile_2015 to nobody,apache;
+GRANT SELECT on raob_profile_2015 to nobody;
 CREATE INDEX raob_profile_2015_fid_idx 
 	on raob_profile_2015(fid);
 
@@ -24,11 +24,11 @@ CREATE INDEX warnings_2015_gtype_idx on warnings_2015(gtype);
 CREATE INDEX warnings_2015_issue_idx on warnings_2015(issue);
 CREATE INDEX warnings_2015_ugc_idx on warnings_2015(ugc);
 CREATE INDEX warnings_2015_wfo_idx on warnings_2015(wfo);
-grant select on warnings_2015 to nobody,apache;
+grant select on warnings_2015 to nobody;
 
 CREATE table sbw_2015() inherits (sbw);
 create index sbw_2015_idx on sbw_2015(wfo,eventid,significance,phenomena);
 create index sbw_2015_expire_idx on sbw_2015(expire);
 create index sbw_2015_issue_idx on sbw_2015(issue);
 create index sbw_2015_wfo_idx on sbw_2015(wfo);
-grant select on sbw_2015 to apache,nobody;
+grant select on sbw_2015 to nobody;

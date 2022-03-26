@@ -23,7 +23,7 @@ CREATE TABLE uscrn_alldata(
   PARTITION by range(valid);
 ALTER TABLE uscrn_alldata OWNER to mesonet;
 GRANT ALL on uscrn_alldata to ldm;
-GRANT SELECT on uscrn_alldata to nobody,apache;
+GRANT SELECT on uscrn_alldata to nobody;
 
 do
 $do$
@@ -65,7 +65,7 @@ begin
             GRANT ALL on %s to ldm
         $f$, mytable);
         execute format($f$
-            GRANT SELECT on %s to nobody,apache
+            GRANT SELECT on %s to nobody
         $f$, mytable);
         -- Indices
         execute format($f$
@@ -102,7 +102,7 @@ CREATE TABLE alldata(
   PARTITION by range(valid);
 ALTER TABLE alldata OWNER to mesonet;
 GRANT ALL on alldata to ldm;
-GRANT SELECT on alldata to nobody,apache;
+GRANT SELECT on alldata to nobody;
 
 do
 $do$
@@ -144,7 +144,7 @@ begin
             GRANT ALL on %s to ldm
         $f$, mytable);
         execute format($f$
-            GRANT SELECT on %s to nobody,apache
+            GRANT SELECT on %s to nobody
         $f$, mytable);
         -- Indices
         execute format($f$
@@ -263,7 +263,7 @@ station            character varying(10),
 ) PARTITION by range(valid);
 ALTER TABLE flux_data OWNER to mesonet;
 GRANT ALL on flux_data to ldm;
-GRANT SELECT on flux_data to nobody,apache;
+GRANT SELECT on flux_data to nobody;
 
 do
 $do$
@@ -305,7 +305,7 @@ begin
             GRANT ALL on %s to ldm
         $f$, mytable);
         execute format($f$
-            GRANT SELECT on %s to nobody,apache
+            GRANT SELECT on %s to nobody
         $f$, mytable);
         -- Indices
         execute format($f$
@@ -332,7 +332,7 @@ CREATE TABLE hpd_alldata(
 ) PARTITION by range(valid);
 ALTER TABLE hpd_alldata OWNER to mesonet;
 GRANT ALL on hpd_alldata to ldm;
-GRANT SELECT on hpd_alldata to nobody,apache;
+GRANT SELECT on hpd_alldata to nobody;
 
 do
 $do$
@@ -374,7 +374,7 @@ begin
             GRANT ALL on %s to ldm
         $f$, mytable);
         execute format($f$
-            GRANT SELECT on %s to nobody,apache
+            GRANT SELECT on %s to nobody
         $f$, mytable);
         -- Indices
         execute format($f$

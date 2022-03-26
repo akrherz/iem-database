@@ -20,5 +20,5 @@ CREATE TABLE ghg_data(
   ghg14 real,
   ghg15 real,
   ghg16 real);
-GRANT SELECT on ghg_data to nobody,apache;
+GRANT SELECT on ghg_data to nobody;
 GRANT ALL on ghg_data to mesonet,ldm;

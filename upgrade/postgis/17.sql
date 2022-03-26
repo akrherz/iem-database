@@ -6,10 +6,10 @@ create table lsrs_2017(
   INHERITS (lsrs);
 CREATE INDEX lsrs_2017_valid_idx on lsrs_2017(valid);
 CREATE INDEX lsrs_2017_wfo_idx on lsrs_2017(wfo);
-GRANT SELECT on lsrs_2017 to nobody,apache;
+GRANT SELECT on lsrs_2017 to nobody;
 
 CREATE TABLE raob_profile_2017() inherits (raob_profile);
-GRANT SELECT on raob_profile_2017 to nobody,apache;
+GRANT SELECT on raob_profile_2017 to nobody;
 CREATE INDEX raob_profile_2017_fid_idx 
 	on raob_profile_2017(fid);
 
@@ -36,7 +36,7 @@ alter table warnings_2017 ALTER phenomena SET NOT NULL;
 alter table warnings_2017 ALTER significance SET NOT NULL;
 alter table warnings_2017 ALTER init_expire SET NOT NULL;
 alter table warnings_2017 ALTER product_issue SET NOT NULL;
-grant select on warnings_2017 to nobody,apache;
+grant select on warnings_2017 to nobody;
 
 
 CREATE table sbw_2017() inherits (sbw);
@@ -45,4 +45,4 @@ create index sbw_2017_expire_idx on sbw_2017(expire);
 create index sbw_2017_issue_idx on sbw_2017(issue);
 create index sbw_2017_wfo_idx on sbw_2017(wfo);
 CREATE INDEX sbw_2017_gix ON sbw_2017 USING GIST (geom);
-grant select on sbw_2017 to apache,nobody;
+grant select on sbw_2017 to nobody;

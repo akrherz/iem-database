@@ -6,7 +6,7 @@ CREATE TABLE ffg_2018(
 CREATE INDEX ffg_2018_ugc_idx on ffg_2018(ugc);
 CREATE INDEX ffg_2018_valid_idx on ffg_2018(valid);
 GRANT ALL on ffg_2018 to ldm,mesonet;
-GRANT SELECT on ffg_2018 to nobody,apache;
+GRANT SELECT on ffg_2018 to nobody;
 
 create table lsrs_2018( 
   CONSTRAINT __lsrs_2018_check 
@@ -15,10 +15,10 @@ create table lsrs_2018(
   INHERITS (lsrs);
 CREATE INDEX lsrs_2018_valid_idx on lsrs_2018(valid);
 CREATE INDEX lsrs_2018_wfo_idx on lsrs_2018(wfo);
-GRANT SELECT on lsrs_2018 to nobody,apache;
+GRANT SELECT on lsrs_2018 to nobody;
 
 CREATE TABLE raob_profile_2018() inherits (raob_profile);
-GRANT SELECT on raob_profile_2018 to nobody,apache;
+GRANT SELECT on raob_profile_2018 to nobody;
 CREATE INDEX raob_profile_2018_fid_idx 
     on raob_profile_2018(fid);
 
@@ -40,7 +40,7 @@ alter table warnings_2018 ALTER status SET NOT NULL;
 alter table warnings_2018 ALTER ugc SET NOT NULL;
 alter table warnings_2018 ALTER phenomena SET NOT NULL;
 alter table warnings_2018 ALTER significance SET NOT NULL;
-grant select on warnings_2018 to nobody,apache;
+grant select on warnings_2018 to nobody;
 GRANT ALL on warnings_2018 to mesonet,ldm;
 
 
@@ -50,4 +50,4 @@ create index sbw_2018_expire_idx on sbw_2018(expire);
 create index sbw_2018_issue_idx on sbw_2018(issue);
 create index sbw_2018_wfo_idx on sbw_2018(wfo);
 CREATE INDEX sbw_2018_gix ON sbw_2018 USING GIST (geom);
-grant select on sbw_2018 to apache,nobody;
+grant select on sbw_2018 to nobody;

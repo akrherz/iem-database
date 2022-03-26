@@ -121,7 +121,7 @@ begin
             GRANT ALL on sm_minute_%s to mesonet,ldm
         $f$, year);
         execute format($f$
-            GRANT SELECT on sm_minute_%s to nobody,apache
+            GRANT SELECT on sm_minute_%s to nobody
         $f$, year);
     end loop;
 end;

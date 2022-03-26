@@ -20,7 +20,7 @@ CREATE TABLE sps(
 ) PARTITION by range(issue);
 ALTER TABLE sps OWNER to mesonet;
 GRANT ALL on sps to ldm;
-GRANT SELECT on sps to apache,nobody;
+GRANT SELECT on sps to nobody;
 
 do
 $do$
@@ -42,7 +42,7 @@ begin
             GRANT ALL on %s to ldm
         $f$, mytable);
         execute format($f$
-            GRANT SELECT on %s to nobody,apache
+            GRANT SELECT on %s to nobody
         $f$, mytable);
         -- Indices
         execute format($f$

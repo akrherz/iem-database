@@ -23,7 +23,7 @@ CREATE INDEX on idot_snowplow_archive(label);
 CREATE INDEX on idot_snowplow_archive(valid);
 ALTER TABLE idot_snowplow_archive OWNER to mesonet;
 GRANT ALL on idot_snowplow_archive to ldm;
-GRANT SELECT on idot_snowplow_archive to nobody,apache;
+GRANT SELECT on idot_snowplow_archive to nobody;
 
 do
 $do$
@@ -40,7 +40,7 @@ begin
             GRANT ALL on idot_snowplow_%s to mesonet,ldm
         $f$, year);
         execute format($f$
-            GRANT SELECT on idot_snowplow_%s to nobody,apache
+            GRANT SELECT on idot_snowplow_%s to nobody
         $f$, year);
     end loop;
 end;

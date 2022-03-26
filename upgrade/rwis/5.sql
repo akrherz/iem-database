@@ -26,7 +26,7 @@ CREATE TABLE alldata(
 ) PARTITION by range(valid);
 ALTER TABLE alldata OWNER to mesonet;
 GRANT ALL on alldata to ldm;
-GRANT SELECT on alldata to nobody,apache;
+GRANT SELECT on alldata to nobody;
 
 CREATE TABLE alldata_traffic(
   station char(5),
@@ -40,7 +40,7 @@ CREATE TABLE alldata_traffic(
 ) PARTITION by range(valid);
 ALTER TABLE alldata_traffic OWNER to mesonet;
 GRANT ALL on alldata_traffic to ldm;
-GRANT select on alldata_traffic to nobody,apache;
+GRANT select on alldata_traffic to nobody;
 
 
 CREATE TABLE alldata_soil(
@@ -64,7 +64,7 @@ CREATE TABLE alldata_soil(
 ) PARTITION by range(valid);
 ALTER TABLE alldata_soil OWNER to mesonet;
 GRANT ALL on alldata_soil to ldm;
-GRANT select on alldata_soil to nobody,apache;
+GRANT select on alldata_soil to nobody;
 
 do
 $do$
@@ -106,7 +106,7 @@ begin
             GRANT ALL on %s to ldm
         $f$, mytable);
         execute format($f$
-            GRANT SELECT on %s to nobody,apache
+            GRANT SELECT on %s to nobody
         $f$, mytable);
         -- Indices
         execute format($f$
@@ -163,7 +163,7 @@ begin
             GRANT ALL on %s to ldm
         $f$, mytable);
         execute format($f$
-            GRANT SELECT on %s to nobody,apache
+            GRANT SELECT on %s to nobody
         $f$, mytable);
         -- Indices
         execute format($f$
@@ -220,7 +220,7 @@ begin
             GRANT ALL on %s to ldm
         $f$, mytable);
         execute format($f$
-            GRANT SELECT on %s to nobody,apache
+            GRANT SELECT on %s to nobody
         $f$, mytable);
         -- Indices
         execute format($f$

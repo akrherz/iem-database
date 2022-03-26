@@ -4,7 +4,7 @@ CREATE TABLE forecast_inventory(
   model varchar(32),
   modelts timestamptz
 );
-GRANT SELECT on forecast_inventory to nobody,apache;
+GRANT SELECT on forecast_inventory to nobody;
 
 CREATE TABLE alldata_forecast(
   modelid int REFERENCES forecast_inventory(id),
@@ -15,5 +15,5 @@ CREATE TABLE alldata_forecast(
   precip real,
   srad real
 );
-GRANT SELECT on alldata_forecast to nobody,apache;
+GRANT SELECT on alldata_forecast to nobody;
 CREATE INDEX alldata_forecast_idx on alldata_forecast(station, day);

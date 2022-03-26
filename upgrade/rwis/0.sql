@@ -5,7 +5,7 @@ create table t2015(
   INHERITS (alldata);
 CREATE INDEX t2015_station_idx on t2015(station);
 CREATE INDEX t2015_valid_idx on t2015(valid);
-GRANT SELECT on t2015 to nobody,apache;
+GRANT SELECT on t2015 to nobody;
 
 create table t2015_traffic( 
   CONSTRAINT __t2015_traffic_check 
@@ -14,7 +14,7 @@ create table t2015_traffic(
   INHERITS (alldata_traffic);
 CREATE INDEX t2015_traffic_station_idx on t2015_traffic(station);
 CREATE INDEX t2015_traffic_valid_idx on t2015_traffic(valid);
-GRANT SELECT on t2015_traffic to nobody,apache;
+GRANT SELECT on t2015_traffic to nobody;
 
 create table t2015_soil( 
   CONSTRAINT __t2015_soil_check 
@@ -23,4 +23,4 @@ create table t2015_soil(
   INHERITS (alldata_soil);
 CREATE INDEX t2015_soil_station_idx on t2015_soil(station);
 CREATE INDEX t2015_soil_valid_idx on t2015_soil(valid);
-GRANT SELECT on t2015_soil to nobody,apache;
+GRANT SELECT on t2015_soil to nobody;

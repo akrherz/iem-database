@@ -8,4 +8,4 @@ CREATE TABLE waterquality_data(
   value real);
 
 GRANT ALL on waterquality_data to mesonet,ldm;
-GRANT SELECT on waterquality_data to nobody,apache;
+GRANT SELECT on waterquality_data to nobody;

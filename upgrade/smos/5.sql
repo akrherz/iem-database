@@ -9,7 +9,7 @@ ALTER TABLE data rename to data_old;
  ) PARTITION by range(valid);
  ALTER TABLE data OWNER to mesonet;
  GRANT ALL on data to ldm;
- GRANT SELECT on data to apache,nobody;
+ GRANT SELECT on data to nobody;
  
 
 do
@@ -67,7 +67,7 @@ begin
                 GRANT ALL on %s to ldm
             $f$, mytable);
             execute format($f$
-                GRANT SELECT on %s to nobody,apache
+                GRANT SELECT on %s to nobody
             $f$, mytable);
             execute format($f$
                 CREATE INDEX %s_grid_idx on %s(grid_idx)

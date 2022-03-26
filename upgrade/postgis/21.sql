@@ -2,7 +2,7 @@
 CREATE TABLE spc_outlook_thresholds(
   priority smallint UNIQUE,
   threshold varchar(4));
-GRANT SELECT on spc_outlook_thresholds to nobody,apache;
+GRANT SELECT on spc_outlook_thresholds to nobody;
 GRANT ALL on spc_outlook_thresholds to ldm,mesonet;
 
 INSERT into spc_outlook_thresholds VALUES 

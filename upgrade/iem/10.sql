@@ -10,7 +10,7 @@ EXECUTE format('create table summary_'|| rec.year || '(
   INHERITS (summary)', rec.year || '-01-01', rec.year || '-12-31');
 EXECUTE 'CREATE INDEX summary_'|| rec.year || '_day_idx on summary_'|| rec.year || '(day)';
 EXECUTE 'CREATE UNIQUE INDEX summary_'|| rec.year || '_iemid_day_idx on summary_'|| rec.year || '(iemid, day)';
-EXECUTE 'GRANT SELECT on summary_'|| rec.year || ' to nobody,apache';
+EXECUTE 'GRANT SELECT on summary_'|| rec.year || ' to nobody';
 EXECUTE 'alter table summary_'|| rec.year || '
   add foreign key(iemid)
   references stations(iemid) ON DELETE CASCADE';

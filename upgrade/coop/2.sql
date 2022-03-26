@@ -46,5 +46,5 @@ CREATE TABLE IF NOT EXISTS nass_quickstats(
 	cv varchar(7),
 	num_value real
 );
-GRANT SELECT on nass_quickstats to nobody,apache;
+GRANT SELECT on nass_quickstats to nobody;
 

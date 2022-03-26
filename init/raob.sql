@@ -50,8 +50,8 @@ CREATE TABLE stations(
 CREATE UNIQUE index stations_idx on stations(id, network);
 create UNIQUE index stations_iemid_idx on stations(iemid);
 SELECT AddGeometryColumn('stations', 'geom', 4326, 'POINT', 2);
-GRANT SELECT on stations to apache,nobody;
-grant all on stations_iemid_seq to nobody,apache;
+GRANT SELECT on stations to nobody;
+grant all on stations_iemid_seq to nobody;
 GRANT ALL on stations to mesonet,ldm;
 GRANT ALL on stations_iemid_seq to mesonet,ldm;
 
@@ -105,7 +105,7 @@ CREATE TABLE raob_flights(
 ALTER TABLE raob_flights OWNER to mesonet;
 GRANT ALL on raob_flights to ldm,mesonet;
 create unique index raob_flights_idx on raob_flights(valid, station);
-GRANT SELECT on raob_flights to nobody,apache;
+GRANT SELECT on raob_flights to nobody;
 
 CREATE TABLE raob_profile(
     fid int REFERENCES raob_flights(fid) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -122,7 +122,7 @@ CREATE TABLE raob_profile(
 );
 ALTER TABLE raob_profile OWNER to mesonet;
 CREATE INDEX raob_profile_fid_idx on raob_profile(fid);
-GRANT SELECT on raob_profile to nobody,apache;
+GRANT SELECT on raob_profile to nobody;
 
 do
 $do$
@@ -138,7 +138,7 @@ begin
         ALTER TABLE raob_profile_%s OWNER to mesonet;
         alter table raob_profile_%s add constraint fid_fk FOREIGN KEY (fid)
             REFERENCES raob_flights(fid) ON DELETE CASCADE ON UPDATE CASCADE;
-        GRANT SELECT on raob_profile_%s to nobody,apache;
+        GRANT SELECT on raob_profile_%s to nobody;
     $f$, y, y, y, y, y
     );
     end loop;

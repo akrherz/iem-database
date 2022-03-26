@@ -4,4 +4,4 @@ create table t2015_hourly(
         and valid < '2016-01-01 00:00+00')) 
   INHERITS (alldata);
 CREATE INDEX t2015_hourly_idx on t2015_hourly(station, valid);
-GRANT SELECT on t2015_hourly to nobody,apache;
+GRANT SELECT on t2015_hourly to nobody;

@@ -4,4 +4,4 @@ CREATE TABLE elnino(
 	anom_34 real,
 	soi_3m real
 );
-GRANT SELECT on elnino to nobody,apache;
+GRANT SELECT on elnino to nobody;

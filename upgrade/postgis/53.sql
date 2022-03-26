@@ -10,5 +10,5 @@ CREATE TABLE cwa(
 );
 ALTER TABLE cwa OWNER to mesonet;
 GRANT ALL on cwa to ldm;
-GRANT SELECT on cwa to nobody,apache;
+GRANT SELECT on cwa to nobody;
 

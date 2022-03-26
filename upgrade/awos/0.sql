@@ -23,7 +23,7 @@ CREATE TABLE alldata(
 ) PARTITION by RANGE (valid);
 ALTER TABLE alldata OWNER to mesonet;
 GRANT ALL on alldata to ldm;
-GRANT SELECT on alldata to nobody,apache;
+GRANT SELECT on alldata to nobody;
 
 -- create tables as some of these do not currently exists
 do
@@ -49,7 +49,7 @@ begin
                 GRANT ALL on %s to ldm
             $f$, mytable);
             execute format($f$
-                GRANT SELECT on %s to nobody,apache
+                GRANT SELECT on %s to nobody
             $f$, mytable);
             -- Indices
             execute format($f$

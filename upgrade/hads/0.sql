@@ -7,7 +7,7 @@ CREATE TABLE raw2015(
 	key varchar(11),
 	value real
 );
-GRANT SELECT on raw2015 to nobody,apache;
+GRANT SELECT on raw2015 to nobody;
 
 create table raw2015_01( 
   CONSTRAINT __raw2015_01_check 
@@ -16,7 +16,7 @@ create table raw2015_01(
   INHERITS (raw2015);
 CREATE INDEX raw2015_01_idx on raw2015_01(station, valid);
 CREATE INDEX raw2015_01_valid_idx on raw2015_01(valid);
-grant select on raw2015_01 to nobody,apache;
+grant select on raw2015_01 to nobody;
 
 create table raw2015_02( 
   CONSTRAINT __raw2015_02_check 
@@ -25,7 +25,7 @@ create table raw2015_02(
   INHERITS (raw2015);
 CREATE INDEX raw2015_02_idx on raw2015_02(station, valid);
 CREATE INDEX raw2015_02_valid_idx on raw2015_02(valid);
-grant select on raw2015_02 to nobody,apache;
+grant select on raw2015_02 to nobody;
 
 create table raw2015_03( 
   CONSTRAINT __raw2015_03_check 
@@ -34,7 +34,7 @@ create table raw2015_03(
   INHERITS (raw2015);
 CREATE INDEX raw2015_03_idx on raw2015_03(station, valid);
 CREATE INDEX raw2015_03_valid_idx on raw2015_03(valid);
-grant select on raw2015_03 to nobody,apache;
+grant select on raw2015_03 to nobody;
 
 create table raw2015_04( 
   CONSTRAINT __raw2015_04_check 
@@ -43,7 +43,7 @@ create table raw2015_04(
   INHERITS (raw2015);
 CREATE INDEX raw2015_04_idx on raw2015_04(station, valid);
 CREATE INDEX raw2015_04_valid_idx on raw2015_04(valid);
-grant select on raw2015_04 to nobody,apache;
+grant select on raw2015_04 to nobody;
 
 create table raw2015_05( 
   CONSTRAINT __raw2015_05_check 
@@ -52,7 +52,7 @@ create table raw2015_05(
   INHERITS (raw2015);
 CREATE INDEX raw2015_05_idx on raw2015_05(station, valid);
 CREATE INDEX raw2015_05_valid_idx on raw2015_05(valid);
-grant select on raw2015_05 to nobody,apache;
+grant select on raw2015_05 to nobody;
 
 create table raw2015_06( 
   CONSTRAINT __raw2015_06_check 
@@ -61,7 +61,7 @@ create table raw2015_06(
   INHERITS (raw2015);
 CREATE INDEX raw2015_06_idx on raw2015_06(station, valid);
 CREATE INDEX raw2015_06_valid_idx on raw2015_06(valid);
-grant select on raw2015_06 to nobody,apache;
+grant select on raw2015_06 to nobody;
 
 create table raw2015_07( 
   CONSTRAINT __raw2015_07_check 
@@ -70,7 +70,7 @@ create table raw2015_07(
   INHERITS (raw2015);
 CREATE INDEX raw2015_07_idx on raw2015_07(station, valid);
 CREATE INDEX raw2015_07_valid_idx on raw2015_07(valid);
-grant select on raw2015_07 to nobody,apache;
+grant select on raw2015_07 to nobody;
 
 create table raw2015_08( 
   CONSTRAINT __raw2015_08_check 
@@ -79,7 +79,7 @@ create table raw2015_08(
   INHERITS (raw2015);
 CREATE INDEX raw2015_08_idx on raw2015_08(station, valid);
 CREATE INDEX raw2015_08_valid_idx on raw2015_08(valid);
-grant select on raw2015_08 to nobody,apache;
+grant select on raw2015_08 to nobody;
 
 create table raw2015_09( 
   CONSTRAINT __raw2015_09_check 
@@ -88,7 +88,7 @@ create table raw2015_09(
   INHERITS (raw2015);
 CREATE INDEX raw2015_09_idx on raw2015_09(station, valid);
 CREATE INDEX raw2015_09_valid_idx on raw2015_09(valid);
-grant select on raw2015_09 to nobody,apache;
+grant select on raw2015_09 to nobody;
 
 create table raw2015_10( 
   CONSTRAINT __raw2015_10_check 
@@ -97,7 +97,7 @@ create table raw2015_10(
   INHERITS (raw2015);
 CREATE INDEX raw2015_10_idx on raw2015_10(station, valid);
 CREATE INDEX raw2015_10_valid_idx on raw2015_10(valid);
-grant select on raw2015_10 to nobody,apache;
+grant select on raw2015_10 to nobody;
 
 create table raw2015_11( 
   CONSTRAINT __raw2015_11_check 
@@ -106,7 +106,7 @@ create table raw2015_11(
   INHERITS (raw2015);
 CREATE INDEX raw2015_11_idx on raw2015_11(station, valid);
 CREATE INDEX raw2015_11_valid_idx on raw2015_11(valid);
-grant select on raw2015_11 to nobody,apache;
+grant select on raw2015_11 to nobody;
 
 create table raw2015_12( 
   CONSTRAINT __raw2015_12_check 
@@ -115,4 +115,4 @@ create table raw2015_12(
   INHERITS (raw2015);
 CREATE INDEX raw2015_12_idx on raw2015_12(station, valid);
 CREATE INDEX raw2015_12_valid_idx on raw2015_12(valid);
-grant select on raw2015_12 to nobody,apache;
+grant select on raw2015_12 to nobody;
