@@ -24,30 +24,19 @@ ALTER TABLE scenarios OWNER to mesonet;
 insert into scenarios values (0, 'Production', 0, 0, 0);
 
 CREATE TABLE huc12(
-    gid SERIAL,
-    huc_8 varchar(8),
-    huc_10 varchar(10),
     huc_12 varchar(12),
     acres numeric,
-    hu_10_ds varchar(10),
-    hu_10_name text,
-    hu_10_mod text,
-    hu_10_type char(1),
-    hu_12_ds varchar(10),
     hu_12_name text,
-    hu_12_mod text,
-    hu_12_type char(1),
-    meta_id varchar(4),
     states text,
     areapctmea real,
     shape_leng numeric,
     shape_area numeric,
-    buffdist smallint,
     geom geometry(MultiPolygon, 5070),
     simple_geom geometry(Polygon, 5070),
     scenario int REFERENCES scenarios(id),
     ugc char(6),
-    mlra_id smallint
+    mlra_id smallint,
+    dominant_tillage smallint
 );
 CREATE UNIQUE INDEX huc12_idx on huc12(huc_12, scenario);
 GRANT SELECT on huc12 to nobody;
