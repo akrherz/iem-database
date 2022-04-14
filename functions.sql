@@ -112,3 +112,14 @@ CREATE FUNCTION wind_chill(real, real) RETURNS double precision
     LANGUAGE sql
     AS $_$select 35.74 + .6215 * $1 - 35.75 * power($2 * 1.15,0.16) + .4275 * $1 * power($2 * 1.15,0.16)$_$;
  	
+--
+-- Used for throttling based on database server load
+-- https://aaronparecki.com/2015/02/19/8
+create extension file_fdw;
+CREATE SERVER fileserver FOREIGN DATA WRAPPER file_fdw;
+CREATE FOREIGN TABLE system_loadavg 
+(one text, five text, fifteen text, scheduled text, pid text) 
+SERVER fileserver 
+OPTIONS (filename '/proc/loadavg', format 'text', delimiter ' ');
+ALTER TABLE system_loadavg OWNER TO mesonet;
+GRANT SELECT ON system_loadavg TO nobody, ldm;
