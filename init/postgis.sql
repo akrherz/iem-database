@@ -5,7 +5,7 @@ CREATE EXTENSION postgis;
 CREATE TABLE iem_schema_manager_version(
 	version int,
 	updated timestamptz);
-INSERT into iem_schema_manager_version values (59, now());
+INSERT into iem_schema_manager_version values (60, now());
 
 ---
 --- TABLES THAT ARE LOADED VIA shp2pgsql
@@ -1073,7 +1073,23 @@ CREATE TABLE watches (
     type character(3),
     report text,
     num smallint,
-    geom geometry(MultiPolygon, 4326)
+    geom geometry(MultiPolygon, 4326),
+    tornadoes_2m smallint,
+    tornadoes_1m_strong smallint,
+    wind_10m smallint,
+    wind_1m_65kt smallint,
+    hail_10m smallint,
+    hail_1m_2inch smallint,
+    hail_wind_6m smallint,
+    max_hail_size float,
+    max_wind_gust_knots float,
+    max_tops_feet int,
+    storm_motion_drct int,
+    storm_motion_sknt int,
+    is_pds bool,
+    product_id_wwp varchar(36),
+    product_id_saw varchar(36),
+    product_id_wou varchar(36)
 );
 ALTER TABLE watches OWNER to mesonet;
 GRANT ALL on watches to ldm;
