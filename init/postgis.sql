@@ -1089,7 +1089,7 @@ CREATE TABLE watches (
     is_pds bool,
     product_id_wwp varchar(36),
     product_id_saw varchar(36),
-    product_id_wou varchar(36)
+    product_id_sel varchar(36)
 );
 ALTER TABLE watches OWNER to mesonet;
 GRANT ALL on watches to ldm;

@@ -14,4 +14,4 @@ ALTER TABLE watches add storm_motion_sknt int;
 ALTER TABLE watches add is_pds bool;
 ALTER TABLE watches add product_id_wwp varchar(36);
 ALTER TABLE watches add product_id_saw varchar(36);
-ALTER TABLE watches add product_id_wou varchar(36);
+ALTER TABLE watches add product_id_sel varchar(36);
