@@ -1071,7 +1071,6 @@ CREATE TABLE watches (
     issued timestamp with time zone,
     expired timestamp with time zone,
     type character(3),
-    report text,
     num smallint,
     geom geometry(MultiPolygon, 4326),
     tornadoes_2m smallint,
