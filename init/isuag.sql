@@ -297,10 +297,10 @@ CREATE TABLE sm_hourly (
     etalfalfa_f character(1),
     etalfalfa_qc real,
 
-    -- Wind speed meters per second, sample
-    WS_mps_S_WVT real,
-    ws_mps_s_wvt_f character(1),
-    ws_mps_s_wvt_qc real,
+    -- Wind speed, sample
+    ws_mph real,
+    ws_mph_f character(1),
+    ws_mph_qc real,
 
     -- Wind direction
     WindDir_D1_WVT real,
@@ -506,9 +506,9 @@ CREATE TABLE sm_minute (
   T4_C_Avg_f char(1),
 
   -- wind speed mph
-  WS_mph_S_WVT real,
-  WS_mph_S_WVT_qc real,
-  WS_mph_S_WVT_f char(1),
+  WS_mph real,
+  WS_mph_qc real,
+  WS_mph_f char(1),
 
   -- wind speed max
   WS_mph_max real,
@@ -788,7 +788,7 @@ CREATE UNIQUE INDEX sm_inversion_idx on sm_inversion(station, valid);
 
 --- Clever hack to map data around!
 create or replace view alldata as 
-	select station, valid, ws_mps_s_wvt * 1.94 as sknt, 
+	select station, valid, ws_mph * 1.15 as sknt,
 	winddir_d1_wvt as drct, rain_in_tot as phour,
     c2f(tair_c_avg) as tmpf, rh_avg as relh
     from sm_hourly;
