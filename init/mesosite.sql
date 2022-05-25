@@ -5,7 +5,7 @@ CREATE EXTENSION postgis;
 CREATE TABLE iem_schema_manager_version(
 	version int,
 	updated timestamptz);
-INSERT into iem_schema_manager_version values (24, now());
+INSERT into iem_schema_manager_version values (25, now());
 
 --- ==== TABLES TO investigate deleting
 --- counties
@@ -82,10 +82,14 @@ CREATE index iembot_social_log_valid_idx on iembot_social_log(valid);
 CREATE TABLE networks(
   id varchar(12) unique,
   name varchar,
-  tzname varchar(32)
+  tzname varchar(32),
+  extent geometry(Polygon,4326),
+  windrose_update timestamptz
 );
+CREATE UNIQUE index networks_id_idx on networks(id);
+ALTER TABLE networks OWNER to mesonet;
+GRANT ALL on networks to ldm;
 GRANT SELECT on networks to nobody;
-SELECT AddGeometryColumn('networks', 'extent', 4326, 'POLYGON', 2);
 
 ---
 --- Missing table: news
