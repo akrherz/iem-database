@@ -8,7 +8,7 @@ CREATE TABLE iem_schema_manager_version(
 	version int,
 	updated timestamptz);
 ALTER TABLE iem_schema_manager_version OWNER to mesonet;
-INSERT into iem_schema_manager_version values (22, now());
+INSERT into iem_schema_manager_version values (23, now());
 
 create table scenarios(
     id int UNIQUE,
@@ -93,8 +93,10 @@ CREATE TABLE flowpaths(
   climate_file varchar(128),
   geom geometry(LINESTRING, 5070),
   bulk_slope real,
-  max_slope real
+  max_slope real,
+  irrigated boolean DEFAULT false
 );
+ALTER TABLE flowpaths OWNER to mesonet;
 create index flowpaths_huc12_fpath_idx on flowpaths(huc_12,fpath);
 GRANT SELECT on flowpaths to nobody;
 CREATE INDEX flowpaths_idx on flowpaths USING GIST(geom);
