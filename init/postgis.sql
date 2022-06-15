@@ -5,7 +5,7 @@ CREATE EXTENSION postgis;
 CREATE TABLE iem_schema_manager_version(
 	version int,
 	updated timestamptz);
-INSERT into iem_schema_manager_version values (60, now());
+INSERT into iem_schema_manager_version values (61, now());
 
 ---
 --- TABLES THAT ARE LOADED VIA shp2pgsql
@@ -601,7 +601,8 @@ CREATE TABLE warnings (
     init_expire timestamp with time zone not null,
     product_issue timestamp with time zone not null,
     is_emergency boolean,
-    is_pds boolean
+    is_pds boolean,
+    purge_time timestamptz
 );
 ALTER TABLE warnings OWNER to mesonet;
 GRANT ALL on warnings to ldm;
