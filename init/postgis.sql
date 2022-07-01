@@ -5,7 +5,7 @@ CREATE EXTENSION postgis;
 CREATE TABLE iem_schema_manager_version(
 	version int,
 	updated timestamptz);
-INSERT into iem_schema_manager_version values (61, now());
+INSERT into iem_schema_manager_version values (62, now());
 
 ---
 --- TABLES THAT ARE LOADED VIA shp2pgsql
@@ -65,6 +65,8 @@ CREATE TABLE airmet_freezing_levels(
     valid_at timestamptz,
     product_id text,
     level int,
+    lower_level int,
+    upper_level int,
     geom geometry(MultiLineString, 4326)
 );
 CREATE INDEX airmet_freezing_levels_idx on airmet_freezing_levels(valid_at);
