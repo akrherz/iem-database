@@ -383,10 +383,7 @@ GRANT SELECT on feel_data_hourly to nobody;
 CREATE TABLE hpd_alldata(
   station varchar(6),
   valid timestamptz,
-  counter real,
-  tmpc real,
-  battery real,
-  calc_precip real
+  precip real
 ) PARTITION by range(valid);
 ALTER TABLE hpd_alldata OWNER to mesonet;
 GRANT ALL on hpd_alldata to ldm;
@@ -398,7 +395,7 @@ declare
      year int;
      mytable varchar;
 begin
-    for year in 2009..2030
+    for year in 1970..2030
     loop
         mytable := format($f$hpd_%s$f$, year);
         execute format($f$
