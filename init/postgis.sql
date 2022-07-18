@@ -5,7 +5,7 @@ CREATE EXTENSION postgis;
 CREATE TABLE iem_schema_manager_version(
 	version int,
 	updated timestamptz);
-INSERT into iem_schema_manager_version values (62, now());
+INSERT into iem_schema_manager_version values (63, now());
 
 ---
 --- TABLES THAT ARE LOADED VIA shp2pgsql
@@ -324,6 +324,18 @@ AS $_$
   (case when $3 then source = 'fz' else source != 'fz' end) LIMIT 1
 $_$;
 
+--
+-- Version for LSR table to get by a name
+--   end_ts is null to get only current entries
+--   order by to prioritize counties before zones, hopefully
+CREATE OR REPLACE FUNCTION get_gid_by_name_state(varchar, char(2))
+RETURNS int
+LANGUAGE sql
+AS $_$
+    select gid from ugcs where state = $2 and upper($1) = upper(name)
+    and end_ts is null
+    ORDER by ugc ASC LIMIT 1
+$_$;
 
 ---
 --- Store IDOT dashcam stuff
@@ -760,10 +772,8 @@ begin
 end;
 $do$;
 
-
----
---- LSRs!
---- 
+--
+-- Local Storm Reports
 CREATE TABLE lsrs (
     valid timestamp with time zone,
     type character(1),
@@ -779,7 +789,8 @@ CREATE TABLE lsrs (
     product_id text,
     updated timestamptz DEFAULT now(),
     unit varchar(32),
-    qualifier char(1)
+    qualifier char(1),
+    gid int references ugcs(gid)
 ) PARTITION by range(valid);
 ALTER TABLE lsrs OWNER to mesonet;
 GRANT ALL on lsrs to ldm;
