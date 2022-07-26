@@ -1071,7 +1071,8 @@ GRANT SELECT on spc_outlook_geometries to nobody;
 -- SPC Outlooks View joining the two tables together
 CREATE OR REPLACE VIEW spc_outlooks AS
     select id, issue, product_issue, expire, threshold, category, day,
-    outlook_type, geom, product_id, updated, cycle
+    outlook_type, geom, product_id, updated, cycle,
+    date(expire at time zone 'UTC' - '24 hours'::interval) as outlook_date
     from spc_outlook o LEFT JOIN spc_outlook_geometries g
     on (o.id = g.spc_outlook_id);
 ALTER VIEW spc_outlooks OWNER to mesonet;
