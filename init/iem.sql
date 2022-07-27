@@ -519,7 +519,7 @@ CREATE OR REPLACE FUNCTION current_update_log() RETURNS trigger
     LANGUAGE plpgsql
     AS $$
   BEGIN
-   IF (NEW.valid != OLD.valid) THEN
+   IF (NEW.valid != OLD.valid or coalesce(NEW.raw, '') != coalesce(OLD.raw, '')) THEN
      INSERT into current_log SELECT * from current WHERE iemid = NEW.iemid;
    END IF;
    RETURN NEW;
