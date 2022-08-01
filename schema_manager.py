@@ -16,7 +16,7 @@ import psycopg2
 
 
 def check_management(cursor):
-    """ Make sure we have management of this database """
+    """Make sure we have management of this database"""
     cursor.execute(
         """
          select * from pg_tables where schemaname = 'public'
@@ -37,7 +37,7 @@ def check_management(cursor):
 
 
 def run_db(dbname):
-    """ Lets do an actual database """
+    """Lets do an actual database"""
     # the pyiem version of get_dbconn does hostname magic, the psycopg2
     # does not, so we need to account for that.
     try:
@@ -86,7 +86,7 @@ def run_db(dbname):
 
 
 def main():
-    """ Go Main Go """
+    """Go Main Go"""
     os.chdir("upgrade")
     for dbname in os.listdir("."):
         run_db(dbname)
