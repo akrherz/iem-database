@@ -436,6 +436,8 @@ CREATE TABLE current (
     updated timestamptz DEFAULT now(),
     snowdepth real
 );
+ALTER TABLE current OWNER to mesonet;
+GRANT ALL on current to ldm;
 CREATE UNIQUE index current_iemid_idx on current(iemid);
 GRANT SELECT on current to nobody;
 
