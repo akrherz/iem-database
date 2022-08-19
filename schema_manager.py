@@ -90,6 +90,7 @@ def main():
     os.chdir("upgrade")
     for dbname in os.listdir("."):
         run_db(dbname)
+    print("Done...")
 
 
 if __name__ == "__main__":
