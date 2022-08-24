@@ -726,7 +726,7 @@ create table sbw(
   hvtec_record char(2),
   windthreat text,
   hailthreat text,
-  sqalltag text
+  squalltag text
 );
 ALTER TABLE sbw OWNER to mesonet;
 GRANT ALL on sbw to ldm;
