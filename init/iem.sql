@@ -516,6 +516,7 @@ CREATE TABLE current_log (
 );
 GRANT ALL on current_log to mesonet,ldm;
 GRANT SELECT on current_log to nobody;
+CREATE INDEX current_log_updated_idx on current_log(updated);
 
 CREATE OR REPLACE FUNCTION current_update_log() RETURNS trigger
     LANGUAGE plpgsql
