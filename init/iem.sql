@@ -139,9 +139,7 @@ GRANT SELECT on events to nobody;
 --- Current QC data
 ---
 CREATE TABLE current_qc(
-  station varchar(10),
-  valid timestamp without time zone,
-  network varchar(10),
+  valid timestamptz,
   tmpf real,
   tmpf_qc_av real,
   tmpf_qc_sc real,
@@ -153,7 +151,7 @@ CREATE TABLE current_qc(
   alti_qc_sc real,
   iemid int REFERENCES stations(iemid)
  );
-CREATE UNIQUE INDEX current_qc_idx on current_qc(station, network);
+CREATE UNIQUE INDEX current_qc_idx on current_qc(iemid);
 GRANT SELECT on current_qc to nobody;
 
 ---
