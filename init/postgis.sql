@@ -1129,7 +1129,6 @@ grant select on watches_current to nobody;
 -- !!!!!!!!!!!!! WARNING !!!!!!!!!!!!
 -- look what was done in 9.sql and replicate that for 2016 updates
 
-
 --
 -- Storage of PIREPs
 --
@@ -1137,14 +1136,47 @@ CREATE TABLE pireps(
   valid timestamptz,
   geom geography(POINT,4326),
   is_urgent boolean,
-  aircraft_type varchar,
-  report varchar
-);
+  aircraft_type text,
+  report text)
+  PARTITION by range(valid);
 ALTER TABLE pireps OWNER to mesonet;
-CREATE INDEX pireps_valid_idx on pireps(valid);
 GRANT SELECT on pireps to nobody;
 GRANT ALL on pireps to ldm;
 
+do
+$do$
+declare
+     year int;
+     mytable varchar;
+begin
+    for year in 2000..2030
+    loop
+        mytable := format($f$pireps_%s$f$, year);
+        execute format($f$
+            create table %s partition of pireps
+            for values from ('%s-01-01 00:00+00') to ('%s-01-01 00:00+00')
+            $f$, mytable, year, year + 1);
+        execute format($f$
+            ALTER TABLE %s OWNER to mesonet
+        $f$, mytable);
+        execute format($f$
+            GRANT ALL on %s to ldm
+        $f$, mytable);
+        execute format($f$
+            GRANT SELECT on %s to nobody
+        $f$, mytable);
+        -- Indices
+        execute format($f$
+            CREATE INDEX %s_valid_idx on %s(valid)
+        $f$, mytable, mytable);
+        execute format($f$
+            CREATE INDEX %s_geom_idx on %s USING GIST (geom)
+        $f$, mytable, mytable);
+    end loop;
+end;
+$do$;
+
+--
 CREATE TABLE ffg(
   ugc char(6),
   valid timestamptz,
