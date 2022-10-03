@@ -148,15 +148,6 @@ CREATE  TABLE flowpath_points(
 create index flowpath_points_flowpath_idx on flowpath_points(flowpath);
 GRANT SELECT on flowpath_points to nobody;
 
----
---- xref of surgo values to soils file
----
-CREATE TABLE xref_surgo(
-  surgo int,
-  soilfile varchar(24)
-);
-create index xref_surgo_idx on xref_surgo(surgo);
-
 --- Store Properties used by website and scripts
 CREATE TABLE properties(
   key varchar UNIQUE NOT NULL,
