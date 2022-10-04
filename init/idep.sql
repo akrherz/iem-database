@@ -133,7 +133,6 @@ CREATE TABLE flowpath_ofes(
     ofe smallint not null,
     geom geometry(LineString, 5070),
     bulk_slope real,
-    surgo int,
     scenario int,
     gssurgo_id int REFERENCES gssurgo(id)
 );
@@ -150,7 +149,6 @@ CREATE  TABLE flowpath_points(
   segid int,
   elevation real,
   length real,
-  surgo int,
   management varchar(32),
   slope real,
   landuse varchar(32),
