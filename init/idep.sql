@@ -22,6 +22,7 @@ CREATE TABLE gssurgo(
 ALTER TABLE gssurgo OWNER to mesonet;
 GRANT SELECT on gssurgo to nobody;
 CREATE INDEX gssurgo_idx on gssurgo(id);
+CREATE UNIQUE INDEX gssurgo_mukey_idx on gssurgo(fiscal_year, mukey);
 
 create table scenarios(
     id int UNIQUE,
