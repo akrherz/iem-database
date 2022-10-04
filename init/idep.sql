@@ -8,7 +8,20 @@ CREATE TABLE iem_schema_manager_version(
 	version int,
 	updated timestamptz);
 ALTER TABLE iem_schema_manager_version OWNER to mesonet;
-INSERT into iem_schema_manager_version values (25, now());
+INSERT into iem_schema_manager_version values (26, now());
+
+-- GSSURGO Metadata
+CREATE TABLE gssurgo(
+    id serial UNIQUE NOT NULL,
+    fiscal_year int,
+    mukey int,
+    label text,
+    kwfact real,
+    hydrogroup varchar(8)
+);
+ALTER TABLE gssurgo OWNER to mesonet;
+GRANT SELECT on gssurgo to nobody;
+CREATE INDEX gssurgo_idx on gssurgo(id);
 
 create table scenarios(
     id int UNIQUE,
@@ -120,7 +133,8 @@ CREATE TABLE flowpath_ofes(
     geom geometry(LineString, 5070),
     bulk_slope real,
     surgo int,
-    scenario int
+    scenario int,
+    gssurgo_id int REFERENCES gssurgo(id)
 );
 ALTER TABLE flowpath_ofes OWNER to mesonet;
 GRANT SELECT on flowpath_ofes to nobody;
@@ -143,7 +157,8 @@ CREATE  TABLE flowpath_points(
   gridorder smallint,
   fbndid int,
   genlu smallint references general_landuse(id),
-  ofe smallint
+  ofe smallint,
+  gssurgo_id int references gssurgo(id)
 );
 create index flowpath_points_flowpath_idx on flowpath_points(flowpath);
 GRANT SELECT on flowpath_points to nobody;
