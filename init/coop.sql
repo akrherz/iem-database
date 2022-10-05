@@ -15,20 +15,6 @@ CREATE TABLE climoweek(
 );
 GRANT SELECT on climoweek to nobody;
 
----
---- Storage of Hayhoe downscaled data
----
-CREATE TABLE hayhoe_daily(
-  model varchar(32),
-  scenario varchar(8),
-  station varchar(6),
-  day date,
-  high real,
-  low real,
-  precip real
-);
-GRANT SELECT on hayhoe_daily to nobody;
-CREATE INDEX hayhoe_daily_station_idx on hayhoe_daily(station);
 
 CREATE TABLE nass_quickstats(
     sector_desc varchar(60), -- CROPS, ENVIRONMENTAL, etc
