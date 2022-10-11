@@ -18,10 +18,12 @@ def fake_hads_wind():
         """
         insert into alldata(station, valid, sknt, drct)
         select 'XXXX',
-        generate_series('2019-12-20 12:00+00', '2021-01-05 12:00',
+        generate_series(
+            '2019-12-20 12:00+00'::timestamptz,
+            '2021-01-05 12:00+00'::timestamptz,
             '1 hour'::interval),
-        generate_series(1, 9175) / 500. as sknt, -- 18.35 max
-        generate_series(1, 9175) / 26. as drct -- 352.9 max
+        generate_series(1, 9169) / 500. as sknt, -- 18.35 max
+        generate_series(1, 9169) / 26. as drct -- 352.9 max
         """
     )
     cursor.close()

@@ -26,3 +26,4 @@ jobs:
         sh bootstrap.sh
         psql -f data/postgis/cwsu.db -U mesonet postgis
         /usr/bin/python3 schema_manager.py
+        /usr/bin/python3 store_test_data.py
