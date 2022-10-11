@@ -10,6 +10,25 @@ except ImportError:
 NETWORKS = ["IA_ASOS", "AWOS", "IACLIMATE", "IA_COOP"]
 
 
+def fake_hads_wind():
+    """Create some faked wind data for pyiem windrose utils exercising."""
+    pgconn = get_dbconn(database="hads", user="mesonet")
+    cursor = pgconn.cursor()
+    cursor.execute(
+        """
+        insert into alldata(station, valid, sknt, drct)
+        select 'XXXX',
+        generate_series('2019-12-20 12:00+00', '2021-01-05 12:00',
+            '1 hour'::interval),
+        generate_series(1, 9175) / 500. as sknt, -- 18.35 max
+        generate_series(1, 9175) / 26. as drct -- 352.9 max
+        """
+    )
+    cursor.close()
+    pgconn.commit()
+    pgconn.close()
+
+
 def fake_asos(station):
     """hack"""
     pgconn = get_dbconn(database="asos", user="mesonet")
@@ -34,7 +53,8 @@ def do_stations(network):
     pgconn = get_dbconn(database="mesosite", user="mesonet")
     cursor = pgconn.cursor()
     req = requests.get(
-        f"http://mesonet.agron.iastate.edu/geojson/network/{network}.geojson"
+        f"http://mesonet.agron.iastate.edu/geojson/network/{network}.geojson",
+        timeout=60,
     )
     data = req.json()
     for feature in data["features"]:
@@ -89,6 +109,7 @@ def main():
     """Workflow"""
     _ = [do_stations(network) for network in NETWORKS]
     _ = [fake_asos(station) for station in ["AMW", "DSM"]]
+    fake_hads_wind()
 
 
 if __name__ == "__main__":
