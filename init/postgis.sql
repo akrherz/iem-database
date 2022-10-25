@@ -1056,7 +1056,7 @@ CREATE TABLE spc_outlook_geometries(
     spc_outlook_id int REFERENCES spc_outlook(id),
     threshold varchar(4) REFERENCES spc_outlook_thresholds(threshold),
     category varchar(64),
-    geom geometry(MultiPolygon, 4326)
+    geom geometry(MultiPolygon, 4326) CONSTRAINT _sog_geom_isvalid CHECK (ST_IsValid(geom))
 );
 CREATE INDEX spc_outlook_geometries_idx
     on spc_outlook_geometries(spc_outlook_id);
