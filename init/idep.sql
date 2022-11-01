@@ -134,6 +134,9 @@ CREATE TABLE flowpath_ofes(
     geom geometry(LineString, 5070),
     bulk_slope real,
     scenario int,
+    fbndid int,
+    management varchar(32),
+    landuse varchar(32),
     gssurgo_id int REFERENCES gssurgo(id)
 );
 ALTER TABLE flowpath_ofes OWNER to mesonet;
@@ -149,12 +152,9 @@ CREATE  TABLE flowpath_points(
   segid int,
   elevation real,
   length real,
-  management varchar(32),
   slope real,
-  landuse varchar(32),
   geom geometry(POINT, 5070),
   gridorder smallint,
-  fbndid int,
   genlu smallint references general_landuse(id),
   ofe smallint,
   gssurgo_id int references gssurgo(id)
