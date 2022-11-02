@@ -36,6 +36,7 @@ ALTER TABLE scenarios OWNER to mesonet;
 
 -- Default entry that is used for testing.
 insert into scenarios values (0, 'Production', 0, 0, 0);
+insert into scenarios values (-1, 'Testing', 0, 0, 0);
 
 CREATE TABLE huc12(
     huc_12 varchar(12),
