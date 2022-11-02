@@ -109,7 +109,8 @@ CREATE TABLE flowpaths(
   bulk_slope real,
   max_slope real,
   irrigated boolean DEFAULT false,
-  ofe_count smallint
+  ofe_count smallint,
+  real_length real
 );
 ALTER TABLE flowpaths OWNER to mesonet;
 create index flowpaths_huc12_fpath_idx on flowpaths(huc_12,fpath);
@@ -133,11 +134,13 @@ CREATE TABLE flowpath_ofes(
     ofe smallint not null,
     geom geometry(LineString, 5070),
     bulk_slope real,
-    scenario int,
+    max_slope real,
     fbndid int,
     management varchar(32),
     landuse varchar(32),
-    gssurgo_id int REFERENCES gssurgo(id)
+    gssurgo_id int REFERENCES gssurgo(id),
+    genlu smallint references general_landuse(id),
+    real_length real
 );
 ALTER TABLE flowpath_ofes OWNER to mesonet;
 GRANT SELECT on flowpath_ofes to nobody;
@@ -148,14 +151,12 @@ CREATE INDEX flowpath_ofes_idx on flowpath_ofes(flowpath);
 ---
 CREATE  TABLE flowpath_points(
   flowpath int references flowpaths(fid),
-  scenario int references scenarios(id),
   segid int,
   elevation real,
   length real,
   slope real,
   geom geometry(POINT, 5070),
   gridorder smallint,
-  genlu smallint references general_landuse(id),
   ofe smallint,
   gssurgo_id int references gssurgo(id)
 );
