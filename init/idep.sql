@@ -185,3 +185,19 @@ CREATE INDEX harvest_huc12_idx on harvest(huc12);
 CREATE INDEX harvest_valid_idx on harvest(valid);
 GRANT ALL on harvest to ldm,mesonet;
 GRANT SELECT on harvest to nobody;
+
+--
+-- Field Boundaries
+CREATE TABLE fields(
+    field_id SERIAL UNIQUE,
+    scenario smallint REFERENCES scenarios(id),
+    huc12 char(12),
+    fbndid int,
+    acres real,
+    isag bool,
+    geom geometry(Polygon, 5070)
+);
+ALTER TABLE fields OWNER to mesonet;
+GRANT SELECT on fields to nobody;
+CREATE INDEX fields_huc12_idx on fields(huc12);
+CREATE INDEX fields_geom_idx on fields USING GIST(geom);
