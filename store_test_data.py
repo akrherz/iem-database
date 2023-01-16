@@ -12,7 +12,7 @@ NETWORKS = ["IA_ASOS", "AWOS", "IACLIMATE", "IA_COOP"]
 
 def fake_hads_wind():
     """Create some faked wind data for pyiem windrose utils exercising."""
-    pgconn = get_dbconn(database="hads", user="mesonet")
+    pgconn = get_dbconn(database="hads", user="mesonet", host="localhost")
     cursor = pgconn.cursor()
     cursor.execute(
         """
@@ -33,17 +33,16 @@ def fake_hads_wind():
 
 def fake_asos(station):
     """hack"""
-    pgconn = get_dbconn(database="asos", user="mesonet")
+    pgconn = get_dbconn(database="asos", user="mesonet", host="localhost")
     cursor = pgconn.cursor()
     for year in range(1995, 1997):
         cursor.execute(
-            """
-        insert into t%s(station, valid, tmpf, dwpf) SELECT '%s',
-        generate_series('%s-01-02 00:00'::timestamp,
-        '%s-12-02 00:00'::timestamp, '1 hour'::interval),
+            f"""
+        insert into t{year}(station, valid, tmpf, dwpf) SELECT '{station}',
+        generate_series('{year}-01-02 00:00'::timestamp,
+        '{year}-12-02 00:00'::timestamp, '1 hour'::interval),
         random() * 100., random() * 100.
         """
-            % (year, station, year, year)
         )
     cursor.close()
     pgconn.commit()
@@ -52,7 +51,7 @@ def fake_asos(station):
 
 def do_stations(network):
     """hack"""
-    pgconn = get_dbconn(database="mesosite", user="mesonet")
+    pgconn = get_dbconn(database="mesosite", user="mesonet", host="localhost")
     cursor = pgconn.cursor()
     req = requests.get(
         f"http://mesonet.agron.iastate.edu/geojson/network/{network}.geojson",
