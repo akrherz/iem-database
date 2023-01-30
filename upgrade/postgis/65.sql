@@ -2,7 +2,7 @@
 CREATE TABLE artcc(
     id varchar(8) unique not null,
     name text,
-    geom geometry(Polygon, 4326)
+    geom geography(polygon)
 );
 ALTER TABLE artcc OWNER to mesonet;
 GRANT ALL on artcc to ldm;
