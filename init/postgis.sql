@@ -5,7 +5,7 @@ CREATE EXTENSION postgis;
 CREATE TABLE iem_schema_manager_version(
 	version int,
 	updated timestamptz);
-INSERT into iem_schema_manager_version values (64, now());
+INSERT into iem_schema_manager_version values (65, now());
 
 ---
 --- TABLES THAT ARE LOADED VIA shp2pgsql
@@ -18,6 +18,16 @@ INSERT into iem_schema_manager_version values (64, now());
 ---   + tz
 ---   + uscounties
 ---   + warnings_import
+
+-- Bootstraped via scripts in akrherz/DEV repo, pireps folder
+CREATE TABLE artcc(
+    id varchar(8) unique not null,
+    name text,
+    geom geometry(Polygon, 4326)
+);
+ALTER TABLE artcc OWNER to mesonet;
+GRANT ALL on artcc to ldm;
+GRANT SELECT on artcc to nobody;
 
 -- Storage of Center Weather Advisories
 
