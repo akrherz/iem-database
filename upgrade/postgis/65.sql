@@ -1,9 +1,10 @@
 -- Bootstraped via scripts in akrherz/DEV repo, pireps folder
-CREATE TABLE artcc(
-    id varchar(8) unique not null,
+CREATE TABLE airspaces(
+    ident varchar(8),
+    type_code varchar(8) not null,
     name text,
-    geom geography(polygon)
+    geom geography(multipolygon)
 );
-ALTER TABLE artcc OWNER to mesonet;
-GRANT ALL on artcc to ldm;
-GRANT SELECT on artcc to nobody;
+ALTER TABLE airspaces OWNER to mesonet;
+GRANT ALL on airspaces to ldm;
+GRANT SELECT on airspaces to nobody;
