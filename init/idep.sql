@@ -40,12 +40,8 @@ insert into scenarios values (-1, 'Testing', 0, 0, 0);
 
 CREATE TABLE huc12(
     huc_12 varchar(12),
-    acres numeric,
-    hu_12_name text,
+    name text,
     states text,
-    areapctmea real,
-    shape_leng numeric,
-    shape_area numeric,
     geom geometry(MultiPolygon, 5070),
     simple_geom geometry(Polygon, 5070),
     scenario int REFERENCES scenarios(id),
