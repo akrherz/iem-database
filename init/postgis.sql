@@ -5,7 +5,7 @@ CREATE EXTENSION postgis;
 CREATE TABLE iem_schema_manager_version(
 	version int,
 	updated timestamptz);
-INSERT into iem_schema_manager_version values (65, now());
+INSERT into iem_schema_manager_version values (66, now());
 
 ---
 --- TABLES THAT ARE LOADED VIA shp2pgsql
@@ -1148,7 +1148,8 @@ CREATE TABLE pireps(
   geom geography(POINT,4326),
   is_urgent boolean,
   aircraft_type text,
-  report text)
+  report text,
+  artcc varchar(3))
   PARTITION by range(valid);
 ALTER TABLE pireps OWNER to mesonet;
 GRANT SELECT on pireps to nobody;
