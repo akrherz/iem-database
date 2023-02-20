@@ -5,10 +5,10 @@ CREATE EXTENSION postgis;
 -- Boilerplate IEM schema_manager_version, the version gets incremented each
 -- time we make an upgrade script
 CREATE TABLE iem_schema_manager_version(
-	version int,
-	updated timestamptz);
+    version int,
+    updated timestamptz);
 ALTER TABLE iem_schema_manager_version OWNER to mesonet;
-INSERT into iem_schema_manager_version values (26, now());
+INSERT into iem_schema_manager_version values (27, now());
 
 -- GSSURGO Metadata
 CREATE TABLE gssurgo(
@@ -47,7 +47,8 @@ CREATE TABLE huc12(
     scenario int REFERENCES scenarios(id),
     ugc char(6),
     mlra_id smallint,
-    dominant_tillage smallint
+    dominant_tillage smallint,
+    average_slope_ratio real
 );
 CREATE UNIQUE INDEX huc12_idx on huc12(huc_12, scenario);
 GRANT SELECT on huc12 to nobody;
