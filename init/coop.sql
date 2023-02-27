@@ -5,7 +5,7 @@ CREATE EXTENSION postgis;
 CREATE TABLE iem_schema_manager_version(
 	version int,
 	updated timestamptz);
-INSERT into iem_schema_manager_version values (14, now());
+INSERT into iem_schema_manager_version values (15, now());
 
 ---
 --- Storage of climoweek
@@ -876,3 +876,13 @@ CREATE TABLE yieldfx_baseline(
   windspeed real,
   rh real);
 GRANT SELECT on yieldfx_baseline to nobody;
+
+-- Storage of polygons associated with regions we compute climodat for
+CREATE TABLE climodat_regions(
+    iemid int REFERENCES stations(iemid),
+    geom geometry(MultiPolygon, 4326)
+);
+CREATE UNIQUE INDEX climodat_regions_idx on climodat_regions(iemid);
+CREATE INDEX climodat_regions_gix on climodat_regions USING GIST(geom);
+ALTER TABLE climodat_regions OWNER TO mesonet;
+GRANT SELECT on climodat_regions to nobody, ldm;
