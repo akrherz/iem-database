@@ -8,7 +8,7 @@ CREATE TABLE iem_schema_manager_version(
     version int,
     updated timestamptz);
 ALTER TABLE iem_schema_manager_version OWNER to mesonet;
-INSERT into iem_schema_manager_version values (27, now());
+INSERT into iem_schema_manager_version values (28, now());
 
 -- GSSURGO Metadata
 CREATE TABLE gssurgo(
@@ -17,7 +17,8 @@ CREATE TABLE gssurgo(
     mukey int,
     label text,
     kwfact real,
-    hydrogroup varchar(8)
+    hydrogroup varchar(8),
+    plastic_limit real
 );
 ALTER TABLE gssurgo OWNER to mesonet;
 GRANT SELECT on gssurgo to nobody;
