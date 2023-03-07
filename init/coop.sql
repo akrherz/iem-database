@@ -62,7 +62,7 @@ CREATE TABLE alldata_tmp(
   estimated boolean,
   narr_srad real,
   merra_srad real,
-  merra_srad_cs real,
+  era5land_srad real,
   hrrr_srad real
   );
 
@@ -86,7 +86,7 @@ CREATE TABLE alldata(
   precip_hour smallint,
   narr_srad real,
   merra_srad real,
-  merra_srad_cs real,
+  era5land_srad real,
   hrrr_srad real
   ) PARTITION by range(station);
 ALTER TABLE alldata OWNER to mesonet;
@@ -172,7 +172,7 @@ CREATE TABLE alldata_estimates(
   estimated boolean,
   narr_srad real,
   merra_srad real,
-  merra_srad_cs real,
+  era5land_srad real,
   hrrr_srad real
   );
 GRANT select on alldata_estimates to nobody;
