@@ -201,3 +201,16 @@ ALTER TABLE fields OWNER to mesonet;
 GRANT SELECT on fields to nobody;
 CREATE INDEX fields_huc12_idx on fields(huc12);
 CREATE INDEX fields_geom_idx on fields USING GIST(geom);
+
+--
+-- Dates of tillage and planting operations
+create table field_operations(
+    field_id int REFERENCES fields(field_id),
+    year int,
+    till1 date,
+    till2 date,
+    plant date
+);
+alter table field_operations owner to mesonet;
+grant select on field_operations to nobody;
+create index field_operations_idx on field_operations(field_id);
