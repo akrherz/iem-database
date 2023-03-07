@@ -193,7 +193,9 @@ CREATE TABLE fields(
     fbndid int,
     acres real,
     isag bool,
-    geom geometry(Polygon, 5070)
+    geom geometry(Polygon, 5070),
+    landuse varchar(32),
+    management varchar(32)
 );
 ALTER TABLE fields OWNER to mesonet;
 GRANT SELECT on fields to nobody;
