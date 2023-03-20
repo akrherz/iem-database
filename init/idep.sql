@@ -18,7 +18,9 @@ CREATE TABLE gssurgo(
     label text,
     kwfact real,
     hydrogroup varchar(8),
-    plastic_limit real
+    plastic_limit real,
+    wepp_min_sw real,
+    wepp_max_sw real
 );
 ALTER TABLE gssurgo OWNER to mesonet;
 GRANT SELECT on gssurgo to nobody;
