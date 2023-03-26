@@ -5,7 +5,7 @@ CREATE EXTENSION postgis;
 CREATE TABLE iem_schema_manager_version(
 	version int,
 	updated timestamptz);
-INSERT into iem_schema_manager_version values (15, now());
+INSERT into iem_schema_manager_version values (16, now());
 
 ---
 --- Storage of climoweek
@@ -102,7 +102,7 @@ declare
         'ia', 'id', 'il', 'in', 'ks', 'ky', 'la', 'ma', 'md', 'me', 'mi', 'mn',
         'mo', 'ms', 'mt', 'nc', 'nd', 'ne', 'nh', 'nj', 'nm', 'nv', 'ny', 'oh',
         'ok', 'or', 'pa', 'ri', 'sc', 'sd', 'tn', 'tx', 'ut', 'va', 'vt', 'wa',
-        'wi', 'wv', 'wy', 'gu', 'pr', 'vi'];
+        'wi', 'wv', 'wy', 'gu', 'pr', 'vi', 'as'];
 begin
     foreach st in ARRAY states
     loop
