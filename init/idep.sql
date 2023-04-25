@@ -195,7 +195,7 @@ CREATE TABLE fields(
     fbndid int,
     acres real,
     isag bool,
-    geom geometry(Polygon, 5070),
+    geom geometry(MultiPolygon, 5070),
     landuse varchar(32),
     management varchar(32)
 );
