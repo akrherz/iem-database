@@ -19,6 +19,21 @@ INSERT into iem_schema_manager_version values (66, now());
 ---   + uscounties
 ---   + warnings_import
 
+-- Placeholder as it is bootstrapped via shp2psql
+create table rfc(
+    gid serial,
+    objectid real,
+    site_id varchar(3),
+    state varchar(2),
+    rfc_name varchar(18),
+    rfc_city varchar(25),
+    basin_id varchar(5),
+    geom geometry(MultiPolygon, 4326)
+);
+ALTER TABLE rfc OWNER to mesonet;
+GRANT ALL on rfc to ldm;
+GRANT SELECT on rfc to nobody;
+
 -- Bootstraped via scripts in akrherz/DEV repo, pireps folder
 CREATE TABLE airspaces(
     ident varchar(8),
