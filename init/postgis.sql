@@ -814,6 +814,7 @@ CREATE TABLE lsrs (
     typetext character varying(40),
     geom geometry(Point, 4326),
     product_id text,
+    product_id_summary text,
     updated timestamptz DEFAULT now(),
     unit varchar(32),
     qualifier char(1),
