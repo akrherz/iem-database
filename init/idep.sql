@@ -46,7 +46,8 @@ create table scenarios(
     label varchar,
     climate_scenario int,
     huc12_scenario int,
-    flowpath_scenario int
+    flowpath_scenario int,
+    dep_version_label text
     );
 GRANT SELECT on scenarios to nobody;
 ALTER TABLE scenarios OWNER to mesonet;
