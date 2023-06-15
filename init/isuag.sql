@@ -4,7 +4,7 @@
 CREATE TABLE iem_schema_manager_version(
     version int,
     updated timestamptz);
-INSERT into iem_schema_manager_version values (18, now());
+INSERT into iem_schema_manager_version values (19, now());
 
 CREATE EXTENSION postgis;
 
@@ -74,7 +74,15 @@ CREATE TABLE sm_daily (
 
   WindDir_D1_WVT real,
   DailyET real,
-  T4_C_Avg real,
+    t4_c_min real,
+    t4_c_min_f character(1),
+    t4_c_min_qc real,
+    t4_c_avg real,
+    t4_c_avg_f character(1),
+    t4_c_avg_qc real,
+    t4_c_max real,
+    t4_c_max_f character(1),
+    t4_c_max_qc real,
   VWC_12_Avg real,
   VWC_24_Avg real,
   VWC_50_Avg real,
@@ -103,8 +111,6 @@ CREATE TABLE sm_daily (
     ws_mph_tmx_qc timestamp with time zone,
     dailyet_f character(1),
     dailyet_qc real,
-    t4_c_avg_f character(1),
-    t4_c_avg_qc real,
     vwc_12_avg_f character(1),
     vwc_12_avg_qc real,
     vwc_24_avg_f character(1),
