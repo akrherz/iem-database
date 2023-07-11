@@ -5,7 +5,7 @@ CREATE EXTENSION postgis;
 CREATE TABLE iem_schema_manager_version(
     version int,
     updated timestamptz);
-INSERT into iem_schema_manager_version values (66, now());
+INSERT into iem_schema_manager_version values (67, now());
 
 ---
 --- TABLES THAT ARE LOADED VIA shp2pgsql
@@ -1083,12 +1083,15 @@ CREATE TABLE spc_outlook_geometries(
     spc_outlook_id int REFERENCES spc_outlook(id),
     threshold varchar(4) REFERENCES spc_outlook_thresholds(threshold),
     category varchar(64),
-    geom geometry(MultiPolygon, 4326) CONSTRAINT _sog_geom_isvalid CHECK (ST_IsValid(geom))
+    geom geometry(MultiPolygon, 4326) CONSTRAINT _sog_geom_isvalid CHECK (ST_IsValid(geom)),
+    geom_layers geometry(MultiPolygon, 4326) CONSTRAINT _sog_geom_layers_isvalid CHECK (ST_IsValid(geom_layers))
 );
 CREATE INDEX spc_outlook_geometries_idx
     on spc_outlook_geometries(spc_outlook_id);
 CREATE INDEX spc_outlook_geometries_gix
     ON spc_outlook_geometries USING GIST (geom);
+CREATE INDEX spc_outlook_geometries_layers_gix
+    ON spc_outlook_geometries USING GIST (geom_layers);
 create index spc_outlook_geometries_combo_idx
     on spc_outlook_geometries(threshold, category);
 ALTER TABLE spc_outlook_geometries OWNER to mesonet;
