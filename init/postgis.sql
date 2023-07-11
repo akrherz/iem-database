@@ -3,9 +3,9 @@ CREATE EXTENSION postgis;
 -- Boilerplate IEM schema_manager_version, the version gets incremented each
 -- time we make an upgrade script
 CREATE TABLE iem_schema_manager_version(
-	version int,
-	updated timestamptz);
-INSERT into iem_schema_manager_version values (66, now());
+    version int,
+    updated timestamptz);
+INSERT into iem_schema_manager_version values (67, now());
 
 ---
 --- TABLES THAT ARE LOADED VIA shp2pgsql
@@ -193,41 +193,41 @@ GRANT SELECT on cwsu to nobody;
 --- Quasi synced from mesosite database
 ---
 CREATE TABLE stations(
-	id varchar(20),
-	synop int,
-	name varchar(64),
-	state char(2),
-	country char(2),
-	elevation real,
-	network varchar(20),
-	online boolean,
-	params varchar(300),
-	county varchar(50),
-	plot_name varchar(64),
-	climate_site varchar(6),
-	remote_id int,
-	nwn_id int,
-	spri smallint,
-	wfo varchar(3),
-	archive_begin date,
-	archive_end date,
-	modified timestamp with time zone,
-	tzname varchar(32),
-	iemid SERIAL,
-	metasite boolean,
-	sigstage_low real,
-	sigstage_action real,
-	sigstage_bankfull real,
-	sigstage_flood real,
-	sigstage_moderate real,
-	sigstage_major real,
-	sigstage_record real,
-	ugc_county char(6),
-	ugc_zone char(6),
-	ncdc81 varchar(11),
+    id varchar(20),
+    synop int,
+    name varchar(64),
+    state char(2),
+    country char(2),
+    elevation real,
+    network varchar(20),
+    online boolean,
+    params varchar(300),
+    county varchar(50),
+    plot_name varchar(64),
+    climate_site varchar(6),
+    remote_id int,
+    nwn_id int,
+    spri smallint,
+    wfo varchar(3),
+    archive_begin date,
+    archive_end date,
+    modified timestamp with time zone,
+    tzname varchar(32),
+    iemid SERIAL,
+    metasite boolean,
+    sigstage_low real,
+    sigstage_action real,
+    sigstage_bankfull real,
+    sigstage_flood real,
+    sigstage_moderate real,
+    sigstage_major real,
+    sigstage_record real,
+    ugc_county char(6),
+    ugc_zone char(6),
+    ncdc81 varchar(11),
     ncei91 varchar(11),
-	temp24_hour smallint,
-	precip24_hour smallint
+    temp24_hour smallint,
+    precip24_hour smallint
 );
 CREATE UNIQUE index stations_idx on stations(id, network);
 create UNIQUE index stations_iemid_idx on stations(iemid);
@@ -284,15 +284,15 @@ SELECT AddGeometryColumn('robins', 'the_geom', 4326, 'POINT', 2);
 --- NWS Forecast / WWA Zones / Boundaries
 ---
 CREATE TABLE ugcs(
-	gid SERIAL UNIQUE NOT NULL,
-	ugc char(6) NOT NULL,
-	name varchar(256),
-	state char(2),
-	tzname varchar(32),
-	wfo varchar(9),
-	begin_ts timestamptz NOT NULL,
-	end_ts timestamptz,
-	area2163 real,
+    gid SERIAL UNIQUE NOT NULL,
+    ugc char(6) NOT NULL,
+    name varchar(256),
+    state char(2),
+    tzname varchar(32),
+    wfo varchar(9),
+    begin_ts timestamptz NOT NULL,
+    end_ts timestamptz,
+    area2163 real,
     source varchar(2),
     gpw_population_2000 int,
     gpw_population_2005 int,
@@ -367,17 +367,17 @@ $_$;
 --- Store IDOT dashcam stuff
 ---
 CREATE TABLE idot_dashcam_current(
-	label varchar(20) UNIQUE not null,
-	valid timestamptz,
-	idnum int
+    label varchar(20) UNIQUE not null,
+    valid timestamptz,
+    idnum int
 );
 SELECT AddGeometryColumn('idot_dashcam_current', 'geom', 4326, 'POINT', 2);
 GRANT SELECT on idot_dashcam_current to nobody;
 
 CREATE TABLE idot_dashcam_log(
-	label varchar(20) not null,
-	valid timestamptz,
-	idnum int
+    label varchar(20) not null,
+    valid timestamptz,
+    idnum int
 );
 SELECT AddGeometryColumn('idot_dashcam_log', 'geom', 4326, 'POINT', 2);
 CREATE INDEX idot_dashcam_log_valid_idx on idot_dashcam_log(valid);
@@ -394,21 +394,21 @@ BEGIN
                 where label = new.label 
                );
 
-	-- Label exists, update table
+    -- Label exists, update table
     IF result = 1 THEN
-	    UPDATE idot_dashcam_current SET idnum = new.idnum, geom = new.geom,
-	    valid = new.valid WHERE label = new.label;
+        UPDATE idot_dashcam_current SET idnum = new.idnum, geom = new.geom,
+        valid = new.valid WHERE label = new.label;
     END IF;
 
-	-- Insert into log
-	INSERT into idot_dashcam_log(label, valid, idnum, geom) VALUES
-	(new.label, new.valid, new.idnum, new.geom);
-	
-	-- Stop insert from happening
-	IF result = 1 THEN
-		RETURN null;
-	END IF;
-	
+    -- Insert into log
+    INSERT into idot_dashcam_log(label, valid, idnum, geom) VALUES
+    (new.label, new.valid, new.idnum, new.geom);
+    
+    -- Stop insert from happening
+    IF result = 1 THEN
+        RETURN null;
+    END IF;
+    
     -- Allow insert to happen
     RETURN new;
 
@@ -425,47 +425,47 @@ CREATE TRIGGER idot_dashcam_current_insert_before_T
 --- Store DOT snowplow data
 ---
 CREATE TABLE idot_snowplow_current(
-	label varchar(20) UNIQUE not null,
-	valid timestamptz not null,
-	heading real,
-	velocity real,
-	roadtemp real,
-	airtemp real,
-	solidmaterial varchar(256),
-	liquidmaterial varchar(256),
-	prewetmaterial varchar(256),
-	solidsetrate real,
-	liquidsetrate real,
-	prewetsetrate real,
-	leftwingplowstate smallint,
-	rightwingplowstate smallint,
-	frontplowstate smallint,
-	underbellyplowstate smallint,
-	solid_spread_code smallint,
-	road_temp_code smallint
+    label varchar(20) UNIQUE not null,
+    valid timestamptz not null,
+    heading real,
+    velocity real,
+    roadtemp real,
+    airtemp real,
+    solidmaterial varchar(256),
+    liquidmaterial varchar(256),
+    prewetmaterial varchar(256),
+    solidsetrate real,
+    liquidsetrate real,
+    prewetsetrate real,
+    leftwingplowstate smallint,
+    rightwingplowstate smallint,
+    frontplowstate smallint,
+    underbellyplowstate smallint,
+    solid_spread_code smallint,
+    road_temp_code smallint
 );
 SELECT AddGeometryColumn('idot_snowplow_current', 'geom', 4326, 'POINT', 2);
 GRANT SELECT on idot_snowplow_current to nobody;
 
 CREATE TABLE idot_snowplow_archive(
-	label varchar(20) not null,
-	valid timestamptz not null,
-	heading real,
-	velocity real,
-	roadtemp real,
-	airtemp real,
-	solidmaterial varchar(256),
-	liquidmaterial varchar(256),
-	prewetmaterial varchar(256),
-	solidsetrate real,
-	liquidsetrate real,
-	prewetsetrate real,
-	leftwingplowstate smallint,
-	rightwingplowstate smallint,
-	frontplowstate smallint,
-	underbellyplowstate smallint,
-	solid_spread_code smallint,
-	road_temp_code smallint,
+    label varchar(20) not null,
+    valid timestamptz not null,
+    heading real,
+    velocity real,
+    roadtemp real,
+    airtemp real,
+    solidmaterial varchar(256),
+    liquidmaterial varchar(256),
+    prewetmaterial varchar(256),
+    solidsetrate real,
+    liquidsetrate real,
+    prewetsetrate real,
+    leftwingplowstate smallint,
+    rightwingplowstate smallint,
+    frontplowstate smallint,
+    underbellyplowstate smallint,
+    solid_spread_code smallint,
+    road_temp_code smallint,
     geom geometry(Point, 4326)
 ) PARTITION by RANGE (valid);
 CREATE INDEX on idot_snowplow_archive(label);
@@ -896,11 +896,11 @@ grant select on nws_ugc to nobody;
 --- SIGMET Convective Outlook
 ---
 CREATE TABLE sigmets_current(
-	sigmet_type char(1),
-	label varchar(16),
-	issue timestamp with time zone,
-	expire timestamp with time zone,
-	raw text
+    sigmet_type char(1),
+    label varchar(16),
+    issue timestamp with time zone,
+    expire timestamp with time zone,
+    raw text
 );
 ALTER TABLE sigmets_current OWNER to mesonet;
 GRANT ALL on sigmets_current to ldm;
@@ -908,11 +908,11 @@ SELECT AddGeometryColumn('sigmets_current', 'geom', 4326, 'POLYGON', 2);
 GRANT SELECT on sigmets_current to nobody;
 
 CREATE TABLE sigmets_archive(
-	sigmet_type char(1),
-	label varchar(16),
-	issue timestamp with time zone,
-	expire timestamp with time zone,
-	raw text
+    sigmet_type char(1),
+    label varchar(16),
+    issue timestamp with time zone,
+    expire timestamp with time zone,
+    raw text
 );
 SELECT AddGeometryColumn('sigmets_archive', 'geom', 4326, 'POLYGON', 2);
 GRANT SELECT on sigmets_archive to nobody;
@@ -947,18 +947,18 @@ create index nexrad_n0q_tindex_date_trunc on nexrad_n0q_tindex( date_trunc('minu
 ---
 ---
 CREATE table roads_base(
-	segid SERIAL unique,
-	major varchar(32),
-	minor varchar(128),
-	us1 smallint,
-	st1 smallint,
-	int1 smallint,
-	type smallint,
-	wfo char(3),
-	longname varchar(256),
-	idot_id int,
-	archive_begin timestamptz,
-	archive_end timestamptz
+    segid SERIAL unique,
+    major varchar(32),
+    minor varchar(128),
+    us1 smallint,
+    st1 smallint,
+    int1 smallint,
+    type smallint,
+    wfo char(3),
+    longname varchar(256),
+    idot_id int,
+    archive_begin timestamptz,
+    archive_end timestamptz
 );
 
 SELECT AddGeometryColumn('roads_base', 'geom', 26915, 'MULTILINESTRING', 2);
@@ -1083,12 +1083,15 @@ CREATE TABLE spc_outlook_geometries(
     spc_outlook_id int REFERENCES spc_outlook(id),
     threshold varchar(4) REFERENCES spc_outlook_thresholds(threshold),
     category varchar(64),
-    geom geometry(MultiPolygon, 4326) CONSTRAINT _sog_geom_isvalid CHECK (ST_IsValid(geom))
+    geom geometry(MultiPolygon, 4326) CONSTRAINT _sog_geom_isvalid CHECK (ST_IsValid(geom)),
+    geom_layers geometry(MultiPolygon, 4326) CONSTRAINT _sog_geom_layers_isvalid CHECK (ST_IsValid(geom_layers))
 );
 CREATE INDEX spc_outlook_geometries_idx
     on spc_outlook_geometries(spc_outlook_id);
 CREATE INDEX spc_outlook_geometries_gix
     ON spc_outlook_geometries USING GIST (geom);
+CREATE INDEX spc_outlook_geometries_layers_gix
+    ON spc_outlook_geometries USING GIST (geom_layers);
 create index spc_outlook_geometries_combo_idx
     on spc_outlook_geometries(threshold, category);
 ALTER TABLE spc_outlook_geometries OWNER to mesonet;
@@ -1109,7 +1112,7 @@ GRANT SELECT on spc_outlooks to ldm,nobody;
 --
 -- Convective Watches
 CREATE TABLE watches (
-	fid serial,
+    fid serial,
     sel character(5),
     issued timestamp with time zone,
     expired timestamp with time zone,
