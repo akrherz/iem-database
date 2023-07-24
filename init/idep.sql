@@ -155,7 +155,6 @@ CREATE TABLE flowpath_ofes(
     management varchar(32),
     landuse varchar(32),
     gssurgo_id int REFERENCES gssurgo(id),
-    genlu smallint references general_landuse(id),
     real_length real
 );
 ALTER TABLE flowpath_ofes OWNER to mesonet;
@@ -212,7 +211,8 @@ CREATE TABLE fields(
     isag bool,
     geom geometry(MultiPolygon, 5070),
     landuse varchar(32),
-    management varchar(32)
+    management varchar(32),
+    genlu smallint references general_landuse(id)
 );
 ALTER TABLE fields OWNER to mesonet;
 GRANT SELECT on fields to nobody;
