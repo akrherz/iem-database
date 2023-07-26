@@ -863,10 +863,6 @@ CREATE FUNCTION getskyc(character varying) RETURNS smallint
     AS $_$select value from skycoverage where code = $1$_$;
 
 
-CREATE FUNCTION local_date(timestamp with time zone) RETURNS date
-    LANGUAGE sql IMMUTABLE
-    AS $_$select date($1)$_$;
-
 CREATE FUNCTION mdate(timestamp with time zone) RETURNS date
     LANGUAGE sql IMMUTABLE
     AS $_$select date($1)$_$;

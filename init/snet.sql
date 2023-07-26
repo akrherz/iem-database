@@ -5,11 +5,6 @@ CREATE TABLE iem_schema_manager_version(
 	updated timestamptz);
 INSERT into iem_schema_manager_version values (4, now());
 
-CREATE FUNCTION local_date(timestamp with time zone) RETURNS date
-    LANGUAGE sql IMMUTABLE
-    AS $_$select date($1)$_$;
-
-
 CREATE TABLE dump (
     station character varying(5),
     valid timestamp with time zone,
