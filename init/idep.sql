@@ -137,8 +137,8 @@ CREATE INDEX flowpaths_idx on flowpaths USING GIST(geom);
 -- genlu column in flowpath_points
 --
 CREATE TABLE general_landuse(
-    id smallint,
-    label text
+    id smallint not null,
+    label text not null
 );
 CREATE UNIQUE index general_landuse_idx on general_landuse(id);
 ALTER TABLE general_landuse OWNER to mesonet;
@@ -212,7 +212,7 @@ CREATE TABLE fields(
     geom geometry(MultiPolygon, 5070),
     landuse varchar(32),
     management varchar(32),
-    genlu smallint references general_landuse(id)
+    genlu smallint references general_landuse(id) not null
 );
 ALTER TABLE fields OWNER to mesonet;
 GRANT SELECT on fields to nobody;
