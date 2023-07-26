@@ -72,6 +72,7 @@ CREATE TABLE hml_forecast(
 CREATE INDEX hml_forecast_idx on hml_forecast(station, generationtime);
 alter table hml_forecast owner to mesonet;
 grant all on hml_forecast to ldm;
+grant all on hml_forecast_id_seq to ldm;
 GRANT SELECT on hml_forecast to nobody;
 CREATE INDEX hml_forecast_issued_idx on hml_forecast(issued);
 
