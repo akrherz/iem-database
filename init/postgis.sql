@@ -915,8 +915,9 @@ CREATE TABLE sigmets_archive(
     raw text
 );
 SELECT AddGeometryColumn('sigmets_archive', 'geom', 4326, 'POLYGON', 2);
+alter table sigmets_archive owner to mesonet;
+grant all on sigmets_archive to ldm;
 GRANT SELECT on sigmets_archive to nobody;
-
 
 ---
 --- NEXRAD N0R Composites 
@@ -1138,6 +1139,7 @@ CREATE TABLE watches (
 );
 ALTER TABLE watches OWNER to mesonet;
 GRANT ALL on watches to ldm;
+grant all on watches_fid_seq to ldm;
 grant select on watches to nobody;
 
 CREATE UNIQUE INDEX watches_idx ON watches USING btree (issued, num);

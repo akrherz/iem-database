@@ -78,6 +78,8 @@ CREATE TABLE hml_observed_keys(
   id smallint UNIQUE,
   label varchar(32));
 GRANT SELECT on hml_observed_keys to nobody;
+alter table hml_observed_keys owner to mesonet;
+grant all on hml_observed_keys to ldm;
 
 INSERT into hml_observed_keys values
  (0, 'Depth Below Sfc[ft]'),
