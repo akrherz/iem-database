@@ -132,6 +132,30 @@ CREATE UNIQUE index iembot_twitter_subs_idx on
 GRANT ALL on iembot_twitter_subs to nobody;
 
 
+---
+--- IEMBOT Mastodon Page subscriptions
+---
+CREATE TABLE iembot_mastodon_oauth(
+  user_id bigint NOT NULL UNIQUE,
+  screen_name text,
+  access_token text,
+  api_base_url text,
+  created timestamptz DEFAULT now(),
+  updated timestamptz DEFAULT now(),
+  disabled bool default 'f',
+  iem_owned bool default 'f'
+);
+GRANT ALL on iembot_mastodon_oauth to nobody;
+
+CREATE TABLE iembot_mastodon_subs(
+  user_id bigint REFERENCES iembot_mastodon_oauth(user_id),
+  screen_name varchar(128),
+  channel varchar(64)
+);
+CREATE UNIQUE index iembot_mastodon_subs_idx on 
+ iembot_mastodon_subs(screen_name, channel);
+GRANT ALL on iembot_mastodon_subs to nobody;
+
 
 ---
 --- IEMBot channels
