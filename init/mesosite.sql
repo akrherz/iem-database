@@ -50,6 +50,7 @@ alter table iembot_mastodon_apps owner to mesonet;
 grant all on iembot_mastodon_apps to nobody;
 
 create table iembot_mastodon_oauth(
+    id serial unique not null,
     appid int references iembot_mastodon_apps(id) not null,
     screen_name text not null,
     created timestamptz default now(),
