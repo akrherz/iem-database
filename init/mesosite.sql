@@ -3,8 +3,8 @@ CREATE EXTENSION postgis;
 -- Boilerplate IEM schema_manager_version, the version gets incremented each
 -- time we make an upgrade script
 CREATE TABLE iem_schema_manager_version(
-	version int,
-	updated timestamptz);
+    version int,
+    updated timestamptz);
 INSERT into iem_schema_manager_version values (25, now());
 
 --- ==== TABLES TO investigate deleting
@@ -28,14 +28,14 @@ GRANT ALL on weblog to nobody;
 --- Store metadata used to drive the /timemachine/
 ---
 CREATE TABLE archive_products(
-	id SERIAL,
-	name varchar,
-	template varchar,
-	sts timestamptz,
-	interval int,
-	groupname varchar,
-	time_offset int,
-	avail_lag int);
+    id SERIAL,
+    name varchar,
+    template varchar,
+    sts timestamptz,
+    interval int,
+    groupname varchar,
+    time_offset int,
+    avail_lag int);
 GRANT SELECT on archive_products to nobody;
 
 -- Mostly for slack at the moment
@@ -47,9 +47,9 @@ GRANT ALL on iembot_webhooks to nobody;
 
 
 CREATE TABLE iembot_room_syndications (
-	roomname character varying(64),    
-	endpoint character varying(64),    
-	convtype character(1));
+    roomname character varying(64),    
+    endpoint character varying(64),    
+    convtype character(1));
 
 
 CREATE TABLE iembot_fb_access_tokens (
@@ -192,8 +192,8 @@ CREATE TABLE iemapps(
 GRANT ALL on iemapps to nobody;
 
 CREATE TABLE iemapps_tags(
-	appid int references iemapps(appid),
-	tag varchar(24) not null
+    appid int references iemapps(appid),
+    tag varchar(24) not null
 );
 CREATE UNIQUE INDEX iemapps_tags_idx on iemapps_tags(appid,tag);
 GRANT ALL on iemapps_tags to nobody;
@@ -203,9 +203,9 @@ GRANT ALL on iemapps_tags to nobody;
 --- webcam logs
 ---
 CREATE TABLE camera_log(
-	cam varchar(11),
-	valid timestamp with time zone,
-	drct smallint
+    cam varchar(11),
+    valid timestamp with time zone,
+    drct smallint
 ) PARTITION by range(valid);
 ALTER TABLE camera_log OWNER to mesonet;
 GRANT ALL on camera_log to ldm;
@@ -247,9 +247,9 @@ $do$;
 --- webcam currents
 ---
 CREATE TABLE camera_current(
-	cam varchar(11) UNIQUE,
-	valid timestamp with time zone,
-	drct smallint);
+    cam varchar(11) UNIQUE,
+    valid timestamp with time zone,
+    drct smallint);
 GRANT SELECT on camera_current to nobody;
 GRANT ALL on camera_current to mesonet,ldm;
 
@@ -257,14 +257,14 @@ GRANT ALL on camera_current to mesonet,ldm;
 --- Webcam scheduling
 ---
 CREATE TABLE webcam_scheduler(
-	cid varchar(10),
-	begints timestamp with time zone,
-	endts timestamp with time zone,
-	is_daily boolean,
-	filename varchar,
-	movie_seconds smallint);
+    cid varchar(10),
+    begints timestamp with time zone,
+    endts timestamp with time zone,
+    is_daily boolean,
+    filename varchar,
+    movie_seconds smallint);
 CREATE UNIQUE index webcam_scheduler_filename_idx on
-	webcam_scheduler(filename);
+    webcam_scheduler(filename);
 GRANT ALL on webcam_scheduler to nobody;
 
 ---
@@ -286,70 +286,70 @@ create view nwschat_properties as select * from properties;
 --- Webcam configurations
 ---
 CREATE TABLE webcams(
-	id varchar(11),
-	ip inet,
-	name varchar,
-	pan0 smallint,
-	online boolean,
-	port int,
-	network varchar(10),
-	iservice varchar,
-	iserviceurl varchar,
-	sts timestamp with time zone,
-	ets timestamp with time zone,
-	county varchar,
-	hosted varchar,
-	hostedurl varchar,
-	sponsor varchar,
-	sponsorurl varchar,
-	removed boolean,
-	state varchar(2),
-	moviebase varchar,
-	scrape_url varchar,
-	is_vapix boolean,
-	fullres varchar(9) DEFAULT '640x480' NOT NULL,
+    id varchar(11),
+    ip inet,
+    name varchar,
+    pan0 smallint,
+    online boolean,
+    port int,
+    network varchar(10),
+    iservice varchar,
+    iserviceurl varchar,
+    sts timestamp with time zone,
+    ets timestamp with time zone,
+    county varchar,
+    hosted varchar,
+    hostedurl varchar,
+    sponsor varchar,
+    sponsorurl varchar,
+    removed boolean,
+    state varchar(2),
+    moviebase varchar,
+    scrape_url varchar,
+    is_vapix boolean,
+    fullres varchar(9) DEFAULT '640x480' NOT NULL,
   fqdn varchar
-	);
+    );
 SELECT AddGeometryColumn('webcams', 'geom', 4326, 'POINT', 2);
 GRANT all on webcams to mesonet,ldm;
 GRANT select on webcams to nobody;
 
 CREATE TABLE stations(
-	id varchar(20),
-	synop int,
-	name varchar(64),
-	state char(2),
-	country char(2),
-	elevation real,
-	network varchar(20),
-	online boolean,
-	params varchar(300),
-	county varchar(50),
-	plot_name varchar(64),
-	climate_site varchar(6),
-	remote_id int,
-	nwn_id int,
-	spri smallint,
-	wfo varchar(3),
-	archive_begin date,
-	archive_end date,
-	modified timestamp with time zone,
-	tzname varchar(32),
-	iemid SERIAL UNIQUE NOT NULL,
-	metasite boolean,
-	sigstage_low real,
-	sigstage_action real,
-	sigstage_bankfull real,
-	sigstage_flood real,
-	sigstage_moderate real,
-	sigstage_major real,
-	sigstage_record real,
-	ugc_county char(6),
-	ugc_zone char(6),
-	ncdc81 varchar(11),
+    id varchar(20),
+    synop int,
+    name varchar(64),
+    state char(2),
+    country char(2),
+    elevation real,
+    network varchar(20),
+    online boolean,
+    params varchar(300),
+    county varchar(50),
+    plot_name varchar(64),
+    climate_site varchar(6),
+    remote_id int,
+    nwn_id int,
+    spri smallint,
+    wfo varchar(3),
+    archive_begin date,
+    archive_end date,
+    modified timestamp with time zone,
+    tzname varchar(32),
+    iemid SERIAL UNIQUE NOT NULL,
+    metasite boolean,
+    sigstage_low real,
+    sigstage_action real,
+    sigstage_bankfull real,
+    sigstage_flood real,
+    sigstage_moderate real,
+    sigstage_major real,
+    sigstage_record real,
+    ugc_county char(6),
+    ugc_zone char(6),
+    ncdc81 varchar(11),
     ncei91 varchar(11),
-	temp24_hour smallint,
-	precip24_hour smallint
+    temp24_hour smallint,
+    precip24_hour smallint
 );
 ALTER TABLE stations OWNER to mesonet;
 -- no commas in name please
@@ -363,13 +363,13 @@ GRANT ALL on stations to mesonet,ldm;
 GRANT ALL on stations_iemid_seq to mesonet,ldm;
 
 CREATE OR REPLACE FUNCTION update_modified_column()
-	RETURNS TRIGGER AS $$
-	BEGIN
-	   NEW.modified = now(); 
-	   RETURN NEW;
-	END;
-	$$ language 'plpgsql';
-	
+    RETURNS TRIGGER AS $$
+    BEGIN
+       NEW.modified = now(); 
+       RETURN NEW;
+    END;
+    $$ language 'plpgsql';
+    
 CREATE TRIGGER update_stations_modtime BEFORE UPDATE
         ON stations FOR EACH ROW EXECUTE PROCEDURE 
         update_modified_column();
@@ -387,8 +387,8 @@ GRANT SELECT on station_threading to nobody;
 
 -- Storage of station attributes
 CREATE TABLE station_attributes(
-	iemid int REFERENCES stations(iemid),
-	attr varchar(128) NOT NULL,
+    iemid int REFERENCES stations(iemid),
+    attr varchar(128) NOT NULL,
   value varchar NOT NULL);
 GRANT ALL on station_attributes to mesonet,ldm;
 CREATE UNIQUE index station_attributes_idx on station_attributes(iemid, attr);
@@ -475,11 +475,11 @@ GRANT SELECT on iemrasters_lookup to nobody;
 
 -- Storage of Autoplot timings and such
 CREATE TABLE autoplot_timing(
-	appid smallint NOT NULL,
-	valid timestamptz NOT NULL,
-	timing real NOT NULL,
-	uri varchar,
-	hostname varchar(24) NOT NULL);
+    appid smallint NOT NULL,
+    valid timestamptz NOT NULL,
+    timing real NOT NULL,
+    uri varchar,
+    hostname varchar(24) NOT NULL);
 GRANT SELECT on autoplot_timing to nobody;
 CREATE INDEX autoplot_timing_idx on autoplot_timing(appid);
 
