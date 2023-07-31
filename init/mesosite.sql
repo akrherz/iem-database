@@ -63,6 +63,15 @@ create table iembot_mastodon_oauth(
 alter table iembot_mastodon_oauth owner to mesonet;
 grant all on iembot_mastodon_oauth to nobody;
 
+create table iembot_mastodon_subs(
+    user_id int references iembot_mastodon_oauth(id),
+    channel varchar(64)
+);
+alter table iembot_mastodon_subs owner to mesonet;
+create unique index iembot_mastodon_subs_idx
+    on iembot_mastodon_subs(user_id, channel);
+grant all on iembot_mastodon_subs to nobody;
+
 -- Mostly for slack at the moment
 CREATE TABLE iembot_webhooks(
   channel varchar,
