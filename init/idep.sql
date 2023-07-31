@@ -8,7 +8,7 @@ CREATE TABLE iem_schema_manager_version(
     version int,
     updated timestamptz);
 ALTER TABLE iem_schema_manager_version OWNER to mesonet;
-insert into iem_schema_manager_version values (29, now());
+insert into iem_schema_manager_version values (30, now());
 
 -- Storage of DEP versioning dailyerosion/dep#179
 create table dep_version(
@@ -155,28 +155,12 @@ CREATE TABLE flowpath_ofes(
     management varchar(32),
     landuse varchar(32),
     gssurgo_id int REFERENCES gssurgo(id),
-    real_length real
+    real_length real,
+    point_elevation real[]
 );
 ALTER TABLE flowpath_ofes OWNER to mesonet;
 GRANT SELECT on flowpath_ofes to nobody;
 CREATE INDEX flowpath_ofes_idx on flowpath_ofes(flowpath);
-
----
---- Raw Points on each flowpath
----
-CREATE  TABLE flowpath_points(
-  flowpath int references flowpaths(fid),
-  segid int,
-  elevation real,
-  length real,
-  slope real,
-  geom geometry(POINT, 5070),
-  gridorder smallint,
-  ofe smallint,
-  gssurgo_id int references gssurgo(id)
-);
-create index flowpath_points_flowpath_idx on flowpath_points(flowpath);
-GRANT SELECT on flowpath_points to nobody;
 
 --- Store Properties used by website and scripts
 CREATE TABLE properties(
