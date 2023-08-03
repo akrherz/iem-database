@@ -148,15 +148,14 @@ GRANT SELECT on general_landuse to nobody;
 CREATE TABLE flowpath_ofes(
     flowpath int REFERENCES flowpaths(fid),
     ofe smallint not null,
-    geom geometry(LineString, 5070),
+    geom geometry(LineStringZ, 5070),
     bulk_slope real,
     max_slope real,
     fbndid int,
     management varchar(32),
     landuse varchar(32),
     gssurgo_id int REFERENCES gssurgo(id),
-    real_length real,
-    point_elevation real[]
+    real_length real
 );
 ALTER TABLE flowpath_ofes OWNER to mesonet;
 GRANT SELECT on flowpath_ofes to nobody;
