@@ -804,7 +804,7 @@ $do$;
 CREATE TABLE lsrs (
     valid timestamp with time zone,
     type character(1),
-    magnitude real,
+    magnitude numeric,
     city character varying(32),
     county character varying(32),
     state character(2),
