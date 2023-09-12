@@ -60,7 +60,8 @@ def run_db(dbname):
         if not os.path.isfile(fn):
             break
         print("    -> Attempting schema upgrade #%s ..." % (baseversion,))
-        cursor.execute(open(fn).read())
+        with open(fn, encoding="utf-8") as fh:
+            cursor.execute(fh.read())
 
         cursor.execute(
             """
