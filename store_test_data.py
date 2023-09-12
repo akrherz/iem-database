@@ -5,14 +5,14 @@ try:
     # Lovely hack here to use my custom connection when possible
     from pyiem.util import get_dbconn
 except ImportError:
-    from psycopg2 import connect as get_dbconn
+    from psycopg import connect as get_dbconn
 
 NETWORKS = ["IA_ASOS", "AWOS", "IACLIMATE", "IA_COOP"]
 
 
 def fake_hads_wind():
     """Create some faked wind data for pyiem windrose utils exercising."""
-    pgconn = get_dbconn(database="hads", user="mesonet", host="localhost")
+    pgconn = get_dbconn(dbname="hads", user="mesonet", host="localhost")
     cursor = pgconn.cursor()
     cursor.execute(
         """
@@ -33,7 +33,7 @@ def fake_hads_wind():
 
 def fake_asos(station):
     """hack"""
-    pgconn = get_dbconn(database="asos", user="mesonet", host="localhost")
+    pgconn = get_dbconn(dbname="asos", user="mesonet", host="localhost")
     cursor = pgconn.cursor()
     for year in range(1995, 1997):
         cursor.execute(
@@ -51,7 +51,7 @@ def fake_asos(station):
 
 def do_stations(network):
     """hack"""
-    pgconn = get_dbconn(database="mesosite", user="mesonet", host="localhost")
+    pgconn = get_dbconn(dbname="mesosite", user="mesonet", host="localhost")
     cursor = pgconn.cursor()
     req = requests.get(
         f"http://mesonet.agron.iastate.edu/geojson/network/{network}.geojson",
@@ -73,12 +73,13 @@ def do_stations(network):
         ncdc81 = feature["properties"]["ncdc81"]
         ncei91 = feature["properties"].get("ncei91")
         (lon, lat) = feature["geometry"]["coordinates"]
+        giswkt = f"SRID=4326;POINT({lon} {lat})"
         cursor.execute(
             """
         INSERT into stations(id, name, state, country, elevation, network,
         online, county, plot_name, climate_site, wfo, tzname, metasite,
         ugc_county, ugc_zone, geom, ncdc81, ncei91) VALUES (%s, %s, %s, %s, %s,
-        %s, 't', %s, %s, %s, %s, %s, 'f', %s, %s, 'SRID=4326;POINT(%s %s)',
+        %s, 't', %s, %s, %s, %s, %s, 'f', %s, %s, %s,
         %s, %s)
         """,
             (
@@ -95,8 +96,7 @@ def do_stations(network):
                 tzname,
                 ugc_county,
                 ugc_zone,
-                lon,
-                lat,
+                giswkt,
                 ncdc81,
                 ncei91,
             ),

@@ -15,13 +15,12 @@ jobs:
     - name: Install Ubuntu Deps
       run: |
         sudo apt-get update
-        sudo apt-get install python3-psycopg2
+        sudo python -m pip install psycopg
 
     - name: Do Work
       run: |
         git clone --depth 1 https://github.com/akrherz/ci_tooling.git .ci_tooling
         . .ci_tooling/postgres.sh
-        export PATH="/usr/lib/postgresql/12/bin:$PATH"
         psql -c 'CREATE ROLE runner SUPERUSER LOGIN CREATEDB;' -U postgres || true
         sh bootstrap.sh
         psql -f data/postgis/cwsu.db -U mesonet postgis
