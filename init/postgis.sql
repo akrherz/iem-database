@@ -1137,8 +1137,6 @@ CREATE TABLE watches (
     product_id_saw varchar(36),
     product_id_sel varchar(36)
 );
-alter table watches add constraint check_geom 
-    CHECK(ST_IsEmpty(geom) = false and geom is not null);
 ALTER TABLE watches OWNER to mesonet;
 GRANT ALL on watches to ldm;
 grant all on watches_fid_seq to ldm;
