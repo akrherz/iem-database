@@ -101,11 +101,27 @@ def do_stations(network):
     pgconn.close()
 
 
+def add_webcam():
+    """Add a webcam"""
+    pgconn = psycopg.connect("postgresql://mesonet@localhost/mesosite")
+    cursor = pgconn.cursor()
+    cursor.execute(
+        """
+        INSERT into webcams(id, name, network, online)
+        VALUES ('KCCI-027', 'ISU Ag Farm', 'KCCI', 't')
+    """
+    )
+    cursor.close()
+    pgconn.commit()
+    pgconn.close()
+
+
 def main():
     """Workflow"""
     _ = [do_stations(network) for network in NETWORKS]
     _ = [fake_asos(station) for station in ["AMW", "DSM"]]
     fake_hads_wind()
+    add_webcam()
 
 
 if __name__ == "__main__":
