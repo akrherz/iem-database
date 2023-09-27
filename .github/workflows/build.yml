@@ -25,6 +25,7 @@ jobs:
 
     - name: Do Work
       run: |
+        set -e
         git clone --depth 1 https://github.com/akrherz/ci_tooling.git .ci_tooling
         . .ci_tooling/postgres.sh
         psql -c 'CREATE ROLE runner SUPERUSER LOGIN CREATEDB;' -U postgres || true

@@ -17,7 +17,8 @@ create table dep_version(
     acpf text not null,
     flowpath text not null,
     gssurgo text not null,
-    software text not null
+    software text not null,
+    tillage text not null
 );
 alter table dep_version owner to mesonet;
 grant select on dep_version to nobody;
