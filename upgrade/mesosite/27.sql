@@ -2,7 +2,7 @@
 -- Table storage for website telemetry data
 --
 create table website_telemetry(
-    valid timestamptz not null,
+    valid timestamptz not null default now(),
     timing real,
     status_code integer,
     client_addr inet,

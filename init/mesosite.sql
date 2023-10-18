@@ -14,7 +14,7 @@ INSERT into iem_schema_manager_version values (27, now());
 
 --
 create table website_telemetry(
-    valid timestamptz not null,
+    valid timestamptz not null default now(),
     timing real,
     status_code integer,
     client_addr inet,
