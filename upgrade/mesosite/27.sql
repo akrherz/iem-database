@@ -9,5 +9,7 @@ create table website_telemetry(
     app text,
     request_uri text
 );
+create index website_telemetry_valid_idx on
+  website_telemetry(valid);
 alter table website_telemetry owner to mesonet;
 grant all on website_telemetry to nobody;
