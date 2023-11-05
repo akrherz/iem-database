@@ -370,7 +370,7 @@ CREATE TABLE stations(
     country char(2),
     elevation real,
     network varchar(20),
-    online boolean NOT NULL,
+    online boolean NOT NULL default 't',
     params varchar(300),
     county varchar(50),
     plot_name varchar(64),
