@@ -3,7 +3,7 @@
 CREATE TABLE iem_schema_manager_version(
     version int,
     updated timestamptz);
-INSERT into iem_schema_manager_version values (6, now());
+INSERT into iem_schema_manager_version values (7, now());
 
 CREATE TABLE alldata(
     station varchar(5),
@@ -39,7 +39,7 @@ declare
 begin
     for year in 1983..2030
     loop
-        mytable := format($f$t%s_hourly$f$, year);
+        mytable := format($f$t%s$f$, year);
         execute format($f$
             create table %s partition of alldata
             for values from ('%s-01-01 00:00+00') to ('%s-01-01 00:00+00')
