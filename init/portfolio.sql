@@ -1,8 +1,8 @@
 -- Boilerplate IEM schema_manager_version, the version gets incremented each
 -- time we make an upgrade script
 CREATE TABLE iem_schema_manager_version(
-	version int,
-	updated timestamptz);
+    version int,
+    updated timestamptz);
 INSERT into iem_schema_manager_version values (0, now());
 GRANT ALL on iem_schema_manager_version to ldm,mesonet;
 
@@ -1751,7 +1751,7 @@ ALTER FUNCTION public.getemail(text) OWNER to mesonet;
 CREATE FUNCTION public.getfxtime(text) RETURNS integer
     LANGUAGE sql
     AS $_$SELECT fxtime FROM portfolios
-	WHERE portfolio = $1;$_$;
+    WHERE portfolio = $1;$_$;
 
 
 ALTER FUNCTION public.getfxtime(text) OWNER TO postgres;
@@ -1775,7 +1775,7 @@ ALTER FUNCTION public.getgid4post(numeric) OWNER to mesonet;
 CREATE FUNCTION public.getquestiontext(integer) RETURNS text
     LANGUAGE sql
     AS $_$SELECT question FROM questions
-	WHERE qid = $1;$_$;
+    WHERE qid = $1;$_$;
 
 
 ALTER FUNCTION public.getquestiontext(integer) OWNER to mesonet;
@@ -1787,7 +1787,7 @@ ALTER FUNCTION public.getquestiontext(integer) OWNER to mesonet;
 CREATE FUNCTION public.getquizname(integer) RETURNS text
     LANGUAGE sql
     AS $_$SELECT qname::text FROM quizes
-	WHERE quiznum = $1;$_$;
+    WHERE quiznum = $1;$_$;
 
 
 ALTER FUNCTION public.getquizname(integer) OWNER to mesonet;
@@ -1845,7 +1845,7 @@ ALTER FUNCTION public.getusergid(text, text) OWNER TO postgres;
 CREATE FUNCTION public.getusername(text) RETURNS text
     LANGUAGE sql
     AS $_$SELECT fname||' '||lname as name from users 
-	WHERE username = $1;$_$;
+    WHERE username = $1;$_$;
 
 
 ALTER FUNCTION public.getusername(text) OWNER to mesonet;

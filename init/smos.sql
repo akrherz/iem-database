@@ -3,8 +3,8 @@ CREATE EXTENSION postgis;
 -- Boilerplate IEM schema_manager_version, the version gets incremented each
 -- time we make an upgrade script
 CREATE TABLE iem_schema_manager_version(
-	version int,
-	updated timestamptz);
+    version int,
+    updated timestamptz);
 INSERT into iem_schema_manager_version values (5, now());
 
 ---
