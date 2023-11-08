@@ -3,8 +3,8 @@ CREATE EXTENSION postgis;
 -- Boilerplate IEM schema_manager_version, the version gets incremented each
 -- time we make an upgrade script
 CREATE TABLE iem_schema_manager_version(
-	version int,
-	updated timestamptz);
+    version int,
+    updated timestamptz);
 INSERT into iem_schema_manager_version values (5, now());
 
 --- Tables loaded by shp2pgsql
@@ -123,16 +123,16 @@ CREATE INDEX climate_sectors_idx on climate_sectors(sector,day);
 --- Results by township by year
 ---
 CREATE TABLE results_twp_year(
-	model_twp varchar(9),
-	valid date,
-	avg_loss real,
-	avg_runoff real,
-	min_loss real,
-	max_loss real,
-	min_runoff real,
-	max_runoff real,
-	ve_runoff real,
-	ve_loss real
+    model_twp varchar(9),
+    valid date,
+    avg_loss real,
+    avg_runoff real,
+    min_loss real,
+    max_loss real,
+    min_runoff real,
+    max_runoff real,
+    ve_runoff real,
+    ve_loss real
 );
 GRANT SELECT on results_twp_year to nobody;
 
@@ -140,16 +140,16 @@ GRANT SELECT on results_twp_year to nobody;
 --- Results by township by month
 ---
 CREATE TABLE results_twp_month(
-	model_twp varchar(9),
-	valid date,
-	avg_loss real,
-	avg_runoff real,
-	min_loss real,
-	max_loss real,
-	min_runoff real,
-	max_runoff real,
-	ve_runoff real,
-	ve_loss real
+    model_twp varchar(9),
+    valid date,
+    avg_loss real,
+    avg_runoff real,
+    min_loss real,
+    max_loss real,
+    min_runoff real,
+    max_runoff real,
+    ve_runoff real,
+    ve_loss real
 );
 GRANT SELECT on results_twp_month to nobody;
 
@@ -157,12 +157,12 @@ GRANT SELECT on results_twp_month to nobody;
 --- Combinations
 ---
 CREATE TABLE combos(
-	id SERIAL UNIQUE,
-	nri_id bigint,
-	model_twp varchar(9),
-	hrap_i int,
-	mkrun boolean,
-	erosivity_idx real
+    id SERIAL UNIQUE,
+    nri_id bigint,
+    model_twp varchar(9),
+    hrap_i int,
+    mkrun boolean,
+    erosivity_idx real
 );
 CREATE UNIQUE INDEX combos_idx on combos(nri_id, model_twp, hrap_i);
 CREATE INDEX combos_hrap_i_idx on combos(hrap_i);
@@ -174,11 +174,11 @@ GRANT SELECT on combos to nobody;
 --- Store run results
 ---
 CREATE TABLE results(
-	run_id bigint,
-	valid date,
-	runoff real,
-	loss real,
-	precip real
+    run_id bigint,
+    valid date,
+    runoff real,
+    loss real,
+    precip real
 );
 CREATE INDEX results_run_id_idx on results(run_id);
 CREATE INDEX results_valid_idx on results(valid);

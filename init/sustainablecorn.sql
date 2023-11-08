@@ -2,31 +2,31 @@
 --- Storage of Plot Identifiers
 ---
 CREATE TABLE plotids(
-	uniqueid varchar,
-	rep varchar,
-	tillage varchar,
-	rotation varchar,
-	drainage varchar,
-	nitrogen varchar,
-	landscape varchar,
-	row varchar,
-	col varchar,
-	soilseriesname2 varchar,
-	soiltextureseries2 varchar,
-	soilseriesname1 varchar,
-	soiltextureseries1 varchar,
-	soilseriesdescription1 varchar,
-	soiltaxonomicclass1 varchar,
-	soilseriesdescription2 varchar,
-	soiltaxonomicclass2 varchar,
-	soiltextureseries3 varchar,
-	soiltaxonomicclass3 varchar,
-	soilseriesdescription3 varchar,
-	soilseriesname3 varchar,
-	north varchar,
-	west varchar,
-	south varchar,
-	plotid varchar
+    uniqueid varchar,
+    rep varchar,
+    tillage varchar,
+    rotation varchar,
+    drainage varchar,
+    nitrogen varchar,
+    landscape varchar,
+    row varchar,
+    col varchar,
+    soilseriesname2 varchar,
+    soiltextureseries2 varchar,
+    soilseriesname1 varchar,
+    soiltextureseries1 varchar,
+    soilseriesdescription1 varchar,
+    soiltaxonomicclass1 varchar,
+    soilseriesdescription2 varchar,
+    soiltaxonomicclass2 varchar,
+    soiltextureseries3 varchar,
+    soiltaxonomicclass3 varchar,
+    soilseriesdescription3 varchar,
+    soilseriesname3 varchar,
+    north varchar,
+    west varchar,
+    south varchar,
+    plotid varchar
 );
 GRANT SELECT on plotids to nobody;
 
@@ -180,7 +180,7 @@ BEGIN
                 (value = new.value or (value is null and new.value is null))
                );
 
-	-- Data is duplication, no-op
+    -- Data is duplication, no-op
     IF result = 1 THEN
         RETURN null;
     END IF;
@@ -190,14 +190,14 @@ BEGIN
                 varname = new.varname and year = new.year
                 and depth = new.depth and subsample = new.subsample);
 
-	-- Data is a new value!
+    -- Data is a new value!
     IF result = 1 THEN
-    	UPDATE soil_data SET value = new.value, updated = now()
-    	WHERE site = new.site and plotid = new.plotid and
+        UPDATE soil_data SET value = new.value, updated = now()
+        WHERE site = new.site and plotid = new.plotid and
                 varname = new.varname and year = new.year and
                 depth = new.depth and subsample = new.subsample;
         INSERT into soil_data_log SELECT * from soil_data WHERE
-        		site = new.site and plotid = new.plotid and
+                site = new.site and plotid = new.plotid and
                 varname = new.varname and year = new.year and depth = new.depth
                 and subsample = new.subsample;
         RETURN null;
@@ -220,7 +220,7 @@ CREATE TRIGGER soil_insert_before_T
    EXECUTE PROCEDURE soil_insert_before_F();
   
 CREATE UNIQUE index soil_data_idx on 
-	soil_data(site, plotid, varname, year, depth, subsample);
+    soil_data(site, plotid, varname, year, depth, subsample);
 GRANT SELECT on soil_data to nobody;
 
 
@@ -258,7 +258,7 @@ BEGIN
                 (value = new.value or (value is null and new.value is null))
                );
 
-	-- Data is duplication, no-op
+    -- Data is duplication, no-op
     IF result = 1 THEN
         RETURN null;
     END IF;
@@ -267,13 +267,13 @@ BEGIN
                 where site = new.site and plotid = new.plotid and
                 varname = new.varname and year = new.year);
 
-	-- Data is a new value!
+    -- Data is a new value!
     IF result = 1 THEN
-    	UPDATE agronomic_data SET value = new.value, updated = now()
-    	WHERE site = new.site and plotid = new.plotid and
+        UPDATE agronomic_data SET value = new.value, updated = now()
+        WHERE site = new.site and plotid = new.plotid and
                 varname = new.varname and year = new.year;
         INSERT into agronomic_data_log SELECT * from agronomic_data WHERE
-        		site = new.site and plotid = new.plotid and
+                site = new.site and plotid = new.plotid and
                 varname = new.varname and year = new.year;
         RETURN null;
     END IF;
@@ -295,5 +295,5 @@ CREATE TRIGGER agronomic_insert_before_T
    EXECUTE PROCEDURE agronomic_insert_before_F();
   
 CREATE UNIQUE index agronomic_data_idx on 
-	agronomic_data(site, plotid, varname, year);
+    agronomic_data(site, plotid, varname, year);
 GRANT SELECT on agronomic_data to nobody;

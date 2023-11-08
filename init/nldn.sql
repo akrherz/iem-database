@@ -3,20 +3,20 @@ CREATE EXTENSION postgis;
 -- Boilerplate IEM schema_manager_version, the version gets incremented each
 -- time we make an upgrade script
 CREATE TABLE iem_schema_manager_version(
-	version int,
-	updated timestamptz);
+    version int,
+    updated timestamptz);
 INSERT into iem_schema_manager_version values (-1, now());
 
 -- Storage of NLDN data, in monthly partitions!
 CREATE TABLE nldn_all(
-	valid timestamptz,
-	geom geometry(Point, 4326),
-	signal real,
-	multiplicity smallint,
-	axis smallint,
-	eccentricity smallint,
-	ellipse smallint,
-	chisqr smallint) PARTITION by RANGE (valid);
+    valid timestamptz,
+    geom geometry(Point, 4326),
+    signal real,
+    multiplicity smallint,
+    axis smallint,
+    eccentricity smallint,
+    ellipse smallint,
+    chisqr smallint) PARTITION by RANGE (valid);
 GRANT ALL on nldn_all to mesonet,ldm;
 GRANT SELECT on nldn_all to nobody;
 CREATE INDEX on nldn_all(valid);
