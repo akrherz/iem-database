@@ -81,7 +81,7 @@ end;
 $do$;
 
 CREATE TABLE stations(
-	id varchar(20),
+	id varchar(64),
 	synop int,
 	name varchar(64),
 	state char(2),
@@ -115,7 +115,8 @@ CREATE TABLE stations(
 	ncdc81 varchar(11),
     ncei91 varchar(11),
 	temp24_hour smallint,
-	precip24_hour smallint
+	precip24_hour smallint,
+	wigos varchar(64)
 );
 CREATE UNIQUE index stations_idx on stations(id, network);
 create UNIQUE index stations_iemid_idx on stations(iemid);

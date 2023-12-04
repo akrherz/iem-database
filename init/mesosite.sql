@@ -363,7 +363,7 @@ GRANT all on webcams to mesonet,ldm;
 GRANT select on webcams to nobody;
 
 CREATE TABLE stations(
-    id varchar(20),
+    id varchar(64),
     synop int,
     name varchar(64),
     state char(2),
@@ -397,7 +397,8 @@ CREATE TABLE stations(
     ncdc81 varchar(11),
     ncei91 varchar(11),
     temp24_hour smallint,
-    precip24_hour smallint
+    precip24_hour smallint,
+    wigos varchar(64)
 );
 ALTER TABLE stations OWNER to mesonet;
 -- no commas in name please
