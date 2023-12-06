@@ -1,0 +1,5 @@
+dependencies:
+  # pin back openssl due to my problems
+  - openssl <3.2
+  - psycopg
+  - requests
