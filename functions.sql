@@ -7,6 +7,23 @@
 ---    LANGUAGE sql
 ---    AS $_$SELECT high from alldata WHERE station = $1 and day = $2$_$;
 
+CREATE OR REPLACE FUNCTION doy_after_july1(date date)
+RETURNS integer
+LANGUAGE plpgsql
+AS $$
+BEGIN
+  DECLARE
+    year integer;
+  BEGIN
+    year := case when date_part('month', date) < 7 then extract(year from date) - 1 else extract(year from date) end;
+
+  RETURN
+    (date - (year || '-07-01')::date) + 1;
+  END;
+END;
+$$;
+
+
 CREATE AGGREGATE sumtxt(text) (
     SFUNC = textcat,
     STYPE = text,
