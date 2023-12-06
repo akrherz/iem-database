@@ -95,7 +95,7 @@ CREATE unique index asi_data_idx on asi_data(station, valid);
 GRANT SELECT on asi_data to nobody;
 
 CREATE TABLE alldata (
-    station character varying(6),
+    station varchar(64),
     valid timestamp with time zone,
     tmpf real,
     dwpf real,
