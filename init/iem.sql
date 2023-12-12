@@ -376,7 +376,15 @@ CREATE TABLE current(
     peak_wind_time timestamptz,
     updated timestamptz DEFAULT now(),
     snowdepth real,
-    srad_1h_j real
+    srad_1h_j real,
+    tsoil_4in_f real,
+    tsoil_8in_f real,
+    tsoil_16in_f real,
+    tsoil_20in_f real,
+    tsoil_32in_f real,
+    tsoil_40in_f real,
+    tsoil_64in_f real,
+    tsoil_128in_f real
 );
 ALTER TABLE current OWNER to mesonet;
 GRANT ALL on current to ldm;
@@ -453,7 +461,15 @@ CREATE TABLE current_log (
     peak_wind_time timestamptz,
     updated timestamptz DEFAULT now(),
     snowdepth real,
-    srad_1h_j real
+    srad_1h_j real,
+    tsoil_4in_f real,
+    tsoil_8in_f real,
+    tsoil_16in_f real,
+    tsoil_20in_f real,
+    tsoil_32in_f real,
+    tsoil_40in_f real,
+    tsoil_64in_f real,
+    tsoil_128in_f real
 );
 GRANT ALL on current_log to mesonet,ldm;
 GRANT SELECT on current_log to nobody;
