@@ -306,77 +306,6 @@ CREATE OR REPLACE RULE replace_current_shef AS ON
         type = new.type and extremum = new.extremum and valid < new.valid and
         ((new.depth is null and depth is null) or depth = new.depth);
 
-
-CREATE TABLE current_tmp(
-    iemid int REFERENCES stations(iemid),
-    tmpf real,
-    dwpf real,
-    drct real,
-    sknt real,
-    indoor_tmpf real,
-    tsf0 real,
-    tsf1 real,
-    tsf2 real,
-    tsf3 real,
-    rwis_subf real,
-    scond0 character varying,
-    scond1 character varying,
-    scond2 character varying,
-    scond3 character varying,
-    valid timestamp with time zone DEFAULT '1980-01-01 00:00:00-06'::timestamp with time zone,
-    pday real,
-    c1smv real,
-    c2smv real,
-    c3smv real,
-    c4smv real,
-    c5smv real,
-    c1tmpf real,
-    c2tmpf real,
-    c3tmpf real,
-    c4tmpf real,
-    c5tmpf real,
-    pres real,
-    relh real,
-    srad real,
-    vsby real,
-    phour real DEFAULT (-99),
-    gust real,
-    raw character varying(256),
-    alti real,
-    mslp real,
-    rstage real,
-    ozone real,
-    co2 real,
-    pmonth real,
-    skyc1 character(3),
-    skyc2 character(3),
-    skyc3 character(3),
-    skyl1 integer,
-    skyl2 integer,
-    skyl3 integer,
-    skyc4 character(3),
-    skyl4 integer,
-    pcounter real,
-    discharge real,
-    p03i real,
-    p06i real,
-    p24i real,
-    max_tmpf_6hr real,
-    min_tmpf_6hr real,
-    max_tmpf_24hr real,
-    min_tmpf_24hr real,
-    wxcodes varchar(12)[],
-    battery real,
-    water_tmpf real,
-    feel real,
-    ice_accretion_1hr real,
-    ice_accretion_3hr real,
-    ice_accretion_6hr real,
-    peak_wind_gust real,
-    peak_wind_drct real,
-    peak_wind_time timestamptz
-);
-
 CREATE TABLE current(
     iemid int REFERENCES stations(iemid),
     tmpf real,
@@ -892,11 +821,6 @@ ALTER TABLE current_log
 ALTER TABLE current_qc
   DROP CONSTRAINT current_qc_iemid_fkey,
   ADD CONSTRAINT current_qc_iemid_fkey FOREIGN KEY (iemid)
-  REFERENCES stations(iemid) ON DELETE CASCADE;
-
-ALTER TABLE current_tmp
-  DROP CONSTRAINT current_tmp_iemid_fkey,
-  ADD CONSTRAINT current_tmp_iemid_fkey FOREIGN KEY (iemid)
   REFERENCES stations(iemid) ON DELETE CASCADE;
 
 ALTER TABLE events
