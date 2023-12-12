@@ -2,31 +2,31 @@
 -- Boilerplate IEM schema_manager_version, the version gets incremented each
 -- time we make an upgrade script
 CREATE TABLE iem_schema_manager_version(
-	version int,
-	updated timestamptz);
+    version int,
+    updated timestamptz);
 INSERT into iem_schema_manager_version values (0, now());
 
 ---
 --- Main table that all children inherit from
 ---
 CREATE TABLE alldata(
-	station varchar(5),
-	valid timestamptz,
-	tmpf smallint,
-	dwpf smallint,
-	sknt smallint,
-	drct smallint,
-	gust smallint,
-	p01i real,
-	cl1 smallint,
-	ca1 smallint,
-	cl2 smallint,
-	ca2 smallint,
-	cl3 smallint,
-	ca3 smallint,
-	vsby real,
-	alti real,
-	qc varchar(5)
+    station varchar(5),
+    valid timestamptz,
+    tmpf smallint,
+    dwpf smallint,
+    sknt smallint,
+    drct smallint,
+    gust smallint,
+    p01i real,
+    cl1 smallint,
+    ca1 smallint,
+    cl2 smallint,
+    ca2 smallint,
+    cl3 smallint,
+    ca3 smallint,
+    vsby real,
+    alti real,
+    qc varchar(5)
 ) PARTITION by range(valid);
 ALTER TABLE alldata OWNER to mesonet;
 GRANT ALL on alldata to ldm;

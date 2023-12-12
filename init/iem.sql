@@ -3,9 +3,9 @@ CREATE EXTENSION postgis;
 -- Boilerplate IEM schema_manager_version, the version gets incremented each
 -- time we make an upgrade script
 CREATE TABLE iem_schema_manager_version(
-	version int,
-	updated timestamptz);
-INSERT into iem_schema_manager_version values (32, now());
+    version int,
+    updated timestamptz);
+INSERT into iem_schema_manager_version values (33, now());
 
 -- Storage of WPC national high low
 CREATE TABLE wpc_national_high_low(
@@ -81,42 +81,42 @@ end;
 $do$;
 
 CREATE TABLE stations(
-	id varchar(64),
-	synop int,
-	name varchar(64),
-	state char(2),
-	country char(2),
-	elevation real,
-	network varchar(20),
-	online boolean,
-	params varchar(300),
-	county varchar(50),
-	plot_name varchar(64),
-	climate_site varchar(6),
-	remote_id int,
-	nwn_id int,
-	spri smallint,
-	wfo varchar(3),
-	archive_begin date,
-	archive_end date,
-	modified timestamp with time zone,
-	tzname varchar(32),
-	iemid SERIAL,
-	metasite boolean,
-	sigstage_low real,
-	sigstage_action real,
-	sigstage_bankfull real,
-	sigstage_flood real,
-	sigstage_moderate real,
-	sigstage_major real,
-	sigstage_record real,
-	ugc_county char(6),
-	ugc_zone char(6),
-	ncdc81 varchar(11),
+    id varchar(64),
+    synop int,
+    name varchar(64),
+    state char(2),
+    country char(2),
+    elevation real,
+    network varchar(20),
+    online boolean,
+    params varchar(300),
+    county varchar(50),
+    plot_name varchar(64),
+    climate_site varchar(6),
+    remote_id int,
+    nwn_id int,
+    spri smallint,
+    wfo varchar(3),
+    archive_begin date,
+    archive_end date,
+    modified timestamp with time zone,
+    tzname varchar(32),
+    iemid SERIAL,
+    metasite boolean,
+    sigstage_low real,
+    sigstage_action real,
+    sigstage_bankfull real,
+    sigstage_flood real,
+    sigstage_moderate real,
+    sigstage_major real,
+    sigstage_record real,
+    ugc_county char(6),
+    ugc_zone char(6),
+    ncdc81 varchar(11),
     ncei91 varchar(11),
-	temp24_hour smallint,
-	precip24_hour smallint,
-	wigos varchar(64)
+    temp24_hour smallint,
+    precip24_hour smallint,
+    wigos varchar(64)
 );
 CREATE UNIQUE index stations_idx on stations(id, network);
 create UNIQUE index stations_iemid_idx on stations(iemid);
@@ -265,10 +265,10 @@ GRANT SELECT on cli_data to nobody;
 --- Offline metadata
 ---
 CREATE TABLE offline(
-	station varchar(20),
-	network varchar(10),
-	trackerid int,
-	valid timestamptz);
+    station varchar(20),
+    network varchar(10),
+    trackerid int,
+    valid timestamptz);
 GRANT SELECT on offline to nobody;
 
 
@@ -306,8 +306,7 @@ CREATE OR REPLACE RULE replace_current_shef AS ON
         type = new.type and extremum = new.extremum and valid < new.valid and
         ((new.depth is null and depth is null) or depth = new.depth);
 
-
-CREATE TABLE current_tmp(
+CREATE TABLE current(
     iemid int REFERENCES stations(iemid),
     tmpf real,
     dwpf real,
@@ -344,80 +343,6 @@ CREATE TABLE current_tmp(
     raw character varying(256),
     alti real,
     mslp real,
-    qc_tmpf character(1),
-    qc_dwpf character(1),
-    rstage real,
-    ozone real,
-    co2 real,
-    pmonth real,
-    skyc1 character(3),
-    skyc2 character(3),
-    skyc3 character(3),
-    skyl1 integer,
-    skyl2 integer,
-    skyl3 integer,
-    skyc4 character(3),
-    skyl4 integer,
-    pcounter real,
-    discharge real,
-    p03i real,
-    p06i real,
-    p24i real,
-    max_tmpf_6hr real,
-    min_tmpf_6hr real,
-    max_tmpf_24hr real,
-    min_tmpf_24hr real,
-    wxcodes varchar(12)[],
-    battery real,
-    water_tmpf real,
-    feel real,
-    ice_accretion_1hr real,
-    ice_accretion_3hr real,
-    ice_accretion_6hr real,
-    peak_wind_gust real,
-    peak_wind_drct real,
-    peak_wind_time timestamptz
-);
-
-CREATE TABLE current (
-    iemid int REFERENCES stations(iemid),
-    tmpf real,
-    dwpf real,
-    drct real,
-    sknt real,
-    indoor_tmpf real,
-    tsf0 real,
-    tsf1 real,
-    tsf2 real,
-    tsf3 real,
-    rwis_subf real,
-    scond0 character varying,
-    scond1 character varying,
-    scond2 character varying,
-    scond3 character varying,
-    valid timestamp with time zone DEFAULT '1980-01-01 00:00:00-06'::timestamp with time zone,
-    pday real,
-    c1smv real,
-    c2smv real,
-    c3smv real,
-    c4smv real,
-    c5smv real,
-    c1tmpf real,
-    c2tmpf real,
-    c3tmpf real,
-    c4tmpf real,
-    c5tmpf real,
-    pres real,
-    relh real,
-    srad real,
-    vsby real,
-    phour real DEFAULT (-99),
-    gust real,
-    raw character varying(256),
-    alti real,
-    mslp real,
-    qc_tmpf character(1),
-    qc_dwpf character(1),
     rstage real,
     ozone real,
     co2 real,
@@ -450,7 +375,16 @@ CREATE TABLE current (
     peak_wind_drct real,
     peak_wind_time timestamptz,
     updated timestamptz DEFAULT now(),
-    snowdepth real
+    snowdepth real,
+    srad_1h_j real,
+    tsoil_4in_f real,
+    tsoil_8in_f real,
+    tsoil_16in_f real,
+    tsoil_20in_f real,
+    tsoil_32in_f real,
+    tsoil_40in_f real,
+    tsoil_64in_f real,
+    tsoil_128in_f real
 );
 ALTER TABLE current OWNER to mesonet;
 GRANT ALL on current to ldm;
@@ -494,8 +428,6 @@ CREATE TABLE current_log (
     raw character varying(256),
     alti real,
     mslp real,
-    qc_tmpf character(1),
-    qc_dwpf character(1),
     rstage real,
     ozone real,
     co2 real,
@@ -528,7 +460,16 @@ CREATE TABLE current_log (
     peak_wind_drct real,
     peak_wind_time timestamptz,
     updated timestamptz DEFAULT now(),
-    snowdepth real
+    snowdepth real,
+    srad_1h_j real,
+    tsoil_4in_f real,
+    tsoil_8in_f real,
+    tsoil_16in_f real,
+    tsoil_20in_f real,
+    tsoil_32in_f real,
+    tsoil_40in_f real,
+    tsoil_64in_f real,
+    tsoil_128in_f real
 );
 GRANT ALL on current_log to mesonet,ldm;
 GRANT SELECT on current_log to nobody;
@@ -550,7 +491,7 @@ FOR EACH ROW EXECUTE PROCEDURE current_update_log();
 
 -- main storage of summary data
 CREATE TABLE summary (
-	iemid int REFERENCES stations(iemid),
+    iemid int REFERENCES stations(iemid),
     max_tmpf real,
     min_tmpf real,
     day date,
@@ -896,11 +837,6 @@ ALTER TABLE current_log
 ALTER TABLE current_qc
   DROP CONSTRAINT current_qc_iemid_fkey,
   ADD CONSTRAINT current_qc_iemid_fkey FOREIGN KEY (iemid)
-  REFERENCES stations(iemid) ON DELETE CASCADE;
-
-ALTER TABLE current_tmp
-  DROP CONSTRAINT current_tmp_iemid_fkey,
-  ADD CONSTRAINT current_tmp_iemid_fkey FOREIGN KEY (iemid)
   REFERENCES stations(iemid) ON DELETE CASCADE;
 
 ALTER TABLE events
