@@ -5,7 +5,7 @@ CREATE EXTENSION postgis;
 CREATE TABLE iem_schema_manager_version(
     version int,
     updated timestamptz);
-INSERT into iem_schema_manager_version values (32, now());
+INSERT into iem_schema_manager_version values (33, now());
 
 -- Storage of WPC national high low
 CREATE TABLE wpc_national_high_low(
@@ -344,8 +344,6 @@ CREATE TABLE current_tmp(
     raw character varying(256),
     alti real,
     mslp real,
-    qc_tmpf character(1),
-    qc_dwpf character(1),
     rstage real,
     ozone real,
     co2 real,
@@ -379,7 +377,7 @@ CREATE TABLE current_tmp(
     peak_wind_time timestamptz
 );
 
-CREATE TABLE current (
+CREATE TABLE current(
     iemid int REFERENCES stations(iemid),
     tmpf real,
     dwpf real,
@@ -416,8 +414,6 @@ CREATE TABLE current (
     raw character varying(256),
     alti real,
     mslp real,
-    qc_tmpf character(1),
-    qc_dwpf character(1),
     rstage real,
     ozone real,
     co2 real,
@@ -450,7 +446,8 @@ CREATE TABLE current (
     peak_wind_drct real,
     peak_wind_time timestamptz,
     updated timestamptz DEFAULT now(),
-    snowdepth real
+    snowdepth real,
+    srad_1h_j real
 );
 ALTER TABLE current OWNER to mesonet;
 GRANT ALL on current to ldm;
@@ -494,8 +491,6 @@ CREATE TABLE current_log (
     raw character varying(256),
     alti real,
     mslp real,
-    qc_tmpf character(1),
-    qc_dwpf character(1),
     rstage real,
     ozone real,
     co2 real,
@@ -528,7 +523,8 @@ CREATE TABLE current_log (
     peak_wind_drct real,
     peak_wind_time timestamptz,
     updated timestamptz DEFAULT now(),
-    snowdepth real
+    snowdepth real,
+    srad_1h_j real
 );
 GRANT ALL on current_log to mesonet,ldm;
 GRANT SELECT on current_log to nobody;
