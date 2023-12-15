@@ -3,7 +3,7 @@
 CREATE TABLE iem_schema_manager_version(
     version int,
     updated timestamptz);
-INSERT into iem_schema_manager_version values (13, now());
+INSERT into iem_schema_manager_version values (14, now());
 
 ---
 --- Stuart Smith Park Hydrology Learning Lab
@@ -108,7 +108,23 @@ CREATE TABLE alldata (
     pday real,
     pmonth real,
     srad real,
-    c1tmpf real
+    tsoil_4in_f real,
+    tsoil_8in_f real,
+    tsoil_16in_f real,
+    tsoil_20in_f real,
+    tsoil_32in_f real,
+    tsoil_40in_f real,
+    tsoil_64in_f real,
+    tsoil_128in_f real,
+    skyc1 char(3),
+    skyc2 char(3),
+    skyc3 char(3),
+    skyc4 char(3),
+    skyl1 int,
+    skyl2 int,
+    skyl3 int,
+    skyl4 int,
+    srad_1h_j real
 ) PARTITION by range(valid);
 
 do
