@@ -5,7 +5,7 @@ CREATE EXTENSION postgis;
 CREATE TABLE iem_schema_manager_version(
     version int,
     updated timestamptz);
-INSERT into iem_schema_manager_version values (17, now());
+INSERT into iem_schema_manager_version values (18, now());
 
 create table ncei_climdiv(
     station char(6),
@@ -25,6 +25,25 @@ CREATE TABLE climoweek(
   climoweek smallint
 );
 GRANT SELECT on climoweek to nobody;
+
+-- Stuff gleaned from the PDF reports, sick.
+create table nass_iowa(
+    valid date,
+    metric text,
+    nw int,
+    nc int,
+    ne int,
+    wc int,
+    c int,
+    ec int,
+    sw int,
+    sc int,
+    se int,
+    load_time timestamptz default now()
+);
+alter table nass_iowa owner to mesonet;
+grant select on nass_iowa to nobody;
+create index nass_iowa_valid_idx on nass_iowa(valid);
 
 
 CREATE TABLE nass_quickstats(
