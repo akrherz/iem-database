@@ -2,17 +2,17 @@
 create table nass_iowa(
     valid date,
     metric text,
-    nw int,
-    nc int,
-    ne int,
-    wc int,
-    c int,
-    ec int,
-    sw int,
-    sc int,
-    se int,
-    load_time timestamptz default now(),
-    iowa int
+    nw numeric,
+    nc numeric,
+    ne numeric,
+    wc numeric,
+    c numeric,
+    ec numeric,
+    sw numeric,
+    sc numeric,
+    se numeric,
+    iowa numeric,
+    load_time timestamptz default now()
 );
 alter table nass_iowa owner to mesonet;
 grant select on nass_iowa to nobody;
