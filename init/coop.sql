@@ -39,7 +39,8 @@ create table nass_iowa(
     sw int,
     sc int,
     se int,
-    load_time timestamptz default now()
+    load_time timestamptz default now(),
+    iowa int
 );
 alter table nass_iowa owner to mesonet;
 grant select on nass_iowa to nobody;
