@@ -289,6 +289,7 @@ GRANT SELECT on offline to nobody;
    product_id varchar(35)
    );
  create index current_shef_station_idx on current_shef(station);
+grant all on current_shef to ldm;
  GRANT SELECT on current_shef to nobody;
  
 CREATE OR REPLACE RULE replace_current_shef AS ON 

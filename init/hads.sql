@@ -59,6 +59,9 @@ CREATE TABLE unknown(
 	product varchar(64),
 	network varchar(24)
 );
+alter table unknown owner to mesonet;
+grant all on unknown to ldm;
+grant select on unknown to nobody;
 
 CREATE TABLE raw_inbound(
 	station varchar(8),
