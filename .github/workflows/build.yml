@@ -40,7 +40,9 @@ jobs:
       run: |
         set -e
         git clone --depth 1 https://github.com/akrherz/ci_tooling.git .ci_tooling
-        . .ci_tooling/postgres.sh
+        cd .ci_tooling
+        . postgres.sh
+        cd ..
         psql -c 'CREATE ROLE runner SUPERUSER LOGIN CREATEDB;' -U postgres || true
         sh bootstrap.sh
         psql -f data/postgis/cwsu.db -U mesonet postgis
