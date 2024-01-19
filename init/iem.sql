@@ -5,7 +5,7 @@ CREATE EXTENSION postgis;
 CREATE TABLE iem_schema_manager_version(
     version int,
     updated timestamptz);
-INSERT into iem_schema_manager_version values (33, now());
+INSERT into iem_schema_manager_version values (34, now());
 
 -- Storage of WPC national high low
 CREATE TABLE wpc_national_high_low(
@@ -634,14 +634,16 @@ CREATE TABLE rwis_soil_data(
   sensor_id smallint,
   valid timestamp with time zone,
   temp real,
-  moisture real
+  moisture real,
+  updated timestamptz DEFAULT now()
 );
 CREATE TABLE rwis_soil_data_log(
   location_id smallint references rwis_locations(id),
   sensor_id smallint,
   valid timestamp with time zone,
   temp real,
-  moisture real
+  moisture real,
+  updated timestamptz DEFAULT now()
 );
 
 GRANT select on rwis_soil_data to nobody;
@@ -688,7 +690,8 @@ CREATE TABLE rwis_traffic_data(
   avg_headway real,
   normal_vol real,
   long_vol real,
-  occupancy real
+  occupancy real,
+  updated timestamptz DEFAULT now()
 );
 
 CREATE TABLE rwis_traffic_data_log(
@@ -698,7 +701,8 @@ CREATE TABLE rwis_traffic_data_log(
   avg_headway real,
   normal_vol real,
   long_vol real,
-  occupancy real
+  occupancy real,
+  updated timestamptz DEFAULT now()
 );
 
 CREATE FUNCTION rwis_traffic_update_log() RETURNS trigger
@@ -816,9 +820,7 @@ CREATE FUNCTION zero_record(text) RETURNS boolean
   END;
 $_$;
 
-
-
-  --
+--
 -- Set cascading deletes when an entry is removed from the stations table
 --
 ALTER TABLE current
