@@ -5,7 +5,7 @@ CREATE EXTENSION postgis;
 CREATE TABLE iem_schema_manager_version(
     version int,
     updated timestamptz);
-INSERT into iem_schema_manager_version values (18, now());
+INSERT into iem_schema_manager_version values (19, now());
 
 create table ncei_climdiv(
     station char(6),
@@ -118,7 +118,11 @@ CREATE TABLE alldata(
   narr_srad real,
   merra_srad real,
   era5land_srad real,
-  hrrr_srad real
+  hrrr_srad real,
+  era5land_soilt4_avg real,
+  era5land_soilm4_avg real,
+  nldas_soilt4_avg real,
+  nldas_soilm4_avg real
   ) PARTITION by range(station);
 ALTER TABLE alldata OWNER to mesonet;
 GRANT ALL on alldata to ldm;
