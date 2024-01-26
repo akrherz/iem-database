@@ -5,7 +5,7 @@ CREATE EXTENSION postgis;
 CREATE TABLE iem_schema_manager_version(
     version int,
     updated timestamptz);
-INSERT into iem_schema_manager_version values (-1, now());
+INSERT into iem_schema_manager_version values (0, now());
 
 ---
 --- Quasi synced from mesosite database
@@ -56,7 +56,6 @@ grant all on stations_iemid_seq to nobody;
 GRANT ALL on stations to mesonet,ldm;
 GRANT ALL on stations_iemid_seq to mesonet,ldm;
 
-
 ---
 --- Rawinsonde data!
 ---
@@ -101,7 +100,10 @@ CREATE TABLE raob_flights(
     shear_sfc_3km_smps real,
     shear_sfc_6km_smps real,
     mlcape_jkg real,
-    mlcin_jkg real
+    mlcin_jkg real,
+    locked boolean DEFAULT 'f',
+    ingested_at timestamptz DEFAULT now(),
+    computed_at timestamptz DEFAULT now()
 );
 ALTER TABLE raob_flights OWNER to mesonet;
 GRANT ALL on raob_flights to ldm,mesonet;
