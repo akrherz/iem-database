@@ -122,7 +122,8 @@ CREATE TABLE alldata(
   era5land_soilt4_avg real,
   era5land_soilm4_avg real,
   nldas_soilt4_avg real,
-  nldas_soilm4_avg real
+  nldas_soilm4_avg real,
+  era5land_soilm1m_avg real
   ) PARTITION by range(station);
 ALTER TABLE alldata OWNER to mesonet;
 GRANT ALL on alldata to ldm;
