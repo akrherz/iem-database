@@ -5,7 +5,7 @@ CREATE EXTENSION postgis;
 CREATE TABLE iem_schema_manager_version(
     version int,
     updated timestamptz);
-INSERT into iem_schema_manager_version values (67, now());
+INSERT into iem_schema_manager_version values (68, now());
 
 ---
 --- TABLES THAT ARE LOADED VIA shp2pgsql
@@ -643,7 +643,8 @@ CREATE TABLE warnings (
     product_issue timestamp with time zone not null,
     is_emergency boolean,
     is_pds boolean,
-    purge_time timestamptz
+    purge_time timestamptz,
+    product_ids varchar(36)[] not null default '{}'
 );
 ALTER TABLE warnings OWNER to mesonet;
 GRANT ALL on warnings to ldm;
@@ -753,7 +754,8 @@ create table sbw(
   hvtec_record char(2),
   windthreat text,
   hailthreat text,
-  squalltag text
+  squalltag text,
+  product_id varchar(36)
 );
 ALTER TABLE sbw OWNER to mesonet;
 GRANT ALL on sbw to ldm;
