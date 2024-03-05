@@ -1,9 +1,10 @@
 """
- My goal in life is to manage the database schema, so when things change, this
- script can handle it all.  I am run like so:
+My goal in life is to manage the database schema, so when things change, this
+script can handle it all.  I am run like so:
 
-     python schema_manager.py
+    python schema_manager.py
 """
+
 import os
 import sys
 
