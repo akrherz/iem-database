@@ -1,4 +1,5 @@
 """Simple helper script to generate schema"""
+
 import datetime
 
 prefix = "nldn"

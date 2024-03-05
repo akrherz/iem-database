@@ -1,4 +1,5 @@
 """Provide some basic data to allow for better testing"""
+
 import psycopg
 import requests
 
