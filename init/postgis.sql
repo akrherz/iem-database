@@ -642,12 +642,12 @@ CREATE TABLE warnings (
     is_emergency boolean,
     is_pds boolean,
     purge_time timestamptz,
-    product_ids varchar(36)[] not null default '{}'
-);
+    product_ids varchar(36)[] not null default '{}',
+    vtec_year smallint not null
+) partition by list(vtec_year);
 ALTER TABLE warnings OWNER to mesonet;
 GRANT ALL on warnings to ldm;
 grant select on warnings to nobody;
-
 
 do
 $do$
@@ -659,8 +659,8 @@ begin
     loop
         mytable := format($f$warnings_%s$f$, year);
         execute format($f$
-            create table %s() INHERITS (warnings)
-            $f$, mytable);
+            create table %s partition of warnings for values in (%s)
+            $f$, mytable, year);
         execute format($f$
             alter table %s ADD CONSTRAINT %s_gid_fkey
             FOREIGN KEY(gid) REFERENCES ugcs(gid)
@@ -711,7 +711,6 @@ begin
 end;
 $do$;
 
-
 ---
 --- Storm Based Warnings Geo Tables
 ---
@@ -752,8 +751,9 @@ create table sbw(
   windthreat text,
   hailthreat text,
   squalltag text,
-  product_id varchar(36)
-);
+  product_id varchar(36),
+  vtec_year smallint not null
+) partition by list(vtec_year);
 ALTER TABLE sbw OWNER to mesonet;
 GRANT ALL on sbw to ldm;
 grant select on sbw to nobody;
@@ -768,8 +768,8 @@ begin
     loop
         mytable := format($f$sbw_%s$f$, year);
         execute format($f$
-            create table %s() INHERITS (sbw)
-            $f$, mytable);
+            create table %s partition of sbw for values in (%s)
+            $f$, mytable, year);
         execute format($f$
             ALTER TABLE %s OWNER to mesonet
         $f$, mytable);
