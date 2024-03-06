@@ -662,6 +662,9 @@ begin
             create table %s partition of warnings for values in (%s)
             $f$, mytable, year);
         execute format($f$
+            alter table %s alter vtec_year set default %s
+            $f$, mytable, year);
+        execute format($f$
             alter table %s ADD CONSTRAINT %s_gid_fkey
             FOREIGN KEY(gid) REFERENCES ugcs(gid)
         $f$, mytable, mytable);
@@ -769,6 +772,9 @@ begin
         mytable := format($f$sbw_%s$f$, year);
         execute format($f$
             create table %s partition of sbw for values in (%s)
+            $f$, mytable, year);
+        execute format($f$
+            alter table %s alter vtec_year set default %s
             $f$, mytable, year);
         execute format($f$
             ALTER TABLE %s OWNER to mesonet
