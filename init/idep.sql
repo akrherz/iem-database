@@ -210,6 +210,7 @@ create table field_operations(
     year int,
     till1 date,
     till2 date,
+    till3 date,
     plant date
 );
 alter table field_operations owner to mesonet;
