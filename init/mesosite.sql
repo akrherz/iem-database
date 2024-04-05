@@ -19,7 +19,8 @@ create table website_telemetry(
     status_code integer,
     client_addr inet,
     app text,
-    request_uri text
+    request_uri text,
+    vhost text
 );
 create index website_telemetry_valid_idx on
   website_telemetry(valid);
