@@ -5,7 +5,7 @@ CREATE EXTENSION postgis;
 CREATE TABLE iem_schema_manager_version(
     version int,
     updated timestamptz);
-INSERT into iem_schema_manager_version values (68, now());
+INSERT into iem_schema_manager_version values (69, now());
 
 ---
 --- TABLES THAT ARE LOADED VIA shp2pgsql
@@ -755,7 +755,8 @@ create table sbw(
   hailthreat text,
   squalltag text,
   product_id varchar(36),
-  vtec_year smallint not null
+  vtec_year smallint not null,
+  product_signature text
 ) partition by list(vtec_year);
 ALTER TABLE sbw OWNER to mesonet;
 GRANT ALL on sbw to ldm;
