@@ -3,7 +3,45 @@
 CREATE TABLE iem_schema_manager_version(
     version int,
     updated timestamptz);
-INSERT into iem_schema_manager_version values (14, now());
+INSERT into iem_schema_manager_version values (15, now());
+
+-- Purple Air Data
+create table purpleair(
+    station varchar(6),
+    valid timestamptz,
+    current_temp_f smallint,
+    current_humidity smallint,
+    current_dewpoint_f smallint,
+    pressure real,
+    pm2_5_aqi_b smallint,
+    pm1_0_cf_1_b real,
+    p_0_3_um_b real,
+    pm2_5_cf_1_b real,
+    p_0_5_um_b real,
+    pm10_0_cf_1_b real,
+    p_1_0_um_b real,
+    pm1_0_atm_b real,
+    p_2_5_um_b real,
+    pm2_5_atm_b real,
+    p_5_0_um_b real,
+    pm10_0_atm_b real,
+    p_10_0_um_b real,
+    pm2_5_aqi smallint,
+    pm1_0_cf_1 real,
+    p_0_3_um real,
+    pm2_5_cf_1 real,
+    p_0_5_um real,
+    pm10_0_cf_1 real,
+    p_1_0_um real,
+    pm1_0_atm real,
+    p_2_5_um real,
+    pm2_5_atm real,
+    p_5_0_um real,
+    pm10_0_atm real,
+    p_10_0_um real
+);
+alter table purpleair owner to mesonet;
+grant select on purpleair to nobody;
 
 ---
 --- Stuart Smith Park Hydrology Learning Lab
