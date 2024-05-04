@@ -616,8 +616,6 @@ CREATE RULE replace_riverpro
  severity = new.severity, impact_text = new.impact_text
  WHERE ((riverpro.nwsli)::text = (new.nwsli)::text);
 
-
-
 ---
 --- VTEC Table
 ---
@@ -636,7 +634,7 @@ CREATE TABLE warnings (
     hvtec_severity char(1),
     hvtec_cause char(2),
     hvtec_record char(2),
-    gid int references ugcs(gid),
+    gid int references ugcs(gid) not null,
     init_expire timestamp with time zone not null,
     product_issue timestamp with time zone not null,
     is_emergency boolean,
