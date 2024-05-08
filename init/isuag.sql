@@ -8,6 +8,9 @@ INSERT into iem_schema_manager_version values (19, now());
 
 CREATE EXTENSION postgis;
 
+-- bandaid
+insert into spatial_ref_sys select 9311, 'EPSG', 9311, srtext, proj4text from spatial_ref_sys where srid = 2163;
+
 -- synced from mesosite
 CREATE TABLE stations(
     id varchar(64),

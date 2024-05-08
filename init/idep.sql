@@ -2,6 +2,9 @@
 -- are generally all now empty.
 CREATE EXTENSION postgis;
 
+-- bandaid
+insert into spatial_ref_sys select 9311, 'EPSG', 9311, srtext, proj4text from spatial_ref_sys where srid = 2163;
+
 -- Boilerplate IEM schema_manager_version, the version gets incremented each
 -- time we make an upgrade script
 CREATE TABLE iem_schema_manager_version(

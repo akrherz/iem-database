@@ -1,5 +1,8 @@
 CREATE EXTENSION postgis;
 
+-- bandaid
+insert into spatial_ref_sys select 9311, 'EPSG', 9311, srtext, proj4text from spatial_ref_sys where srid = 2163;
+
 -- Storage of Tile Flow
 CREATE TABLE tileflow_data(
   uniqueid varchar(24),
