@@ -1294,6 +1294,7 @@ GRANT SELECT on mcd to nobody;
 CREATE INDEX ON mcd(issue);
 CREATE INDEX ON mcd(num);
 CREATE INDEX mcd_geom_index on mcd USING GIST(geom);
+create unique index mcd_idx on mcd(year, num);
 
 -- Storage of MPDs
 CREATE TABLE mpd(
