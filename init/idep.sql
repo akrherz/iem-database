@@ -113,11 +113,29 @@ CREATE TABLE results_by_huc12(
   avg_delivery real,
   max_delivery real,
   qc_precip real
-);
+) partition by range(scenario);
 CREATE INDEX results_by_huc12_huc_12_idx on results_by_huc12(huc_12);
 CREATE INDEX results_by_huc12_valid_idx on results_by_huc12(valid);
-
 GRANT SELECT on results_by_huc12 to nobody;
+
+create table results_by_huc12_neg partition of results_by_huc12 for values from (-1000) to (0);
+grant select on results_by_huc12_neg to nobody;
+alter table results_by_huc12_neg owner to mesonet;
+
+
+create table results_by_huc12_0 partition of results_by_huc12 for values from (0) to (1);
+grant select on results_by_huc12_0 to nobody;
+alter table results_by_huc12_0 owner to mesonet;
+
+create table results_by_huc12_1_1000 partition of results_by_huc12 for values from (1) to (1000);
+create index results_by_huc12_1_1000_scenario_idx on results_by_huc12_1_1000(scenario);
+grant select on results_by_huc12_1_1000 to nobody;
+alter table results_by_huc12_1_1000 owner to mesonet;
+
+create table results_by_huc12_1000_2000 partition of results_by_huc12 for values from (1000) to (2000);
+create index results_by_huc12_1000_2000_scenario_idx on results_by_huc12_1000_2000(scenario);
+grant select on results_by_huc12_1000_2000 to nobody;
+alter table results_by_huc12_1000_2000 owner to mesonet;
 
 CREATE TABLE flowpaths(
   fid serial UNIQUE,
