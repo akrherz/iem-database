@@ -3,7 +3,9 @@
 CREATE EXTENSION postgis;
 
 -- bandaid
-insert into spatial_ref_sys select 9311, 'EPSG', 9311, srtext, proj4text from spatial_ref_sys where srid = 2163;
+insert into spatial_ref_sys
+    select 9311 as srid, 'EPSG' as auth_name, 9311 as auth_srid,
+    srtext, proj4text from spatial_ref_sys where srid = 2163;
 
 -- Boilerplate IEM schema_manager_version, the version gets incremented each
 -- time we make an upgrade script
@@ -166,23 +168,6 @@ CREATE UNIQUE index general_landuse_idx on general_landuse(id);
 ALTER TABLE general_landuse OWNER to mesonet;
 GRANT SELECT on general_landuse to nobody;
 
--- Store of Flowpath OFE information
-CREATE TABLE flowpath_ofes(
-    flowpath int REFERENCES flowpaths(fid),
-    ofe smallint not null,
-    geom geometry(LineStringZ, 5070),
-    bulk_slope real,
-    max_slope real,
-    fbndid int,
-    management varchar(32),
-    landuse varchar(32),
-    gssurgo_id int REFERENCES gssurgo(id),
-    real_length real
-);
-ALTER TABLE flowpath_ofes OWNER to mesonet;
-GRANT SELECT on flowpath_ofes to nobody;
-CREATE INDEX flowpath_ofes_idx on flowpath_ofes(flowpath);
-
 --- Store Properties used by website and scripts
 CREATE TABLE properties(
   key varchar UNIQUE NOT NULL,
@@ -223,6 +208,24 @@ ALTER TABLE fields OWNER to mesonet;
 GRANT SELECT on fields to nobody;
 CREATE INDEX fields_huc12_idx on fields(huc12);
 CREATE INDEX fields_geom_idx on fields USING GIST(geom);
+
+-- Store of Flowpath OFE information
+CREATE TABLE flowpath_ofes(
+    flowpath int REFERENCES flowpaths(fid),
+    field_id int REFERENCES fields(field_id) not null,
+    ofe smallint not null,
+    geom geometry(LineStringZ, 5070),
+    bulk_slope real,
+    max_slope real,
+    fbndid int,
+    management varchar(32),
+    landuse varchar(32),
+    gssurgo_id int REFERENCES gssurgo(id),
+    real_length real
+);
+ALTER TABLE flowpath_ofes OWNER to mesonet;
+GRANT SELECT on flowpath_ofes to nobody;
+CREATE INDEX flowpath_ofes_idx on flowpath_ofes(flowpath);
 
 --
 -- Dates of tillage and planting operations

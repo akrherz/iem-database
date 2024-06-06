@@ -4,6 +4,7 @@ target-version = "py39"
 
 [tool.ruff.lint]
 select = [
+    "B",  # bugbear
     "E",
     "F",
     "I",
