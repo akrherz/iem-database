@@ -225,6 +225,7 @@ CREATE TABLE flowpath_ofes(
 );
 ALTER TABLE flowpath_ofes OWNER to mesonet;
 GRANT SELECT on flowpath_ofes to nobody;
+CREATE INDEX on flowpath_ofes(field_id);
 CREATE INDEX flowpath_ofes_idx on flowpath_ofes(flowpath);
 
 --
