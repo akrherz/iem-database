@@ -3,7 +3,7 @@
 import psycopg
 import requests
 
-NETWORKS = ["IA_ASOS", "AWOS", "IACLIMATE", "IA_COOP"]
+NETWORKS = ["IA_ASOS", "AWOS", "IACLIMATE", "IA_COOP", "WFO"]
 
 
 def fake_hads_wind():
