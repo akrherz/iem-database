@@ -114,7 +114,8 @@ CREATE TABLE results_by_huc12(
   min_delivery real,
   avg_delivery real,
   max_delivery real,
-  qc_precip real
+  qc_precip real,
+  wind_avg_loss real
 ) partition by range(scenario);
 CREATE INDEX results_by_huc12_huc_12_idx on results_by_huc12(huc_12);
 CREATE INDEX results_by_huc12_valid_idx on results_by_huc12(valid);
