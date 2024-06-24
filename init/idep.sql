@@ -13,7 +13,7 @@ CREATE TABLE iem_schema_manager_version(
     version int,
     updated timestamptz);
 ALTER TABLE iem_schema_manager_version OWNER to mesonet;
-insert into iem_schema_manager_version values (30, now());
+insert into iem_schema_manager_version values (31, now());
 
 -- Storage of DEP versioning dailyerosion/dep#179
 create table dep_version(
@@ -93,6 +93,18 @@ CREATE TABLE results(
 CREATE INDEX results_valid_idx on results(valid);
 CREATE INDEX results_huc_12_idx on results(huc_12);
 
+-- Wind Erosion
+CREATE TABLE wind_results_by_huc12(
+  huc_12 char(12),
+  scenario int references scenarios(id),
+  valid date,
+  avg_loss real
+);
+ALTER TABLE wind_results_by_huc12 OWNER to mesonet;
+GRANT SELECT on wind_results_by_huc12 to nobody;
+CREATE INDEX wind_results_by_huc12_huc_12_idx on wind_results_by_huc12(huc_12);
+CREATE INDEX wind_results_by_huc12_valid_idx on wind_results_by_huc12(valid);
+
 ---
 --- Storage of huc12 level results
 ---
@@ -114,8 +126,7 @@ CREATE TABLE results_by_huc12(
   min_delivery real,
   avg_delivery real,
   max_delivery real,
-  qc_precip real,
-  wind_avg_loss real
+  qc_precip real
 ) partition by range(scenario);
 CREATE INDEX results_by_huc12_huc_12_idx on results_by_huc12(huc_12);
 CREATE INDEX results_by_huc12_valid_idx on results_by_huc12(valid);
