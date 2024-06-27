@@ -1140,7 +1140,7 @@ CREATE TABLE watches (
     max_tops_feet int,
     storm_motion_drct int,
     storm_motion_sknt int,
-    is_pds bool,
+    is_pds bool not null default 'f',
     product_id_wwp varchar(36),
     product_id_saw varchar(36),
     product_id_sel varchar(36)
