@@ -9,7 +9,7 @@ done
 
 for db in afos mesosite postgis snet talltowers \
 asos asos1min hads hml mos rwis squaw \
-awos iem other scan wepp raob \
+awos iem other scan wepp raob id3b \
 coop isuag portfolio smos iemre radar nldn sustainablecorn td idep uscrn
 do
 /usr/bin/psql -v "ON_ERROR_STOP=1" -c "create database $db;" -h localhost -U postgres || exit 2
