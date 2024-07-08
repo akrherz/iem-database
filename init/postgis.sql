@@ -1,14 +1,16 @@
 CREATE EXTENSION postgis;
 
 -- bandaid
-insert into spatial_ref_sys select 9311, 'EPSG', 9311, srtext, proj4text from spatial_ref_sys where srid = 2163;
+insert into spatial_ref_sys
+    select 9311, 'EPSG', 9311, srtext, proj4text from spatial_ref_sys
+    where srid = 2163;
 
 -- Boilerplate IEM schema_manager_version, the version gets incremented each
 -- time we make an upgrade script
 CREATE TABLE iem_schema_manager_version(
     version int,
     updated timestamptz);
-INSERT into iem_schema_manager_version values (69, now());
+INSERT into iem_schema_manager_version values (70, now());
 
 ---
 --- TABLES THAT ARE LOADED VIA shp2pgsql
@@ -908,7 +910,7 @@ CREATE TABLE sigmets_current(
     label varchar(16),
     issue timestamp with time zone,
     expire timestamp with time zone,
-    raw text
+    product_id varchar(36)
 );
 ALTER TABLE sigmets_current OWNER to mesonet;
 GRANT ALL on sigmets_current to ldm;
@@ -920,7 +922,7 @@ CREATE TABLE sigmets_archive(
     label varchar(16),
     issue timestamp with time zone,
     expire timestamp with time zone,
-    raw text
+    product_id varchar(36)
 );
 SELECT AddGeometryColumn('sigmets_archive', 'geom', 4326, 'POLYGON', 2);
 alter table sigmets_archive owner to mesonet;
