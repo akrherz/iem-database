@@ -910,6 +910,7 @@ CREATE TABLE sigmets_current(
     label varchar(16),
     issue timestamp with time zone,
     expire timestamp with time zone,
+    raw text, -- removeme after pyiem release
     product_id varchar(36)
 );
 ALTER TABLE sigmets_current OWNER to mesonet;
@@ -922,6 +923,7 @@ CREATE TABLE sigmets_archive(
     label varchar(16),
     issue timestamp with time zone,
     expire timestamp with time zone,
+    raw text, -- removeme after pyiem release
     product_id varchar(36)
 );
 SELECT AddGeometryColumn('sigmets_archive', 'geom', 4326, 'POLYGON', 2);
