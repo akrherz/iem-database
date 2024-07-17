@@ -315,6 +315,8 @@ SELECT AddGeometryColumn('ugcs', 'centroid', 4326, 'POINT', 2);
 GRANT SELECT on ugcs to nobody;
 CREATE INDEX ugcs_ugc_idx on ugcs(ugc);
 create index ugcs_gix on ugcs USING GIST(geom);
+alter table ugcs add constraint _ugcs_no_ampersand_in_name
+    check (strpos(name, '&') = 0);
 
 ---
 --- Helper function to find a GID for a given UGC code and date!
