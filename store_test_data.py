@@ -1,48 +1,13 @@
 """Provide some basic data to allow for better testing"""
 
+import glob
+import os
+import subprocess
+
 import psycopg
 import requests
 
-NETWORKS = ["IA_ASOS", "AWOS", "IACLIMATE", "IA_COOP", "WFO"]
-
-
-def fake_hads_wind():
-    """Create some faked wind data for pyiem windrose utils exercising."""
-    pgconn = psycopg.connect("postgresql://mesonet@localhost/hads")
-    cursor = pgconn.cursor()
-    cursor.execute(
-        """
-        insert into alldata(station, valid, sknt, drct)
-        select 'XXXX',
-        generate_series(
-            '2019-12-20 12:00+00'::timestamptz,
-            '2021-01-05 12:00+00'::timestamptz,
-            '1 hour'::interval),
-        generate_series(1, 9169) / 500. as sknt, -- 18.35 max
-        generate_series(1, 9169) / 26. as drct -- 352.9 max
-        """
-    )
-    cursor.close()
-    pgconn.commit()
-    pgconn.close()
-
-
-def fake_asos(station):
-    """hack"""
-    pgconn = psycopg.connect("postgresql://mesonet@localhost/asos")
-    cursor = pgconn.cursor()
-    for year in range(1995, 1997):
-        cursor.execute(
-            f"""
-        insert into t{year}(station, valid, tmpf, dwpf) SELECT '{station}',
-        generate_series('{year}-01-02 00:00'::timestamp,
-        '{year}-12-02 00:00'::timestamp, '1 hour'::interval),
-        random() * 100., random() * 100.
-        """
-        )
-    cursor.close()
-    pgconn.commit()
-    pgconn.close()
+NETWORKS = ["IA_ASOS", "IACLIMATE", "IA_COOP", "WFO", "IA_DCP"]
 
 
 def do_stations(network):
@@ -117,11 +82,52 @@ def add_webcam():
     pgconn.close()
 
 
+def process_dbfiles():
+    """Process the DB files."""
+    files = glob.glob(os.path.dirname(__file__) + "/data/*.sql")
+    files.sort()
+    for fn in files:
+        dbname = os.path.basename(fn).split("_")[0]
+        if fn.endswith(".gz"):
+            with subprocess.Popen(
+                ["zcat", fn], stdout=subprocess.PIPE
+            ) as zproc:
+                with subprocess.Popen(
+                    ["psql", "-v", "ON_ERROR_STOP=1", "-U", "mesonet", dbname],
+                    stdin=zproc.stdout,
+                    stdout=subprocess.PIPE,
+                    stderr=subprocess.PIPE,
+                ) as proc:
+                    zproc.wait()
+                    proc.wait()
+                    print(f"{fn} {proc.stderr.read()} {proc.stdout.read()}")
+                    if proc.returncode != 0:
+                        raise ValueError("psql returned non-zero!")
+            continue
+        with subprocess.Popen(
+            [
+                "psql",
+                "-v",
+                "ON_ERROR_STOP=1",
+                "-U",
+                "mesonet",
+                "-f",
+                fn,
+                dbname,
+            ],
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+        ) as proc:
+            proc.wait()
+            print(f"{fn} {proc.stderr.read()} {proc.stdout.read()}")
+            if proc.returncode != 0:
+                raise ValueError("psql returned non-zero!")
+
+
 def main():
     """Workflow"""
     _ = [do_stations(network) for network in NETWORKS]
-    _ = [fake_asos(station) for station in ["AMW", "DSM"]]
-    fake_hads_wind()
+    process_dbfiles()
     add_webcam()
 
 
