@@ -84,7 +84,7 @@ def add_webcam():
 
 def process_dbfiles():
     """Process the DB files."""
-    files = glob.glob(os.path.dirname(__file__) + "/data/*.sql")
+    files = glob.glob(os.path.dirname(__file__) + "/data/*.sql*")
     files.sort()
     for fn in files:
         dbname = os.path.basename(fn).split("_")[0]
