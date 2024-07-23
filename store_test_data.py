@@ -87,6 +87,7 @@ def process_dbfiles():
     files = glob.glob(os.path.dirname(__file__) + "/data/*.sql*")
     files.sort()
     for fn in files:
+        print(fn)
         dbname = os.path.basename(fn).split("_")[0]
         if fn.endswith(".gz"):
             with subprocess.Popen(
@@ -98,7 +99,6 @@ def process_dbfiles():
                     stdout=subprocess.PIPE,
                     stderr=subprocess.PIPE,
                 ) as proc:
-                    zproc.wait()
                     proc.wait()
                     print(f"{fn} {proc.stderr.read()} {proc.stdout.read()}")
                     if proc.returncode != 0:
