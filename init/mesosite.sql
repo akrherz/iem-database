@@ -63,6 +63,7 @@ CREATE TABLE archive_products(
     groupname varchar,
     time_offset int,
     avail_lag int);
+alter table archive_products owner to mesonet;
 GRANT SELECT on archive_products to nobody;
 
 create table iembot_mastodon_apps(
