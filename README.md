@@ -32,5 +32,7 @@ Filename | Contains
 afos_products.sql.gz | AFDDMX from 10-16 Jul 2024
 asos_alldata.sql.gz | ~2020 data for AMW and DSM
 hads_alldata.sql.gz | 2024 weather variables for EOKI4
+mesosite_products.sql | Archived products metadata
 mesosite_tzworld_chicago.sql.gz | Largest geometry for America/Chicago for tz_world
+mesosite_webcams.sql | Some example webcam entries
 raob_240719.sql.gz | All soundings from 19 July 2024 12 UTC
