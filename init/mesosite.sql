@@ -13,7 +13,16 @@ INSERT into iem_schema_manager_version values (27, now());
 --- ==== TABLES TO investigate deleting
 --- counties
 --- states
---- tz_world  (scripts/dbutil/set_timezone.py)
+
+--
+create table tz_world(
+    gid serial unique not null,
+    tzid varchar(30),
+    geom geometry(MultiPolygon,4326)
+);
+create index tz_world_geom_idx on tz_world using gist(geom);
+alter table tz_world owner to mesonet;
+grant select on tz_world to ldm, nobody;
 
 --
 create table website_telemetry(
