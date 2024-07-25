@@ -111,7 +111,7 @@ def process_dbfiles(psql):
                     proc.wait()
                     print(f"{fn} {proc.stderr.read()} {proc.stdout.read()}")
                     if proc.returncode != 0:
-                        raise ValueError("psql returned non-zero!")
+                        raise ValueError(f"{psql} returned non-zero!")
             continue
         with subprocess.Popen(
             [
@@ -130,7 +130,7 @@ def process_dbfiles(psql):
             proc.wait()
             print(f"{fn} {proc.stderr.read()} {proc.stdout.read()}")
             if proc.returncode != 0:
-                raise ValueError("psql returned non-zero!")
+                raise ValueError(f"{psql} returned non-zero!")
 
 
 def main(argv):
