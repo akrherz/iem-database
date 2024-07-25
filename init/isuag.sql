@@ -746,6 +746,7 @@ CREATE TABLE daily (
     c930 real,
     c930_f character(1)
 );
+alter table daily owner to mesonet;
 CREATE UNIQUE INDEX daily_idx ON daily USING btree (station, valid);
 grant select on daily to nobody;
 
@@ -771,6 +772,7 @@ CREATE TABLE hourly (
     c900 real,
     c900_f character(1)
 );
+alter table hourly owner to mesonet;
 CREATE UNIQUE INDEX hourly_idx ON hourly USING btree (station, valid);
 grant select on hourly to nobody;
 
