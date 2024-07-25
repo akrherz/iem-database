@@ -133,7 +133,7 @@ CREATE TABLE sm_daily (
     t24_c_avg_qc real,
     t50_c_avg_f character(1),
     t50_c_avg_qc real,
-    wc4_f character(1),
+    vwc4_f character(1),
     vwc4_qc real,
     encrh_avg_f character(1),
     encrh_avg_qc real,
