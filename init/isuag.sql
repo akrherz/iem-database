@@ -260,6 +260,7 @@ obs_count int,
   slrkj_tot_f char(1),
   slrkj_tot_qc real
 );
+alter table sm_daily owner to mesonet;
 CREATE UNIQUE index sm_daily_idx on sm_daily(station, valid);
 GRANT SELECT on sm_daily to nobody;
 
@@ -477,6 +478,7 @@ obs_count int,
   slrkj_tot_f char(1),
   slrkj_tot_qc real
 );
+alter table sm_hourly owner to mesonet;
 CREATE UNIQUE index sm_hourly_idx on sm_hourly(station, valid);
 GRANT SELECT on sm_hourly to nobody;
 
