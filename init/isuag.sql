@@ -626,6 +626,7 @@ CREATE TABLE sm_minute (
     sv_vwc42 real, sv_vwc42_qc real, sv_vwc42_f char(1),
     sv_vwc52 real, sv_vwc52_qc real, sv_vwc52_f char(1),
 
+    lwmv_1 real,
     lwmv_1_qc real,
     lwmv_1_f character(1),
     lwmv_2 real,
