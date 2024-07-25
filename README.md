@@ -32,6 +32,7 @@ Filename | Contains
 afos_products.sql.gz | AFDDMX from 10-16 Jul 2024
 asos_alldata.sql.gz | ~2020 data for AMW and DSM
 hads_alldata.sql.gz | 2024 weather variables for EOKI4
+isuag_daily.sql.gz | ISU Ag Climate station A130209 (Ames)
 isuag_sm_minute.sql.gz | ISU Soil Moisture minute data 21-25 July 2024
 isuag_sm_hourly.sql.gz | ISU Soil Moisture hourly data 21-25 July 2024
 isuag_sm_daily.sql | ISU Soil Moisture daily data 21-25 July 2024
