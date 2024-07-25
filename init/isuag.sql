@@ -181,7 +181,7 @@ CREATE TABLE sm_daily (
     ws_mph_f character(1),
     etapples real,
     etapples_qc real,
-    etappls_f character(1),
+    etapples_f character(1),
     ws_mph_max real,
     ws_mph_max_qc real,
     ws_mph_max_f character(1),
