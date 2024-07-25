@@ -95,6 +95,7 @@ def process_dbfiles(psql):
     """Process the DB files."""
     files = glob.glob(os.path.dirname(__file__) + "/data/*.sql*")
     files.sort()
+    args = ["-v", "ON_ERROR_STOP=1", "-U", "mesonet", "-h", "localhost"]
     for fn in files:
         print(fn)
         dbname = os.path.basename(fn).split("_")[0]
@@ -103,7 +104,7 @@ def process_dbfiles(psql):
                 ["zcat", fn], stdout=subprocess.PIPE
             ) as zproc:
                 with subprocess.Popen(
-                    [psql, "-v", "ON_ERROR_STOP=1", "-U", "mesonet", dbname],
+                    [psql, *args, dbname],
                     stdin=zproc.stdout,
                     stdout=subprocess.PIPE,
                     stderr=subprocess.PIPE,
@@ -114,16 +115,7 @@ def process_dbfiles(psql):
                         raise ValueError(f"{psql} returned non-zero!")
             continue
         with subprocess.Popen(
-            [
-                psql,
-                "-v",
-                "ON_ERROR_STOP=1",
-                "-U",
-                "mesonet",
-                "-f",
-                fn,
-                dbname,
-            ],
+            [psql, *args, "-f", fn, dbname],
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
         ) as proc:
