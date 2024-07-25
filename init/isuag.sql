@@ -133,7 +133,7 @@ CREATE TABLE sm_daily (
     t24_c_avg_qc real,
     t50_c_avg_f character(1),
     t50_c_avg_qc real,
-    wc4_f character(1),
+    vwc4_f character(1),
     vwc4_qc real,
     encrh_avg_f character(1),
     encrh_avg_qc real,
@@ -181,7 +181,7 @@ CREATE TABLE sm_daily (
     ws_mph_f character(1),
     etapples real,
     etapples_qc real,
-    etappls_f character(1),
+    etapples_f character(1),
     ws_mph_max real,
     ws_mph_max_qc real,
     ws_mph_max_f character(1),
@@ -260,6 +260,7 @@ obs_count int,
   slrkj_tot_f char(1),
   slrkj_tot_qc real
 );
+alter table sm_daily owner to mesonet;
 CREATE UNIQUE index sm_daily_idx on sm_daily(station, valid);
 GRANT SELECT on sm_daily to nobody;
 
@@ -477,6 +478,7 @@ obs_count int,
   slrkj_tot_f char(1),
   slrkj_tot_qc real
 );
+alter table sm_hourly owner to mesonet;
 CREATE UNIQUE index sm_hourly_idx on sm_hourly(station, valid);
 GRANT SELECT on sm_hourly to nobody;
 
@@ -624,6 +626,7 @@ CREATE TABLE sm_minute (
     sv_vwc42 real, sv_vwc42_qc real, sv_vwc42_f char(1),
     sv_vwc52 real, sv_vwc52_qc real, sv_vwc52_f char(1),
 
+    lwmv_1 real,
     lwmv_1_qc real,
     lwmv_1_f character(1),
     lwmv_2 real,
@@ -743,6 +746,7 @@ CREATE TABLE daily (
     c930 real,
     c930_f character(1)
 );
+alter table daily owner to mesonet;
 CREATE UNIQUE INDEX daily_idx ON daily USING btree (station, valid);
 grant select on daily to nobody;
 
@@ -768,6 +772,7 @@ CREATE TABLE hourly (
     c900 real,
     c900_f character(1)
 );
+alter table hourly owner to mesonet;
 CREATE UNIQUE INDEX hourly_idx ON hourly USING btree (station, valid);
 grant select on hourly to nobody;
 
