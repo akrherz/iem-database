@@ -7,7 +7,7 @@ import subprocess
 import psycopg
 import requests
 
-NETWORKS = ["IA_ASOS", "IACLIMATE", "IA_COOP", "WFO", "IA_DCP"]
+NETWORKS = ["IA_ASOS", "IACLIMATE", "IA_COOP", "WFO", "IA_DCP", "ISUSM"]
 
 
 def do_stations(network):
