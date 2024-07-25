@@ -3,6 +3,7 @@
 import glob
 import os
 import subprocess
+import sys
 
 import psycopg
 import requests
@@ -90,7 +91,7 @@ def add_webcam():
     pgconn.close()
 
 
-def process_dbfiles():
+def process_dbfiles(psql):
     """Process the DB files."""
     files = glob.glob(os.path.dirname(__file__) + "/data/*.sql*")
     files.sort()
@@ -102,7 +103,7 @@ def process_dbfiles():
                 ["zcat", fn], stdout=subprocess.PIPE
             ) as zproc:
                 with subprocess.Popen(
-                    ["psql", "-v", "ON_ERROR_STOP=1", "-U", "mesonet", dbname],
+                    [psql, "-v", "ON_ERROR_STOP=1", "-U", "mesonet", dbname],
                     stdin=zproc.stdout,
                     stdout=subprocess.PIPE,
                     stderr=subprocess.PIPE,
@@ -114,7 +115,7 @@ def process_dbfiles():
             continue
         with subprocess.Popen(
             [
-                "psql",
+                psql,
                 "-v",
                 "ON_ERROR_STOP=1",
                 "-U",
@@ -132,12 +133,13 @@ def process_dbfiles():
                 raise ValueError("psql returned non-zero!")
 
 
-def main():
+def main(argv):
     """Workflow"""
     _ = [do_stations(network) for network in NETWORKS]
-    process_dbfiles()
+    psql = "psql" if len(argv) == 1 else argv[1]
+    process_dbfiles(psql)
     add_webcam()
 
 
 if __name__ == "__main__":
-    main()
+    main(sys.argv)

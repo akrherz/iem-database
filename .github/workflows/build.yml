@@ -47,4 +47,4 @@ jobs:
         sh bootstrap.sh
         psql -f data/postgis/cwsu.db -U mesonet postgis
         python schema_manager.py
-        python store_test_data.py
+        python store_test_data.py $(which psql)
