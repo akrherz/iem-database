@@ -48,9 +48,10 @@ def do_stations(network):
             """
         INSERT into stations(id, name, state, country, elevation, network,
         online, county, plot_name, climate_site, wfo, tzname, metasite,
-        ugc_county, ugc_zone, geom, ncdc81, ncei91) VALUES (%s, %s, %s, %s, %s,
+        ugc_county, ugc_zone, geom, ncdc81, ncei91, archive_begin,
+        archive_end) VALUES (%s, %s, %s, %s, %s,
         %s, 't', %s, %s, %s, %s, %s, 'f', %s, %s, %s,
-        %s, %s)
+        %s, %s, %s, %s)
         """,
             (
                 sid,
@@ -69,6 +70,8 @@ def do_stations(network):
                 giswkt,
                 ncdc81,
                 ncei91,
+                feature["properties"]["archive_begin"],
+                feature["properties"]["archive_end"],
             ),
         )
     cursor.close()
