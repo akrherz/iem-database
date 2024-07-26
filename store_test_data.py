@@ -19,59 +19,52 @@ NETWORKS = [
 ]
 
 
+def _s(val):
+    if val is None:
+        return None
+    return val[:10]
+
+
 def do_stations(network):
     """hack"""
     pgconn = psycopg.connect("postgresql://mesonet@localhost/mesosite")
     cursor = pgconn.cursor()
     req = requests.get(
-        f"http://mesonet.agron.iastate.edu/geojson/network/{network}.geojson",
+        f"http://mesonet.agron.iastate.edu/api/1/network/{network}.json",
         timeout=60,
     )
     data = req.json()
-    for feature in data["features"]:
-        sid = feature["id"]
-        name = feature["properties"]["sname"]
-        county = feature["properties"]["county"]
-        country = feature["properties"]["country"]
-        state = feature["properties"]["state"]
-        wfo = feature["properties"]["wfo"]
-        climate_site = feature["properties"]["climate_site"]
-        tzname = feature["properties"]["tzname"]
-        elevation = feature["properties"]["elevation"]
-        ugc_zone = feature["properties"]["ugc_zone"]
-        ugc_county = feature["properties"]["ugc_county"]
-        ncdc81 = feature["properties"]["ncdc81"]
-        ncei91 = feature["properties"].get("ncei91")
-        (lon, lat) = feature["geometry"]["coordinates"]
-        giswkt = f"SRID=4326;POINT({lon} {lat})"
+    for entry in data["data"]:
         cursor.execute(
             """
-        INSERT into stations(id, name, state, country, elevation, network,
-        online, county, plot_name, climate_site, wfo, tzname, metasite,
-        ugc_county, ugc_zone, geom, ncdc81, ncei91, archive_begin,
-        archive_end) VALUES (%s, %s, %s, %s, %s,
+        INSERT into stations(iemid, id, name, state, country, elevation,
+        network,online, county, plot_name, climate_site, wfo, tzname, metasite,
+        ugc_county, ugc_zone, ncdc81, ncei91, archive_begin,
+        archive_end, geom) VALUES (%s, %s, %s, %s, %s, %s,
         %s, 't', %s, %s, %s, %s, %s, 'f', %s, %s, %s,
-        %s, %s, %s, %s)
+        %s, %s, %s, ST_Point(%s, %s, 4326))
         """,
             (
-                sid,
-                name,
-                state,
-                country,
-                elevation,
+                entry["iemid"],
+                entry["id"],
+                entry["name"],
+                entry["state"],
+                entry["country"],
+                entry["elevation"],
                 network,
-                county,
-                name,
-                climate_site,
-                wfo,
-                tzname,
-                ugc_county,
-                ugc_zone,
-                giswkt,
-                ncdc81,
-                ncei91,
-                feature["properties"]["archive_begin"],
-                feature["properties"]["archive_end"],
+                entry["county"],
+                entry["name"],
+                entry["climate_site"],
+                entry["wfo"],
+                entry["tzname"],
+                entry["ugc_county"],
+                entry["ugc_zone"],
+                entry["ncdc81"],
+                entry["ncei91"],
+                _s(entry["archive_begin"]),
+                _s(entry["archive_end"]),
+                entry["longitude"],
+                entry["latitude"],
             ),
         )
     cursor.close()
