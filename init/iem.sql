@@ -386,7 +386,8 @@ CREATE TABLE current(
     tsoil_32in_f real,
     tsoil_40in_f real,
     tsoil_64in_f real,
-    tsoil_128in_f real
+    tsoil_128in_f real,
+    presentwx varchar(24)
 );
 ALTER TABLE current OWNER to mesonet;
 GRANT ALL on current to ldm;
@@ -469,7 +470,8 @@ CREATE TABLE current_log (
     tsoil_32in_f real,
     tsoil_40in_f real,
     tsoil_64in_f real,
-    tsoil_128in_f real
+    tsoil_128in_f real,
+    presentwx varchar(24)
 );
 GRANT ALL on current_log to mesonet,ldm;
 GRANT SELECT on current_log to nobody;
