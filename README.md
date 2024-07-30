@@ -45,4 +45,5 @@ mesosite_products.sql | Archived products metadata
 mesosite_tzworld_chicago.sql.gz | Largest geometry for America/Chicago for tz_world
 mesosite_webcams.sql | Some example webcam entries
 mesosite_zz_station_attrs.sql | Station attributes for 
+postgis_mcd.sql.gz | MCDs for much of July 2024
 raob_240719.sql.gz | All soundings from 19 July 2024 12 UTC
