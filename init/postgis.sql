@@ -10,7 +10,7 @@ insert into spatial_ref_sys
 CREATE TABLE iem_schema_manager_version(
     version int,
     updated timestamptz);
-INSERT into iem_schema_manager_version values (70, now());
+INSERT into iem_schema_manager_version values (71, now());
 
 ---
 --- TABLES THAT ARE LOADED VIA shp2pgsql
@@ -1170,11 +1170,6 @@ CREATE TABLE watches_current (
 GRANT ALL on watches_current to mesonet,ldm;
 grant select on watches_current to nobody;
 
-
-
--- !!!!!!!!!!!!! WARNING !!!!!!!!!!!!
--- look what was done in 9.sql and replicate that for 2016 updates
-
 --
 -- Storage of PIREPs
 --
@@ -1184,7 +1179,8 @@ CREATE TABLE pireps(
   is_urgent boolean,
   aircraft_type text,
   report text,
-  artcc varchar(3))
+  artcc varchar(3),
+  product_id varchar(36))
   PARTITION by range(valid);
 ALTER TABLE pireps OWNER to mesonet;
 GRANT SELECT on pireps to nobody;
