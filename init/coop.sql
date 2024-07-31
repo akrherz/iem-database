@@ -389,7 +389,13 @@ CREATE TABLE ncdc_climate71(
   min_low real,
   max_precip real,
   years int,
+  gdd32 real,
+  gdd41 real,
+  gdd46 real,
+  gdd48 real,
   gdd50 real,
+  gdd51 real,
+  gdd52 real,
   sdd86 real,
   max_high_yr   int[],
   max_low_yr    int[],
@@ -398,7 +404,8 @@ CREATE TABLE ncdc_climate71(
   max_precip_yr int[],
   max_range     smallint,
   min_range smallint,
-  hdd65 real 
+  hdd65 real,
+  cdd65 real
 );
 CREATE UNIQUE INDEX ncdc_climate71_idx on ncdc_climate71(station,valid);
 GRANT SELECT on ncdc_climate71 to nobody;
