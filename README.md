@@ -48,3 +48,6 @@ mesosite_zz_station_attrs.sql | Station attributes for
 postgis_mcd.sql.gz | MCDs for much of July 2024
 postgis_pireps.sql | A few PIREPs on 31 July 2024
 raob_240719.sql.gz | All soundings from 19 July 2024 12 UTC
+rwis_atmos.sql.gz | RWIS met data for 1 July 2024
+rwis_soil.sql | Iowa RWIS soil data for 1 July 2024
+rwis_traffic.sql | Iowa RWIS traffic data for 1 July 2024
