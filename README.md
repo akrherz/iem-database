@@ -46,6 +46,7 @@ mesosite_tzworld_chicago.sql.gz | Largest geometry for America/Chicago for tz_wo
 mesosite_webcams.sql | Some example webcam entries
 mesosite_zz_station_attrs.sql | Station attributes for 
 mos_20240802.sql | KDSM MOS for 2 Aug 2024 0z
+mos_fake_realtime.sql | MOS faked NBS entry for KDSM valid at 0z today
 postgis_mcd.sql.gz | MCDs for much of July 2024
 postgis_pireps.sql | A few PIREPs on 31 July 2024
 raob_240719.sql.gz | All soundings from 19 July 2024 12 UTC
