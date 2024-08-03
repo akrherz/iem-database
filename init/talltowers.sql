@@ -66,8 +66,9 @@ CREATE TABLE data_analog(
   airtc_120m_2 real
 
 ) PARTITION by range(valid);
+alter table data_analog owner to mesonet;
 GRANT ALL on data_analog to tt_admin,tt_script;
-GRANT SELECT on data_analog to tt_web;
+GRANT SELECT on data_analog to tt_web, nobody;
 
 do
 $do$
@@ -139,8 +140,9 @@ CREATE TABLE data_sonic(
   uz_120m real,
   uy_120m real,
   ux_120m real) PARTITION by range(valid);
+alter table data_sonic owner to mesonet;
 GRANT ALL on data_sonic to tt_admin,tt_script;
-GRANT SELECT on data_sonic to tt_web;
+GRANT SELECT on data_sonic to tt_web, nobody;
 
 do
 $do$
