@@ -17,6 +17,7 @@ NETWORKS = [
     "ISUSM",
     "ISUAG",
     "TALLTOWERS",
+    "RAOB",
 ]
 
 
