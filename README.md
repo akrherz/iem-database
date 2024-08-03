@@ -32,6 +32,9 @@ Filename | Contains
 afos_products.sql.gz | AFDDMX from 10-16 Jul 2024
 asos_alldata.sql.gz | ~2020 data for AMW and DSM
 asos1min_DSMAMW.sql.gz | One Minute ASOS 10-12 July 2024 DSM+AMW
+coop_ncei_climate71_ames.sql | NCEI 71 Climatology for Ames
+coop_ncei_climate81_ames.sql | NCEI 81 Climatology for Ames
+coop_ncei_climate91_ames.sql | NCEI 91 Climatology for Ames
 hads_alldata.sql.gz | 2024 weather variables for EOKI4
 iem_AMWDSM.sql.gz | IEM current,current_log,summary_2024 (26 Jul) for AMW+DSM
 iem_cf6data.sql | CF6 Data for DSM 2024 till 26 Jul
