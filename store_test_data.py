@@ -16,6 +16,7 @@ NETWORKS = [
     "IA_DCP",
     "ISUSM",
     "ISUAG",
+    "TALLTOWERS",
 ]
 
 
