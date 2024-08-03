@@ -407,6 +407,7 @@ CREATE TABLE ncdc_climate71(
   hdd65 real,
   cdd65 real
 );
+alter table ncdc_climate71 owner to mesonet;
 CREATE UNIQUE INDEX ncdc_climate71_idx on ncdc_climate71(station,valid);
 GRANT SELECT on ncdc_climate71 to nobody;
 
@@ -442,6 +443,7 @@ CREATE TABLE ncdc_climate81(
   cdd65 real,
   srad real
 );
+alter table ncdc_climate81 owner to mesonet;
 CREATE UNIQUE INDEX ncdc_climate81_idx on ncdc_climate81(station,valid);
 GRANT SELECT on ncdc_climate81 to nobody;
 
