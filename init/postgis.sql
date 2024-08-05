@@ -181,7 +181,8 @@ CREATE TABLE states(
   the_geom geometry(MultiPolygon, 4326),
   simple_geom geometry(MultiPolygon, 4326)
 );
-GRANT ALL on states to mesonet,ldm;
+alter table states owner to mesonet;
+GRANT ALL on states to ldm;
 GRANT SELECT on states to nobody;
 
 -- CWSU Boundaries, circa 2005 providence
