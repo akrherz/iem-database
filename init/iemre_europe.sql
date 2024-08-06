@@ -2,7 +2,9 @@
 CREATE EXTENSION postgis;
 
 -- bandaid
-insert into spatial_ref_sys select 9311, 'EPSG', 9311, srtext, proj4text from spatial_ref_sys where srid = 2163;
+insert into spatial_ref_sys
+select 9311, 'EPSG', 9311, srtext, proj4text from spatial_ref_sys
+where srid = 2163;
 
 -- Boilerplate IEM schema_manager_version, the version gets incremented each
 -- time we make an upgrade script
@@ -10,7 +12,7 @@ CREATE TABLE iem_schema_manager_version(
     version int,
     updated timestamptz
 );
-INSERT into iem_schema_manager_version values (3, now());
+INSERT into iem_schema_manager_version values (-1, now());
 
 -- Our baseline grid
 CREATE TABLE iemre_grid(
@@ -31,18 +33,18 @@ declare
      x int;
      y int;
 begin
-    for x in 0..487
+    for x in 0..399
     loop
-        for y in 0..215
+        for y in 0..279
         loop
         execute format($f$
             INSERT into iemre_grid(gid, cell_center, hasdata, gridx, gridy,
             cell_polygon)
             VALUES (%s, ST_Point(%s, %s, 4326), 't', %s, %s,
             ST_MakeEnvelope(%s, %s, %s, %s, 4326))
-        $f$, x + y * 488, -125.9375 + x * 0.125, 23.0625 + y * 0.125, x, y,
-        -125.9375 + x * 0.125 - 0.0625, 23.0625 + y * 0.125 - 0.0625,
-        -125.9375 + x * 0.125 + 0.0625, 23.0625 + y * 0.125 + 0.0625
+        $f$, x + y * 400, -9.9375 + x * 0.125, 35.0625 + y * 0.125, x, y,
+        -9.9375 + x * 0.125 - 0.0625, 35.0625 + y * 0.125 - 0.0625,
+        -9.9375 + x * 0.125 + 0.0625, 35.0625 + y * 0.125 + 0.0625
         );
         end loop;
     end loop;
