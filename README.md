@@ -53,6 +53,8 @@ mos_20240802.sql | KDSM MOS for 2 Aug 2024 0z
 mos_fake_realtime.sql | MOS faked NBS entry for KDSM valid at 0z today
 postgis_mcd.sql.gz | MCDs for much of July 2024
 postgis_pireps.sql | A few PIREPs on 31 July 2024
+postgis__000spc_outlook.sql | SPC/WPC Outlook 1-8 Aug 2024
+postgis__spc_outlook_geometries.sql.gz | SPC/WPC Outlooks 1-8 Aug 2024
 postgis_states.sql | Simplified 0.01 us states
 postgis_watches_current.sql | watches_current snapshot 5 Aug 2024
 postgis_watches2024.sql.gz | watches for 2024 till 5 Aug 2024
