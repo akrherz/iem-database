@@ -96,10 +96,8 @@ def process_dbfiles(psql):
     args = ["-v", "ON_ERROR_STOP=1", "-U", "mesonet", "-h", "localhost"]
     for fn in files:
         # Le Sigh for iemre_china and iemre_europe
-        if fn.find(":") > 0:
-            dbname = fn.split(":")[0]
-        else:
-            dbname = os.path.basename(fn).split("_")[0]
+        sep = "__" if fn.find("__") > 0 else "_"
+        dbname = os.path.basename(fn).split(sep)[0]
         if fn.endswith(".gz"):
             with subprocess.Popen(
                 ["zcat", fn], stdout=subprocess.PIPE
