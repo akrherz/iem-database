@@ -56,6 +56,7 @@ postgis_pireps.sql | A few PIREPs on 31 July 2024
 postgis__000spc_outlook.sql | SPC/WPC Outlook 1-8 Aug 2024
 postgis__spc_outlook_geometries.sql.gz | SPC/WPC Outlooks 1-8 Aug 2024
 postgis_states.sql | Simplified 0.01 us states
+postgis__usdm.sql.gz | US Drought Monitor for 2024 till 8 Aug
 postgis_watches_current.sql | watches_current snapshot 5 Aug 2024
 postgis_watches2024.sql.gz | watches for 2024 till 5 Aug 2024
 raob_240719.sql.gz | All soundings from 19 July 2024 12 UTC
