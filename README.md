@@ -48,9 +48,12 @@ isuag_sm_inversion.sql.gz | ISU Soil Moisture inversion data 21-25 July 2024
 mesosite_products.sql | Archived products metadata
 mesosite_tzworld_chicago.sql.gz | Largest geometry for America/Chicago for tz_world
 mesosite_webcams.sql | Some example webcam entries
-mesosite_zz_station_attrs.sql | Station attributes for 
+mesosite_zz_station_attrs.sql | Station attributes for
 mos_20240802.sql | KDSM MOS for 2 Aug 2024 0z
 mos_fake_realtime.sql | MOS faked NBS entry for KDSM valid at 0z today
+other__purpleair.sql | purpleair data for 10 Aug 2024
+other__ss_bubbler.sql | data for 13 Aug 2012
+other__ss_logger_data.sql | 2012-2014 random data
 postgis_mcd.sql.gz | MCDs for much of July 2024
 postgis_pireps.sql | A few PIREPs on 31 July 2024
 postgis__000spc_outlook.sql | SPC/WPC Outlook 1-8 Aug 2024
