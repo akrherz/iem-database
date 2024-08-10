@@ -52,6 +52,7 @@ CREATE TABLE ss_bubbler(
   value real,
   units varchar(32)
 );
+alter table ss_bubbler owner to mesonet;
 CREATE INDEX ss_bubbler_idx on ss_bubbler(valid);
 GRANT SELECT on ss_bubbler to nobody;
 
@@ -75,6 +76,7 @@ CREATE TABLE ss_logger_data(
   ch3_data_c real,
   ch4_data_c real
 );
+alter table ss_logger_data owner to mesonet;
 CREATE INDEX ss_logger_data_idx on ss_logger_data(valid);
 GRANT SELECT on ss_logger_data to nobody;
 
@@ -129,6 +131,7 @@ CREATE TABLE asi_data (
   ch12sd  real,
   ch12max real,
   ch12min real);
+ALTER TABLE asi_data OWNER to mesonet;
 CREATE unique index asi_data_idx on asi_data(station, valid);
 GRANT SELECT on asi_data to nobody;
 
@@ -164,6 +167,9 @@ CREATE TABLE alldata (
     skyl4 int,
     srad_1h_j real
 ) PARTITION by range(valid);
+ALTER TABLE alldata OWNER to mesonet;
+GRANT ALL on alldata to ldm;
+GRANT SELECT on alldata to nobody;
 
 do
 $do$
@@ -346,6 +352,7 @@ CREATE TABLE feel_data_daily(
         Windspeed_Max real,
         SolarRad_MJ_Tot real
 );
+alter table feel_data_daily owner to mesonet;
 GRANT SELECT on feel_data_daily to nobody;
 
 CREATE TABLE feel_data_hourly(
@@ -372,6 +379,7 @@ CREATE TABLE feel_data_hourly(
         LWS2_Ohms_Hst real,
         LWS3_Ohms_Hst real
 );
+alter table feel_data_hourly owner to mesonet;
 GRANT SELECT on feel_data_hourly to nobody;
 
 -- Storage of ncdc HPD data
