@@ -57,7 +57,11 @@ other__ss_logger_data.sql | 2012-2014 random data
 postgis_mcd.sql.gz | MCDs for much of July 2024
 postgis_pireps.sql | A few PIREPs on 31 July 2024
 postgis__000spc_outlook.sql | SPC/WPC Outlook 1-8 Aug 2024
+postgis__airmets.sql | Some AIRMETs from 10 Aug 2024
+postgis__cwas.sql | Some Center Weather Advisories from 10 Aug 2024
+postgis__sigmets_archive.sql | Some SIGMETs from 10 Aug 2024
 postgis__spc_outlook_geometries.sql.gz | SPC/WPC Outlooks 1-8 Aug 2024
+postgis__sps.sql | Some SPSs from 10 Aug 2024
 postgis_states.sql | Simplified 0.01 us states
 postgis__usdm.sql.gz | US Drought Monitor for 2024 till 8 Aug
 postgis_watches_current.sql | watches_current snapshot 5 Aug 2024
