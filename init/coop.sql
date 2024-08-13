@@ -1,14 +1,16 @@
 CREATE EXTENSION postgis;
 
 -- bandaid
-insert into spatial_ref_sys select 9311, 'EPSG', 9311, srtext, proj4text from spatial_ref_sys where srid = 2163;
+insert into spatial_ref_sys
+select 9311, 'EPSG', 9311, srtext, proj4text from spatial_ref_sys
+where srid = 2163;
 
 -- Boilerplate IEM schema_manager_version, the version gets incremented each
 -- time we make an upgrade script
 CREATE TABLE iem_schema_manager_version(
     version int,
     updated timestamptz);
-INSERT into iem_schema_manager_version values (19, now());
+INSERT into iem_schema_manager_version values (20, now());
 
 create table ncei_climdiv(
     station char(6),
@@ -80,27 +82,6 @@ create index nass_quickstats_year_idx on nass_quickstats(year);
 create index nass_quickstats_idx on nass_quickstats(year, short_desc);
 
 ---
---- Temp table
----
-CREATE TABLE alldata_tmp(
-  station char(6),
-  day date,
-  high int,
-  low int,
-  precip real,
-  snow real,
-  sday char(4),
-  year int,
-  month smallint,
-  snowd real,
-  estimated boolean,
-  narr_srad real,
-  merra_srad real,
-  era5land_srad real,
-  hrrr_srad real
-  );
-
----
 --- Datastorage tables
 ---
 CREATE TABLE alldata(
@@ -127,7 +108,8 @@ CREATE TABLE alldata(
   nldas_soilt4_avg real,
   nldas_soilm4_avg real,
   era5land_soilm1m_avg real,
-  nldas_soilm1m_avg real
+  nldas_soilm1m_avg real,
+  power_srad real
   ) PARTITION by range(station);
 ALTER TABLE alldata OWNER to mesonet;
 GRANT ALL on alldata to ldm;
