@@ -37,7 +37,7 @@ coop_ncei_climate71_ames.sql | NCEI 71 Climatology for Ames
 coop_ncei_climate81_ames.sql | NCEI 81 Climatology for Ames
 coop_ncei_climate91_ames.sql | NCEI 91 Climatology for Ames
 hads_alldata.sql.gz | 2024 weather variables for EOKI4
-iem_AMWDSM.sql.gz | IEM current,current_log,summary_2024 (26 Jul) for AMW+DSM
+iem_AMWDSM.sql.gz | IEM current,current_log,summary_2024 (14 Aug) for AMW+DSM
 iem_cf6data.sql | CF6 Data for DSM 2024 till 26 Jul
 iem_clidata.sql | CLI Data for DSM 2024 till 26 Jul
 isuag_daily.sql.gz | ISU Ag Climate station A130209 (Ames)
@@ -45,6 +45,7 @@ isuag_sm_minute.sql.gz | ISU Soil Moisture minute data 21-25 July 2024
 isuag_sm_hourly.sql.gz | ISU Soil Moisture hourly data 21-25 July 2024
 isuag_sm_daily.sql | ISU Soil Moisture daily data 21-25 July 2024
 isuag_sm_inversion.sql.gz | ISU Soil Moisture inversion data 21-25 July 2024
+mesosite__camera_log_2020.sql | Webcam metadata around 17z 10 Aug 2020
 mesosite_products.sql | Archived products metadata
 mesosite_tzworld_chicago.sql.gz | Largest geometry for America/Chicago for tz_world
 mesosite_webcams.sql | Some example webcam entries
