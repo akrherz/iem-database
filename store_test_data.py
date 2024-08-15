@@ -18,6 +18,7 @@ NETWORKS = [
     "ISUAG",
     "TALLTOWERS",
     "RAOB",
+    "NWSCLI",
 ]
 
 
