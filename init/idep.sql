@@ -13,7 +13,7 @@ CREATE TABLE iem_schema_manager_version(
   version int,
   updated timestamptz);
 ALTER TABLE iem_schema_manager_version OWNER to mesonet;
-insert into iem_schema_manager_version values (31, now());
+insert into iem_schema_manager_version values (32, now());
 
 -- Storage of DEP versioning dailyerosion/dep#179
 create table dep_version(
@@ -29,6 +29,17 @@ alter table dep_version owner to mesonet;
 grant select on dep_version to nobody;
 create unique index dep_version_idx
   on dep_version(label, wepp, acpf, flowpath, gssurgo, software);
+
+-- Log clifile requests
+create table clifile_requests(
+  valid timestamptz default now(),
+  client_addr text,
+  geom geometry(Point, 4326),
+  provided_file text,
+  distance_degrees float
+);
+alter table clifile_requests owner to mesonet;
+grant insert on clifile_requests to nobody;
 
 -- GSSURGO Metadata
 CREATE TABLE gssurgo(
