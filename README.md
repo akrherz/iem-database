@@ -70,6 +70,7 @@ postgis__spc_outlook_geometries.sql.gz | SPC/WPC Outlooks 1-8 Aug 2024
 postgis__sps.sql | Some SPSs from 10 Aug 2024
 postgis_states.sql | Simplified 0.01 us states
 postgis__usdm.sql.gz | US Drought Monitor for 2024 till 8 Aug
+postgis_warnings.sql | DMX select warnings from 2018 and 2024
 postgis_watches_current.sql | watches_current snapshot 5 Aug 2024
 postgis_watches2024.sql.gz | watches for 2024 till 5 Aug 2024
 radar__nexrad_attributes_2024.sql.gz | sampled attributes from 10 Aug 2024
