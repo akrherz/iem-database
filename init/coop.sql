@@ -318,6 +318,7 @@ CREATE TABLE climate51(
   cdd65 real,
   srad real
 );
+alter table climate51 owner to mesonet;
 CREATE UNIQUE INDEX climate51_idx on climate51(station,valid);
 CREATE INDEX climate51_station_idx on climate51(station);
 CREATE INDEX climate51_valid_idx on climate51(valid);
@@ -355,6 +356,7 @@ CREATE TABLE climate71(
   cdd65 real,
   srad real
 );
+alter table climate71 owner to mesonet;
 CREATE UNIQUE INDEX climate71_idx on climate71(station,valid);
 GRANT SELECT on climate71 to nobody;
 
@@ -497,6 +499,7 @@ CREATE TABLE climate81(
   cdd65 real,
   srad real
 );
+ALTER TABLE climate81 OWNER to mesonet;
 CREATE UNIQUE INDEX climate81_idx on climate81(station,valid);
 GRANT SELECT on climate81 to nobody;
 
