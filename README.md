@@ -44,6 +44,10 @@ coop_ncei_climate71_ames.sql | NCEI 71 Climatology for Ames
 coop_ncei_climate81_ames.sql | NCEI 81 Climatology for Ames
 coop_ncei_climate91_ames.sql | NCEI 91 Climatology for Ames
 hads_alldata.sql.gz | 2024 weather variables for EOKI4
+hml__000hml_forecast.sql | Guttenburg GTTI4 20-23 Aug 2024
+hml__000hml_observed_keys.sql | metadata for HML
+hml__hml_forecast_data.sql | Guttenburg GTTI4 20-23 Aug 2024
+hml__hml_observed_data.sql | Guttenburg GTTI4 20-23 Aug 2024
 iem_AMWDSM.sql.gz | IEM current,current_log,summary_2024 (14 Aug) for AMW+DSM
 iem_cf6data.sql | CF6 Data for DSM 2024 till 26 Jul
 iem_clidata.sql | CLI Data for DSM 2024 till 26 Jul
