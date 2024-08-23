@@ -1,53 +1,55 @@
 CREATE EXTENSION postgis;
 
 -- bandaid
-insert into spatial_ref_sys select 9311, 'EPSG', 9311, srtext, proj4text from spatial_ref_sys where srid = 2163;
+insert into spatial_ref_sys
+select 9311, 'EPSG', 9311, srtext, proj4text from spatial_ref_sys
+where srid = 2163;
 
 -- Boilerplate IEM schema_manager_version, the version gets incremented each
 -- time we make an upgrade script
 CREATE TABLE iem_schema_manager_version(
-	version int,
-	updated timestamptz);
+    version int,
+    updated timestamptz);
 ALTER TABLE iem_schema_manager_version OWNER to mesonet;
 INSERT into iem_schema_manager_version values (1, now());
 
 CREATE TABLE stations(
-	id varchar(64),
-	synop int,
-	name varchar(64),
-	state char(2),
-	country char(2),
-	elevation real,
-	network varchar(20),
-	online boolean,
-	params varchar(300),
-	county varchar(50),
-	plot_name varchar(64),
-	climate_site varchar(6),
-	remote_id int,
-	nwn_id int,
-	spri smallint,
-	wfo varchar(3),
-	archive_begin date,
-	archive_end date,
-	modified timestamp with time zone,
-	tzname varchar(32),
-	iemid SERIAL,
-	metasite boolean,
-	sigstage_low real,
-	sigstage_action real,
-	sigstage_bankfull real,
-	sigstage_flood real,
-	sigstage_moderate real,
-	sigstage_major real,
-	sigstage_record real,
-	ugc_county char(6),
-	ugc_zone char(6),
-	ncdc81 varchar(11),
+    id varchar(64),
+    synop int,
+    name varchar(64),
+    state char(2),
+    country char(2),
+    elevation real,
+    network varchar(20),
+    online boolean,
+    params varchar(300),
+    county varchar(50),
+    plot_name varchar(64),
+    climate_site varchar(6),
+    remote_id int,
+    nwn_id int,
+    spri smallint,
+    wfo varchar(3),
+    archive_begin date,
+    archive_end date,
+    modified timestamp with time zone,
+    tzname varchar(32),
+    iemid SERIAL,
+    metasite boolean,
+    sigstage_low real,
+    sigstage_action real,
+    sigstage_bankfull real,
+    sigstage_flood real,
+    sigstage_moderate real,
+    sigstage_major real,
+    sigstage_record real,
+    ugc_county char(6),
+    ugc_zone char(6),
+    ncdc81 varchar(11),
     ncei91 varchar(11),
-	temp24_hour smallint,
-	precip24_hour smallint,
-	wigos varchar(64)
+    temp24_hour smallint,
+    precip24_hour smallint,
+    wigos varchar(64)
 );
 ALTER TABLE stations OWNER to mesonet;
 CREATE UNIQUE index stations_idx on stations(id, network);
@@ -107,7 +109,16 @@ INSERT into hml_observed_keys values
  (15, 'Stage Trnd Indicator[code]'),
  (16, 'Tailwater[ft]'),
  (17, 'Tide Height[ft]'),
- (18, 'Total Discharge[kcfs]');
+ (18, 'Total Discharge[kcfs]'),
+ (19, 'Water Height (MHHW)[ft]'),
+ (20, 'Ceiling Height[ft]'),
+ (21, 'Adjusted Discharge[kcfs]'),
+ (22, 'Runoff Depth[in]'),
+ (23, 'Runoff Volume[kaf]'),
+ (24, 'Canal Divers. Dschrg[kcfs]'),
+ (25, 'Spillway Discharge[kcfs]'),
+ (26, 'Flow Diverted[%]')
+;
 
 
 CREATE FUNCTION get_hml_observed_key(text)
@@ -118,10 +129,10 @@ AS $_$
 $_$;
 
 CREATE TABLE hml_observed_data(
-	station varchar(8),
-	valid timestamptz,
-	key smallint REFERENCES hml_observed_keys(id),
-	value real)
+    station varchar(8),
+    valid timestamptz,
+    key smallint REFERENCES hml_observed_keys(id),
+    value real)
     PARTITION by range(valid);
 ALTER TABLE hml_observed_data OWNER to mesonet;
 GRANT ALL on hml_observed_data to ldm;
