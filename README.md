@@ -79,7 +79,7 @@ postgis_warnings.sql | DMX select warnings from 2018 and 2024
 postgis_watches_current.sql | watches_current snapshot 5 Aug 2024
 postgis_watches2024.sql.gz | watches for 2024 till 5 Aug 2024
 radar__nexrad_attributes_2024.sql.gz | sampled attributes from 10 Aug 2024
-radar__nexrad_attributes.sql.gz | current attributes at 22z 10 Aug 2024
+radar__nexrad_attributes.sql.gz | nexrad attributes current (set to loadtime)
 raob_240719.sql.gz | All soundings from 19 July 2024 12 UTC
 rwis_atmos.sql.gz | RWIS met data for 1 July 2024
 rwis_soil.sql | Iowa RWIS soil data for 1 July 2024
