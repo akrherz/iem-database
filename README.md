@@ -34,7 +34,7 @@ asos__000taf.sql | TAF reference table for 20 Aug 2024
 asos__taf2024.sql.gz | TAF data for 20 Aug 2024
 asos_alldata.sql.gz | ~2020 data for AMW and DSM
 asos1min_DSMAMW.sql.gz | One Minute ASOS 10-12 July 2024 DSM+AMW
-coop__IA0000_IATAME_2000_2024.sql.gz | climodat IA0000,IATAME for 2000-2024(aug 14)
+coop__IA0000_IATAME_2000_2024.sql.gz | climodat IA0000,IATAME,IA0200 for 2000-2024(aug 25)
 coop__alldata_IATDSM.sql.gz | climodat IATDSM for 2000-2024(aug 15)
 coop__climate51.sql | climate51 data for IATAME,IATDSM,IA0000
 coop__climate71.sql | climate71 data for IATAME,IATDSM,IA0000
