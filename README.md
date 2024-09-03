@@ -39,7 +39,7 @@ coop__alldata_IATDSM.sql.gz | climodat IATDSM for 2000-2024(aug 15)
 coop__climate51.sql | climate51 data for IATAME,IATDSM,IA0000
 coop__climate71.sql | climate71 data for IATAME,IATDSM,IA0000
 coop__climate81.sql | climate81 data for IATAME,IATDSM,IA0000
-coop__nass_quickstats.sql.gz | NASS Quickstats 2021-2024
+coop__nass_quickstats.sql.gz | NASS Quickstats 2007-Aug 2024
 coop_ncei_climate71_ames.sql | NCEI 71 Climatology for Ames
 coop_ncei_climate81_ames.sql | NCEI 81 Climatology for Ames
 coop_ncei_climate91_ames.sql | NCEI 91 Climatology for Ames
