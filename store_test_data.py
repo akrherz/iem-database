@@ -9,6 +9,7 @@ import psycopg
 import requests
 
 NETWORKS = [
+    "IA_RWIS",
     "IA_ASOS",
     "IACLIMATE",
     "IA_COOP",
@@ -30,7 +31,9 @@ def _s(val):
 
 def do_stations(network):
     """hack"""
-    pgconn = psycopg.connect("postgresql://mesonet@localhost/mesosite")
+    pgconn = psycopg.connect(
+        "postgresql://mesonet@localhost/mesosite?gssencmode=disable"
+    )
     cursor = pgconn.cursor()
     req = requests.get(
         f"http://mesonet.agron.iastate.edu/api/1/network/{network}.json",
@@ -43,9 +46,9 @@ def do_stations(network):
         INSERT into stations(iemid, id, name, state, country, elevation,
         network,online, county, plot_name, climate_site, wfo, tzname, metasite,
         ugc_county, ugc_zone, ncdc81, ncei91, archive_begin,
-        archive_end, geom) VALUES (%s, %s, %s, %s, %s, %s,
+        archive_end, geom, remote_id) VALUES (%s, %s, %s, %s, %s, %s,
         %s, 't', %s, %s, %s, %s, %s, 'f', %s, %s, %s,
-        %s, %s, %s, ST_Point(%s, %s, 4326))
+        %s, %s, %s, ST_Point(%s, %s, 4326), %s)
         """,
             (
                 entry["iemid"],
@@ -68,6 +71,7 @@ def do_stations(network):
                 _s(entry["archive_end"]),
                 entry["longitude"],
                 entry["latitude"],
+                entry["remote_id"],
             ),
         )
     cursor.close()

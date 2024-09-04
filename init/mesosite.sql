@@ -395,7 +395,7 @@ CREATE TABLE stations(
     wfo varchar(3),
     archive_begin date,
     archive_end date,
-    modified timestamp with time zone,
+    modified timestamptz default now(),
     tzname varchar(32),
     iemid SERIAL UNIQUE NOT NULL,
     metasite boolean,
