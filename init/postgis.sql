@@ -29,7 +29,7 @@ INSERT into iem_schema_manager_version values (71, now());
 create table fema_regions(
     region int,
     states varchar[],
-    geom geometry(Geometry, 4326)
+    geom geometry(MultiPolygon, 4326)
 );
 alter table fema_regions owner to mesonet;
 grant select on fema_regions to nobody;
