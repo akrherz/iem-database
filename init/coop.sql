@@ -874,10 +874,11 @@ COPY climoweek (sday, climoweek) FROM stdin;
 
 -- Storage of Nino Data
 CREATE TABLE elnino(
-        monthdate date UNIQUE,
-        anom_34 real,
-        soi_3m real
+  monthdate date UNIQUE,
+  anom_34 real,
+  soi_3m real
 );
+alter table elnino owner to mesonet;
 GRANT SELECT on elnino to nobody;
 
 -- Storage of Point Extracted Forecast Data
@@ -886,6 +887,7 @@ CREATE TABLE forecast_inventory(
   model varchar(32),
   modelts timestamptz
 );
+alter table forecast_inventory owner to mesonet;
 GRANT SELECT on forecast_inventory to nobody;
 
 CREATE TABLE alldata_forecast(
@@ -897,6 +899,7 @@ CREATE TABLE alldata_forecast(
   precip real,
   srad real
 );
+alter table alldata_forecast owner to mesonet;
 GRANT SELECT on alldata_forecast to nobody;
 CREATE INDEX alldata_forecast_idx on alldata_forecast(station, day);
 
@@ -910,6 +913,7 @@ CREATE TABLE yieldfx_baseline(
   rain real,
   windspeed real,
   rh real);
+alter table yieldfx_baseline owner to mesonet;
 GRANT SELECT on yieldfx_baseline to nobody;
 
 -- Storage of polygons associated with regions we compute climodat for
@@ -917,6 +921,7 @@ CREATE TABLE climodat_regions(
     iemid int REFERENCES stations(iemid),
     geom geometry(MultiPolygon, 4326)
 );
+alter table climodat_regions owner to mesonet;
 CREATE UNIQUE INDEX climodat_regions_idx on climodat_regions(iemid);
 CREATE INDEX climodat_regions_gix on climodat_regions USING GIST(geom);
 ALTER TABLE climodat_regions OWNER TO mesonet;
