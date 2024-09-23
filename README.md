@@ -54,8 +54,10 @@ iem__AMWDSM.sql.gz | IEM current,current_log,summary_2024 (14 Aug) for AMW+DSM
 iem__cf6data.sql | CF6 Data for DSM 2024 till 26 Jul
 iem__clidata.sql | CLI Data for DSM 2024 till 26 Jul
 isuag_daily.sql.gz | ISU Ag Climate station A130209 (Ames)
+isuag__hourly.sql | ISU Ag Climate station A130209 (Ames) 2,000 hourly
 isuag_sm_minute.sql.gz | ISU Soil Moisture minute data 21-25 July 2024
 isuag_sm_hourly.sql.gz | ISU Soil Moisture hourly data 21-25 July 2024
+isuag__sm_hourly.sql.gz | More AEEI4 hourly data
 isuag_sm_daily.sql | ISU Soil Moisture daily data 21-25 July 2024
 isuag_sm_inversion.sql.gz | ISU Soil Moisture inversion data 21-25 July 2024
 mesosite__camera_log_2020.sql | Webcam metadata around 17z 10 Aug 2020
