@@ -76,7 +76,7 @@ postgis__cwas.sql | Some Center Weather Advisories from 10 Aug 2024
 postgis__fema_regions.sql.gz | Simplified FEMA Regions
 postgis__sigmets_archive.sql | Some SIGMETs from 10 Aug 2024
 postgis__spc_outlook_geometries.sql.gz | SPC/WPC Outlooks 1-8 Aug 2024
-postgis__sps.sql | Some SPSs from 10 Aug 2024
+postgis__sps2024.sql.gz | SPSs from Aug 2024
 postgis_lsrs.sql | DMX LSRs from 2018-06-20,2018-06-21,2024-05-21, One BGM LSR from 2023
 postgis_states.sql | Simplified 0.01 us states
 postgis__usdm.sql.gz | US Drought Monitor for 2024 till 8 Aug
