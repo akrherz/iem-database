@@ -548,7 +548,6 @@ create index text_products_pil_idx  on text_products(pil);
 -- Special Weather Statements
 CREATE TABLE sps(
     product_id varchar(35),
-    product text,
     segmentnum smallint,
     pil char(6),
     wfo char(3),
