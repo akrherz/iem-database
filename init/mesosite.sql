@@ -46,7 +46,8 @@ CREATE TABLE weblog(
     client_addr inet,
     uri text,
     referer text,
-    http_status int
+    http_status int,
+    x_forwarded_for text
 );
 ALTER TABLE weblog OWNER to mesonet;
 GRANT ALL on weblog to nobody;
