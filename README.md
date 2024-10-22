@@ -48,11 +48,11 @@ hads_alldata.sql.gz | 2024 weather variables for EOKI4
 hml__000hml_forecast.sql | Guttenburg GTTI4 20-23 Aug 2024
 hml__hml_forecast_data.sql | Guttenburg GTTI4 20-23 Aug 2024
 hml__hml_observed_data.sql | Guttenburg GTTI4 20-23 Aug 2024
-iem__000stations.sql | DSM,AMW station metadata
 iem__hourly.sql.gz | DSM,AMW hourly precip 2024 precip till 4 Sept
 iem__AMWDSM.sql.gz | IEM current,current_log,summary_2024 (14 Aug) for AMW+DSM
 iem__cf6data.sql | CF6 Data for DSM 2024 till 26 Jul
 iem__clidata.sql | CLI Data for DSM 2024 till 26 Jul
+iem__summary_iacoop_241022.sql | Iowa COOP summary data for 22 Oct 2024
 isuag_daily.sql.gz | ISU Ag Climate station A130209 (Ames)
 isuag__hourly.sql | ISU Ag Climate station A130209 (Ames) 2,000 hourly
 isuag_sm_minute.sql.gz | ISU Soil Moisture minute data 21-25 July 2024
