@@ -29,54 +29,55 @@ def _s(val):
     return val[:10]
 
 
-def do_stations(network):
+def do_stations(network: str):
     """hack"""
-    pgconn = psycopg.connect(
-        "postgresql://mesonet@localhost/mesosite?gssencmode=disable"
-    )
-    cursor = pgconn.cursor()
     req = requests.get(
         f"http://mesonet.agron.iastate.edu/api/1/network/{network}.json",
         timeout=60,
     )
     data = req.json()
-    for entry in data["data"]:
-        cursor.execute(
-            """
-        INSERT into stations(iemid, id, name, state, country, elevation,
-        network,online, county, plot_name, climate_site, wfo, tzname, metasite,
-        ugc_county, ugc_zone, ncdc81, ncei91, archive_begin,
-        archive_end, geom, remote_id) VALUES (%s, %s, %s, %s, %s, %s,
-        %s, 't', %s, %s, %s, %s, %s, 'f', %s, %s, %s,
-        %s, %s, %s, ST_Point(%s, %s, 4326), %s)
-        """,
-            (
-                entry["iemid"],
-                entry["id"],
-                entry["name"],
-                entry["state"],
-                entry["country"],
-                entry["elevation"],
-                network,
-                entry["county"],
-                entry["name"],
-                entry["climate_site"],
-                entry["wfo"],
-                entry["tzname"],
-                entry["ugc_county"],
-                entry["ugc_zone"],
-                entry["ncdc81"],
-                entry["ncei91"],
-                _s(entry["archive_begin"]),
-                _s(entry["archive_end"]),
-                entry["longitude"],
-                entry["latitude"],
-                entry["remote_id"],
-            ),
+    for dbname in "mesosite iem".split():
+        pgconn = psycopg.connect(
+            f"postgresql://mesonet@localhost/{dbname}?gssencmode=disable"
         )
-    cursor.close()
-    pgconn.commit()
-    pgconn.close()
+        cursor = pgconn.cursor()
+        for entry in data["data"]:
+            cursor.execute(
+                """
+            INSERT into stations(iemid, id, name, state, country, elevation,
+            network,online, county, plot_name, climate_site, wfo, tzname,
+            metasite, ugc_county, ugc_zone, ncdc81, ncei91, archive_begin,
+            archive_end, geom, remote_id) VALUES (%s, %s, %s, %s, %s, %s,
+            %s, 't', %s, %s, %s, %s, %s, 'f', %s, %s, %s,
+            %s, %s, %s, ST_Point(%s, %s, 4326), %s)
+            """,
+                (
+                    entry["iemid"],
+                    entry["id"],
+                    entry["name"],
+                    entry["state"],
+                    entry["country"],
+                    entry["elevation"],
+                    network,
+                    entry["county"],
+                    entry["name"],
+                    entry["climate_site"],
+                    entry["wfo"],
+                    entry["tzname"],
+                    entry["ugc_county"],
+                    entry["ugc_zone"],
+                    entry["ncdc81"],
+                    entry["ncei91"],
+                    _s(entry["archive_begin"]),
+                    _s(entry["archive_end"]),
+                    entry["longitude"],
+                    entry["latitude"],
+                    entry["remote_id"],
+                ),
+            )
+        cursor.close()
+        pgconn.commit()
+        pgconn.close()
 
 
 def add_webcam():
