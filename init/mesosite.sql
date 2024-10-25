@@ -1,18 +1,30 @@
 CREATE EXTENSION postgis;
 
 -- bandaid
-insert into spatial_ref_sys select 9311, 'EPSG', 9311, srtext, proj4text from spatial_ref_sys where srid = 2163;
+insert into spatial_ref_sys
+    select 9311, 'EPSG', 9311, srtext, proj4text from spatial_ref_sys
+    where srid = 2163;
 
 -- Boilerplate IEM schema_manager_version, the version gets incremented each
 -- time we make an upgrade script
 CREATE TABLE iem_schema_manager_version(
     version int,
     updated timestamptz);
-INSERT into iem_schema_manager_version values (27, now());
+INSERT into iem_schema_manager_version values (28, now());
 
 --- ==== TABLES TO investigate deleting
 --- counties
 --- states
+
+-- Storage of citations of the website
+create table website_citations (
+    publication_date date not null,
+    title text not null,
+    link text,
+    iem_resource text
+);
+alter table website_citations owner to mesonet;
+grant select,insert on website_citations to nobody;
 
 --
 create table tz_world(
