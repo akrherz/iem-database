@@ -45,6 +45,7 @@ coop_ncei_climate71_ames.sql | NCEI 71 Climatology for Ames
 coop_ncei_climate81_ames.sql | NCEI 81 Climatology for Ames
 coop_ncei_climate91_ames.sql | NCEI 91 Climatology for Ames
 hads_alldata.sql.gz | 2024 weather variables for EOKI4
+hads_snowfall.sql | 10 Nov 2023 12 UTC fake entries for DNKI4
 hml__000hml_forecast.sql | Guttenburg GTTI4 20-23 Aug 2024
 hml__hml_forecast_data.sql | Guttenburg GTTI4 20-23 Aug 2024
 hml__hml_observed_data.sql | Guttenburg GTTI4 20-23 Aug 2024

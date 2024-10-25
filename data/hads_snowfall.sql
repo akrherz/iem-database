@@ -1,6 +1,9 @@
 -- 6 hour snowfall
 insert into raw2023_11(station, valid, key, value) values
-('DNKI4', '2023-11-10 12:00+00', 'SFQRZZZ', 10);
+('DNKI4', '2023-11-10 12:00+00', 'SFQRZZZ', 10),
+('DNKI4', '2023-11-10 12:00+00', 'SDIRZZZ', 20),
+('DNKI4', '2023-11-10 12:00+00', 'PPQRZZZ', 30),
+('DNKI4', '2023-11-10 12:00+00', 'SWIRZZZ', 40);
 
 -- needed for 6 hour join to work.
 insert into stations(iemid, id, name, network, geom) values
