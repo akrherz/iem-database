@@ -530,7 +530,6 @@ GRANT select on vtec_missing_events to nobody;
 -- Legacy table supporting NWSChat, sigh
 CREATE TABLE text_products (
     product_id varchar(35),
-    product text,
     geom geometry(MultiPolygon, 4326),
     issue timestamptz,
     expire timestamptz,
