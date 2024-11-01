@@ -31,6 +31,7 @@ Filename | Contains
 --- | ---
 afos_products.sql.gz | AFDDMX from 10-16 Jul 2024
 asos__000taf.sql | TAF reference table for 20 Aug 2024
+asos__AMW_01_10_Aug_2024.aql | Ames data for 1-10 Aug 2024
 asos__taf2024.sql.gz | TAF data for 20 Aug 2024
 asos_alldata.sql.gz | ~2020 data for AMW and DSM
 asos1min_DSMAMW.sql.gz | One Minute ASOS 10-12 July 2024 DSM+AMW
