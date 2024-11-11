@@ -193,7 +193,9 @@ CREATE TABLE iembot_twitter_oauth(
   created timestamptz DEFAULT now(),
   updated timestamptz DEFAULT now(),
   disabled bool default 'f',
-  iem_owned bool default 'f'
+  iem_owned bool default 'f',
+  at_handle text,
+  at_app_pass text
 );
 GRANT ALL on iembot_twitter_oauth to nobody;
 
