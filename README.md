@@ -42,6 +42,7 @@ coop__climate71.sql | climate71 data for IATAME,IATDSM,IA0000
 coop__climate81.sql | climate81 data for IATAME,IATDSM,IA0000
 coop__elnino.sql | El Nino data till Aug 2024
 coop__nass_quickstats.sql.gz | NASS Quickstats 2007-Aug 2024
+coop__ncei_climdiv_IA0000.sql | NCEI Climdiv data for Iowa Statewide
 coop_ncei_climate71_ames.sql | NCEI 71 Climatology for Ames
 coop_ncei_climate81_ames.sql | NCEI 81 Climatology for Ames
 coop_ncei_climate91_ames.sql | NCEI 91 Climatology for Ames
