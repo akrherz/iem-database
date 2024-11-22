@@ -13,7 +13,7 @@ CREATE TABLE iem_schema_manager_version(
   version int,
   updated timestamptz);
 ALTER TABLE iem_schema_manager_version OWNER to mesonet;
-insert into iem_schema_manager_version values (32, now());
+insert into iem_schema_manager_version values (33, now());
 
 -- Storage of DEP versioning dailyerosion/dep#179
 create table dep_version(
@@ -244,7 +244,8 @@ CREATE TABLE flowpath_ofes(
   management varchar(32),
   landuse varchar(32),
   gssurgo_id int REFERENCES gssurgo(id),
-  real_length real
+  real_length real,
+  groupid varchar(16)
 );
 ALTER TABLE flowpath_ofes OWNER to mesonet;
 GRANT SELECT on flowpath_ofes to nobody;
