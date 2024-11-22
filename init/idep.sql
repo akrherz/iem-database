@@ -247,7 +247,7 @@ CREATE TABLE flowpath_ofes(
     landuse varchar(32),
     gssurgo_id int REFERENCES gssurgo(id),
     real_length real,
-    groupid varchar(16)
+    groupid text
 );
 ALTER TABLE flowpath_ofes OWNER to mesonet;
 GRANT SELECT on flowpath_ofes to nobody;
