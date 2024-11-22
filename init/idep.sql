@@ -10,7 +10,7 @@ insert into spatial_ref_sys
 -- Boilerplate IEM schema_manager_version, the version gets incremented each
 -- time we make an upgrade script
 CREATE TABLE iem_schema_manager_version(
-    version int,
+    "version" int,
     updated timestamptz);
 ALTER TABLE iem_schema_manager_version OWNER to mesonet;
 insert into iem_schema_manager_version values (33, now());
@@ -32,7 +32,7 @@ create unique index dep_version_idx
 
 -- Log clifile requests
 create table clifile_requests(
-    valid timestamptz default now(),
+    "valid" timestamptz default now(),
     client_addr text,
     geom geometry(Point, 4326),
     provided_file text,
@@ -95,7 +95,7 @@ CREATE TABLE results(
     huc_12 varchar(12),
     scenario int references scenarios(id),
     hs_id int,
-    valid date,
+    "valid" date,
     runoff real,
     loss real,
     precip real,
@@ -108,7 +108,7 @@ CREATE INDEX results_huc_12_idx on results(huc_12);
 CREATE TABLE wind_results_by_huc12(
     huc_12 char(12),
     scenario int references scenarios(id),
-    valid date,
+    "valid" date,
     avg_loss real
 );
 ALTER TABLE wind_results_by_huc12 OWNER to mesonet;
@@ -122,7 +122,7 @@ CREATE INDEX wind_results_by_huc12_valid_idx on wind_results_by_huc12(valid);
 CREATE TABLE results_by_huc12(
     huc_12 varchar(12),
     scenario int references scenarios(id),
-    valid date,
+    "valid" date,
     min_precip real,
     avg_precip real,
     max_precip real,
@@ -193,14 +193,14 @@ GRANT SELECT on general_landuse to nobody;
 
 --- Store Properties used by website and scripts
 CREATE TABLE properties(
-    key varchar UNIQUE NOT NULL,
-    value varchar
+    "key" varchar UNIQUE NOT NULL,
+    "value" varchar
 );
 GRANT SELECT on properties to nobody;
 
 -- Storage of harvest information
 CREATE TABLE harvest(
-    valid date,
+    "valid" date,
     huc12 char(12),
     fpath smallint,
     ofe smallint,
@@ -256,7 +256,7 @@ CREATE INDEX flowpath_ofes_idx on flowpath_ofes(flowpath);
 -- Dates of tillage and planting operations
 create table field_operations(
     field_id int REFERENCES fields(field_id),
-    year int,
+    "year" int,
     till1 date,
     till2 date,
     till3 date,
