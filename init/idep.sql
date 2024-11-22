@@ -4,14 +4,16 @@ CREATE EXTENSION postgis;
 
 -- bandaid
 insert into spatial_ref_sys
-    select 9311 as srid, 'EPSG' as auth_name, 9311 as auth_srid,
-    srtext, proj4text from spatial_ref_sys where srid = 2163;
+select 9311 as srid, 'EPSG' as auth_name, 9311 as auth_srid, srtext, proj4text
+from spatial_ref_sys
+where srid = 2163;
 
 -- Boilerplate IEM schema_manager_version, the version gets incremented each
 -- time we make an upgrade script
 CREATE TABLE iem_schema_manager_version(
     "version" int,
-    updated timestamptz);
+    updated timestamptz
+);
 ALTER TABLE iem_schema_manager_version OWNER to mesonet;
 insert into iem_schema_manager_version values (33, now());
 
@@ -28,7 +30,7 @@ create table dep_version(
 alter table dep_version owner to mesonet;
 grant select on dep_version to nobody;
 create unique index dep_version_idx
-    on dep_version(label, wepp, acpf, flowpath, gssurgo, software);
+on dep_version(label, wepp, acpf, flowpath, gssurgo, software);
 
 -- Log clifile requests
 create table clifile_requests(
@@ -65,7 +67,7 @@ create table scenarios(
     huc12_scenario int,
     flowpath_scenario int,
     dep_version_label text
-    );
+);
 GRANT SELECT on scenarios to nobody;
 ALTER TABLE scenarios OWNER to mesonet;
 
