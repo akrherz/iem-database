@@ -20,6 +20,7 @@ NETWORKS = [
     "TALLTOWERS",
     "RAOB",
     "NWSCLI",
+    "NEXRAD",
 ]
 
 
