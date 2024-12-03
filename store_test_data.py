@@ -81,6 +81,26 @@ def do_stations(network: str):
         pgconn.close()
 
 
+def id3b_realtime():
+    """Fake some data."""
+    pgconn = psycopg.connect("postgresql://mesonet@localhost/id3b")
+    cursor = pgconn.cursor()
+    cursor.execute(
+        """
+        update ldm_product_log SET
+        entered_at = now() - ('2024-12-03 19:30+00'::timestamptz - entered_at),
+        valid_at = now() - ('2024-12-03 19:30+00'::timestamptz - valid_at),
+        wmo_valid_at = now() -
+        ('2024-12-03 19:30+00'::timestamptz - wmo_valid_at)
+        where entered_at between '2024-12-03 16:00+00'
+        and '2024-12-03 20:00+00'
+    """
+    )
+    cursor.close()
+    pgconn.commit()
+    pgconn.close()
+
+
 def add_webcam():
     """Add a webcam"""
     pgconn = psycopg.connect("postgresql://mesonet@localhost/mesosite")
@@ -137,6 +157,7 @@ def main(argv):
     psql = "psql" if len(argv) == 1 else argv[1]
     process_dbfiles(psql)
     add_webcam()
+    id3b_realtime()
 
 
 if __name__ == "__main__":
