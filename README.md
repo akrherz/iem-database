@@ -85,6 +85,7 @@ postgis__sigmets_archive.sql | Some SIGMETs from 10 Aug 2024
 postgis__spc_outlook_geometries.sql.gz | SPC/WPC Outlooks 1-8 Aug 2024
 postgis__sps2024.sql.gz | SPSs from Aug 2024
 postgis_lsrs.sql | DMX LSRs from 2018-06-20,2018-06-21,2024-05-21, One BGM LSR from 2023
+postgis_sbw.sql | DMX,OAX 21 May 2024 polygons, some 2018 stuff
 postgis_states.sql | Simplified 0.01 us states
 postgis__text_products_oct24.sql.gz | NWS misc polygons for Oct 2024
 postgis__usdm.sql.gz | US Drought Monitor for 2024 till 8 Aug
