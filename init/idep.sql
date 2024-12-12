@@ -15,7 +15,7 @@ CREATE TABLE iem_schema_manager_version(
     updated timestamptz
 );
 ALTER TABLE iem_schema_manager_version OWNER to mesonet;
-insert into iem_schema_manager_version values (33, now());
+insert into iem_schema_manager_version values (34, now());
 
 -- Storage of DEP versioning dailyerosion/dep#179
 create table dep_version(
@@ -223,7 +223,7 @@ CREATE TABLE fields(
     huc12 char(12),
     fbndid int,
     acres real,
-    isag bool,
+    isag int,
     geom geometry(MultiPolygon, 5070),
     landuse varchar(32),
     management varchar(32),
