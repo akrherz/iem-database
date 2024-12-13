@@ -32,6 +32,17 @@ grant select on dep_version to nobody;
 create unique index dep_version_idx
 on dep_version(label, wepp, acpf, flowpath, gssurgo, software);
 
+create table scenarios(
+    id int UNIQUE,
+    label varchar,
+    climate_scenario int,
+    huc12_scenario int,
+    flowpath_scenario int,
+    dep_version_label text
+);
+GRANT SELECT on scenarios to nobody;
+ALTER TABLE scenarios OWNER to mesonet;
+
 -- Storage of DEP Climate Files
 create table climate_files(
     id serial primary key,
@@ -82,16 +93,6 @@ GRANT SELECT on gssurgo to nobody;
 CREATE INDEX gssurgo_idx on gssurgo(id);
 CREATE UNIQUE INDEX gssurgo_mukey_idx on gssurgo(fiscal_year, mukey);
 
-create table scenarios(
-    id int UNIQUE,
-    label varchar,
-    climate_scenario int,
-    huc12_scenario int,
-    flowpath_scenario int,
-    dep_version_label text
-);
-GRANT SELECT on scenarios to nobody;
-ALTER TABLE scenarios OWNER to mesonet;
 
 -- Default entry that is used for testing.
 insert into scenarios values (0, 'Production', 0, 0, 0);
