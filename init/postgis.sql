@@ -1064,6 +1064,7 @@ CREATE TABLE spc_outlook(
     cycle smallint NOT NULL
 );
 CREATE INDEX spc_outlook_product_issue on spc_outlook(product_issue);
+CREATE INDEX spc_outlook_issue on spc_outlook(issue);
 CREATE INDEX spc_outlook_expire on spc_outlook(expire);
 create index spc_outlook_combo_idx
      on spc_outlook(outlook_type, day, cycle);
