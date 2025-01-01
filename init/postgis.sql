@@ -118,16 +118,6 @@ GRANT ALL on TABLE airmet_freezing_levels to ldm;
 
 -- Grid Population of the World
 -- https://sedac.ciesin.columbia.edu/data/set/gpw-v4-population-count-rev11/data-download
-CREATE TABLE gpw2025(
-    geom geometry(Point,4326),
-    population int
-);
-create index gpw2025_gix on gpw2025 USING GIST(geom);
-ALTER TABLE gpw2025 OWNER to mesonet;
-GRANT ALL on gpw2025 to ldm;
-GRANT SELECT on gpw2025 to nobody;
-
---
 CREATE TABLE gpw2020(
     geom geometry(Point,4326),
     population int
