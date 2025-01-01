@@ -325,7 +325,8 @@ CREATE TABLE ugcs(
     gpw_population_2005 int,
     gpw_population_2010 int,
     gpw_population_2015 int,
-    gpw_population_2020 int
+    gpw_population_2020 int,
+    gpw_population_2025 int
 );
 ALTER TABLE ugcs OWNER to mesonet;
 GRANT ALL on ugcs to ldm;
