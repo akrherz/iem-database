@@ -4,7 +4,8 @@ set -e -x
 docker build -t iem_database -f Dockerfile .
 
 # Start the container to load schema, but no data yet
-docker run --replace --name iem_database -p 5432:5432 -d iem_database
+docker rm -f iem_database || true
+docker run --name iem_database -p 5432:5432 -d iem_database
 
 # Ensure PostgreSQL is fully initialized and listening on port 5432
 until pg_isready -h localhost -U postgres; do
@@ -29,7 +30,8 @@ docker commit iem_database iem_database
 docker tag iem_database akrherz/iem_database:no_test_data
 
 # Start the container to load test data
-docker run --replace --name iem_database -p 5432:5432 -d iem_database
+docker rm -f iem_database || true
+docker run --name iem_database -p 5432:5432 -d iem_database
 
 # Ensure PostgreSQL is fully initialized and listening on port 5432
 until pg_isready -h localhost -U postgres; do
