@@ -35,7 +35,7 @@ def check_management(cursor):
 def run_db(dbname):
     """Lets do an actual database"""
     try:
-        dbconn = psycopg.connect(f"postgresql://localhost/{dbname}")
+        dbconn = psycopg.connect(f"postgresql://runner@localhost/{dbname}")
     except psycopg.errors.OperationalError:
         dbconn = psycopg.connect(f"postgresql://iemdb-{dbname}.local/{dbname}")
 
