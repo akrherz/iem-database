@@ -76,6 +76,13 @@ def do_stations(network: str):
                     entry["remote_id"],
                 ),
             )
+
+        # We have messed use the stations_iemid_seq at this point, so
+        # we need to fix it
+        cursor.execute(
+            "SELECT setval('stations_iemid_seq', max(iemid)) from stations"
+        )
+
         cursor.close()
         pgconn.commit()
         pgconn.close()
