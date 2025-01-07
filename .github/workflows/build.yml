@@ -1,4 +1,4 @@
-name: Install and Test
+name: Docker Image Workflow
 on:
   pull_request:
     branches:
@@ -18,33 +18,17 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
-    - name: Add /etc/hosts entries
+    - name: Install Host Dependencies
       run: |
-        cat .github/workflows/etchosts.txt | sudo tee -a /etc/hosts
+        sudo apt-get install python3-pip
+        pip3 install psycopg
+        python3 -c "import psycopg; print(psycopg.__version__)"
 
-    # setup conda-forge with micromamba
-    - name: Setup Python
-      uses: mamba-org/setup-micromamba@v1
-      with:
-        environment-file: environment.yml
-        condarc: |
-          channels:
-            - conda-forge
-            - defaults
-        create-args: >-
-          python=3.12
-        environment-name: prod
-        cache-environment: true
+    - name: Run Docker build script
+      run: sh build_docker_image.sh
 
-    - name: Do Work
+    - name: Publish to Github Container Registry
+      if: github.event_name == 'push' && github.ref == 'refs/heads/main'
       run: |
-        set -x
-        git clone --depth 1 https://github.com/akrherz/ci_tooling.git .ci_tooling
-        cd .ci_tooling
-        . postgres.sh
-        cd ..
-        psql -c 'CREATE ROLE runner SUPERUSER LOGIN CREATEDB;' -U postgres || true
-        sh bootstrap.sh
-        psql -f data/postgis/cwsu.db -U mesonet postgis
-        python schema_manager.py
-        python store_test_data.py $(which psql)
+        docker push ghcr.io/akrherz/iem_database:test_data
+        docker push ghcr.io/akrherz/iem_database:no_test_data
