@@ -29,6 +29,9 @@ jobs:
 
     - name: Publish to Github Container Registry
       if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+      env:
+        CR_PAT: ${{ secrets.CR_PAT }}
       run: |
+        echo $CR_PAT | docker login ghcr.io -u akrherz --password-stdin
         docker push ghcr.io/akrherz/iem_database:test_data
         docker push ghcr.io/akrherz/iem_database:no_test_data
