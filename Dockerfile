@@ -1,6 +1,9 @@
 
 FROM postgis/postgis:17-3.5-alpine
 
+LABEL org.opencontainers.image.source https://github.com/akrherz/iem-database
+LABEL org.opencontainers.image.description IEM Database Schema and Test Data
+
 # cull the default database
 RUN rm -rf /var/lib/postgresql/data
 
