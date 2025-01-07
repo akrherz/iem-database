@@ -21,7 +21,8 @@ jobs:
     - name: Install Host Dependencies
       run: |
         sudo apt-get install python3-pip
-        pip3 install psycopg-binary
+        pip3 install psycopg
+        python3 -c "import psycopg; print(psycopg.__version__)"
 
     - name: Run Docker build script
       run: sh build_docker_image.sh
