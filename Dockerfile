@@ -9,5 +9,5 @@ ENV PGDATA=/var/lib/postgresql/17/data
 
 USER postgres
 
-RUN initdb -D /var/lib/postgresql/17/data
-
+# Initialize the database and trust all network connections (for now)
+RUN initdb -D /var/lib/postgresql/17/data --auth-host=trust --auth-local=trust
