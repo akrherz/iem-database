@@ -27,7 +27,7 @@ docker stop -t 120 iem_database
 docker commit iem_database iem_database
 
 # Tag this image for uploading to dockerhub
-docker tag iem_database iem_database:no_test_data
+docker tag iem_database ghcr.io/akrherz/iem_database:no_test_data
 
 # Start the container to load test data
 docker rm -f iem_database || true
@@ -48,4 +48,4 @@ vacuumdb -f -a -U postgres -h localhost
 docker stop -t 120 iem_database
 
 # Commit the container to an image
-docker commit iem_database iem_database:test_data
+docker commit iem_database ghcr.io/akrherz/iem_database:test_data
