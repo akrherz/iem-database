@@ -42,7 +42,7 @@ done
 psql -f data/postgis/cwsu.db -U mesonet -h localhost postgis
 python3 schema_manager.py
 python3 store_test_data.py
-vacuumdb -f -a -j 4 -U postgres -h localhost
+vacuumdb -f -a -U postgres -h localhost
 
 # Stop the container, again be careful to wait
 docker stop -t 120 iem_database
