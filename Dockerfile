@@ -11,3 +11,6 @@ USER postgres
 
 # Initialize the database and trust all network connections (for now)
 RUN initdb -D /var/lib/postgresql/17/data --auth-host=trust --auth-local=trust
+
+# Add pg_hba.conf entry to allow github actions to connect
+RUN echo "host all all 172.0.0.0/8 trust" >> /var/lib/postgresql/17/data/pg_hba.conf
