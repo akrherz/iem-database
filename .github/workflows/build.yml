@@ -18,6 +18,11 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
+    - name: Install Host Dependencies
+      run: |
+        sudo apt-get install python3-pip
+        pip3 install psycopg-binary
+
     - name: Run Docker build script
       run: sh build_docker_image.sh
 
