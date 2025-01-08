@@ -1,4 +1,21 @@
-# Simple Schema Manager
+# IEM Database Schema + Testing Data
+
+This repo serves three purposes.
+
+1. Document the database schema used by most of akrherz's projects.
+2. Provide testing data to load into that schema to support CIs.
+3. Generate docker images used within these same project repos CIs.
+
+## Docker Images
+
+See [GHCR](https://github.com/akrherz/iem-database/pkgs/container/iem_database)
+
+Image | Purpose
+-- | --
+`akrherz/iem_database:no_test_data` | Schema, but no test data loaded
+`akrherz/iem_database:test_data` | Schema and Test Data
+
+## Schema Versioning
 
 Eh, I am sure there are much better ways to manage database schema than this,
 but alas, here it is.  Fundamentally, we support the following scenarios.
