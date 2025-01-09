@@ -10,7 +10,7 @@ insert into spatial_ref_sys
 CREATE TABLE iem_schema_manager_version(
     version int,
     updated timestamptz);
-INSERT into iem_schema_manager_version values (71, now());
+INSERT into iem_schema_manager_version values (72, now());
 
 ---
 --- TABLES THAT ARE LOADED VIA shp2pgsql
@@ -1190,6 +1190,7 @@ CREATE TABLE pireps(
   aircraft_type text,
   report text,
   artcc varchar(3),
+  flight_level int,
   product_id varchar(36))
   PARTITION by range(valid);
 ALTER TABLE pireps OWNER to mesonet;
