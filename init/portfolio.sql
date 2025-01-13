@@ -515,9 +515,7 @@ CREATE TABLE public.iem_site_contacts (
     phone character varying(20),
     email character varying(100)
 );
-
-
-ALTER TABLE public.iem_site_contacts OWNER TO postgres;
+ALTER TABLE public.iem_site_contacts OWNER TO mesonet;
 
 --
 -- Name: iem_site_contacts_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
@@ -955,9 +953,7 @@ CREATE TABLE public.tt_base (
     author character varying(30),
     sensor character varying
 );
-
-
-ALTER TABLE public.tt_base OWNER TO postgres;
+ALTER TABLE public.tt_base OWNER TO mesonet;
 
 --
 -- Name: tt_base_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres

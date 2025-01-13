@@ -618,7 +618,7 @@ CREATE TABLE riverpro (
     severity character(1),
     impact_text text
 );
-
+alter table riverpro owner to mesonet;
 grant select on riverpro to nobody;
 
 CREATE UNIQUE INDEX riverpro_nwsli_idx ON riverpro USING btree (nwsli);
