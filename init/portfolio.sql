@@ -30,7 +30,7 @@ CREATE TABLE public.admins (
 ALTER TABLE public.admins OWNER to mesonet;
 
 --
--- Name: afc_days; Type: TABLE; Schema: public; Owner: postgres
+-- Name: afc_days; Type: TABLE; Schema: public; Owner: mesonet
 --
 
 CREATE TABLE public.afc_days (
@@ -42,10 +42,10 @@ CREATE TABLE public.afc_days (
 );
 
 
-ALTER TABLE public.afc_days OWNER TO postgres;
+ALTER TABLE public.afc_days OWNER TO mesonet;
 
 --
--- Name: afc_forecasts; Type: TABLE; Schema: public; Owner: postgres
+-- Name: afc_forecasts; Type: TABLE; Schema: public; Owner: mesonet
 --
 
 CREATE TABLE public.afc_forecasts (
@@ -67,10 +67,10 @@ CREATE TABLE public.afc_forecasts (
 );
 
 
-ALTER TABLE public.afc_forecasts OWNER TO postgres;
+ALTER TABLE public.afc_forecasts OWNER TO mesonet;
 
 --
--- Name: appregistry; Type: TABLE; Schema: public; Owner: postgres
+-- Name: appregistry; Type: TABLE; Schema: public; Owner: mesonet
 --
 
 CREATE TABLE public.appregistry (
@@ -83,10 +83,10 @@ CREATE TABLE public.appregistry (
 );
 
 
-ALTER TABLE public.appregistry OWNER TO postgres;
+ALTER TABLE public.appregistry OWNER TO mesonet;
 
 --
--- Name: biosketch; Type: TABLE; Schema: public; Owner: postgres
+-- Name: biosketch; Type: TABLE; Schema: public; Owner: mesonet
 --
 
 CREATE TABLE public.biosketch (
@@ -96,7 +96,7 @@ CREATE TABLE public.biosketch (
 );
 
 
-ALTER TABLE public.biosketch OWNER TO postgres;
+ALTER TABLE public.biosketch OWNER TO mesonet;
 
 --
 -- Name: calendar; Type: TABLE; Schema: public; Owner: ldm,mesonet
@@ -390,7 +390,7 @@ CREATE TABLE public.forecasts (
 ALTER TABLE public.forecasts OWNER to mesonet;
 
 --
--- Name: iem_calibration; Type: TABLE; Schema: public; Owner: postgres
+-- Name: iem_calibration; Type: TABLE; Schema: public; Owner: mesonet
 --
 
 CREATE TABLE public.iem_calibration (
@@ -405,10 +405,10 @@ CREATE TABLE public.iem_calibration (
 );
 
 
-ALTER TABLE public.iem_calibration OWNER TO postgres;
+ALTER TABLE public.iem_calibration OWNER TO mesonet;
 
 --
--- Name: iem_calibration_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: iem_calibration_id_seq; Type: SEQUENCE; Schema: public; Owner: mesonet
 --
 
 CREATE SEQUENCE public.iem_calibration_id_seq
@@ -419,17 +419,17 @@ CREATE SEQUENCE public.iem_calibration_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.iem_calibration_id_seq OWNER TO postgres;
+ALTER TABLE public.iem_calibration_id_seq OWNER TO mesonet;
 
 --
--- Name: iem_calibration_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: iem_calibration_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: mesonet
 --
 
 ALTER SEQUENCE public.iem_calibration_id_seq OWNED BY public.iem_calibration.id;
 
 
 --
--- Name: iem_sensor; Type: TABLE; Schema: public; Owner: postgres
+-- Name: iem_sensor; Type: TABLE; Schema: public; Owner: mesonet
 --
 
 CREATE TABLE public.iem_sensor (
@@ -441,10 +441,10 @@ CREATE TABLE public.iem_sensor (
 );
 
 
-ALTER TABLE public.iem_sensor OWNER TO postgres;
+ALTER TABLE public.iem_sensor OWNER TO mesonet;
 
 --
--- Name: iem_sensor_history; Type: TABLE; Schema: public; Owner: postgres
+-- Name: iem_sensor_history; Type: TABLE; Schema: public; Owner: mesonet
 --
 
 CREATE TABLE public.iem_sensor_history (
@@ -456,10 +456,10 @@ CREATE TABLE public.iem_sensor_history (
 );
 
 
-ALTER TABLE public.iem_sensor_history OWNER TO postgres;
+ALTER TABLE public.iem_sensor_history OWNER TO mesonet;
 
 --
--- Name: iem_sensor_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: iem_sensor_id_seq; Type: SEQUENCE; Schema: public; Owner: mesonet
 --
 
 CREATE SEQUENCE public.iem_sensor_id_seq
@@ -470,10 +470,10 @@ CREATE SEQUENCE public.iem_sensor_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.iem_sensor_id_seq OWNER TO postgres;
+ALTER TABLE public.iem_sensor_id_seq OWNER TO mesonet;
 
 --
--- Name: iem_sensors; Type: TABLE; Schema: public; Owner: postgres
+-- Name: iem_sensors; Type: TABLE; Schema: public; Owner: mesonet
 --
 
 CREATE TABLE public.iem_sensors (
@@ -487,10 +487,10 @@ CREATE TABLE public.iem_sensors (
 );
 
 
-ALTER TABLE public.iem_sensors OWNER TO postgres;
+ALTER TABLE public.iem_sensors OWNER TO mesonet;
 
 --
--- Name: iem_sensors_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: iem_sensors_id_seq; Type: SEQUENCE; Schema: public; Owner: mesonet
 --
 
 CREATE SEQUENCE public.iem_sensors_id_seq
@@ -501,10 +501,10 @@ CREATE SEQUENCE public.iem_sensors_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.iem_sensors_id_seq OWNER TO postgres;
+ALTER TABLE public.iem_sensors_id_seq OWNER TO mesonet;
 
 --
--- Name: iem_site_contacts; Type: TABLE; Schema: public; Owner: postgres
+-- Name: iem_site_contacts; Type: TABLE; Schema: public; Owner: mesonet
 --
 
 CREATE TABLE public.iem_site_contacts (
@@ -518,7 +518,7 @@ CREATE TABLE public.iem_site_contacts (
 ALTER TABLE public.iem_site_contacts OWNER TO mesonet;
 
 --
--- Name: iem_site_contacts_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: iem_site_contacts_id_seq; Type: SEQUENCE; Schema: public; Owner: mesonet
 --
 
 CREATE SEQUENCE public.iem_site_contacts_id_seq
@@ -529,10 +529,10 @@ CREATE SEQUENCE public.iem_site_contacts_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.iem_site_contacts_id_seq OWNER TO postgres;
+ALTER TABLE public.iem_site_contacts_id_seq OWNER TO mesonet;
 
 --
--- Name: iem_sites; Type: TABLE; Schema: public; Owner: postgres
+-- Name: iem_sites; Type: TABLE; Schema: public; Owner: mesonet
 --
 
 CREATE TABLE public.iem_sites (
@@ -551,10 +551,10 @@ CREATE TABLE public.iem_sites (
 );
 
 
-ALTER TABLE public.iem_sites OWNER TO postgres;
+ALTER TABLE public.iem_sites OWNER TO mesonet;
 
 --
--- Name: iem_sites_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: iem_sites_id_seq; Type: SEQUENCE; Schema: public; Owner: mesonet
 --
 
 CREATE SEQUENCE public.iem_sites_id_seq
@@ -565,7 +565,7 @@ CREATE SEQUENCE public.iem_sites_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.iem_sites_id_seq OWNER TO postgres;
+ALTER TABLE public.iem_sites_id_seq OWNER TO mesonet;
 
 --
 -- Name: motd; Type: TABLE; Schema: public; Owner: ldm,mesonet
@@ -596,7 +596,7 @@ CREATE SEQUENCE public.motd_id_seq
 ALTER TABLE public.motd_id_seq OWNER to mesonet;
 
 --
--- Name: notify; Type: TABLE; Schema: public; Owner: postgres
+-- Name: notify; Type: TABLE; Schema: public; Owner: mesonet
 --
 
 CREATE TABLE public.notify (
@@ -609,10 +609,10 @@ CREATE TABLE public.notify (
 );
 
 
-ALTER TABLE public.notify OWNER TO postgres;
+ALTER TABLE public.notify OWNER TO mesonet;
 
 --
--- Name: notify2; Type: TABLE; Schema: public; Owner: postgres
+-- Name: notify2; Type: TABLE; Schema: public; Owner: mesonet
 --
 
 CREATE TABLE public.notify2 (
@@ -623,10 +623,10 @@ CREATE TABLE public.notify2 (
 );
 
 
-ALTER TABLE public.notify2 OWNER TO postgres;
+ALTER TABLE public.notify2 OWNER TO mesonet;
 
 --
--- Name: notify_idnum_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: notify_idnum_seq; Type: SEQUENCE; Schema: public; Owner: mesonet
 --
 
 CREATE SEQUENCE public.notify_idnum_seq
@@ -637,7 +637,7 @@ CREATE SEQUENCE public.notify_idnum_seq
     CACHE 1;
 
 
-ALTER TABLE public.notify_idnum_seq OWNER TO postgres;
+ALTER TABLE public.notify_idnum_seq OWNER TO mesonet;
 
 --
 -- Name: pga_forms; Type: TABLE; Schema: public; Owner: ldm,mesonet
@@ -836,7 +836,7 @@ CREATE SEQUENCE public.quizes_quiznum_seq
 ALTER TABLE public.quizes_quiznum_seq OWNER to mesonet;
 
 --
--- Name: roles; Type: TABLE; Schema: public; Owner: postgres
+-- Name: roles; Type: TABLE; Schema: public; Owner: mesonet
 --
 
 CREATE TABLE public.roles (
@@ -846,7 +846,7 @@ CREATE TABLE public.roles (
 );
 
 
-ALTER TABLE public.roles OWNER TO postgres;
+ALTER TABLE public.roles OWNER TO mesonet;
 
 INSERT into roles values (-1, 'Site Admin', 't');
 INSERT into roles values (1, 'Portfolio Admin', 't');
@@ -874,7 +874,7 @@ CREATE TABLE public.scores (
 ALTER TABLE public.scores OWNER to mesonet;
 
 --
--- Name: sessions; Type: TABLE; Schema: public; Owner: postgres
+-- Name: sessions; Type: TABLE; Schema: public; Owner: mesonet
 --
 
 CREATE TABLE public.sessions (
@@ -884,10 +884,10 @@ CREATE TABLE public.sessions (
 );
 
 
-ALTER TABLE public.sessions OWNER TO postgres;
+ALTER TABLE public.sessions OWNER TO mesonet;
 
 --
--- Name: students; Type: TABLE; Schema: public; Owner: postgres
+-- Name: students; Type: TABLE; Schema: public; Owner: mesonet
 --
 
 CREATE TABLE public.students (
@@ -900,7 +900,7 @@ CREATE TABLE public.students (
 );
 
 
-ALTER TABLE public.students OWNER TO postgres;
+ALTER TABLE public.students OWNER TO mesonet;
 
 --
 -- Name: temp; Type: TABLE; Schema: public; Owner: ldm,mesonet
@@ -938,7 +938,7 @@ CREATE TABLE public.transfer (
 ALTER TABLE public.transfer OWNER to mesonet;
 
 --
--- Name: tt_base; Type: TABLE; Schema: public; Owner: postgres
+-- Name: tt_base; Type: TABLE; Schema: public; Owner: mesonet
 --
 
 CREATE TABLE public.tt_base (
@@ -956,7 +956,7 @@ CREATE TABLE public.tt_base (
 ALTER TABLE public.tt_base OWNER TO mesonet;
 
 --
--- Name: tt_base_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: tt_base_id_seq; Type: SEQUENCE; Schema: public; Owner: mesonet
 --
 
 CREATE SEQUENCE public.tt_base_id_seq
@@ -967,10 +967,10 @@ CREATE SEQUENCE public.tt_base_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.tt_base_id_seq OWNER TO postgres;
+ALTER TABLE public.tt_base_id_seq OWNER TO mesonet;
 
 --
--- Name: tt_flags; Type: TABLE; Schema: public; Owner: postgres
+-- Name: tt_flags; Type: TABLE; Schema: public; Owner: mesonet
 --
 
 CREATE TABLE public.tt_flags (
@@ -982,10 +982,10 @@ CREATE TABLE public.tt_flags (
 );
 
 
-ALTER TABLE public.tt_flags OWNER TO postgres;
+ALTER TABLE public.tt_flags OWNER TO mesonet;
 
 --
--- Name: tt_flags_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: tt_flags_id_seq; Type: SEQUENCE; Schema: public; Owner: mesonet
 --
 
 CREATE SEQUENCE public.tt_flags_id_seq
@@ -996,17 +996,17 @@ CREATE SEQUENCE public.tt_flags_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.tt_flags_id_seq OWNER TO postgres;
+ALTER TABLE public.tt_flags_id_seq OWNER TO mesonet;
 
 --
--- Name: tt_flags_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: tt_flags_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: mesonet
 --
 
 ALTER SEQUENCE public.tt_flags_id_seq OWNED BY public.tt_flags.id;
 
 
 --
--- Name: tt_log; Type: TABLE; Schema: public; Owner: postgres
+-- Name: tt_log; Type: TABLE; Schema: public; Owner: mesonet
 --
 
 CREATE TABLE public.tt_log (
@@ -1021,10 +1021,10 @@ CREATE TABLE public.tt_log (
 );
 
 
-ALTER TABLE public.tt_log OWNER TO postgres;
+ALTER TABLE public.tt_log OWNER TO mesonet;
 
 --
--- Name: tt_log_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: tt_log_id_seq; Type: SEQUENCE; Schema: public; Owner: mesonet
 --
 
 CREATE SEQUENCE public.tt_log_id_seq
@@ -1035,7 +1035,7 @@ CREATE SEQUENCE public.tt_log_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.tt_log_id_seq OWNER TO postgres;
+ALTER TABLE public.tt_log_id_seq OWNER TO mesonet;
 
 --
 -- Name: units; Type: TABLE; Schema: public; Owner: ldm,mesonet
@@ -1087,34 +1087,34 @@ CREATE TABLE public.users (
 ALTER TABLE public.users OWNER to mesonet;
 
 --
--- Name: iem_calibration id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: iem_calibration id; Type: DEFAULT; Schema: public; Owner: mesonet
 --
 
 ALTER TABLE ONLY public.iem_calibration ALTER COLUMN id SET DEFAULT nextval('public.iem_calibration_id_seq'::regclass);
 
 
 --
--- Name: tt_flags id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: tt_flags id; Type: DEFAULT; Schema: public; Owner: mesonet
 --
 
 ALTER TABLE ONLY public.tt_flags ALTER COLUMN id SET DEFAULT nextval('public.tt_flags_id_seq'::regclass);
 
 --
--- Name: afc_days_idx; Type: INDEX; Schema: public; Owner: postgres
+-- Name: afc_days_idx; Type: INDEX; Schema: public; Owner: mesonet
 --
 
 CREATE UNIQUE INDEX afc_days_idx ON public.afc_days USING btree (portfolio, day);
 
 
 --
--- Name: afc_forecasts_idx; Type: INDEX; Schema: public; Owner: postgres
+-- Name: afc_forecasts_idx; Type: INDEX; Schema: public; Owner: mesonet
 --
 
 CREATE UNIQUE INDEX afc_forecasts_idx ON public.afc_forecasts USING btree (username, portfolio, day);
 
 
 --
--- Name: appregistry_portfolio_key; Type: INDEX; Schema: public; Owner: postgres
+-- Name: appregistry_portfolio_key; Type: INDEX; Schema: public; Owner: mesonet
 --
 
 CREATE UNIQUE INDEX appregistry_portfolio_key ON public.appregistry USING btree (portfolio);
@@ -1156,42 +1156,42 @@ CREATE INDEX forecasts_portfolio_idx ON public.forecasts USING btree (portfolio)
 
 
 --
--- Name: iem_calibration_idx; Type: INDEX; Schema: public; Owner: postgres
+-- Name: iem_calibration_idx; Type: INDEX; Schema: public; Owner: mesonet
 --
 
 CREATE UNIQUE INDEX iem_calibration_idx ON public.iem_calibration USING btree (station, portfolio, valid, parameter);
 
 
 --
--- Name: iem_sensor_id_key; Type: INDEX; Schema: public; Owner: postgres
+-- Name: iem_sensor_id_key; Type: INDEX; Schema: public; Owner: mesonet
 --
 
 CREATE UNIQUE INDEX iem_sensor_id_key ON public.iem_sensor USING btree (id);
 
 
 --
--- Name: iem_sensors_id_key; Type: INDEX; Schema: public; Owner: postgres
+-- Name: iem_sensors_id_key; Type: INDEX; Schema: public; Owner: mesonet
 --
 
 CREATE UNIQUE INDEX iem_sensors_id_key ON public.iem_sensors USING btree (id);
 
 
 --
--- Name: iem_site_contacts_id_key; Type: INDEX; Schema: public; Owner: postgres
+-- Name: iem_site_contacts_id_key; Type: INDEX; Schema: public; Owner: mesonet
 --
 
 CREATE UNIQUE INDEX iem_site_contacts_id_key ON public.iem_site_contacts USING btree (id);
 
 
 --
--- Name: iem_sites_id_key; Type: INDEX; Schema: public; Owner: postgres
+-- Name: iem_sites_id_key; Type: INDEX; Schema: public; Owner: mesonet
 --
 
 CREATE UNIQUE INDEX iem_sites_id_key ON public.iem_sites USING btree (id);
 
 
 --
--- Name: iem_sites_smid_idx; Type: INDEX; Schema: public; Owner: postgres
+-- Name: iem_sites_smid_idx; Type: INDEX; Schema: public; Owner: mesonet
 --
 
 CREATE UNIQUE INDEX iem_sites_smid_idx ON public.iem_sites USING btree (s_mid);
@@ -1212,14 +1212,14 @@ CREATE INDEX motd_portfolio_idx ON public.motd USING btree (portfolio);
 
 
 --
--- Name: notify_idnum_key; Type: INDEX; Schema: public; Owner: postgres
+-- Name: notify_idnum_key; Type: INDEX; Schema: public; Owner: mesonet
 --
 
 CREATE UNIQUE INDEX notify_idnum_key ON public.notify USING btree (idnum);
 
 
 --
--- Name: notify_idx; Type: INDEX; Schema: public; Owner: postgres
+-- Name: notify_idx; Type: INDEX; Schema: public; Owner: mesonet
 --
 
 CREATE INDEX notify_idx ON public.notify USING btree (username, portfolio);
@@ -1254,42 +1254,42 @@ CREATE UNIQUE INDEX quizes_quiznum_key ON public.quizes USING btree (quiznum);
 
 
 --
--- Name: students_portfolio_idx; Type: INDEX; Schema: public; Owner: postgres
+-- Name: students_portfolio_idx; Type: INDEX; Schema: public; Owner: mesonet
 --
 
 CREATE INDEX students_portfolio_idx ON public.students USING btree (portfolio);
 
 
 --
--- Name: students_username_idx; Type: INDEX; Schema: public; Owner: postgres
+-- Name: students_username_idx; Type: INDEX; Schema: public; Owner: mesonet
 --
 
 CREATE INDEX students_username_idx ON public.students USING btree (username);
 
 
 --
--- Name: tt_base_id_key; Type: INDEX; Schema: public; Owner: postgres
+-- Name: tt_base_id_key; Type: INDEX; Schema: public; Owner: mesonet
 --
 
 CREATE UNIQUE INDEX tt_base_id_key ON public.tt_base USING btree (id);
 
 
 --
--- Name: tt_base_s_mid_idx; Type: INDEX; Schema: public; Owner: postgres
+-- Name: tt_base_s_mid_idx; Type: INDEX; Schema: public; Owner: mesonet
 --
 
 CREATE INDEX tt_base_s_mid_idx ON public.tt_base USING btree (s_mid);
 
 
 --
--- Name: tt_log_id_key; Type: INDEX; Schema: public; Owner: postgres
+-- Name: tt_log_id_key; Type: INDEX; Schema: public; Owner: mesonet
 --
 
 CREATE UNIQUE INDEX tt_log_id_key ON public.tt_log USING btree (id);
 
 
 --
--- Name: tt_log_tt_id_idx; Type: INDEX; Schema: public; Owner: postgres
+-- Name: tt_log_tt_id_idx; Type: INDEX; Schema: public; Owner: mesonet
 --
 
 CREATE INDEX tt_log_tt_id_idx ON public.tt_log USING btree (tt_id);
@@ -1317,7 +1317,7 @@ CREATE UNIQUE INDEX users_username_idx ON public.users USING btree (username);
 
 
 --
--- Name: students $1; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: students $1; Type: FK CONSTRAINT; Schema: public; Owner: mesonet
 --
 
 ALTER TABLE ONLY public.students
@@ -1339,28 +1339,28 @@ GRANT ALL ON TABLE public.admins TO nobody;
 
 
 --
--- Name: TABLE afc_days; Type: ACL; Schema: public; Owner: postgres
+-- Name: TABLE afc_days; Type: ACL; Schema: public; Owner: mesonet
 --
 
 GRANT ALL ON TABLE public.afc_days TO nobody;
 
 
 --
--- Name: TABLE afc_forecasts; Type: ACL; Schema: public; Owner: postgres
+-- Name: TABLE afc_forecasts; Type: ACL; Schema: public; Owner: mesonet
 --
 
 GRANT ALL ON TABLE public.afc_forecasts TO nobody;
 
 
 --
--- Name: TABLE appregistry; Type: ACL; Schema: public; Owner: postgres
+-- Name: TABLE appregistry; Type: ACL; Schema: public; Owner: mesonet
 --
 
 GRANT ALL ON TABLE public.appregistry TO nobody;
 
 
 --
--- Name: TABLE biosketch; Type: ACL; Schema: public; Owner: postgres
+-- Name: TABLE biosketch; Type: ACL; Schema: public; Owner: mesonet
 --
 
 GRANT ALL ON TABLE public.biosketch TO nobody;
@@ -1458,77 +1458,77 @@ GRANT ALL ON TABLE public.forecasts TO nobody;
 
 
 --
--- Name: TABLE iem_calibration; Type: ACL; Schema: public; Owner: postgres
+-- Name: TABLE iem_calibration; Type: ACL; Schema: public; Owner: mesonet
 --
 
 GRANT ALL ON TABLE public.iem_calibration TO nobody;
 
 
 --
--- Name: SEQUENCE iem_calibration_id_seq; Type: ACL; Schema: public; Owner: postgres
+-- Name: SEQUENCE iem_calibration_id_seq; Type: ACL; Schema: public; Owner: mesonet
 --
 
 GRANT ALL ON SEQUENCE public.iem_calibration_id_seq TO nobody;
 
 
 --
--- Name: TABLE iem_sensor; Type: ACL; Schema: public; Owner: postgres
+-- Name: TABLE iem_sensor; Type: ACL; Schema: public; Owner: mesonet
 --
 
 GRANT ALL ON TABLE public.iem_sensor TO nobody;
 
 
 --
--- Name: TABLE iem_sensor_history; Type: ACL; Schema: public; Owner: postgres
+-- Name: TABLE iem_sensor_history; Type: ACL; Schema: public; Owner: mesonet
 --
 
 GRANT ALL ON TABLE public.iem_sensor_history TO nobody;
 
 
 --
--- Name: SEQUENCE iem_sensor_id_seq; Type: ACL; Schema: public; Owner: postgres
+-- Name: SEQUENCE iem_sensor_id_seq; Type: ACL; Schema: public; Owner: mesonet
 --
 
 GRANT ALL ON SEQUENCE public.iem_sensor_id_seq TO nobody;
 
 
 --
--- Name: TABLE iem_sensors; Type: ACL; Schema: public; Owner: postgres
+-- Name: TABLE iem_sensors; Type: ACL; Schema: public; Owner: mesonet
 --
 
 GRANT ALL ON TABLE public.iem_sensors TO nobody;
 
 
 --
--- Name: SEQUENCE iem_sensors_id_seq; Type: ACL; Schema: public; Owner: postgres
+-- Name: SEQUENCE iem_sensors_id_seq; Type: ACL; Schema: public; Owner: mesonet
 --
 
 GRANT ALL ON SEQUENCE public.iem_sensors_id_seq TO nobody;
 
 
 --
--- Name: TABLE iem_site_contacts; Type: ACL; Schema: public; Owner: postgres
+-- Name: TABLE iem_site_contacts; Type: ACL; Schema: public; Owner: mesonet
 --
 
 GRANT ALL ON TABLE public.iem_site_contacts TO nobody;
 
 
 --
--- Name: SEQUENCE iem_site_contacts_id_seq; Type: ACL; Schema: public; Owner: postgres
+-- Name: SEQUENCE iem_site_contacts_id_seq; Type: ACL; Schema: public; Owner: mesonet
 --
 
 GRANT ALL ON SEQUENCE public.iem_site_contacts_id_seq TO nobody;
 
 
 --
--- Name: TABLE iem_sites; Type: ACL; Schema: public; Owner: postgres
+-- Name: TABLE iem_sites; Type: ACL; Schema: public; Owner: mesonet
 --
 
 GRANT ALL ON TABLE public.iem_sites TO nobody;
 
 
 --
--- Name: SEQUENCE iem_sites_id_seq; Type: ACL; Schema: public; Owner: postgres
+-- Name: SEQUENCE iem_sites_id_seq; Type: ACL; Schema: public; Owner: mesonet
 --
 
 GRANT ALL ON SEQUENCE public.iem_sites_id_seq TO nobody;
@@ -1549,14 +1549,14 @@ GRANT ALL ON SEQUENCE public.motd_id_seq TO nobody;
 
 
 --
--- Name: TABLE notify; Type: ACL; Schema: public; Owner: postgres
+-- Name: TABLE notify; Type: ACL; Schema: public; Owner: mesonet
 --
 
 GRANT ALL ON TABLE public.notify TO nobody;
 
 
 --
--- Name: SEQUENCE notify_idnum_seq; Type: ACL; Schema: public; Owner: postgres
+-- Name: SEQUENCE notify_idnum_seq; Type: ACL; Schema: public; Owner: mesonet
 --
 
 GRANT ALL ON SEQUENCE public.notify_idnum_seq TO nobody;
@@ -1647,7 +1647,7 @@ GRANT ALL ON SEQUENCE public.quizes_quiznum_seq TO nobody;
 
 
 --
--- Name: TABLE roles; Type: ACL; Schema: public; Owner: postgres
+-- Name: TABLE roles; Type: ACL; Schema: public; Owner: mesonet
 --
 
 GRANT ALL ON TABLE public.roles TO nobody;
@@ -1661,49 +1661,49 @@ GRANT ALL ON TABLE public.scores TO nobody;
 
 
 --
--- Name: TABLE sessions; Type: ACL; Schema: public; Owner: postgres
+-- Name: TABLE sessions; Type: ACL; Schema: public; Owner: mesonet
 --
 
 GRANT ALL ON TABLE public.sessions TO nobody;
 
 
 --
--- Name: TABLE students; Type: ACL; Schema: public; Owner: postgres
+-- Name: TABLE students; Type: ACL; Schema: public; Owner: mesonet
 --
 
 GRANT ALL ON TABLE public.students TO nobody;
 
 
 --
--- Name: TABLE tt_base; Type: ACL; Schema: public; Owner: postgres
+-- Name: TABLE tt_base; Type: ACL; Schema: public; Owner: mesonet
 --
 
 GRANT ALL ON TABLE public.tt_base TO nobody;
 
 
 --
--- Name: SEQUENCE tt_base_id_seq; Type: ACL; Schema: public; Owner: postgres
+-- Name: SEQUENCE tt_base_id_seq; Type: ACL; Schema: public; Owner: mesonet
 --
 
 GRANT ALL ON SEQUENCE public.tt_base_id_seq TO nobody;
 
 
 --
--- Name: TABLE tt_flags; Type: ACL; Schema: public; Owner: postgres
+-- Name: TABLE tt_flags; Type: ACL; Schema: public; Owner: mesonet
 --
 
 GRANT SELECT ON TABLE public.tt_flags TO nobody;
 
 
 --
--- Name: TABLE tt_log; Type: ACL; Schema: public; Owner: postgres
+-- Name: TABLE tt_log; Type: ACL; Schema: public; Owner: mesonet
 --
 
 GRANT ALL ON TABLE public.tt_log TO nobody;
 
 
 --
--- Name: SEQUENCE tt_log_id_seq; Type: ACL; Schema: public; Owner: postgres
+-- Name: SEQUENCE tt_log_id_seq; Type: ACL; Schema: public; Owner: mesonet
 --
 
 GRANT ALL ON SEQUENCE public.tt_log_id_seq TO nobody;
@@ -1741,7 +1741,7 @@ WHERE username = $1;$_$;
 ALTER FUNCTION public.getemail(text) OWNER to mesonet;
 
 --
--- Name: getfxtime(text); Type: FUNCTION; Schema: public; Owner: postgres
+-- Name: getfxtime(text); Type: FUNCTION; Schema: public; Owner: mesonet
 --
 
 CREATE FUNCTION public.getfxtime(text) RETURNS integer
@@ -1750,7 +1750,7 @@ CREATE FUNCTION public.getfxtime(text) RETURNS integer
     WHERE portfolio = $1;$_$;
 
 
-ALTER FUNCTION public.getfxtime(text) OWNER TO postgres;
+ALTER FUNCTION public.getfxtime(text) OWNER TO mesonet;
 
 --
 -- Name: getgid4post(numeric); Type: FUNCTION; Schema: public; Owner: ldm,mesonet
@@ -1789,7 +1789,7 @@ CREATE FUNCTION public.getquizname(integer) RETURNS text
 ALTER FUNCTION public.getquizname(integer) OWNER to mesonet;
 
 --
--- Name: getroleid(character varying, character varying); Type: FUNCTION; Schema: public; Owner: postgres
+-- Name: getroleid(character varying, character varying); Type: FUNCTION; Schema: public; Owner: mesonet
 --
 
 CREATE FUNCTION public.getroleid(character varying, character varying) RETURNS smallint
@@ -1797,10 +1797,10 @@ CREATE FUNCTION public.getroleid(character varying, character varying) RETURNS s
     AS $_$select r.id from roles r, students s  WHERE s.role = r.id and s.username = $1 and s.portfolio = $2$_$;
 
 
-ALTER FUNCTION public.getroleid(character varying, character varying) OWNER TO postgres;
+ALTER FUNCTION public.getroleid(character varying, character varying) OWNER TO mesonet;
 
 --
--- Name: getrolename(character varying, character varying); Type: FUNCTION; Schema: public; Owner: postgres
+-- Name: getrolename(character varying, character varying); Type: FUNCTION; Schema: public; Owner: mesonet
 --
 
 CREATE FUNCTION public.getrolename(character varying, character varying) RETURNS character varying
@@ -1808,10 +1808,10 @@ CREATE FUNCTION public.getrolename(character varying, character varying) RETURNS
     AS $_$select r.name from roles r, students s  WHERE s.role = r.id and s.username = $1 and s.portfolio = $2$_$;
 
 
-ALTER FUNCTION public.getrolename(character varying, character varying) OWNER TO postgres;
+ALTER FUNCTION public.getrolename(character varying, character varying) OWNER TO mesonet;
 
 --
--- Name: getsitename(text); Type: FUNCTION; Schema: public; Owner: postgres
+-- Name: getsitename(text); Type: FUNCTION; Schema: public; Owner: mesonet
 --
 
 CREATE FUNCTION public.getsitename(text) RETURNS text
@@ -1820,10 +1820,10 @@ CREATE FUNCTION public.getsitename(text) RETURNS text
         WHERE s_mid = $1;$_$;
 
 
-ALTER FUNCTION public.getsitename(text) OWNER TO postgres;
+ALTER FUNCTION public.getsitename(text) OWNER TO mesonet;
 
 --
--- Name: getusergid(text, text); Type: FUNCTION; Schema: public; Owner: postgres
+-- Name: getusergid(text, text); Type: FUNCTION; Schema: public; Owner: mesonet
 --
 
 CREATE FUNCTION public.getusergid(text, text) RETURNS text
@@ -1832,7 +1832,7 @@ CREATE FUNCTION public.getusergid(text, text) RETURNS text
         WHERE username = $2 and portfolio = $1;$_$;
 
 
-ALTER FUNCTION public.getusergid(text, text) OWNER TO postgres;
+ALTER FUNCTION public.getusergid(text, text) OWNER TO mesonet;
 
 --
 -- Name: getusername(text); Type: FUNCTION; Schema: public; Owner: ldm,mesonet
@@ -1847,7 +1847,7 @@ CREATE FUNCTION public.getusername(text) RETURNS text
 ALTER FUNCTION public.getusername(text) OWNER to mesonet;
 
 --
--- Name: totalerrorbycase(text, text, real); Type: FUNCTION; Schema: public; Owner: postgres
+-- Name: totalerrorbycase(text, text, real); Type: FUNCTION; Schema: public; Owner: mesonet
 --
 
 CREATE FUNCTION public.totalerrorbycase(text, text, real) RETURNS numeric
@@ -1855,4 +1855,4 @@ CREATE FUNCTION public.totalerrorbycase(text, text, real) RETURNS numeric
     AS $_$SELECT sum(total_err)::numeric  from forecast_grades WHERE userid = $1 and portfolio = $2 and case_group = $3 ;$_$;
 
 
-ALTER FUNCTION public.totalerrorbycase(text, text, real) OWNER TO postgres;
+ALTER FUNCTION public.totalerrorbycase(text, text, real) OWNER TO mesonet;
