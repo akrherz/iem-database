@@ -125,16 +125,19 @@ CREATE TABLE iembot_room_syndications (
     roomname character varying(64),    
     endpoint character varying(64),    
     convtype character(1));
-
+alter table iembot_room_syndications owner to mesonet;
 
 CREATE TABLE iembot_fb_access_tokens (
     fbpid bigint,
     access_token text
 );
+alter table iembot_fb_access_tokens owner to mesonet;
+
 CREATE TABLE iembot_fb_subscriptions (
     fbpid bigint,
     channel character varying
 );
+alter table iembot_fb_subscriptions owner to mesonet;
 
 ---
 --- Table to track iembot's use of social media
@@ -149,6 +152,7 @@ CREATE TABLE iembot_social_log(
   response text,
   response_code int
 );
+ALTER TABLE iembot_social_log OWNER to mesonet;
 CREATE index iembot_social_log_valid_idx on iembot_social_log(valid);
 
 ---
@@ -197,6 +201,7 @@ CREATE TABLE iembot_twitter_oauth(
   at_handle text,
   at_app_pass text
 );
+ALTER TABLE iembot_twitter_oauth OWNER to mesonet;
 GRANT ALL on iembot_twitter_oauth to nobody;
 
 CREATE TABLE iembot_twitter_subs(
@@ -204,11 +209,10 @@ CREATE TABLE iembot_twitter_subs(
   screen_name varchar(128),
   channel varchar(64)
 );
+ALTER TABLE iembot_twitter_subs OWNER to mesonet;
 CREATE UNIQUE index iembot_twitter_subs_idx on 
  iembot_twitter_subs(screen_name, channel);
 GRANT ALL on iembot_twitter_subs to nobody;
-
-
 
 ---
 --- IEMBot channels
@@ -218,6 +222,7 @@ CREATE TABLE iembot_channels(
   name varchar,
   channel_key character varying DEFAULT substr(md5((random())::text), 0, 12)
 );
+alter table iembot_channels owner to mesonet;
 GRANT all on iembot_channels to nobody;
 
 ---
@@ -227,6 +232,7 @@ CREATE TABLE iembot_room_subscriptions (
     roomname character varying(64),
     channel character varying(24)
 );
+ALTER TABLE iembot_room_subscriptions OWNER to mesonet;
 CREATE UNIQUE index iembot_room_subscriptions_idx on
   iembot_room_subscriptions(roomname, channel);
 GRANT all on iembot_room_subscriptions to nobody;
@@ -238,6 +244,7 @@ CREATE TABLE iembot_rooms (
     fbpage varchar,
     twitter varchar
 );
+ALTER TABLE iembot_rooms OWNER to mesonet;
 GRANT all on iembot_rooms to nobody;
 
 ---
@@ -254,8 +261,6 @@ CREATE TABLE racoon_jobs(
   wtype varchar(32)
 );
 GRANT all on racoon_jobs to nobody;
-
-
 
 ---
 --- IEM Apps Database!
