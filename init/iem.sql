@@ -272,6 +272,7 @@ CREATE TABLE offline(
     network varchar(10),
     trackerid int,
     valid timestamptz);
+alter table offline owner to mesonet;
 GRANT SELECT on offline to nobody;
 
 
