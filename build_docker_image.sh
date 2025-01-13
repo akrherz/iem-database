@@ -13,9 +13,6 @@ until pg_isready -h localhost -U postgres; do
   sleep 2
 done
 
-# Create a runner superuser, unsure if we need this...
-psql -c 'CREATE ROLE runner SUPERUSER LOGIN CREATEDB;' -h localhost -U postgres
-
 sh bootstrap.sh
 
 # Now we need to stop and save off this container as an image without test data

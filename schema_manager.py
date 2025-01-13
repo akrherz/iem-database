@@ -14,61 +14,56 @@ import psycopg
 def check_management(cursor):
     """Make sure we have management of this database"""
     cursor.execute(
-        """
-         select * from pg_tables where schemaname = 'public'
-         and tablename = 'iem_schema_manager_version'
-     """
+        "select * from pg_tables where schemaname = 'public' and "
+        "tablename = 'iem_schema_manager_version'"
     )
     if cursor.rowcount == 0:
         cursor.execute(
-            """
-        CREATE TABLE iem_schema_manager_version
-            (version int, updated timestamptz)
-        """
+            "CREATE TABLE iem_schema_manager_version "
+            "(version int, updated timestamptz)"
         )
         cursor.execute(
-            """INSERT into iem_schema_manager_version
-        VALUES (-1, now())"""
+            "INSERT into iem_schema_manager_version VALUES (-1, now())"
         )
 
 
 def run_db(dbname):
     """Lets do an actual database"""
+    # This is an ugly hack.  The first case should generally work in CI
+    # The second actually works in production
     try:
-        dbconn = psycopg.connect(f"postgresql://runner@localhost/{dbname}")
-    except psycopg.errors.OperationalError:
-        dbconn = psycopg.connect(f"postgresql://iemdb-{dbname}.local/{dbname}")
+        dbconn = psycopg.connect(
+            f"postgresql://postgres@localhost/{dbname}?gssencmode=disable"
+        )
+    except psycopg.OperationalError:
+        dbconn = psycopg.connect(
+            f"postgresql://iemdb-{dbname}.local/{dbname}?gssencmode=disable"
+        )
 
     cursor = dbconn.cursor()
 
     check_management(cursor)
 
-    cursor.execute(
-        """
-        SELECT version, updated from iem_schema_manager_version
-    """
-    )
+    cursor.execute("SELECT version, updated from iem_schema_manager_version")
     row = cursor.fetchone()
     baseversion = row[0]
     print(
-        ("Database: %-15s has revision: %3s (%s)")
-        % (dbname, baseversion, row[1].strftime("%Y-%m-%d %H:%M"))
+        f"Database: {dbname:<15s} has revision: {baseversion:3.0f} "
+        f"({row[1]:%Y-%m-%d %H:%M})"
     )
 
     while True:
         baseversion += 1
-        fn = "%s/%s.sql" % (dbname, baseversion)
+        fn = f"{dbname}/{baseversion}.sql"
         if not os.path.isfile(fn):
             break
-        print("    -> Attempting schema upgrade #%s ..." % (baseversion,))
+        print(f"    -> Attempting schema upgrade #{baseversion} ...")
         with open(fn, encoding="utf-8") as fh:
             cursor.execute(fh.read())
 
         cursor.execute(
-            """
-            UPDATE iem_schema_manager_version
-            SET version = %s, updated = now()
-            """,
+            "UPDATE iem_schema_manager_version "
+            "SET version = %s, updated = now()",
             (baseversion,),
         )
 
@@ -89,5 +84,4 @@ def main():
 
 
 if __name__ == "__main__":
-    # main
     main()
