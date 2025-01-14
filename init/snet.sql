@@ -48,7 +48,7 @@ CREATE TABLE alldata (
     relh real,
     alti real,
     gust real
-);
+) PARTITION by range(valid);
 alter table alldata owner to mesonet;
 GRANT SELECT on alldata to nobody;
 
