@@ -563,6 +563,7 @@ CREATE TABLE autoplot_timing(
     timing real NOT NULL,
     uri varchar,
     hostname varchar(24) NOT NULL);
+alter table autoplot_timing owner to mesonet;
 GRANT SELECT on autoplot_timing to nobody;
 CREATE INDEX autoplot_timing_idx on autoplot_timing(appid);
 

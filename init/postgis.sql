@@ -463,6 +463,7 @@ CREATE TABLE idot_snowplow_current(
     solid_spread_code smallint,
     road_temp_code smallint
 );
+alter table idot_snowplow_current owner to mesonet;
 SELECT AddGeometryColumn('idot_snowplow_current', 'geom', 4326, 'POINT', 2);
 GRANT SELECT on idot_snowplow_current to nobody;
 
@@ -984,7 +985,7 @@ CREATE table roads_base(
     archive_begin timestamptz,
     archive_end timestamptz
 );
-
+alter table roads_base owner to mesonet;
 SELECT AddGeometryColumn('roads_base', 'geom', 26915, 'MULTILINESTRING', 2);
 SELECT AddGeometryColumn('roads_base', 'simple_geom', 26915, 'MULTILINESTRING', 2);
 
@@ -1005,6 +1006,7 @@ CREATE TABLE roads_current(
   towing_prohibited boolean,
   limited_vis boolean,
   raw varchar);
+alter table roads_current owner to mesonet;
 GRANT SELECT on roads_current to nobody;
 
 ---
