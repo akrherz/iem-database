@@ -29,6 +29,7 @@ CREATE TABLE climoweek(
   sday char(4) UNIQUE,
   climoweek smallint
 );
+alter table climoweek owner to mesonet;
 GRANT SELECT on climoweek to nobody;
 
 -- Stuff gleaned from the PDF reports, sick.
@@ -283,6 +284,7 @@ CREATE TABLE climate(
   cdd65 real,
   srad real
 );
+alter table climate owner to mesonet;
 CREATE UNIQUE INDEX climate_idx on climate(station,valid);
 GRANT SELECT on climate to nobody;
 
