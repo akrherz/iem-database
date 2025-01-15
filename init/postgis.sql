@@ -390,6 +390,7 @@ CREATE TABLE idot_dashcam_current(
     valid timestamptz,
     idnum int
 );
+alter table idot_dashcam_current owner to mesonet;
 SELECT AddGeometryColumn('idot_dashcam_current', 'geom', 4326, 'POINT', 2);
 GRANT SELECT on idot_dashcam_current to nobody;
 
@@ -398,6 +399,7 @@ CREATE TABLE idot_dashcam_log(
     valid timestamptz,
     idnum int
 );
+alter table idot_dashcam_log owner to mesonet;
 SELECT AddGeometryColumn('idot_dashcam_log', 'geom', 4326, 'POINT', 2);
 CREATE INDEX idot_dashcam_log_valid_idx on idot_dashcam_log(valid);
 CREATE INDEX idot_dashcam_log_label_idx on idot_dashcam_log(label);
