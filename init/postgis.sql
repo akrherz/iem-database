@@ -1142,7 +1142,7 @@ GRANT SELECT on spc_outlooks to ldm,nobody;
 -- Convective Watches
 CREATE TABLE watches (
     fid serial,
-    sel character(5),
+    sel varchar(4),
     issued timestamp with time zone,
     expired timestamp with time zone,
     type character(3),
