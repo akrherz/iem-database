@@ -83,6 +83,7 @@ isuag__sm_hourly.sql.gz | More AEEI4 hourly data
 isuag_sm_daily.sql | ISU Soil Moisture daily data 21-25 July 2024
 isuag_sm_inversion.sql.gz | ISU Soil Moisture inversion data 21-25 July 2024
 mesosite__camera_log_2020.sql | Webcam metadata around 17z 10 Aug 2020
+mesosite__feature.sql | Random IEM Feature content
 mesosite_products.sql | Archived products metadata
 mesosite_tzworld_chicago.sql.gz | Largest geometry for America/Chicago for tz_world
 mesosite_webcams.sql | Some example webcam entries
