@@ -83,12 +83,12 @@ isuag__sm_hourly.sql.gz | More AEEI4 hourly data
 isuag_sm_daily.sql | ISU Soil Moisture daily data 21-25 July 2024
 isuag_sm_inversion.sql.gz | ISU Soil Moisture inversion data 21-25 July 2024
 mesosite__camera_log_2020.sql | Webcam metadata around 17z 10 Aug 2020
+mesosite__feature.sql | Random IEM Feature content
 mesosite_products.sql | Archived products metadata
 mesosite_tzworld_chicago.sql.gz | Largest geometry for America/Chicago for tz_world
 mesosite_webcams.sql | Some example webcam entries
 mesosite_zz_station_attrs.sql | Station attributes for
 mos_20240802.sql | KDSM MOS for 2 Aug 2024 0z
-mos_fake_realtime.sql | MOS faked NBS entry for KDSM valid at 0z today
 other__purpleair.sql | purpleair data for 10 Aug 2024
 other__ss_bubbler.sql | data for 13 Aug 2012
 other__ss_logger_data.sql | 2012-2014 random data
