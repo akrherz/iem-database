@@ -272,7 +272,7 @@ $do$
 declare
     year int;
 begin
-    for year in 2007..2030
+    for year in 2000..2030
     loop
         execute format($f$
             create table cocorahs_%s partition of alldata_cocorahs
