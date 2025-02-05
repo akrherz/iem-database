@@ -310,7 +310,7 @@ CREATE TABLE ugcs(
     begin_ts timestamptz NOT NULL,
     end_ts timestamptz,
     area2163 real,
-    source varchar(2),
+    source varchar(2) not null,
     gpw_population_2000 int,
     gpw_population_2005 int,
     gpw_population_2010 int,
