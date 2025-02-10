@@ -110,6 +110,7 @@ CREATE TABLE huc12(
     dominant_tillage smallint,
     average_slope_ratio real
 );
+alter table huc12 owner to mesonet;
 CREATE UNIQUE INDEX huc12_idx on huc12(huc_12, scenario);
 GRANT SELECT on huc12 to nobody;
 
@@ -126,6 +127,7 @@ CREATE TABLE results(
     precip real,
     delivery real
 );
+alter table results owner to mesonet;
 CREATE INDEX results_valid_idx on results(valid);
 CREATE INDEX results_huc_12_idx on results(huc_12);
 
@@ -164,6 +166,7 @@ CREATE TABLE results_by_huc12(
     max_delivery real,
     qc_precip real
 ) partition by range(scenario);
+alter table results_by_huc12 owner to mesonet;
 CREATE INDEX results_by_huc12_huc_12_idx on results_by_huc12(huc_12);
 CREATE INDEX results_by_huc12_valid_idx on results_by_huc12(valid);
 GRANT SELECT on results_by_huc12 to nobody;
@@ -221,6 +224,7 @@ CREATE TABLE properties(
     "key" varchar UNIQUE NOT NULL,
     "value" varchar
 );
+alter table properties owner to mesonet;
 GRANT SELECT on properties to nobody;
 
 -- Storage of harvest information
@@ -235,7 +239,7 @@ CREATE TABLE harvest(
 );
 CREATE INDEX harvest_huc12_idx on harvest(huc12);
 CREATE INDEX harvest_valid_idx on harvest(valid);
-GRANT ALL on harvest to ldm,mesonet;
+alter table harvest owner to mesonet;
 GRANT SELECT on harvest to nobody;
 
 --
