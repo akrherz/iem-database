@@ -1,7 +1,8 @@
 CREATE EXTENSION postgis;
 
 -- bandaid
-insert into spatial_ref_sys select 9311, 'EPSG', 9311, srtext, proj4text from spatial_ref_sys where srid = 2163;
+insert into spatial_ref_sys select 9311, 'EPSG', 9311, srtext, proj4text
+    from spatial_ref_sys where srid = 2163;
 
 -- Boilerplate IEM schema_manager_version, the version gets incremented each
 -- time we make an upgrade script
@@ -18,32 +19,34 @@ CREATE TABLE grid(
   gridx int,
   gridy int,
   geom geometry(Point, 4326)
-  );
-  CREATE index grid_idx on grid(idx);
- GRANT SELECT on grid to nobody;
- 
- ---
- --- Lookup table of observation events
- ---
- CREATE TABLE obtimes(
+);
+alter table grid owner to mesonet;
+CREATE index grid_idx on grid(idx);
+GRANT SELECT on grid to nobody;
+
+---
+--- Lookup table of observation events
+---
+CREATE TABLE obtimes(
    valid timestamp with time zone UNIQUE
- );
- GRANT SELECT on obtimes to nobody;
- 
- ---
- --- Store the actual data, will have partitioned tables
- --- 
- CREATE TABLE data(
+);
+alter table obtimes owner to mesonet;
+GRANT SELECT on obtimes to nobody;
+
+---
+--- Store the actual data, will have partitioned tables
+--- 
+CREATE TABLE data(
    grid_idx int REFERENCES grid(idx),
    valid timestamp with time zone,
    soil_moisture real,
    optical_depth real
- ) PARTITION by range(valid);
- ALTER TABLE data OWNER to mesonet;
- GRANT ALL on data to ldm;
- GRANT SELECT on data to nobody;
- 
- do
+) PARTITION by range(valid);
+ALTER TABLE data OWNER to mesonet;
+GRANT ALL on data to ldm;
+GRANT SELECT on data to nobody;
+
+do
 $do$
 declare
      year int;
