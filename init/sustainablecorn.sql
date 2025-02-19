@@ -28,6 +28,7 @@ CREATE TABLE plotids(
     south varchar,
     plotid varchar
 );
+alter table plotids owner to mesonet;
 GRANT SELECT on plotids to nobody;
 
 ---=========================================================================
@@ -140,7 +141,51 @@ CREATE TABLE operations(
     iron varchar,
     biomassdate1 date
 );
+alter table operations owner to mesonet;
 GRANT SELECT on operations to nobody;
+
+CREATE TABLE public.metadata_master (
+    leadpi character varying,
+    co_leaders character varying,
+    institutionname character varying,
+    unit character varying,
+    officialfarmname character varying,
+    uniqueid character varying,
+    nwlon character varying,
+    nwlat character varying,
+    swlon character varying,
+    swlat character varying,
+    selon character varying,
+    selat character varying,
+    nelon character varying,
+    nelat character varying,
+    rawlonlat character varying,
+    latitude character varying,
+    longitude character varying,
+    state character varying,
+    county character varying,
+    city character varying,
+    landscapeslope character varying,
+    tiledepth character varying,
+    tilespacing character varying,
+    sitearea character varying,
+    plotsize character varying,
+    numberofplots character varying,
+    establishmentyear character varying,
+    y1forcap character varying,
+    epaecoregionlevel4codeandname character varying,
+    iemclimatesite character varying,
+    additionalinformation character varying,
+    pre_2011 character varying,
+    notes2011 character varying,
+    notes2012 character varying,
+    notes2013 character varying,
+    notes2014 character varying,
+    notes2015 character varying
+);
+
+ALTER TABLE public.metadata_master OWNER TO mesonet;
+GRANT SELECT ON TABLE public.metadata_master TO nobody;
 
 --- ========================================================================
 --- Storage of Soil Data
@@ -155,6 +200,8 @@ CREATE TABLE soil_data(
   subsample varchar(12),
   updated timestamptz default now()
 );
+alter table soil_data owner to mesonet;
+grant select on soil_data to nobody;
 
 CREATE TABLE soil_data_log(
   site varchar(24),
@@ -236,6 +283,8 @@ CREATE TABLE agronomic_data(
   value varchar(32),
   updated timestamptz default now()
 );
+alter table agronomic_data owner to mesonet;
+grant select on agronomic_data to nobody;
 
 CREATE TABLE agronomic_data_log(
   site varchar(24),

@@ -12,6 +12,9 @@ CREATE TABLE website_edits(
 GRANT ALL on website_edits to nobody;
 
 -- Allow editing
+alter table tileflow_data owner to mesonet;
 GRANT ALL on tileflow_data to nobody;
+alter table decagon_data owner to mesonet;
 GRANT ALL on decagon_data to nobody;
+alter table watertable_data owner to mesonet;
 GRANT ALL on watertable_data to nobody;
