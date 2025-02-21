@@ -14,7 +14,7 @@ CREATE TABLE waterquality_data(
   varname varchar(8),
   value real);
 alter table waterquality_data owner to mesonet;
-GRANT ALL on waterquality_data to mesonet,ldm;
+GRANT ALL on waterquality_data to mesonet;
 GRANT SELECT on waterquality_data to nobody;
 
 
@@ -24,7 +24,7 @@ CREATE TABLE website_downloads(
   valid timestamptz default now()
 );
 alter table website_downloads owner to mesonet;
-GRANT ALL on website_downloads to nobody,ldm;
+GRANT ALL on website_downloads to nobody;
 
 CREATE TABLE dwm(
  uniqueid varchar,
@@ -75,7 +75,7 @@ CREATE TABLE ipm_data(
 CREATE INDEX ipm_data_uniqueid_idx on ipm_data(uniqueid);
 alter table ipm_data owner to mesonet;
 GRANT SELECT on ipm_data to nobody;
-GRANT ALL on ipm_data to mesonet,ldm;
+GRANT ALL on ipm_data to mesonet;
 
 -- Storage of GHG Data
 CREATE TABLE ghg_data(
@@ -105,7 +105,7 @@ CREATE TABLE ghg_data(
 CREATE INDEX ghg_data_uniqueid_idx on ghg_data(uniqueid);
 alter table ghg_data owner to mesonet;
 GRANT SELECT on ghg_data to nobody;
-GRANT ALL on ghg_data to mesonet,ldm;
+GRANT ALL on ghg_data to mesonet;
 
 
 -- Storage of website edits metadata
@@ -133,12 +133,6 @@ INSERT into website_access_levels VALUES (0, 'admin', 'Administrators');
 INSERT into website_access_levels VALUES (1, 'cscap', 'Sustainable Corn CAP');
 INSERT into website_access_levels VALUES (2, 'td', 'Transforming Drainage');
 
-ALTER TABLE website_users ADD CONSTRAINT distfk FOREIGN KEY (access_level)
-  REFERENCES website_access_levels(access_level);
-
-ALTER TABLE website_users DROP CONSTRAINT website_users_email_key;
-
-
 -- Storage of authorized Google OpenID users
 CREATE TABLE website_users(
   email varchar NOT NULL UNIQUE,
@@ -146,6 +140,9 @@ CREATE TABLE website_users(
   access_level smallint);
 alter table website_users owner to mesonet;
 GRANT ALL on website_users to nobody;
+ALTER TABLE website_users ADD CONSTRAINT distfk FOREIGN KEY (access_level)
+  REFERENCES website_access_levels(access_level);
+ALTER TABLE website_users DROP CONSTRAINT website_users_email_key;
 
 -- Storage of Tile Flow
 CREATE TABLE tileflow_data(
