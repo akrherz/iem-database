@@ -497,9 +497,9 @@ CREATE TABLE soil_data(
   updated timestamptz default now(),
   sampledate date
 );
-CREATE INDEX soil_data_site_idx on soil_data(site);
+CREATE INDEX soil_data_site_idx on soil_data(uniqueid);
 CREATE UNIQUE index soil_data_idx on 
-    soil_data(site, plotid, varname, year, depth, subsample, sampledate);
+    soil_data(uniqueid, plotid, varname, year, depth, subsample, sampledate);
 
 alter table soil_data owner to mesonet;
 grant select on soil_data to nobody;
