@@ -586,6 +586,9 @@ CREATE TABLE agronomic_data(
 );
 alter table agronomic_data owner to mesonet;
 grant select on agronomic_data to nobody;
+CREATE UNIQUE index agronomic_data_idx on 
+    agronomic_data(uniqueid, plotid, varname, year);
+GRANT SELECT on agronomic_data to nobody;
 
 CREATE TABLE agronomic_data_log(
   uniqueid varchar(24),
@@ -644,7 +647,3 @@ CREATE TRIGGER agronomic_insert_before_T
    ON agronomic_data
    FOR EACH ROW
    EXECUTE PROCEDURE agronomic_insert_before_F();
-  
-CREATE UNIQUE index agronomic_data_idx on 
-    agronomic_data(site, plotid, varname, year);
-GRANT SELECT on agronomic_data to nobody;
