@@ -1,14 +1,16 @@
 CREATE EXTENSION postgis;
 
 -- bandaid
-insert into spatial_ref_sys select 9311, 'EPSG', 9311, srtext, proj4text from spatial_ref_sys where srid = 2163;
+insert into spatial_ref_sys
+    select 9311, 'EPSG', 9311, srtext, proj4text from spatial_ref_sys
+    where srid = 2163;
 
 -- Boilerplate IEM schema_manager_version, the version gets incremented each
 -- time we make an upgrade script
 CREATE TABLE iem_schema_manager_version(
     version int,
     updated timestamptz);
-INSERT into iem_schema_manager_version values (34, now());
+INSERT into iem_schema_manager_version values (35, now());
 
 -- Storage of WPC national high low
 CREATE TABLE wpc_national_high_low(
@@ -507,10 +509,6 @@ CREATE TABLE summary (
     pmonth real,
     snow real,
     snowd real,
-    max_tmpf_qc character(1),
-    min_tmpf_qc character(1),
-    pday_qc character(1),
-    snow_qc character(1),
     snoww real,
     max_drct real,
     max_srad smallint,
