@@ -3,7 +3,7 @@
 CREATE TABLE iem_schema_manager_version(
     version int,
     updated timestamptz);
-INSERT into iem_schema_manager_version values (7, now());
+INSERT into iem_schema_manager_version values (8, now());
 
 CREATE TABLE sensors(
   station varchar(5),
@@ -13,7 +13,6 @@ CREATE TABLE sensors(
   sensor3 varchar(100)
 );
 GRANT SELECT on sensors to nobody;
-  
 
 CREATE TABLE alldata(
   station varchar(6),
@@ -33,7 +32,9 @@ CREATE TABLE alldata(
   tfs2_text text,
   tfs3_text text,
   pcpn real,
-  vsby real
+  vsby real,
+  feel real,
+  relh real
 ) PARTITION by range(valid);
 ALTER TABLE alldata OWNER to mesonet;
 GRANT ALL on alldata to ldm;
