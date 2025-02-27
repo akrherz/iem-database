@@ -511,7 +511,7 @@ CREATE TABLE summary (
     snowd real,
     snoww real,
     max_drct real,
-    max_srad smallint,
+    max_srad real,
     coop_tmpf real,
     coop_valid timestamp with time zone,
     et_inch real,
