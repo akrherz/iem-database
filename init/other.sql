@@ -247,7 +247,23 @@ begin
 end;
 $do$;
 
--- -----------------------------------
+-------------------------------------
+create table flux_meta(
+	station text,
+	surface text,
+	sts timestamp,
+	ets timestamp
+);
+alter table flux_meta owner to mesonet;
+grant select on flux_meta to nobody;
+
+create table flux_vars(
+	name text,
+	units text,
+	details text
+);
+alter table flux_vars owner to mesonet;
+grant select on flux_vars to nobody;
 
 CREATE TABLE flux_data(
 station            character varying(10),   

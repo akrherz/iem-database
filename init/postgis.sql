@@ -295,6 +295,8 @@ CREATE TABLE robins(
   name varchar,
   city varchar,
   day date);
+alter table robins owner to mesonet;
+grant select on robins to nobody;
 SELECT AddGeometryColumn('robins', 'the_geom', 4326, 'POINT', 2);
 
 ---
