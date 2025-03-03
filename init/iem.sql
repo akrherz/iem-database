@@ -678,12 +678,15 @@ CREATE TABLE rwis_traffic_sensors(
   lane_id smallint,
   name varchar(64)
 );
+alter table rwis_traffic_sensors owner to mesonet;
+grant select on rwis_traffic_sensors to nobody;
 
 CREATE OR REPLACE view rwis_traffic_meta AS 
   SELECT l.id as location_id, l.nwsli as nwsli, s.id as sensor_id,
   s.lane_id as lane_id
   FROM rwis_locations l, rwis_traffic_sensors s WHERE
   l.id = s.location_id;
+grant select on rwis_traffic_meta to nobody;
 
 
 CREATE TABLE rwis_traffic_data(
