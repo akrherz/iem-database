@@ -952,9 +952,11 @@ GRANT SELECT on sigmets_archive to nobody;
 ---
 CREATE TABLE nexrad_n0r_tindex(
  datetime timestamp without time zone,
- filepath varchar
+ filepath varchar,
+ the_geom geometry(MultiPolygon, 4326)
  );
-SELECT AddGeometryColumn('nexrad_n0r_tindex', 'the_geom', 4326, 'MULTIPOLYGON', 2);
+alter table nexrad_n0r_tindex owner to mesonet;
+grant all on nexrad_n0r_tindex to ldm;
 GRANT SELECT on nexrad_n0r_tindex to nobody;
 CREATE INDEX nexrad_n0r_tindex_idx on nexrad_n0r_tindex(datetime);
 create index nexrad_n0r_tindex_date_trunc on nexrad_n0r_tindex( date_trunc('minute', datetime) );
@@ -965,9 +967,11 @@ create index nexrad_n0r_tindex_date_trunc on nexrad_n0r_tindex( date_trunc('minu
 ---
 CREATE TABLE nexrad_n0q_tindex(
  datetime timestamp without time zone,
- filepath varchar
+ filepath varchar,
+ the_geom geometry(MultiPolygon, 4326)
  );
-SELECT AddGeometryColumn('nexrad_n0q_tindex', 'the_geom', 4326, 'MULTIPOLYGON', 2);
+alter table nexrad_n0q_tindex owner to mesonet;
+grant all on nexrad_n0q_tindex to ldm;
 GRANT SELECT on nexrad_n0q_tindex to nobody;
 CREATE INDEX nexrad_n0q_tindex_idx on nexrad_n0q_tindex(datetime);
 create index nexrad_n0q_tindex_date_trunc on nexrad_n0q_tindex( date_trunc('minute', datetime) );
