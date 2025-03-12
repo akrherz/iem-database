@@ -1332,7 +1332,10 @@ CREATE TABLE mpd(
     issue timestamptz,
     expire timestamptz,
     watch_confidence smallint,
-    concerning text
+    concerning text,
+    most_prob_tornado text,
+    most_prob_gust text,
+    most_prob_hail text
 );
 ALTER TABLE mpd OWNER to mesonet;
 GRANT ALL on mpd to ldm;
