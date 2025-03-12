@@ -10,7 +10,7 @@ insert into spatial_ref_sys
 CREATE TABLE iem_schema_manager_version(
     version int,
     updated timestamptz);
-INSERT into iem_schema_manager_version values (72, now());
+INSERT into iem_schema_manager_version values (73, now());
 
 ---
 --- TABLES THAT ARE LOADED VIA shp2pgsql
@@ -1308,7 +1308,10 @@ CREATE TABLE mcd(
     issue timestamptz,
     expire timestamptz,
     watch_confidence smallint,
-    concerning text
+    concerning text,
+    most_prob_tornado text,
+    most_prob_gust text,
+    most_prob_hail text
 );
 ALTER TABLE mcd OWNER to mesonet;
 GRANT ALL on mcd to ldm;
