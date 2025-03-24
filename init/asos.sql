@@ -6,8 +6,8 @@ insert into spatial_ref_sys select 9311, 'EPSG', 9311, srtext, proj4text from sp
 -- Boilerplate IEM schema_manager_version, the version gets incremented each
 -- time we make an upgrade script
 CREATE TABLE iem_schema_manager_version(
-	version int,
-	updated timestamptz);
+    version int,
+    updated timestamptz);
 INSERT into iem_schema_manager_version values (19, now());
 
 ---
@@ -44,42 +44,42 @@ CREATE FUNCTION getskyc(character varying) RETURNS smallint
 --- Quasi synced from mesosite database
 ---
 CREATE TABLE stations(
-	id varchar(64),
-	synop int,
-	name varchar(64),
-	state char(2),
-	country char(2),
-	elevation real,
-	network varchar(20),
-	online boolean,
-	params varchar(300),
-	county varchar(50),
-	plot_name varchar(64),
-	climate_site varchar(6),
-	remote_id int,
-	nwn_id int,
-	spri smallint,
-	wfo varchar(3),
-	archive_begin date,
-	archive_end date,
-	modified timestamp with time zone,
-	tzname varchar(32),
-	iemid SERIAL,
-	metasite boolean,
-	sigstage_low real,
-	sigstage_action real,
-	sigstage_bankfull real,
-	sigstage_flood real,
-	sigstage_moderate real,
-	sigstage_major real,
-	sigstage_record real,
-	ugc_county char(6),
-	ugc_zone char(6),
-	ncdc81 varchar(11),
+    id varchar(64),
+    synop int,
+    name varchar(64),
+    state char(2),
+    country char(2),
+    elevation real,
+    network varchar(20),
+    online boolean,
+    params varchar(300),
+    county varchar(50),
+    plot_name varchar(64),
+    climate_site varchar(6),
+    remote_id int,
+    nwn_id int,
+    spri smallint,
+    wfo varchar(3),
+    archive_begin date,
+    archive_end date,
+    modified timestamp with time zone,
+    tzname varchar(32),
+    iemid SERIAL,
+    metasite boolean,
+    sigstage_low real,
+    sigstage_action real,
+    sigstage_bankfull real,
+    sigstage_flood real,
+    sigstage_moderate real,
+    sigstage_major real,
+    sigstage_record real,
+    ugc_county char(6),
+    ugc_zone char(6),
+    ncdc81 varchar(11),
     ncei91 varchar(11),
-	temp24_hour smallint,
-	precip24_hour smallint,
-	wigos varchar(64)
+    temp24_hour smallint,
+    precip24_hour smallint,
+    wigos varchar(64)
 );
 CREATE UNIQUE index stations_idx on stations(id, network);
 create UNIQUE index stations_iemid_idx on stations(iemid);
@@ -153,7 +153,7 @@ $do$
 declare
      year int;
 begin
-    for year in 1928..2030
+    for year in 1900..2030
     loop
         execute format($f$
             create table t%s partition of alldata
@@ -180,7 +180,7 @@ end;
 $do$;
 
 CREATE TABLE scp_alldata(
- station varchar(5),    
+ station varchar(5),
  valid timestamptz,
  mid varchar(3),
  high varchar(3),

@@ -540,7 +540,7 @@ declare
      year int;
      mytable varchar;
 begin
-    for year in 1928..2030
+    for year in 1900..2030
     loop
         mytable := format($f$summary_%s$f$, year);
         execute format($f$
