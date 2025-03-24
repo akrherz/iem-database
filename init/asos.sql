@@ -153,7 +153,7 @@ $do$
 declare
      year int;
 begin
-    for year in 1928..2030
+    for year in 1900..2030
     loop
         execute format($f$
             create table t%s partition of alldata
