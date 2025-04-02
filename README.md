@@ -84,6 +84,7 @@ isuag_sm_daily.sql | ISU Soil Moisture daily data 21-25 July 2024
 isuag_sm_inversion.sql.gz | ISU Soil Moisture inversion data 21-25 July 2024
 mesosite__camera_log_2020.sql | Webcam metadata around 17z 10 Aug 2020
 mesosite__feature.sql | Random IEM Feature content
+mesosite__networks.sql | A few IEM networks for Iowa and WFO
 mesosite_products.sql | Archived products metadata
 mesosite_tzworld_chicago.sql.gz | Largest geometry for America/Chicago for tz_world
 mesosite_webcams.sql | Some example webcam entries
@@ -99,6 +100,7 @@ postgis__airmets.sql | Some AIRMETs from 10 Aug 2024
 postgis__cwas.sql | Some Center Weather Advisories from 10 Aug 2024
 postgis__fema_regions.sql.gz | Simplified FEMA Regions
 postgis__sigmets_archive.sql | Some SIGMETs from 10 Aug 2024
+postgis__sigmets_current.sql | Some current SIGMETs to get goosed in CI
 postgis__spc_outlook_geometries.sql.gz | SPC/WPC Outlooks 1-8 Aug 2024
 postgis__sps2024.sql.gz | SPSs from Aug 2024
 postgis_lsrs.sql | DMX LSRs from 2018-06-20,2018-06-21,2024-05-21, One BGM LSR from 2023
