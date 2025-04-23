@@ -69,6 +69,7 @@ hml__000hml_forecast.sql | Guttenburg GTTI4 20-23 Aug 2024
 hml__hml_forecast_data.sql | Guttenburg GTTI4 20-23 Aug 2024
 hml__hml_observed_data.sql | Guttenburg GTTI4 20-23 Aug 2024
 id3b__product_log_nob.sql.gz | ldm_product_log of N0B that gets updated to RT
+idep__pydeptesting.sql | test data run with dailyerosion/dep (pydep) repo
 iem__hourly.sql.gz | DSM,AMW hourly precip 2024 precip till 4 Sept
 iem__AMWDSM.sql.gz | IEM current,current_log,summary_2024 (14 Aug) for AMW+DSM
 iem__cf6data.sql | CF6 Data for DSM 2024 till 26 Jul
