@@ -32,6 +32,12 @@ $do$
 declare
      x int;
      y int;
+     left_edge real = -81.5625;
+     left_center real = -81.5;
+     bottom_edge real = -55.9375;
+     bottom_center real = -55.875;
+     spacing real = 0.125;
+     columns int = 380;
 begin
     for x in 0..379
     loop
@@ -42,9 +48,16 @@ begin
             cell_polygon)
             VALUES (%s, ST_Point(%s, %s, 4326), 't', %s, %s,
             ST_MakeEnvelope(%s, %s, %s, %s, 4326))
-        $f$, x + y * 380, -81.5625 + x * 0.125, -55.9375 + y * 0.125, x, y,
-        -81.5625 + x * 0.125 - 0.0625, -55.9375 + y * 0.125 - 0.0625,
-        -81.5625 + x * 0.125 + 0.0625, -55.9375 + y * 0.125 + 0.0625
+        $f$,
+        x + y * columns,
+        left_center + x * spacing,
+        bottom_center + y * spacing,
+        x,
+        y,
+        left_edge + x * spacing,
+        bottom_edge + y * spacing,
+        left_edge + (x + 1) * spacing,
+        bottom_edge + (y  + 1) * spacing
         );
         end loop;
     end loop;

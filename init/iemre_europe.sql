@@ -12,7 +12,7 @@ CREATE TABLE iem_schema_manager_version(
     version int,
     updated timestamptz
 );
-INSERT into iem_schema_manager_version values (-1, now());
+INSERT into iem_schema_manager_version values (0, now());
 
 -- Our baseline grid
 CREATE TABLE iemre_grid(
@@ -32,6 +32,12 @@ $do$
 declare
      x int;
      y int;
+     left_edge real = -10.0625;
+     left_center real = -10.0;
+     bottom_edge real = 34.9375;
+     bottom_center real = 35.0;
+     spacing real = 0.125;
+     columns int = 400;
 begin
     for x in 0..399
     loop
@@ -42,9 +48,16 @@ begin
             cell_polygon)
             VALUES (%s, ST_Point(%s, %s, 4326), 't', %s, %s,
             ST_MakeEnvelope(%s, %s, %s, %s, 4326))
-        $f$, x + y * 400, -9.9375 + x * 0.125, 35.0625 + y * 0.125, x, y,
-        -9.9375 + x * 0.125 - 0.0625, 35.0625 + y * 0.125 - 0.0625,
-        -9.9375 + x * 0.125 + 0.0625, 35.0625 + y * 0.125 + 0.0625
+        $f$,
+        x + y * columns,
+        left_center + x * spacing,
+        bottom_center + y * spacing,
+        x,
+        y,
+        left_edge + x * spacing,
+        bottom_edge + y * spacing,
+        left_edge + (x + 1) * spacing,
+        bottom_edge + (y  + 1) * spacing
         );
         end loop;
     end loop;
