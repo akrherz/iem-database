@@ -76,6 +76,7 @@ iem__cf6data.sql | CF6 Data for DSM 2024 till 26 Jul
 iem__clidata.sql | CLI Data for DSM 2024 till 26 Jul
 iem__summary_iacoop_241022.sql | Iowa COOP summary data for 22 Oct 2024
 iem__summary2020.sql.gz | Ames, Des Moines summary data for 2020
+iemre__20170102.sql | IEMRE entry for 2 Jan 2017 for pydep
 isuag_daily.sql.gz | ISU Ag Climate station A130209 (Ames)
 isuag__hourly.sql | ISU Ag Climate station A130209 (Ames) 2,000 hourly
 isuag_sm_minute.sql.gz | ISU Soil Moisture minute data 21-25 July 2024
