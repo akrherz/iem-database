@@ -13,6 +13,7 @@ NETWORKS = [
     "IA_ASOS",
     "IACLIMATE",
     "IA_COOP",
+    "IA_COCORAHS",
     "WFO",
     "IA_DCP",
     "ISUSM",
