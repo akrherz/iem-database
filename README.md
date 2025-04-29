@@ -48,6 +48,7 @@ Filename | Contains
 --- | ---
 afos_products.sql.gz | AFDDMX from 10-16 Jul 2024
 asos__000taf.sql | TAF reference table for 20 Aug 2024
+asos__31_Dec_2024.sql | ASOS data for DSM, AMW, BNW for 31 Dec 2024
 asos__AMW_01_10_Aug_2024.aql | Ames data for 1-10 Aug 2024
 asos__taf2024.sql.gz | TAF data for 20 Aug 2024
 asos_alldata.sql.gz | ~2020 data for AMW and DSM
@@ -57,6 +58,7 @@ coop__alldata_IATDSM.sql.gz | climodat IATDSM for 2000-2024(aug 15)
 coop__climate51.sql | climate51 data for IATAME,IATDSM,IA0000
 coop__climate71.sql | climate71 data for IATAME,IATDSM,IA0000
 coop__climate81.sql | climate81 data for IATAME,IATDSM,IA0000
+coop__cocorahs_241231.sql | CoCoRaHS Iowa data for 31 Dec 2024
 coop__elnino.sql | El Nino data till Aug 2024
 coop__nass_quickstats.sql.gz | NASS Quickstats 2007-Aug 2024
 coop__ncei_climdiv_IA0000.sql | NCEI Climdiv data for Iowa Statewide
@@ -76,6 +78,7 @@ iem__cf6data.sql | CF6 Data for DSM 2024 till 26 Jul
 iem__clidata.sql | CLI Data for DSM 2024 till 26 Jul
 iem__summary_iacoop_241022.sql | Iowa COOP summary data for 22 Oct 2024
 iem__summary2020.sql.gz | Ames, Des Moines summary data for 2020
+iem__summary_iacoop_241231.sql | IA COOP summary data for 31 Dec 2024
 iemre__20170102.sql | IEMRE entry for 2 Jan 2017 for pydep
 isuag_daily.sql.gz | ISU Ag Climate station A130209 (Ames)
 isuag__hourly.sql | ISU Ag Climate station A130209 (Ames) 2,000 hourly
