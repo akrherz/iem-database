@@ -5,4 +5,5 @@ copy station_attributes(iemid,attr,value) from STDIN with (format csv);
 37004,SHEF_6HR_SRC,DSXI4
 40174,METAR_RESET_MINUTE,53
 40174,HAS1MIN,1
+41463,IS_AWOS,1
 \.
