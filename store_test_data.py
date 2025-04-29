@@ -37,7 +37,7 @@ def do_stations(network: str):
         timeout=60,
     )
     data = req.json()
-    for dbname in "mesosite iem".split():
+    for dbname in "mesosite iem coop".split():
         pgconn = psycopg.connect(
             f"postgresql://mesonet@localhost/{dbname}?gssencmode=disable"
         )
