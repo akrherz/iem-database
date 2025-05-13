@@ -926,7 +926,7 @@ create table alldata_sigmets(
     expire timestamp with time zone not null,
     product_id varchar(36) not null,
     geom geometry(Polygon, 4326) not null,
-    narrative text,
+    narrative text
 ) partition by range(issue);
 alter table alldata_sigmets owner to mesonet;
 grant all on alldata_sigmets to ldm;
