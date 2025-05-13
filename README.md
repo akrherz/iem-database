@@ -106,7 +106,6 @@ postgis__airmets.sql | Some AIRMETs from 10 Aug 2024
 postgis__cwas.sql | Some Center Weather Advisories from 10 Aug 2024
 postgis__fema_regions.sql.gz | Simplified FEMA Regions
 postgis__sigmets_archive.sql | Some SIGMETs from 10 Aug 2024
-postgis__sigmets_current.sql | Some current SIGMETs to get goosed in CI
 postgis__spc_outlook_geometries.sql.gz | SPC/WPC Outlooks 1-8 Aug 2024
 postgis__sps2024.sql.gz | SPSs from Aug 2024
 postgis_lsrs.sql | DMX LSRs from 2018-06-20,2018-06-21,2024-05-21, One BGM LSR from 2023
