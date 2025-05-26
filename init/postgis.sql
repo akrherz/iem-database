@@ -829,7 +829,7 @@ $do$;
 -- Local Storm Reports
 CREATE TABLE lsrs (
     valid timestamp with time zone,
-    type character(1),
+    type character(1) not null,
     magnitude numeric,
     city character varying(32),
     county character varying(32),
@@ -837,7 +837,7 @@ CREATE TABLE lsrs (
     source character varying(32),
     remark text,
     wfo character(3),
-    typetext character varying(40),
+    typetext character varying(40) not null,
     geom geometry(Point, 4326),
     product_id text,
     product_id_summary text,
