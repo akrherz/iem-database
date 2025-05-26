@@ -390,19 +390,17 @@ $_$;
 CREATE TABLE idot_dashcam_current(
     label varchar(20) UNIQUE not null,
     valid timestamptz,
-    idnum int
+    geom geometry(Point, 4326)
 );
 alter table idot_dashcam_current owner to mesonet;
-SELECT AddGeometryColumn('idot_dashcam_current', 'geom', 4326, 'POINT', 2);
 GRANT SELECT on idot_dashcam_current to nobody;
 
 CREATE TABLE idot_dashcam_log(
     label varchar(20) not null,
     valid timestamptz,
-    idnum int
+    geom geometry(Point, 4326)
 );
 alter table idot_dashcam_log owner to mesonet;
-SELECT AddGeometryColumn('idot_dashcam_log', 'geom', 4326, 'POINT', 2);
 CREATE INDEX idot_dashcam_log_valid_idx on idot_dashcam_log(valid);
 CREATE INDEX idot_dashcam_log_label_idx on idot_dashcam_log(label);
 GRANT SELECT on idot_dashcam_current to nobody;
@@ -419,13 +417,13 @@ BEGIN
 
     -- Label exists, update table
     IF result = 1 THEN
-        UPDATE idot_dashcam_current SET idnum = new.idnum, geom = new.geom,
+        UPDATE idot_dashcam_current SET geom = new.geom,
         valid = new.valid WHERE label = new.label;
     END IF;
 
     -- Insert into log
-    INSERT into idot_dashcam_log(label, valid, idnum, geom) VALUES
-    (new.label, new.valid, new.idnum, new.geom);
+    INSERT into idot_dashcam_log(label, valid, geom) VALUES
+    (new.label, new.valid, new.geom);
     
     -- Stop insert from happening
     IF result = 1 THEN
