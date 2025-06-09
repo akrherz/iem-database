@@ -65,6 +65,15 @@ CREATE TABLE weblog(
 ALTER TABLE weblog OWNER to mesonet;
 GRANT ALL on weblog to nobody;
 
+create table weblog_block_queue(
+    protocol smallint,
+    client_addr inet,
+    target text,
+    x_forwarded_for text,
+    banned boolean DEFAULT 'f'
+);
+alter table weblog_block_queue owner to mesonet;
+
 ---
 --- Store metadata used to drive the /timemachine/
 ---
