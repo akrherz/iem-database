@@ -82,6 +82,7 @@ iem__summary_iacoop_241022.sql | Iowa COOP summary data for 22 Oct 2024
 iem__summary2020.sql.gz | Ames, Des Moines summary data for 2020
 iem__summary_iacoop_241231.sql | IA COOP summary data for 31 Dec 2024
 iemre__20170102.sql | IEMRE entry for 2 Jan 2017 for pydep
+iemre_china__20250721.sql | IEMRE entry for 21 Jul 2025 for pydep
 isuag_daily.sql.gz | ISU Ag Climate station A130209 (Ames)
 isuag__hourly.sql | ISU Ag Climate station A130209 (Ames) 2,000 hourly
 isuag_sm_minute.sql.gz | ISU Soil Moisture minute data 21-25 July 2024
