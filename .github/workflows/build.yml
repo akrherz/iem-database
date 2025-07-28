@@ -6,6 +6,7 @@ on:
   push:
     branches:
       - main
+
 jobs:
   build-linux:
     defaults:
@@ -35,3 +36,13 @@ jobs:
         echo $CR_PAT | docker login ghcr.io -u akrherz --password-stdin
         docker push ghcr.io/akrherz/iem_database:test_data
         docker push ghcr.io/akrherz/iem_database:no_test_data
+
+    - name: Clean up old container images
+      if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+      uses: actions/delete-package-versions@v5
+      with:
+        token: ${{ secrets.CR_PAT }}
+        package-name: 'iem_database'
+        package-type: 'container'
+        min-versions-to-keep: 10
+        delete-only-untagged-versions: true
