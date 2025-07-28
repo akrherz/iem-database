@@ -66,6 +66,7 @@ coop__ncei_climdiv_IA0000.sql | NCEI Climdiv data for Iowa Statewide
 coop_ncei_climate71_ames.sql | NCEI 71 Climatology for Ames
 coop_ncei_climate81_ames.sql | NCEI 81 Climatology for Ames
 coop_ncei_climate91_ames.sql | NCEI 91 Climatology for Ames
+dep_china__pydeptesting.sql | pydep test entry for climate_files
 hads_alldata.sql.gz | 2024 weather variables for EOKI4
 hads_snowfall.sql | 10 Nov 2023 12 UTC fake entries for DNKI4
 hml__000hml_forecast.sql | Guttenburg GTTI4 20-23 Aug 2024
