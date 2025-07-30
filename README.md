@@ -102,6 +102,8 @@ other__feel_data.sql | ISU FEEL data for 14 Apr 2025
 other__purpleair.sql | purpleair data for 10 Aug 2024
 other__ss_bubbler.sql | data for 13 Aug 2012
 other__ss_logger_data.sql | 2012-2014 random data
+postgis__00ugcs.sql.gz | NWS UGC database as of 30 Jul 2025
+postgis_00ugcs.sql | A faked UGC entry to match warnings below
 postgis_mcd.sql.gz | MCDs for much of July 2024
 postgis_pireps.sql | A few PIREPs on 31 July 2024
 postgis__000spc_outlook.sql | SPC/WPC Outlook 1-8 Aug 2024
