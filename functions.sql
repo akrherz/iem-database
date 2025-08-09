@@ -7,6 +7,12 @@
 ---    LANGUAGE sql
 ---    AS $_$SELECT high from alldata WHERE station = $1 and day = $2$_$;
 
+create or replace function abs(interval)
+returns interval
+as $$
+select greatest(-$1,$1);
+$$ language sql immutable;
+
 CREATE OR REPLACE FUNCTION doy_after_july1(date date)
 RETURNS integer
 LANGUAGE plpgsql

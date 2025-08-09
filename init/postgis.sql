@@ -1083,6 +1083,11 @@ CREATE TABLE spc_outlook(
     day smallint NOT NULL,
     cycle smallint NOT NULL
 );
+alter table spc_outlook add constraint issue_abs check
+    (abs(product_issue - issue) < '10 days'::interval);
+alter table spc_outlook add constraint expire_abs check
+    (abs(product_issue - expire) < '10 days'::interval);
+
 CREATE INDEX spc_outlook_product_issue on spc_outlook(product_issue);
 CREATE INDEX spc_outlook_issue on spc_outlook(issue);
 CREATE INDEX spc_outlook_expire on spc_outlook(expire);
