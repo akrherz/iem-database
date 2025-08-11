@@ -17,3 +17,6 @@ RUN initdb -D /var/lib/postgresql/17/data --auth-host=trust --auth-local=trust
 
 # Add pg_hba.conf entry to allow github actions to connect
 RUN echo "host all all 172.0.0.0/8 trust" >> /var/lib/postgresql/17/data/pg_hba.conf
+
+# GH286 Trim pg_wal size to 100MB
+RUN echo "max_wal_size = 100MB" >> /var/lib/postgresql/17/data/postgresql.conf
