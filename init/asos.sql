@@ -8,7 +8,7 @@ insert into spatial_ref_sys select 9311, 'EPSG', 9311, srtext, proj4text from sp
 CREATE TABLE iem_schema_manager_version(
     version int,
     updated timestamptz);
-INSERT into iem_schema_manager_version values (19, now());
+INSERT into iem_schema_manager_version values (20, now());
 
 ---
 --- Store unknown stations
@@ -238,6 +238,23 @@ GRANT SELECT on taf to nobody;
 CREATE INDEX taf_idx on taf(station, valid);
 grant all on taf_id_seq to ldm;
 
+create table taf_ftype(
+    ftype smallint not null,
+    abbr text not null,
+    label text not null
+);
+alter table taf_ftype owner to mesonet;
+grant select on taf_ftype to nobody, ldm;
+create unique index taf_ftype_idx on taf_ftype(ftype);
+
+insert into taf_ftype(ftype, abbr, label) values
+(0, 'OB', 'Observation'),
+(1, 'FM', 'Forecast'),
+(2, 'TEMPO', 'Temporary'),
+(3, 'PROB30', 'Probability 30'),
+(4, 'PROB40', 'Probability 40'),
+(5, 'BECMG', 'Becoming');
+
 CREATE TABLE taf_forecast(
     taf_id int REFERENCES taf(id),
     valid timestamptz,
@@ -253,7 +270,8 @@ CREATE TABLE taf_forecast(
     skyl int[],
     ws_level int,
     ws_drct smallint,
-    ws_sknt smallint
+    ws_sknt smallint,
+    ftype smallint REFERENCES taf_ftype(ftype)
 ) PARTITION by range(valid);
 ALTER TABLE taf_forecast OWNER to mesonet;
 GRANT ALL on taf_forecast to ldm;
