@@ -259,7 +259,6 @@ CREATE TABLE taf_forecast(
     taf_id int REFERENCES taf(id),
     valid timestamptz,
     raw text,
-    is_tempo boolean,
     end_valid timestamptz,
     sknt smallint,
     drct smallint,
@@ -271,7 +270,7 @@ CREATE TABLE taf_forecast(
     ws_level int,
     ws_drct smallint,
     ws_sknt smallint,
-    ftype smallint REFERENCES taf_ftype(ftype)
+    ftype smallint REFERENCES taf_ftype(ftype) not null
 ) PARTITION by range(valid);
 ALTER TABLE taf_forecast OWNER to mesonet;
 GRANT ALL on taf_forecast to ldm;
