@@ -8,7 +8,7 @@ INSERT into iem_schema_manager_version values (10, now());
 
 CREATE TABLE products(
   data text,
-  pil char(6),
+  pil char(6) not null,
   entered timestamptz,
   source char(4),
   wmo char(6),
