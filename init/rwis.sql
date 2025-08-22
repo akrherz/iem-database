@@ -148,7 +148,7 @@ begin
         $f$, mytable);
         -- Indices
         execute format($f$
-            CREATE INDEX %s_station_idx on %s(station)
+            CREATE INDEX %s_iemid_idx on %s(iemid)
         $f$, mytable, mytable);
         execute format($f$
             CREATE INDEX %s_valid_idx on %s(valid)
@@ -181,7 +181,7 @@ begin
         $f$, mytable);
         -- Indices
         execute format($f$
-            CREATE INDEX %s_station_idx on %s(station)
+            CREATE INDEX %s_iemid_idx on %s(iemid)
         $f$, mytable, mytable);
         execute format($f$
             CREATE INDEX %s_valid_idx on %s(valid)
@@ -214,7 +214,7 @@ begin
         $f$, mytable);
         -- Indices
         execute format($f$
-            CREATE INDEX %s_station_idx on %s(station)
+            CREATE INDEX %s_iemid_idx on %s(iemid)
         $f$, mytable, mytable);
         execute format($f$
             CREATE INDEX %s_valid_idx on %s(valid)
