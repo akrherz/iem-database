@@ -4,7 +4,7 @@ CREATE EXTENSION postgis;
 CREATE TABLE iem_schema_manager_version(
     version int,
     updated timestamptz);
-INSERT into iem_schema_manager_version values (9, now());
+insert into iem_schema_manager_version values (10, now());
 
 CREATE TABLE stations(
     id varchar(64),
@@ -52,7 +52,7 @@ create UNIQUE index stations_iemid_idx on stations(iemid);
 
 
 CREATE TABLE sensors(
-  station varchar(5),
+  iemid int references stations(iemid),
   sensor0 varchar(100),
   sensor1 varchar(100),
   sensor2 varchar(100),
@@ -61,7 +61,7 @@ CREATE TABLE sensors(
 GRANT SELECT on sensors to nobody;
 
 CREATE TABLE alldata(
-  station varchar(6),
+  iemid int references stations(iemid),
   valid timestamptz,
   tmpf real,
   dwpf real,
@@ -87,7 +87,7 @@ GRANT ALL on alldata to ldm;
 GRANT SELECT on alldata to nobody;
 
 CREATE TABLE alldata_traffic(
-  station char(5),
+  iemid int references stations(iemid),
   valid timestamp with time zone,
   lane_id smallint,
   avg_speed real,
@@ -102,7 +102,7 @@ GRANT select on alldata_traffic to nobody;
 
 
 CREATE TABLE alldata_soil(
-  station char(5),
+  iemid int references stations(iemid),
   valid timestamp with time zone,
   tmpf_1in real,
   tmpf_3in real,
