@@ -125,7 +125,7 @@ postgis_watches2024.sql.gz | watches for 2024 till 5 Aug 2024
 radar__nexrad_attributes_2024.sql.gz | sampled attributes from 10 Aug 2024
 radar__nexrad_attributes.sql.gz | nexrad attributes current (set to loadtime)
 raob_240719.sql.gz | All soundings from 19 July 2024 12 UTC
-rwis_atmos.sql.gz | RWIS met data for 1 July 2024
+rwis_atmos.sql.gz | Iowa RWIS met data for 1 July 2024
 rwis_soil.sql | Iowa RWIS soil data for 1 July 2024
 rwis_traffic.sql | Iowa RWIS traffic data for 1 July 2024
 talltowers_20160915.sql | Talltowers data from 15 Sep 2016
