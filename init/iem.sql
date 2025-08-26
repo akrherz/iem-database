@@ -392,6 +392,35 @@ CREATE TABLE current(
     tsoil_64in_f real,
     tsoil_128in_f real
 );
+
+-- Condition Relative Humidty to some value gt 0 and le 102 (forgive some)
+create or replace function rh_condition()
+returns trigger as $$
+declare
+    v_relh double precision;
+begin
+    if NEW.relh is null then
+        return NEW;
+    end if;
+    begin
+        v_relh := (NEW.relh)::double precision;
+    exception when others then
+        NEW.relh := null;
+        return NEW;
+    end;
+    if v_relh <= 0.0 or v_relh > 102.0 then
+        NEW.relh := null;
+    else
+        NEW.relh := v_relh;  -- I suppose we could make this an int, meh
+    end if;
+    return NEW;
+END;
+$$ language plpgsql;
+
+create trigger trg_current_rh_condition
+before insert or update on current
+for each row execute function rh_condition();
+
 ALTER TABLE current OWNER to mesonet;
 GRANT ALL on current to ldm;
 CREATE UNIQUE index current_iemid_idx on current(iemid);
