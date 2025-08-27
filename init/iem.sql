@@ -504,6 +504,11 @@ CREATE TABLE current_log (
     tsoil_64in_f real,
     tsoil_128in_f real
 );
+
+create trigger trg_current_log_rh_condition
+before insert or update on current_log
+for each row execute function rh_condition();
+
 GRANT ALL on current_log to mesonet,ldm;
 GRANT SELECT on current_log to nobody;
 CREATE INDEX current_log_updated_idx on current_log(updated);
