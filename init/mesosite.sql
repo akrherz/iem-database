@@ -599,7 +599,8 @@ CREATE TABLE iemrasters(
   filename_template varchar,
   cf_long_name varchar
 );
-GRANT SELECT on iemrasters to nobody;
+alter table iemrasters owner to mesonet;
+GRANT SELECT on iemrasters to nobody,ldm;
 
 -- Storage of color tables and values
 CREATE TABLE iemrasters_lookup(
@@ -610,7 +611,8 @@ CREATE TABLE iemrasters_lookup(
   g smallint,
   b smallint
 );
-GRANT SELECT on iemrasters_lookup to nobody;
+alter table iemrasters_lookup owner to mesonet;
+GRANT SELECT on iemrasters_lookup to nobody,ldm;
 
 -- Storage of Autoplot timings and such
 CREATE TABLE autoplot_timing(
