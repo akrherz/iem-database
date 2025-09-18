@@ -104,6 +104,7 @@ other__feel_data.sql | ISU FEEL data for 14 Apr 2025
 other__purpleair.sql | purpleair data for 10 Aug 2024
 other__ss_bubbler.sql | data for 13 Aug 2012
 other__ss_logger_data.sql | 2012-2014 random data
+other__t2025.sql | WMO BUFR SRF data for 0-756-1-456700 on 17 Sep 2025
 postgis__00ugcs.sql.gz | NWS UGC database as of 30 Jul 2025, with hard coded 1980 start date
 postgis_00ugcs.sql | A faked UGC entry to match warnings below
 postgis_mcd.sql.gz | MCDs for much of July 2024
