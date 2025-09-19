@@ -22,6 +22,7 @@ NETWORKS = [
     "RAOB",
     "NWSCLI",
     "NEXRAD",
+    "NCEI91",
 ]
 
 
