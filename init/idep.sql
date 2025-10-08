@@ -250,7 +250,6 @@ CREATE TABLE fields(
     huc12 char(12),
     fbndid int,
     acres real,
-    isag int,
     geom geometry(MultiPolygon, 5070),
     landuse varchar(32),
     management varchar(32),
