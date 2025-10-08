@@ -1,4 +1,4 @@
-copy field_operations(field_id,year,till1,till2,till3,plant) from stdin with (csv header);
+copy field_operations(field_id,year,till1,till2,till3,plant) from stdin with (format csv);
 58263781,2025,2025-06-10,2025-06-11,2025-06-12,2025-06-13
 58263782,2025,2025-06-10,2025-06-11,,2025-06-12
 58263783,2025,2025-06-10,,,2025-06-11
