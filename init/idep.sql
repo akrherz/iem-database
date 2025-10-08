@@ -254,7 +254,15 @@ CREATE TABLE fields(
     geom geometry(MultiPolygon, 5070),
     landuse varchar(32),
     management varchar(32),
-    genlu smallint references general_landuse(id) not null
+    genlu smallint references general_landuse(id) not null,
+    man_2017_2022 char(6),
+    residue2017 smallint,
+    residue2018 smallint,
+    residue2019 smallint,
+    residue2020 smallint,
+    residue2021 smallint,
+    residue2022 smallint,
+    isag int
 );
 ALTER TABLE fields OWNER to mesonet;
 GRANT SELECT on fields to nobody;
