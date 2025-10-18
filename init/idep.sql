@@ -15,7 +15,7 @@ CREATE TABLE iem_schema_manager_version(
     updated timestamptz
 );
 ALTER TABLE iem_schema_manager_version OWNER to mesonet;
-insert into iem_schema_manager_version values (35, now());
+insert into iem_schema_manager_version values (36, now());
 
 -- Storage of DEP versioning dailyerosion/dep#179
 create table dep_version(
@@ -86,7 +86,9 @@ CREATE TABLE gssurgo(
     hydrogroup varchar(8),
     plastic_limit real,
     wepp_min_sw real,
-    wepp_max_sw real
+    wepp_max_sw real,
+    wepp_min_sw1 real,
+    wepp_max_sw1 real
 );
 ALTER TABLE gssurgo OWNER to mesonet;
 GRANT SELECT on gssurgo to nobody;
