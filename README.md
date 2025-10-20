@@ -55,7 +55,7 @@ asos_alldata.sql.gz | ~2020 data for AMW and DSM
 asos1min_DSMAMW.sql.gz | One Minute ASOS 10-12 July 2024 DSM+AMW
 coop__IA0000_IATAME_2000_2024.sql.gz | climodat IA0000,IATAME,IA0200 for 2000-2024(aug 25)
 coop__IAC005_2000_2024.sql | climodat IAC005 (Central Iowa) 2000-2024
-coop__alldata_IATDSM.sql.gz | climodat IATDSM for 2000-2024(aug 15)
+coop__alldata_IATDSM.sql.gz | climodat IATDSM, IA2203 for 2000-2024(aug 15)
 coop__climate51.sql | climate51 data for IATAME,IATDSM,IA0000
 coop__climate71.sql | climate71 data for IATAME,IATDSM,IA0000
 coop__climate81.sql | climate81 data for IATAME,IATDSM,IA0000
