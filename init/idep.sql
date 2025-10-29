@@ -88,7 +88,8 @@ CREATE TABLE gssurgo(
     wepp_min_sw real,
     wepp_max_sw real,
     wepp_min_sw1 real,
-    wepp_max_sw1 real
+    wepp_max_sw1 real,
+    textureclass text
 );
 ALTER TABLE gssurgo OWNER to mesonet;
 GRANT SELECT on gssurgo to nobody;
