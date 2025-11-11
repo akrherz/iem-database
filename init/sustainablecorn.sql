@@ -529,7 +529,7 @@ BEGIN
                 (value = new.value or (value is null and new.value is null))
                );
 
-	-- Data is duplication, no-op
+    -- Data is duplication, no-op
     IF result = 1 THEN
         RETURN null;
     END IF;
@@ -539,14 +539,14 @@ BEGIN
                 varname = new.varname and year = new.year
                 and depth = new.depth and subsample = new.subsample);
 
-	-- Data is a new value!
+    -- Data is a new value!
     IF result = 1 THEN
-    	UPDATE soil_data SET value = new.value, updated = now()
-    	WHERE uniqueid = new.uniqueid and plotid = new.plotid and
+        UPDATE soil_data SET value = new.value, updated = now()
+        WHERE uniqueid = new.uniqueid and plotid = new.plotid and
                 varname = new.varname and year = new.year and
                 depth = new.depth and subsample = new.subsample;
         INSERT into soil_data_log SELECT * from soil_data WHERE
-        		uniqueid = new.uniqueid and plotid = new.plotid and
+                uniqueid = new.uniqueid and plotid = new.plotid and
                 varname = new.varname and year = new.year and depth = new.depth
                 and subsample = new.subsample;
         RETURN null;
@@ -611,7 +611,7 @@ BEGIN
                 (value = new.value or (value is null and new.value is null))
                );
 
-	-- Data is duplication, no-op
+    -- Data is duplication, no-op
     IF result = 1 THEN
         RETURN null;
     END IF;
@@ -620,13 +620,13 @@ BEGIN
                 where uniqueid = new.uniqueid and plotid = new.plotid and
                 varname = new.varname and year = new.year);
 
-	-- Data is a new value!
+    -- Data is a new value!
     IF result = 1 THEN
-    	UPDATE agronomic_data SET value = new.value, updated = now()
-    	WHERE uniqueid = new.uniqueid and plotid = new.plotid and
+        UPDATE agronomic_data SET value = new.value, updated = now()
+        WHERE uniqueid = new.uniqueid and plotid = new.plotid and
                 varname = new.varname and year = new.year;
         INSERT into agronomic_data_log SELECT * from agronomic_data WHERE
-        		uniqueid = new.uniqueid and plotid = new.plotid and
+                uniqueid = new.uniqueid and plotid = new.plotid and
                 varname = new.varname and year = new.year;
         RETURN null;
     END IF;
