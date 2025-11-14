@@ -9,6 +9,7 @@ import psycopg
 import requests
 
 NETWORKS = [
+    "CWSU",
     "IA_RWIS",
     "IA_ASOS",
     "IACLIMATE",
