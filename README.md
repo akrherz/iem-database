@@ -49,7 +49,8 @@ Filename | Contains
 afos_products.sql.gz | AFDDMX from 10-16 Jul 2024
 asos__000taf.sql | TAF reference table for 21 Aug 2024 UTC
 asos__31_Dec_2024.sql | ASOS data for DSM, AMW, BNW for 31 Dec 2024
-asos__AMW_01_10_Aug_2024.aql | Ames data for 1-10 Aug 2024
+asos__AMW_01_10_Aug_2024.sql | Ames data for 1-10 Aug 2024
+asos__MCW_12_25_Dec_2022.sql.gz | Mason City for 21-24 Dec 2022 (Blizzard)
 asos__taf2024.sql.gz | TAF data for 21 Aug 2024 UTC
 asos_alldata.sql.gz | ~2020 data for AMW and DSM
 asos1min_DSMAMW.sql.gz | One Minute ASOS 10-12 July 2024 DSM+AMW
