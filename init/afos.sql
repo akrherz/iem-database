@@ -7,12 +7,12 @@ CREATE TABLE iem_schema_manager_version(
 INSERT into iem_schema_manager_version values (10, now());
 
 CREATE TABLE products(
-  data text,
-  pil char(6) not null,
-  entered timestamptz,
-  source char(4),
-  wmo char(6),
-  bbb varchar(3)
+    data text,
+    pil char(6) not null,
+    entered timestamptz,
+    source char(4),
+    wmo char(6),
+    bbb varchar(3)
 ) PARTITION by RANGE (entered);
 ALTER TABLE products OWNER to mesonet;
 GRANT ALL on products to ldm;
