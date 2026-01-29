@@ -10,7 +10,7 @@ insert into spatial_ref_sys
 CREATE TABLE iem_schema_manager_version(
     version int,
     updated timestamptz);
-INSERT into iem_schema_manager_version values (74, now());
+INSERT into iem_schema_manager_version values (75, now());
 
 ---
 --- TABLES THAT ARE LOADED VIA shp2pgsql
@@ -1102,21 +1102,27 @@ GRANT ALL on spc_outlook_id_seq to mesonet,ldm;
 CREATE TABLE spc_outlook_thresholds(
   priority smallint UNIQUE,
   threshold varchar(4) UNIQUE);
+alter table spc_outlook_thresholds owner to mesonet;
 GRANT SELECT on spc_outlook_thresholds to nobody;
 GRANT ALL on spc_outlook_thresholds to ldm,mesonet;
 
 INSERT into spc_outlook_thresholds VALUES 
- (10, '0.02'),
- (20, '0.05'),
- (30, '0.10'),
- (40, '0.15'),
- (50, '0.25'),
- (60, '0.30'),
- (70, '0.35'),
- (80, '0.40'),
- (90, '0.45'),
- (100, '0.60'),
- (101, 'SIGN'),
+ (2, '0.02'),
+ (5, '0.05'),
+ (10, '0.10'),
+ (15, '0.15'),
+ (25, '0.25'),
+ (30, '0.30'),
+ (35, '0.35'),
+ (40, '0.40'),
+ (45, '0.45'),
+ (60, '0.60'),
+ (75, '0.75'),
+ (90, '0.90'),
+ (101, 'CIG1'),
+ (102, 'CIG2'),
+ (103, 'CIG3'),
+ (104, 'SIGN'),
  (110, 'TSTM'),
  (120, 'MRGL'),
  (130, 'SLGT'),
