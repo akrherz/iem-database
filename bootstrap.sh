@@ -7,7 +7,7 @@ do
 /usr/bin/psql -v "ON_ERROR_STOP=1" -c "create user $myuser;" -h localhost -U postgres
 done
 
-for db in afos mesosite postgis snet talltowers \
+for db in afos mesosite postgis snet talltowers iembot \
 asos asos1min hads hml mos rwis squaw \
 awos iem other scan wepp raob id3b iemre_china iemre_europe iemre_sa \
 coop isuag portfolio smos iemre radar nldn sustainablecorn td idep uscrn \
