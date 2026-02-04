@@ -1,5 +1,5 @@
 
-select create_iembot_channel('AFDDMX', 'Area Forecast Discussion DMX');
+select get_or_create_iembot_channel_id('AFDDMX');
 
 --
 

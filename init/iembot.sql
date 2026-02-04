@@ -40,13 +40,17 @@ grant all on iembot_channels_id_seq to nobody;
 grant all on iembot_channels to nobody;
 
 -- Helper function to make inserts easier
-create or replace function create_iembot_channel(chname varchar, chdesc text)
+create or replace function get_or_create_iembot_channel_id(chname varchar)
 returns int as $$
 declare
     chan_id int;
 begin
+    select id into chan_id from iembot_channels where channel_name = chname;
+    if chan_id is not null then
+        return chan_id;
+    end if;
     insert into iembot_channels(channel_name, "description")
-    values (chname, chdesc) returning id into chan_id;
+    values (chname, chname) returning id into chan_id;
     return chan_id;
 end;
 $$ language plpgsql;
