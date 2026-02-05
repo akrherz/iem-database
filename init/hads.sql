@@ -88,7 +88,8 @@ CREATE TABLE raw_inbound_tmp(
     depth smallint,
     unit_convention char(1),
     qualifier char(1),
-    dv_interval interval
+    dv_interval interval,
+    updated timestamptz
 );
 ALTER TABLE raw_inbound_tmp OWNER to mesonet;
 GRANT ALL on raw_inbound_tmp to ldm;
