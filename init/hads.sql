@@ -80,20 +80,6 @@ CREATE TABLE raw_inbound(
 ALTER TABLE raw_inbound OWNER to mesonet;
 GRANT ALL on raw_inbound to ldm;
 
-CREATE TABLE raw_inbound_tmp(
-	station varchar(8),
-	valid timestamptz,
-	key varchar(11),
-	value real,
-    depth smallint,
-    unit_convention char(1),
-    qualifier char(1),
-    dv_interval interval,
-    updated timestamptz
-);
-ALTER TABLE raw_inbound_tmp OWNER to mesonet;
-GRANT ALL on raw_inbound_tmp to ldm;
-
 -- Create the raw partitioned tables
 CREATE TABLE raw(
     station varchar(8),
