@@ -6,6 +6,9 @@ This repo serves three purposes.
 2. Provide testing data to load into that schema to support CIs.
 3. Generate docker images used within these same project repos CIs.
 
+[![pre-commit.ci status](https://results.pre-commit.ci/badge/github/akrherz/iem-database/main.svg)](https://results.pre-commit.ci/latest/github/akrherz/iem-database/main)
+
+
 ## Docker Images
 
 See [GHCR](https://github.com/akrherz/iem-database/pkgs/container/iem_database)
