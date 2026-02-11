@@ -271,6 +271,45 @@ GRANT SELECT on fields to nobody;
 CREATE INDEX fields_huc12_idx on fields(huc12);
 CREATE INDEX fields_geom_idx on fields USING GIST(geom);
 
+-- Storage of wind results by field
+create table field_wind_erosion_results(
+    field_id int references fields(field_id),
+    scenario int references scenarios(id),
+    "valid" date,
+    erosion_kgm2 real,
+    avg_wmps real,
+    max_wmps real,
+    drct real
+) partition by range(valid);
+alter table field_wind_erosion_results owner to mesonet;
+grant select on field_wind_erosion_results to nobody;
+create index field_wind_erosion_results_valid_idx
+on field_wind_erosion_results(valid);
+create index field_wind_erosion_results_field_idx
+on field_wind_erosion_results(field_id);
+
+do
+$do$
+declare
+     year int;
+begin
+    for year in 2007..2030
+    loop
+        execute format($f$
+            create table field_wind_erosion_results_%s partition of field_wind_erosion_results
+            for values from ('%s-01-01') to ('%s-01-01')
+            $f$, year, year, year + 1);
+        execute format($f$
+            alter table field_wind_erosion_results_%s owner to mesonet
+        $f$, year);
+        execute format($f$
+            grant select on field_wind_erosion_results_%s to nobody
+        $f$, year);
+    end loop;
+end;
+$do$;
+
+
 -- Store of Flowpath OFE information
 CREATE TABLE flowpath_ofes(
     flowpath int REFERENCES flowpaths(fid),
