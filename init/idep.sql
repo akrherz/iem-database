@@ -284,9 +284,9 @@ create table field_wind_erosion_results(
 alter table field_wind_erosion_results owner to mesonet;
 grant select on field_wind_erosion_results to nobody;
 create index field_wind_erosion_results_valid_idx
-   on field_wind_erosion_results(valid);
+on field_wind_erosion_results(valid);
 create index field_wind_erosion_results_field_idx
-   on field_wind_erosion_results(field_id);
+on field_wind_erosion_results(field_id);
 
 do
 $do$
