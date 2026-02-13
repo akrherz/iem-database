@@ -1,20 +1,21 @@
 CREATE EXTENSION postgis;
 -- Boilerplate IEM schema_manager_version, the version gets incremented each
 -- time we make an upgrade script
-CREATE TABLE iem_schema_manager_version(
-    version int,
-    updated timestamptz);
-insert into iem_schema_manager_version values (10, now());
+CREATE TABLE iem_schema_manager_version (
+    version int, -- noqa
+    updated timestamptz
+);
+INSERT INTO iem_schema_manager_version VALUES (10, now());
 
-CREATE TABLE stations(
+CREATE TABLE stations (
     id varchar(64),
     synop int,
-    name varchar(64),
+    name varchar(64), -- noqa
     state char(2),
     country char(2),
     elevation real,
     network varchar(20),
-    online boolean,
+    online boolean, -- noqa
     params varchar(300),
     county varchar(50),
     plot_name varchar(64),
@@ -27,7 +28,7 @@ CREATE TABLE stations(
     archive_end date,
     modified timestamp with time zone,
     tzname varchar(32),
-    iemid SERIAL,
+    iemid serial,
     metasite boolean,
     sigstage_low real,
     sigstage_action real,
@@ -43,88 +44,88 @@ CREATE TABLE stations(
     temp24_hour smallint,
     precip24_hour smallint,
     wigos varchar(64),
-    geom geometry(POINT, 4326)
+    geom GEOMETRY (POINT, 4326)
 );
-alter table stations owner to mesonet;
-grant select on stations to ldm,nobody;
-CREATE UNIQUE index stations_idx on stations(id, network);
-create UNIQUE index stations_iemid_idx on stations(iemid);
+ALTER TABLE stations OWNER TO mesonet;
+GRANT SELECT ON stations TO ldm, nobody;
+CREATE UNIQUE INDEX stations_idx ON stations (id, network);
+CREATE UNIQUE INDEX stations_iemid_idx ON stations (iemid);
 
 
-CREATE TABLE sensors(
-  iemid int references stations(iemid),
-  sensor0 varchar(100),
-  sensor1 varchar(100),
-  sensor2 varchar(100),
-  sensor3 varchar(100)
+CREATE TABLE sensors (
+    iemid int REFERENCES stations (iemid),
+    sensor0 varchar(100),
+    sensor1 varchar(100),
+    sensor2 varchar(100),
+    sensor3 varchar(100)
 );
-GRANT SELECT on sensors to nobody;
+GRANT SELECT ON sensors TO nobody;
 
-CREATE TABLE alldata(
-  iemid int references stations(iemid),
-  valid timestamptz,
-  tmpf real,
-  dwpf real,
-  drct smallint,
-  sknt real,
-  tfs0 real,
-  tfs1 real,
-  tfs2 real,
-  tfs3 real,
-  subf real,
-  gust real,
-  tfs0_text text,
-  tfs1_text text,
-  tfs2_text text,
-  tfs3_text text,
-  pcpn real,
-  vsby real,
-  feel real,
-  relh real
-) PARTITION by range(valid);
-ALTER TABLE alldata OWNER to mesonet;
-GRANT ALL on alldata to ldm;
-GRANT SELECT on alldata to nobody;
+CREATE TABLE alldata (
+    iemid int REFERENCES stations (iemid),
+    valid timestamptz, -- noqa
+    tmpf real,
+    dwpf real,
+    drct smallint,
+    sknt real,
+    tfs0 real,
+    tfs1 real,
+    tfs2 real,
+    tfs3 real,
+    subf real,
+    gust real,
+    tfs0_text text,
+    tfs1_text text,
+    tfs2_text text,
+    tfs3_text text,
+    pcpn real,
+    vsby real,
+    feel real,
+    relh real
+) PARTITION BY RANGE (valid);
+ALTER TABLE alldata OWNER TO mesonet;
+GRANT ALL ON alldata TO ldm;
+GRANT SELECT ON alldata TO nobody;
 
-CREATE TABLE alldata_traffic(
-  iemid int references stations(iemid),
-  valid timestamp with time zone,
-  lane_id smallint,
-  avg_speed real,
-  avg_headway real,
-  normal_vol real,
-  long_vol real,
-  occupancy real
-) PARTITION by range(valid);
-ALTER TABLE alldata_traffic OWNER to mesonet;
-GRANT ALL on alldata_traffic to ldm;
-GRANT select on alldata_traffic to nobody;
+CREATE TABLE alldata_traffic (
+    iemid int REFERENCES stations (iemid),
+    valid timestamp with time zone,  --noqa
+    lane_id smallint,
+    avg_speed real,
+    avg_headway real,
+    normal_vol real,
+    long_vol real,
+    occupancy real
+) PARTITION BY RANGE (valid);
+ALTER TABLE alldata_traffic OWNER TO mesonet;
+GRANT ALL ON alldata_traffic TO ldm;
+GRANT SELECT ON alldata_traffic TO nobody;
 
 
-CREATE TABLE alldata_soil(
-  iemid int references stations(iemid),
-  valid timestamp with time zone,
-  tmpf_1in real,
-  tmpf_3in real,
-  tmpf_6in real,
-  tmpf_9in real,
-  tmpf_12in real,
-  tmpf_18in real,
-  tmpf_24in real,
-  tmpf_30in real,
-  tmpf_36in real,
-  tmpf_42in real,
-  tmpf_48in real,
-  tmpf_54in real,
-  tmpf_60in real,
-  tmpf_66in real,
-  tmpf_72in real
-) PARTITION by range(valid);
-ALTER TABLE alldata_soil OWNER to mesonet;
-GRANT ALL on alldata_soil to ldm;
-GRANT select on alldata_soil to nobody;
+CREATE TABLE alldata_soil (
+    iemid int REFERENCES stations (iemid),
+    valid timestamp with time zone, -- noqa
+    tmpf_1in real,
+    tmpf_3in real,
+    tmpf_6in real,
+    tmpf_9in real,
+    tmpf_12in real,
+    tmpf_18in real,
+    tmpf_24in real,
+    tmpf_30in real,
+    tmpf_36in real,
+    tmpf_42in real,
+    tmpf_48in real,
+    tmpf_54in real,
+    tmpf_60in real,
+    tmpf_66in real,
+    tmpf_72in real
+) PARTITION BY RANGE (valid);
+ALTER TABLE alldata_soil OWNER TO mesonet;
+GRANT ALL ON alldata_soil TO ldm;
+GRANT SELECT ON alldata_soil TO nobody;
 
-do
+DO
 $do$
 declare
      year int;
@@ -157,7 +158,7 @@ begin
 end;
 $do$;
 
-do
+DO
 $do$
 declare
      year int;
@@ -190,7 +191,7 @@ begin
 end;
 $do$;
 
-do
+DO
 $do$
 declare
      year int;
