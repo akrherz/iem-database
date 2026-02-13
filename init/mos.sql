@@ -1,13 +1,14 @@
 -- Boilerplate IEM schema_manager_version, the version gets incremented each
 -- time we make an upgrade script
-CREATE TABLE iem_schema_manager_version(
-    version int,
-    updated timestamptz);
-INSERT into iem_schema_manager_version values (11, now());
+CREATE TABLE iem_schema_manager_version (
+    version int,  -- noqa
+    updated timestamptz
+);
+INSERT INTO iem_schema_manager_version VALUES (11, now());
 
 CREATE TABLE model_gridpoint (
     station character varying(4),
-    model character varying(12),
+    model character varying(12), -- noqa
     runtime timestamp with time zone,
     ftime timestamp with time zone,
     sbcape real,
@@ -15,12 +16,12 @@ CREATE TABLE model_gridpoint (
     pwater real,
     precipcon real,
     precip real
-) PARTITION by range(runtime);
-ALTER TABLE model_gridpoint OWNER to mesonet;
-GRANT ALL on model_gridpoint to ldm;
-GRANT SELECT on model_gridpoint to nobody;
+) PARTITION BY RANGE (runtime);
+ALTER TABLE model_gridpoint OWNER TO mesonet;
+GRANT ALL ON model_gridpoint TO ldm;
+GRANT SELECT ON model_gridpoint TO nobody;
 
-do
+DO
 $do$
 declare
      year int;
@@ -50,86 +51,86 @@ begin
 end;
 $do$;
 
-CREATE TABLE alldata(
-  station text,
- model character varying(12)  ,
- runtime timestamp with time zone ,
- ftime  timestamp with time zone ,
- n_x   smallint           ,
- tmp    smallint             ,
- dpt     smallint               ,
- cld    character(2)         ,
- wdr    smallint             ,
- wsp   smallint          ,
- p06   smallint             ,
- p12    smallint             ,
- q06   smallint              ,
- q12   smallint       ,
- t06_1   smallint         ,
- t06_2   smallint        ,
- t12_1   smallint         ,
- t12_2   smallint     ,
- snw    smallint         ,
- cig    smallint      ,
- vis   smallint          ,
- obv  character(2)  ,
- poz    smallint           ,
- pos    smallint        ,
- typ    character(2),
-  sky smallint,
-  gst smallint,
-  t03 smallint,
-  pzr smallint,
-  psn smallint,
-  ppl smallint,
-  pra smallint,
-  s06 smallint,
-  slv smallint,
-  i06 smallint,
-  lcb smallint,
-  swh smallint,
-  dur smallint,
-  mht smallint,
-  twd smallint,
-  tws smallint,
-  hid smallint,
-  sol smallint,
-  q24 smallint,
-  p24 smallint,
-  t24 smallint,
-  ccg smallint,
-  ppo smallint,
-  pco char(1),
-  cvs smallint,
-  lp1 smallint,
-  lc1 char(1),
-  cp1 smallint,
-  cc1 char(1),
-  s12 smallint,
-  i12 smallint,
-  s24 smallint,
-  pzp smallint,
-  prs smallint,
-  txn smallint,
-  xnd smallint,
-  tsd smallint,
-  dsd smallint,
-  ssd smallint,
-  gsd smallint,
-  ifc smallint,
-  ifv smallint,
-  mvc smallint,
-  mvv smallint,
-  liv smallint,
-  wsd smallint,
-  p01 smallint,
-  pc1 char(1)
-) PARTITION by range(runtime);
-ALTER TABLE alldata OWNER to mesonet;
-GRANT ALL on alldata to ldm;
-GRANT SELECT on alldata to nobody;
+CREATE TABLE alldata (
+    station text,
+    model character varying(12), -- noqa
+    runtime timestamp with time zone,
+    ftime timestamp with time zone,
+    n_x smallint,
+    tmp smallint,
+    dpt smallint,
+    cld character(2),
+    wdr smallint,
+    wsp smallint,
+    p06 smallint,
+    p12 smallint,
+    q06 smallint,
+    q12 smallint,
+    t06_1 smallint,
+    t06_2 smallint,
+    t12_1 smallint,
+    t12_2 smallint,
+    snw smallint,
+    cig smallint,
+    vis smallint,
+    obv character(2),
+    poz smallint,
+    pos smallint,
+    typ character(2),
+    sky smallint,
+    gst smallint,
+    t03 smallint,
+    pzr smallint,
+    psn smallint,
+    ppl smallint,
+    pra smallint,
+    s06 smallint,
+    slv smallint,
+    i06 smallint,
+    lcb smallint,
+    swh smallint,
+    dur smallint,
+    mht smallint,
+    twd smallint,
+    tws smallint,
+    hid smallint,
+    sol smallint,
+    q24 smallint,
+    p24 smallint,
+    t24 smallint,
+    ccg smallint,
+    ppo smallint,
+    pco char(1),
+    cvs smallint,
+    lp1 smallint,
+    lc1 char(1),
+    cp1 smallint,
+    cc1 char(1),
+    s12 smallint,
+    i12 smallint,
+    s24 smallint,
+    pzp smallint,
+    prs smallint,
+    txn smallint,
+    xnd smallint,
+    tsd smallint,
+    dsd smallint,
+    ssd smallint,
+    gsd smallint,
+    ifc smallint,
+    ifv smallint,
+    mvc smallint,
+    mvv smallint,
+    liv smallint,
+    wsd smallint,
+    p01 smallint,
+    pc1 char(1)
+) PARTITION BY RANGE (runtime);
+ALTER TABLE alldata OWNER TO mesonet;
+GRANT ALL ON alldata TO ldm;
+GRANT SELECT ON alldata TO nobody;
 
-do
+DO
 $do$
 declare
      year int;
