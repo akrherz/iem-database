@@ -8,7 +8,7 @@ insert into spatial_ref_sys select 9311, 'EPSG', 9311, srtext, proj4text from sp
 CREATE TABLE iem_schema_manager_version(
     version int,
     updated timestamptz);
-INSERT into iem_schema_manager_version values (20, now());
+INSERT into iem_schema_manager_version values (21, now());
 
 ---
 --- Store unknown stations
@@ -230,7 +230,8 @@ CREATE TABLE taf(
     id SERIAL UNIQUE,
     station char(4),
     valid timestamptz,
-    product_id varchar(35)
+    product_id varchar(35),
+    is_amendment boolean
 );
 ALTER TABLE taf OWNER to mesonet;
 GRANT ALL on taf to ldm;
