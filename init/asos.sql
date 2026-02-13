@@ -1,57 +1,67 @@
 CREATE EXTENSION postgis;
 
 -- bandaid
-insert into spatial_ref_sys select 9311, 'EPSG', 9311, srtext, proj4text from spatial_ref_sys where srid = 2163;
+INSERT INTO spatial_ref_sys
+SELECT
+    9311 AS srid,
+    'EPSG' AS auth_name,
+    9311 AS auth_srid,
+    srtext,
+    proj4text
+FROM spatial_ref_sys
+WHERE srid = 2163;
 
 -- Boilerplate IEM schema_manager_version, the version gets incremented each
 -- time we make an upgrade script
-CREATE TABLE iem_schema_manager_version(
-    version int,
-    updated timestamptz);
-INSERT into iem_schema_manager_version values (21, now());
+CREATE TABLE iem_schema_manager_version (
+    version int, -- noqa
+    updated timestamptz
+);
+INSERT INTO iem_schema_manager_version VALUES (21, now());
 
 ---
 --- Store unknown stations
 ---
-CREATE TABLE unknown(
-  id varchar(5),
-  valid timestamptz
+CREATE TABLE unknown (
+    id varchar(5),
+    valid timestamptz -- noqa
 );
-ALTER TABLE unknown OWNER to mesonet;
-GRANT ALL on unknown to ldm;
-GRANT SELECT on unknown to nobody;
+ALTER TABLE unknown OWNER TO mesonet;
+GRANT ALL ON unknown TO ldm;
+GRANT SELECT ON unknown TO nobody;
 
 ---
 --- Some skycoverage metadata
 ---
-CREATE TABLE skycoverage(
-  code char(3),
-  value smallint);
-GRANT SELECT on skycoverage to nobody;
-INSERT into skycoverage values('CLR', 0);
-INSERT into skycoverage values('FEW', 25);
-INSERT into skycoverage values('SCT', 50);
-INSERT into skycoverage values('BKN', 75);
-INSERT into skycoverage values('OVC', 100);
+CREATE TABLE skycoverage (
+    code char(3),
+    value smallint -- noqa
+);
+GRANT SELECT ON skycoverage TO nobody;
+INSERT INTO skycoverage VALUES ('CLR', 0);
+INSERT INTO skycoverage VALUES ('FEW', 25);
+INSERT INTO skycoverage VALUES ('SCT', 50);
+INSERT INTO skycoverage VALUES ('BKN', 75);
+INSERT INTO skycoverage VALUES ('OVC', 100);
 
 
 CREATE FUNCTION getskyc(character varying) RETURNS smallint
-    LANGUAGE sql
-    AS $_$select value from skycoverage where code = $1$_$;
+LANGUAGE sql
+AS $_$select value from skycoverage where code = $1$_$;
 
 
 ---
 --- Quasi synced from mesosite database
 ---
-CREATE TABLE stations(
+CREATE TABLE stations (
     id varchar(64),
     synop int,
-    name varchar(64),
+    name varchar(64), -- noqa
     state char(2),
     country char(2),
     elevation real,
     network varchar(20),
-    online boolean,
+    online boolean, -- noqa
     params varchar(300),
     county varchar(50),
     plot_name varchar(64),
@@ -64,7 +74,7 @@ CREATE TABLE stations(
     archive_end date,
     modified timestamp with time zone,
     tzname varchar(32),
-    iemid SERIAL,
+    iemid serial,
     metasite boolean,
     sigstage_low real,
     sigstage_action real,
@@ -81,74 +91,75 @@ CREATE TABLE stations(
     precip24_hour smallint,
     wigos varchar(64)
 );
-CREATE UNIQUE index stations_idx on stations(id, network);
-create UNIQUE index stations_iemid_idx on stations(iemid);
-SELECT AddGeometryColumn('stations', 'geom', 4326, 'POINT', 2);
-GRANT SELECT on stations to nobody;
-grant all on stations_iemid_seq to nobody;
-GRANT ALL on stations to mesonet,ldm;
-GRANT ALL on stations_iemid_seq to mesonet,ldm;
+CREATE UNIQUE INDEX stations_idx ON stations (id, network);
+CREATE UNIQUE INDEX stations_iemid_idx ON stations (iemid);
+SELECT addgeometrycolumn('stations', 'geom', 4326, 'POINT', 2);
+GRANT SELECT ON stations TO nobody;
+GRANT ALL ON stations_iemid_seq TO nobody;
+GRANT ALL ON stations TO mesonet, ldm;
+GRANT ALL ON stations_iemid_seq TO mesonet, ldm;
 
 -- Storage of Type of Observation this is
-CREATE TABLE alldata_report_type(
-  id smallint UNIQUE NOT NULL,
-  label varchar);
-GRANT SELECT on alldata_report_type to nobody;
+CREATE TABLE alldata_report_type (
+    id smallint UNIQUE NOT NULL,
+    label varchar -- noqa
+);
+GRANT SELECT ON alldata_report_type TO nobody;
 
-INSERT into alldata_report_type VALUES
-        (0, 'Unknown'),
-        (1, 'MADIS HFMETAR'),
-        (2, 'Legacy Routine+Special'),
-        (3, 'Routine'),
-        (4, 'Special');
+INSERT INTO alldata_report_type VALUES
+(0, 'Unknown'),
+(1, 'MADIS HFMETAR'),
+(2, 'Legacy Routine+Special'),
+(3, 'Routine'),
+(4, 'Special');
 
 
-CREATE TABLE alldata(
- station        character varying(4),    
- valid          timestamp with time zone,
- tmpf           real,          
- dwpf           real,          
- drct           real,        
- sknt           real,         
- alti           real,      
- gust           real,       
- vsby           real,      
- skyc1          character(3),     
- skyc2          character(3),    
- skyc3          character(3),   
- skyl1          integer,  
- skyl2          integer, 
- skyl3          integer,
- metar          character varying(256),
- skyc4          character(3),
- skyl4          integer,
- p03i           real,
- p06i           real,
- p24i           real,
- max_tmpf_6hr   real,
- min_tmpf_6hr   real,
- max_tmpf_24hr  real,
- min_tmpf_24hr  real,
- mslp           real,
- p01i           real,
- wxcodes        varchar(12)[],
-  report_type smallint REFERENCES alldata_report_type(id),
-  ice_accretion_1hr real,
-  ice_accretion_3hr real,
-  ice_accretion_6hr real,
-  feel real,
-  relh real,
-  peak_wind_gust real,
-  peak_wind_drct real,
-  peak_wind_time timestamptz,
-  snowdepth smallint,
-  editable bool default 't'
-) PARTITION by range(valid);
-ALTER TABLE alldata OWNER to mesonet;
-GRANT ALL on alldata to ldm;
-GRANT SELECT on alldata to nobody;
+CREATE TABLE alldata (
+    station character varying(4),
+    valid timestamp with time zone, -- noqa
+    tmpf real,
+    dwpf real,
+    drct real,
+    sknt real,
+    alti real,
+    gust real,
+    vsby real,
+    skyc1 character(3),
+    skyc2 character(3),
+    skyc3 character(3),
+    skyl1 integer,
+    skyl2 integer,
+    skyl3 integer,
+    metar character varying(256),
+    skyc4 character(3),
+    skyl4 integer,
+    p03i real,
+    p06i real,
+    p24i real,
+    max_tmpf_6hr real,
+    min_tmpf_6hr real,
+    max_tmpf_24hr real,
+    min_tmpf_24hr real,
+    mslp real,
+    p01i real,
+    wxcodes varchar(12) [],
+    report_type smallint REFERENCES alldata_report_type (id),
+    ice_accretion_1hr real,
+    ice_accretion_3hr real,
+    ice_accretion_6hr real,
+    feel real,
+    relh real,
+    peak_wind_gust real,
+    peak_wind_drct real,
+    peak_wind_time timestamptz,
+    snowdepth smallint,
+    editable bool DEFAULT 't'
+) PARTITION BY RANGE (valid);
+ALTER TABLE alldata OWNER TO mesonet;
+GRANT ALL ON alldata TO ldm;
+GRANT SELECT ON alldata TO nobody;
 
-do
+DO
 $do$
 declare
      year int;
@@ -179,21 +190,21 @@ begin
 end;
 $do$;
 
-CREATE TABLE scp_alldata(
- station varchar(5),
- valid timestamptz,
- mid varchar(3),
- high varchar(3),
- cldtop1 int,
- cldtop2 int,
- eca smallint,
- source char(1)
-) PARTITION by range(valid);
-ALTER TABLE scp_alldata OWNER to mesonet;
-GRANT ALL on scp_alldata to ldm;
-GRANT SELECT on scp_alldata to nobody;
+CREATE TABLE scp_alldata (
+    station varchar(5),
+    valid timestamptz, -- noqa
+    mid varchar(3),
+    high varchar(3),
+    cldtop1 int,
+    cldtop2 int,
+    eca smallint,
+    source char(1)
+) PARTITION BY RANGE (valid);
+ALTER TABLE scp_alldata OWNER TO mesonet;
+GRANT ALL ON scp_alldata TO ldm;
+GRANT SELECT ON scp_alldata TO nobody;
 
-do
+DO
 $do$
 declare
      year int;
@@ -226,29 +237,29 @@ $do$;
 
 -- Storage of TAF Information
 
-CREATE TABLE taf(
-    id SERIAL UNIQUE,
+CREATE TABLE taf (
+    id serial UNIQUE,
     station char(4),
-    valid timestamptz,
+    valid timestamptz, -- noqa
     product_id varchar(35),
     is_amendment boolean
 );
-ALTER TABLE taf OWNER to mesonet;
-GRANT ALL on taf to ldm;
-GRANT SELECT on taf to nobody;
-CREATE INDEX taf_idx on taf(station, valid);
-grant all on taf_id_seq to ldm;
+ALTER TABLE taf OWNER TO mesonet;
+GRANT ALL ON taf TO ldm;
+GRANT SELECT ON taf TO nobody;
+CREATE INDEX taf_idx ON taf (station, valid);
+GRANT ALL ON taf_id_seq TO ldm;
 
-create table taf_ftype(
-    ftype smallint not null,
-    abbr text not null,
-    label text not null
+CREATE TABLE taf_ftype (
+    ftype smallint NOT NULL,
+    abbr text NOT NULL,
+    label text NOT NULL -- noqa
 );
-alter table taf_ftype owner to mesonet;
-grant select on taf_ftype to nobody, ldm;
-create unique index taf_ftype_idx on taf_ftype(ftype);
+ALTER TABLE taf_ftype OWNER TO mesonet;
+GRANT SELECT ON taf_ftype TO nobody, ldm;
+CREATE UNIQUE INDEX taf_ftype_idx ON taf_ftype (ftype);
 
-insert into taf_ftype(ftype, abbr, label) values
+INSERT INTO taf_ftype (ftype, abbr, label) VALUES
 (0, 'OB', 'Observation'),
 (1, 'FM', 'Forecast'),
 (2, 'TEMPO', 'Temporary'),
@@ -256,28 +267,28 @@ insert into taf_ftype(ftype, abbr, label) values
 (4, 'PROB40', 'Probability 40'),
 (5, 'BECMG', 'Becoming');
 
-CREATE TABLE taf_forecast(
-    taf_id int REFERENCES taf(id),
-    valid timestamptz,
-    raw text,
+CREATE TABLE taf_forecast (
+    taf_id int REFERENCES taf (id),
+    valid timestamptz, -- noqa
+    raw text, -- noqa
     end_valid timestamptz,
     sknt smallint,
     drct smallint,
     gust smallint,
     visibility float,
-    presentwx text[],
-    skyc varchar(3)[],
-    skyl int[],
+    presentwx text [],
+    skyc varchar(3) [],
+    skyl int [],
     ws_level int,
     ws_drct smallint,
     ws_sknt smallint,
-    ftype smallint REFERENCES taf_ftype(ftype) not null
-) PARTITION by range(valid);
-ALTER TABLE taf_forecast OWNER to mesonet;
-GRANT ALL on taf_forecast to ldm;
-GRANT SELECT on taf_forecast to nobody;
+    ftype smallint REFERENCES taf_ftype (ftype) NOT NULL
+) PARTITION BY RANGE (valid);
+ALTER TABLE taf_forecast OWNER TO mesonet;
+GRANT ALL ON taf_forecast TO ldm;
+GRANT SELECT ON taf_forecast TO nobody;
 
-do
+DO
 $do$
 declare
      year int;
@@ -313,7 +324,7 @@ end;
 $do$;
 
 -- Wind and Temp Aloft Forecast
-create table alldata_tempwind_aloft(
+CREATE TABLE alldata_tempwind_aloft (
     station char(4),
     obtime timestamptz,
     ftime timestamptz,
@@ -376,12 +387,12 @@ create table alldata_tempwind_aloft(
     tmpc53000 smallint,
     drct53000 smallint,
     sknt53000 smallint
-) partition by range(ftime);
-alter table alldata_tempwind_aloft owner to mesonet;
-grant all on alldata_tempwind_aloft to ldm;
-grant select on alldata_tempwind_aloft to nobody;
+) PARTITION BY RANGE (ftime);
+ALTER TABLE alldata_tempwind_aloft OWNER TO mesonet;
+GRANT ALL ON alldata_tempwind_aloft TO ldm;
+GRANT SELECT ON alldata_tempwind_aloft TO nobody;
 
-do
+DO
 $do$
 declare
      year int;
