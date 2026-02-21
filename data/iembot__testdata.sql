@@ -11,6 +11,7 @@ declare
   twitter_iembot bigint;
   slack_iemchat bigint;
   atmosphere_iembot bigint;
+  webhook_iembot bigint;
 begin
   dmxchat := create_iembot_account('xmpp');
   dvnchat := create_iembot_account('xmpp');
@@ -18,6 +19,7 @@ begin
   twitter_iembot := create_iembot_account('twitter');
   slack_iemchat := create_iembot_account('slack');
   atmosphere_iembot := create_iembot_account('atmosphere');
+  webhook_iembot := create_iembot_account('webhook');
 
   insert into iembot_rooms(iembot_account_id, roomname) values
     (dmxchat, 'dmxchat'),
@@ -102,5 +104,21 @@ insert into iembot_subscriptions(
     iembot_account_id, channel_id
 ) values (
     (select id from iembot_accounts where service = 'atmosphere'),
+    (select id from iembot_channels where channel_name = 'AFDDMX')
+);
+
+-- webhooks
+
+insert into iembot_webhook_users
+values (-1, 'root@localhost', now());
+
+insert into iembot_webhooks values
+(-1, -1, (select id from iembot_accounts where service = 'webhook'),
+'http://localhost', now());
+
+insert into iembot_subscriptions(
+    iembot_account_id, channel_id
+) values (
+    (select id from iembot_accounts where service = 'webhook'),
     (select id from iembot_channels where channel_name = 'AFDDMX')
 );
