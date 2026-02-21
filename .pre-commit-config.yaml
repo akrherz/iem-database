@@ -2,7 +2,7 @@ ci:
   autoupdate_schedule: quarterly
 repos:
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: "v0.15.1"
+    rev: "v0.15.2"
     hooks:
       - id: ruff
         args: [--fix, --exit-non-zero-on-fix]
@@ -11,6 +11,6 @@ repos:
     rev: 4.0.4
     hooks:
       - id: sqlfluff-lint
-        args: [--dialect=postgres, --disregard-sqlfluffignores]
+        args: [--dialect=postgres]
       - id: sqlfluff-fix
-        args: [--dialect=postgres, --disregard-sqlfluffignores]
+        args: [--dialect=postgres]
