@@ -1,15 +1,16 @@
 -- Boilerplate IEM schema_manager_version, the version gets incremented each
 -- time we make an upgrade script
-create table iem_schema_manager_version(
-    version int,
-    updated timestamptz);
-insert into iem_schema_manager_version values (-1, now());
+create table iem_schema_manager_version (
+    version int,  -- noqa
+    updated timestamptz
+);
+insert into iem_schema_manager_version values (0, now());
 
 -- A global account identifier for IEMBot, referenced by the various tables
 -- and subscriptions
 create table iembot_accounts (
     id serial primary key,
-    "service" text not null,
+    service text not null,
     created_at timestamptz default now()
 );
 alter table iembot_accounts owner to mesonet;
@@ -29,10 +30,10 @@ $$ language plpgsql;
 
 -- Channels
 --   - The most basic level of information organization
-create table iembot_channels(
+create table iembot_channels (
     id serial primary key,
     channel_name varchar(64) unique not null,
-    "description" text,
+    description text,
     created_at timestamptz default now()
 );
 alter table iembot_channels owner to mesonet;
@@ -58,10 +59,10 @@ $$ language plpgsql;
 -- Channel Groups
 --   - Next level up of organization of channels into a group
 --   - Nomenclature that these start with an underscore
-create table iembot_channel_groups(
+create table iembot_channel_groups (
     id serial primary key,
     group_name varchar(64) unique not null,
-    "description" text,
+    description text,
     created_at timestamptz default now(),
     check (
         strpos(group_name, '_') = 1
@@ -72,23 +73,23 @@ grant all on iembot_channel_groups_id_seq to nobody;
 grant all on iembot_channel_groups to nobody;
 
 -- Junction table for channels to channel groups
-create table iembot_channel_group_membership(
+create table iembot_channel_group_membership (
     id serial primary key,
-    channel_id int references iembot_channels(id),
-    group_id int references iembot_channel_groups(id),
+    channel_id int references iembot_channels (id),
+    group_id int references iembot_channel_groups (id),
     created_at timestamptz default now()
 );
-create unique index on iembot_channel_group_membership(channel_id, group_id);
+create unique index on iembot_channel_group_membership (channel_id, group_id);
 alter table iembot_channel_group_membership owner to mesonet;
 grant all on iembot_channel_group_membership_id_seq to nobody;
 grant all on iembot_channel_group_membership to nobody;
 
 -- Subscriptions to either channels or channel groups
-create table iembot_subscriptions(
+create table iembot_subscriptions (
     id serial primary key,
-    iembot_account_id bigint not null references iembot_accounts(id),
-    channel_id int references iembot_channels(id),
-    group_id int references iembot_channel_groups(id),
+    iembot_account_id bigint not null references iembot_accounts (id),
+    channel_id int references iembot_channels (id),
+    group_id int references iembot_channel_groups (id),
     created_at timestamptz default now(),
     check (
         (channel_id is not null and group_id is null)
@@ -96,7 +97,7 @@ create table iembot_subscriptions(
         (channel_id is null and group_id is not null)
     )
 );
-create unique index on iembot_subscriptions(
+create unique index on iembot_subscriptions (
     iembot_account_id, channel_id, group_id
 );
 alter table iembot_subscriptions owner to mesonet;
@@ -107,7 +108,7 @@ grant all on iembot_subscriptions to nobody;
 -- SLACK
 
 -- Storage of IEMBot Slack info
-create table iembot_slack_teams(
+create table iembot_slack_teams (
     id serial primary key,
     team_id text unique not null,
     team_name text,
@@ -120,14 +121,14 @@ grant all on iembot_slack_teams_id_seq to nobody;
 grant all on iembot_slack_teams to nobody;
 
 -- Storage of IEMBot Slack Channels, sadly redundant name
-create table iembot_slack_team_channels(
+create table iembot_slack_team_channels (
     id serial primary key,
-    iembot_account_id bigint not null references iembot_accounts(id),
-    team_id text not null references iembot_slack_teams(team_id),
+    iembot_account_id bigint not null references iembot_accounts (id),
+    team_id text not null references iembot_slack_teams (team_id),
     channel_id text not null,
     created_at timestamptz default now()
 );
-create unique index on iembot_slack_team_channels(team_id, channel_id);
+create unique index on iembot_slack_team_channels (team_id, channel_id);
 alter table iembot_slack_team_channels owner to mesonet;
 grant all on iembot_slack_team_channels_id_seq to nobody;
 grant all on iembot_slack_team_channels to nobody;
@@ -135,9 +136,9 @@ grant all on iembot_slack_team_channels to nobody;
 -- _________________________________________________________________________
 -- MASTODON
 
-create table iembot_mastodon_apps(
+create table iembot_mastodon_apps (
     id serial unique not null,
-    server text unique not null,
+    server text unique not null,  -- noqa
     created timestamptz default now(),
     updated timestamptz default now(),
     client_id text not null,
@@ -148,14 +149,14 @@ grant all on iembot_mastodon_apps_id_seq to nobody;
 grant all on iembot_mastodon_apps to nobody;
 
 -- This is where the accounts lie / xref to subscriptions
-create table iembot_mastodon_oauth(
+create table iembot_mastodon_oauth (
     id serial unique not null,
-    iembot_account_id bigint not null references iembot_accounts(id),
-    appid int references iembot_mastodon_apps(id) not null,
+    iembot_account_id bigint not null references iembot_accounts (id),
+    appid int references iembot_mastodon_apps (id) not null,
     screen_name text not null,
     created timestamptz default now(),
     updated timestamptz default now(),
-    password text,
+    password text,  --noqa
     access_token text,
     iem_owned bool default 'f',
     disabled bool default 'f'
@@ -167,9 +168,9 @@ grant all on iembot_mastodon_oauth to nobody;
 ---
 --- Table to track iembot's use of social media
 ---
-create table iembot_social_log(
-    iembot_account_id bigint not null references iembot_accounts(id),
-    valid timestamp with time zone default now(),
+create table iembot_social_log (
+    iembot_account_id bigint not null references iembot_accounts (id),
+    valid timestamp with time zone default now(),  --noqa
     medium varchar(24),
     source varchar(256),
     resource_uri varchar(256),
@@ -179,13 +180,13 @@ create table iembot_social_log(
     response_code int
 );
 alter table iembot_social_log owner to mesonet;
-create index iembot_social_log_valid_idx on iembot_social_log(valid);
+create index iembot_social_log_valid_idx on iembot_social_log (valid);
 
 -- _______________________________________________________________________
 -- Atmosphere/Bluesky
-create table iembot_atmosphere_accounts(
+create table iembot_atmosphere_accounts (
     id serial unique not null,
-    iembot_account_id bigint not null references iembot_accounts(id),
+    iembot_account_id bigint not null references iembot_accounts (id),
     handle text not null,
     app_pass text not null,
     disabled bool default 'f',
@@ -197,16 +198,16 @@ grant all on iembot_atmosphere_accounts to nobody;
 
 -- _________________________________________________________________
 -- Twitter/X
-create table iembot_twitter_oauth(
-  user_id bigint NOT NULL UNIQUE,
-  iembot_account_id bigint not null references iembot_accounts(id),
-  screen_name text,
-  access_token text,
-  access_token_secret text,
-  created timestamptz DEFAULT now(),
-  updated timestamptz DEFAULT now(),
-  disabled bool default 'f',
-  iem_owned bool default 'f'
+create table iembot_twitter_oauth (
+    user_id bigint not null unique,
+    iembot_account_id bigint not null references iembot_accounts (id),
+    screen_name text,
+    access_token text,
+    access_token_secret text,
+    created timestamptz default now(),
+    updated timestamptz default now(),
+    disabled bool default 'f',
+    iem_owned bool default 'f'
 );
 alter table iembot_twitter_oauth owner to mesonet;
 grant all on iembot_twitter_oauth to nobody;
@@ -214,16 +215,29 @@ grant all on iembot_twitter_oauth to nobody;
 -- ______________________________________________________________________
 -- IEMBot rooms on weather.im
 create table iembot_rooms (
-    iembot_account_id bigint not null references iembot_accounts(id),
+    iembot_account_id bigint not null references iembot_accounts (id),
     roomname varchar unique not null
 );
 alter table iembot_rooms owner to mesonet;
 grant all on iembot_rooms to nobody;
 
--- _____________________________________________________________________
--- Webhooks, legacy one off that will be removed
-CREATE TABLE iembot_webhooks(
-    channel varchar,
-    url varchar);
-ALTER TABLE iembot_webhooks OWNER to mesonet;
-GRANT ALL on iembot_webhooks to nobody;
+-- Storage of Google Oauth users for webhooks
+create table iembot_webhook_users (
+    id serial primary key,
+    google_id text not null unique,
+    created_at timestamptz default now()
+);
+alter table iembot_webhook_users owner to mesonet;
+grant all on iembot_webhook_users to nobody;
+
+-- Association of webooks to users
+-- The account id is associated here as this is where channel subscriptions go
+create table iembot_webhooks (
+    id serial primary key,
+    iembot_webhook_user_id int not null references iembot_webhook_users (id),
+    iembot_account_id integer not null references iembot_accounts (id),
+    url text not null unique,
+    created_at timestamptz default now()
+);
+alter table iembot_webhooks owner to mesonet;
+grant all on iembot_webhooks to nobody;
