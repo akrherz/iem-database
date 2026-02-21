@@ -11,6 +11,6 @@ repos:
     rev: 4.0.4
     hooks:
       - id: sqlfluff-lint
-        args: [--dialect=postgres]
+        args: [--dialect=postgres, --disregard-sqlfluffignores]
       - id: sqlfluff-fix
-        args: [--dialect=postgres]
+        args: [--dialect=postgres, --disregard-sqlfluffignores]
