@@ -37,13 +37,13 @@ create function gdd48(real, real) returns numeric
 language sql
 as $_$select (( (CASE WHEN $1 > 48 THEN 
 (case when $1 > 86 THEN 86 ELSE $1 END ) - 48 ELSE 0 END) +
-(CASE WHEN $2 > 48 THEN $2 - 48 ELSE 0 END) ) / 2.0)::numeric$_$;
+(CASE WHEN $2 > 48 THEN least($2, 86) - 48 ELSE 0 END) ) / 2.0)::numeric$_$;
 
 create function gdd50(real, real) returns numeric
 language sql
 as $_$select (( (CASE WHEN $1 > 50 THEN
 (case when $1 > 86 THEN 86 ELSE $1 END ) - 50 ELSE 0 END) +
-(CASE WHEN $2 > 50 THEN $2 - 50 ELSE 0 END) ) / 2.0)::numeric$_$;
+(CASE WHEN $2 > 50 THEN least($2, 86) - 50 ELSE 0 END) ) / 2.0)::numeric$_$;
 
 create function gdd52(real, real) returns numeric
 language sql
@@ -52,7 +52,7 @@ as $_$
    (CASE WHEN $1 > 52 THEN
      (case when $1 > 86 THEN 86 ELSE $1 END ) - 52
     ELSE 0 END)
-  + (CASE WHEN $2 > 52 and $2 < 99 THEN $2 - 52 ELSE 0 END) ) / 2.0)::numeric
+  + (CASE WHEN $2 > 52 and $2 < 99 THEN least($2, 86) - 52 ELSE 0 END) ) / 2.0)::numeric
 $_$;
 
 --
@@ -61,7 +61,7 @@ create or replace function gddxx(real, real, real, real) returns numeric
 language sql
 as $_$
     select case when $3 is null or $4 is null then null else (( (CASE WHEN $3 > $1 THEN (case when $3 > $2 THEN $2 ELSE $3 END ) - $1 ELSE 0 END) + 
-        (CASE WHEN $4 > $1 THEN $4 - $1 ELSE 0 END) ) / 2.0)::numeric end
+        (CASE WHEN $4 > $1 THEN least($4, $2) - $1 ELSE 0 END) ) / 2.0)::numeric end
     $_$;
 
 --
