@@ -306,7 +306,7 @@ CREATE TABLE current_shef (
 CREATE UNIQUE INDEX ON current_shef (
     station, physical_code, duration, source, type, extremum,
     probability, depth, qualifier, unit_convention
-);
+) NULLS NOT DISTINCT;
 ALTER TABLE current_shef OWNER TO mesonet;
 CREATE INDEX current_shef_station_idx ON current_shef (station);
 GRANT ALL ON current_shef TO ldm;
