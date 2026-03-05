@@ -1,30 +1,40 @@
 CREATE EXTENSION postgis;
 
 -- bandaid
-insert into spatial_ref_sys select 9311, 'EPSG', 9311, srtext, proj4text from spatial_ref_sys where srid = 2163;
+INSERT INTO spatial_ref_sys
+SELECT
+    9311 AS srid,
+    'EPSG' AS auth_name,
+    9311 AS auth_srid,
+    srtext,
+    proj4text
+FROM spatial_ref_sys
+WHERE srid = 2163;
 
 -- Boilerplate IEM schema_manager_version, the version gets incremented each
 -- time we make an upgrade script
-CREATE TABLE iem_schema_manager_version(
+CREATE TABLE iem_schema_manager_version (
     version int,
-    updated timestamptz);
-INSERT into iem_schema_manager_version values (-1, now());
+    updated timestamptz
+);
+INSERT INTO iem_schema_manager_version VALUES (-1, now());
 
 -- Storage of NLDN data, in monthly partitions!
-CREATE TABLE nldn_all(
+CREATE TABLE nldn_all (
     valid timestamptz,
-    geom geometry(Point, 4326),
+    geom GEOMETRY (POINT, 4326),
     signal real,
     multiplicity smallint,
     axis smallint,
     eccentricity smallint,
     ellipse smallint,
-    chisqr smallint) PARTITION by RANGE (valid);
-GRANT ALL on nldn_all to mesonet,ldm;
-GRANT SELECT on nldn_all to nobody;
-CREATE INDEX on nldn_all(valid);
+    chisqr smallint
+) PARTITION BY RANGE (valid);
+GRANT ALL ON nldn_all TO mesonet, ldm;
+GRANT SELECT ON nldn_all TO nobody;
+CREATE INDEX ON nldn_all (valid);
 
-do
+DO
 $do$
 declare
      year int;

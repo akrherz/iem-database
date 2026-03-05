@@ -1,19 +1,28 @@
 CREATE EXTENSION postgis;
 
 -- bandaid
-insert into spatial_ref_sys select 9311, 'EPSG', 9311, srtext, proj4text from spatial_ref_sys where srid = 2163;
+INSERT INTO spatial_ref_sys
+SELECT
+    9311 AS srid,
+    'EPSG' AS auth_name,
+    9311 AS auth_srid,
+    srtext,
+    proj4text
+FROM spatial_ref_sys
+WHERE srid = 2163;
 
 -- Boilerplate IEM schema_manager_version, the version gets incremented each
 -- time we make an upgrade script
-CREATE TABLE iem_schema_manager_version(
+CREATE TABLE iem_schema_manager_version (
     version int,
-    updated timestamptz);
-INSERT into iem_schema_manager_version values (0, now());
+    updated timestamptz
+);
+INSERT INTO iem_schema_manager_version VALUES (0, now());
 
 ---
 --- Quasi synced from mesosite database
 ---
-CREATE TABLE stations(
+CREATE TABLE stations (
     id varchar(64),
     synop int,
     name varchar(64),
@@ -34,7 +43,7 @@ CREATE TABLE stations(
     archive_end date,
     modified timestamp with time zone,
     tzname varchar(32),
-    iemid SERIAL,
+    iemid serial,
     metasite boolean,
     sigstage_low real,
     sigstage_action real,
@@ -51,19 +60,19 @@ CREATE TABLE stations(
     precip24_hour smallint,
     wigos varchar(64)
 );
-CREATE UNIQUE index stations_idx on stations(id, network);
-create UNIQUE index stations_iemid_idx on stations(iemid);
-SELECT AddGeometryColumn('stations', 'geom', 4326, 'POINT', 2);
-GRANT SELECT on stations to nobody;
-grant all on stations_iemid_seq to nobody;
-GRANT ALL on stations to mesonet,ldm;
-GRANT ALL on stations_iemid_seq to mesonet,ldm;
+CREATE UNIQUE INDEX stations_idx ON stations (id, network);
+CREATE UNIQUE INDEX stations_iemid_idx ON stations (iemid);
+SELECT addgeometrycolumn('stations', 'geom', 4326, 'POINT', 2);
+GRANT SELECT ON stations TO nobody;
+GRANT ALL ON stations_iemid_seq TO nobody;
+GRANT ALL ON stations TO mesonet, ldm;
+GRANT ALL ON stations_iemid_seq TO mesonet, ldm;
 
 ---
 --- Rawinsonde data!
 ---
-CREATE TABLE raob_flights(
-    fid SERIAL PRIMARY KEY,
+CREATE TABLE raob_flights (
+    fid serial PRIMARY KEY,
     valid timestamptz,  -- Standard time of ob
     station varchar(4),
     hydro_level real,
@@ -108,13 +117,13 @@ CREATE TABLE raob_flights(
     ingested_at timestamptz DEFAULT now(),
     computed_at timestamptz DEFAULT now()
 );
-ALTER TABLE raob_flights OWNER to mesonet;
-GRANT ALL on raob_flights to ldm,mesonet;
-create unique index raob_flights_idx on raob_flights(valid, station);
-GRANT SELECT on raob_flights to nobody;
+ALTER TABLE raob_flights OWNER TO mesonet;
+GRANT ALL ON raob_flights TO ldm, mesonet;
+CREATE UNIQUE INDEX raob_flights_idx ON raob_flights (valid, station);
+GRANT SELECT ON raob_flights TO nobody;
 
-CREATE TABLE raob_profile(
-    fid int REFERENCES raob_flights(fid) ON DELETE CASCADE ON UPDATE CASCADE,
+CREATE TABLE raob_profile (
+    fid int REFERENCES raob_flights (fid) ON DELETE CASCADE ON UPDATE CASCADE,
     ts timestamptz,
     levelcode smallint,
     pressure real, -- mb
@@ -126,11 +135,11 @@ CREATE TABLE raob_profile(
     bearing real, -- deg
     range_miles real -- miles
 );
-ALTER TABLE raob_profile OWNER to mesonet;
-CREATE INDEX raob_profile_fid_idx on raob_profile(fid);
-GRANT SELECT on raob_profile to nobody;
+ALTER TABLE raob_profile OWNER TO mesonet;
+CREATE INDEX raob_profile_fid_idx ON raob_profile (fid);
+GRANT SELECT ON raob_profile TO nobody;
 
-do
+DO
 $do$
 declare
      y int;

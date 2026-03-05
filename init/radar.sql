@@ -1,21 +1,30 @@
 CREATE EXTENSION postgis;
 
 -- bandaid
-insert into spatial_ref_sys select 9311, 'EPSG', 9311, srtext, proj4text from spatial_ref_sys where srid = 2163;
+INSERT INTO spatial_ref_sys
+SELECT
+    9311 AS srid,
+    'EPSG' AS auth_name,
+    9311 AS auth_srid,
+    srtext,
+    proj4text
+FROM spatial_ref_sys
+WHERE srid = 2163;
 
 -- Boilerplate IEM schema_manager_version, the version gets incremented each
 -- time we make an upgrade script
-CREATE TABLE iem_schema_manager_version(
+CREATE TABLE iem_schema_manager_version (
     version int,
-    updated timestamptz);
-INSERT into iem_schema_manager_version values (-1, now());
+    updated timestamptz
+);
+INSERT INTO iem_schema_manager_version VALUES (-1, now());
 
 ---
 --- NEXRAD Attributes
 ---
-CREATE TABLE nexrad_attributes(
-    nexrad character(3),   
-    storm_id character(2),     
+CREATE TABLE nexrad_attributes (
+    nexrad character(3),
+    storm_id character(2),
     azimuth smallint,
     range smallint,
     tvs character varying(10),
@@ -30,15 +39,15 @@ CREATE TABLE nexrad_attributes(
     drct smallint,
     sknt smallint,
     valid timestamp with time zone,
-    geom geometry(Point, 4326)
- );
-GRANT ALL on nexrad_attributes to ldm,mesonet;
-GRANT SELECT on nexrad_attributes to nobody;
+    geom GEOMETRY (POINT, 4326)
+);
+GRANT ALL ON nexrad_attributes TO ldm, mesonet;
+GRANT SELECT ON nexrad_attributes TO nobody;
 
 
-CREATE TABLE nexrad_attributes_log(
-    nexrad character(3),   
-    storm_id character(2),     
+CREATE TABLE nexrad_attributes_log (
+    nexrad character(3),
+    storm_id character(2),
     azimuth smallint,
     range smallint,
     tvs character varying(10),
@@ -53,14 +62,14 @@ CREATE TABLE nexrad_attributes_log(
     drct smallint,
     sknt smallint,
     valid timestamp with time zone,
-    geom geometry(Point, 4326)
- ) PARTITION by RANGE (valid);
-GRANT ALL on nexrad_attributes_log to ldm,mesonet;
-GRANT SELECT on nexrad_attributes_log to nobody;
-CREATE INDEX on nexrad_attributes_log(valid);
-CREATE INDEX on nexrad_attributes_log(nexrad);
+    geom GEOMETRY (POINT, 4326)
+) PARTITION BY RANGE (valid);
+GRANT ALL ON nexrad_attributes_log TO ldm, mesonet;
+GRANT SELECT ON nexrad_attributes_log TO nobody;
+CREATE INDEX ON nexrad_attributes_log (valid);
+CREATE INDEX ON nexrad_attributes_log (nexrad);
 
-do
+DO
 $do$
 declare
      year int;

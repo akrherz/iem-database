@@ -1,18 +1,26 @@
-
 -- Boilerplate IEM schema_manager_version, the version gets incremented each
 -- time we make an upgrade script
-CREATE TABLE iem_schema_manager_version(
+CREATE TABLE iem_schema_manager_version (
     version int,
-    updated timestamptz);
-INSERT into iem_schema_manager_version values (19, now());
+    updated timestamptz
+);
+INSERT INTO iem_schema_manager_version VALUES (19, now());
 
 CREATE EXTENSION postgis;
 
 -- bandaid
-insert into spatial_ref_sys select 9311, 'EPSG', 9311, srtext, proj4text from spatial_ref_sys where srid = 2163;
+INSERT INTO spatial_ref_sys
+SELECT
+    9311 AS srid,
+    'EPSG' AS auth_name,
+    9311 AS auth_srid,
+    srtext,
+    proj4text
+FROM spatial_ref_sys
+WHERE srid = 2163;
 
 -- synced from mesosite
-CREATE TABLE stations(
+CREATE TABLE stations (
     id varchar(64),
     synop int,
     name varchar(64),
@@ -33,7 +41,7 @@ CREATE TABLE stations(
     archive_end date,
     modified timestamp with time zone,
     tzname varchar(32),
-    iemid SERIAL,
+    iemid serial,
     metasite boolean,
     sigstage_low real,
     sigstage_action real,
@@ -48,24 +56,24 @@ CREATE TABLE stations(
     ncei91 varchar(11),
     temp24_hour smallint,
     precip24_hour smallint,
-    geom geometry(Point, 4326),
+    geom GEOMETRY (POINT, 4326),
     wigos varchar(64)
 );
-CREATE UNIQUE index stations_idx on stations(id, network);
-create UNIQUE index stations_iemid_idx on stations(iemid);
-GRANT SELECT on stations to nobody;
-grant all on stations_iemid_seq to nobody;
-GRANT ALL on stations to mesonet,ldm;
-GRANT ALL on stations_iemid_seq to mesonet,ldm;
+CREATE UNIQUE INDEX stations_idx ON stations (id, network);
+CREATE UNIQUE INDEX stations_iemid_idx ON stations (iemid);
+GRANT SELECT ON stations TO nobody;
+GRANT ALL ON stations_iemid_seq TO nobody;
+GRANT ALL ON stations TO mesonet, ldm;
+GRANT ALL ON stations_iemid_seq TO mesonet, ldm;
 
 CREATE TABLE sm_daily (
-  station char(5),
-  valid date,
-  TAir_C_Avg real,
-  TAir_C_Max real,
-  TAir_C_TMx timestamp with time zone,
-  TAir_C_Min real,
-  TAir_C_TMn timestamp with time zone,
+    station char(5),
+    valid date,
+    tair_c_avg real,
+    tair_c_max real,
+    tair_c_tmx timestamp with time zone,
+    tair_c_min real,
+    tair_c_tmn timestamp with time zone,
     -- Rainfall Total in inches
     rain_in_tot real,
     rain_in_tot_f character(1),
@@ -76,8 +84,8 @@ CREATE TABLE sm_daily (
     rain_in_2_tot_qc real,
     rain_in_2_tot_f character(1),
 
-  WindDir_D1_WVT real,
-  DailyET real,
+    winddir_d1_wvt real,
+    dailyet real,
     t4_c_min real,
     t4_c_min_f character(1),
     t4_c_min_qc real,
@@ -87,17 +95,17 @@ CREATE TABLE sm_daily (
     t4_c_max real,
     t4_c_max_f character(1),
     t4_c_max_qc real,
-  VWC_12_Avg real,
-  VWC_24_Avg real,
-  VWC_50_Avg real,
-  EC12 real,
-  EC24 real,
-  EC50 real,
-  T12_C_Avg real,
-  T24_C_Avg real,
-  T50_C_Avg real,
-  vwc4 real,
-  encrh_avg real,
+    vwc_12_avg real,
+    vwc_24_avg real,
+    vwc_50_avg real,
+    ec12 real,
+    ec24 real,
+    ec50 real,
+    t12_c_avg real,
+    t24_c_avg real,
+    t50_c_avg real,
+    vwc4 real,
+    encrh_avg real,
     tair_c_avg_f character(1),
     tair_c_avg_qc real,
     tair_c_max_f character(1),
@@ -110,7 +118,7 @@ CREATE TABLE sm_daily (
     tair_c_tmn_qc timestamp with time zone,
     winddir_d1_wvt_f character(1),
     winddir_d1_wvt_qc real,
-    WS_mph_TMx timestamp with time zone,
+    ws_mph_tmx timestamp with time zone,
     ws_mph_tmx_f character(1),
     ws_mph_tmx_qc timestamp with time zone,
     dailyet_f character(1),
@@ -146,7 +154,7 @@ CREATE TABLE sm_daily (
     vwc50 real,
     vwc50_qc real,
     vwc50_f char(1),
-        lwmv_1 real,
+    lwmv_1 real,
     lwmv_1_qc real,
     lwmv_1_f character(1),
     lwmv_2 real,
@@ -186,25 +194,25 @@ CREATE TABLE sm_daily (
     ws_mph_max_qc real,
     ws_mph_max_f character(1),
 
-lwmdry_lowbare_tot real,
-lwmdry_lowbare_tot_qc real,
-lwmdry_lowbare_tot_f char(1),
-lwmcon_lowbare_tot real,
-lwmcon_lowbare_tot_qc real,
-lwmcon_lowbare_tot_f char(1),
-lwmwet_lowbare_tot real,
-lwmwet_lowbare_tot_qc real,
-lwmwet_lowbare_tot_f char(1),
-lwmdry_highbare_tot real,
-lwmdry_highbare_tot_qc real,
-lwmdry_highbare_tot_f char(1),
-lwmcon_highbare_tot real,
-lwmcon_highbare_tot_qc real,
-lwmcon_highbare_tot_f char(1),
-lwmwet_highbare_tot real,
-lwmwet_highbare_tot_qc real,
-lwmwet_highbare_tot_f char(1),
-obs_count int,
+    lwmdry_lowbare_tot real,
+    lwmdry_lowbare_tot_qc real,
+    lwmdry_lowbare_tot_f char(1),
+    lwmcon_lowbare_tot real,
+    lwmcon_lowbare_tot_qc real,
+    lwmcon_lowbare_tot_f char(1),
+    lwmwet_lowbare_tot real,
+    lwmwet_lowbare_tot_qc real,
+    lwmwet_lowbare_tot_f char(1),
+    lwmdry_highbare_tot real,
+    lwmdry_highbare_tot_qc real,
+    lwmdry_highbare_tot_f char(1),
+    lwmcon_highbare_tot real,
+    lwmcon_highbare_tot_qc real,
+    lwmcon_highbare_tot_f char(1),
+    lwmwet_highbare_tot real,
+    lwmwet_highbare_tot_qc real,
+    lwmwet_highbare_tot_f char(1),
+    obs_count int,
 
     -- SoilVue  EC Values
     sv_ec2 real, sv_ec2_qc real, sv_ec2_f char(1),
@@ -255,14 +263,14 @@ obs_count int,
     sv_vwc42 real, sv_vwc42_qc real, sv_vwc42_f char(1),
     sv_vwc52 real, sv_vwc52_qc real, sv_vwc52_f char(1),
 
-  -- Solar Radiation kJ
-  slrkj_tot real,
-  slrkj_tot_f char(1),
-  slrkj_tot_qc real
+    -- Solar Radiation kJ
+    slrkj_tot real,
+    slrkj_tot_f char(1),
+    slrkj_tot_qc real
 );
-alter table sm_daily owner to mesonet;
-CREATE UNIQUE index sm_daily_idx on sm_daily(station, valid);
-GRANT SELECT on sm_daily to nobody;
+ALTER TABLE sm_daily OWNER TO mesonet;
+CREATE UNIQUE INDEX sm_daily_idx ON sm_daily (station, valid);
+GRANT SELECT ON sm_daily TO nobody;
 
 --- Soil Moisture Stations
 CREATE TABLE sm_hourly (
@@ -280,7 +288,7 @@ CREATE TABLE sm_hourly (
     tair_c_min_f char(1),
 
     -- average air temp over the hour
-    TAir_C_Avg real,
+    tair_c_avg real,
     tair_c_avg_f character(1),
     tair_c_avg_qc real,
 
@@ -299,12 +307,12 @@ CREATE TABLE sm_hourly (
     rain_in_2_tot_f character(1),
 
     -- Tracked at two stations
-    ETApples real,
-    ETApples_qc real,
-    ETApples_f char(1),
+    etapples real,
+    etapples_qc real,
+    etapples_f char(1),
 
     -- Tracked at most sites
-    ETAlfalfa real,
+    etalfalfa real,
     etalfalfa_f character(1),
     etalfalfa_qc real,
 
@@ -314,7 +322,7 @@ CREATE TABLE sm_hourly (
     ws_mph_qc real,
 
     -- Wind direction
-    WindDir_D1_WVT real,
+    winddir_d1_wvt real,
     winddir_d1_wvt_f character(1),
     winddir_d1_wvt_qc real,
 
@@ -322,24 +330,24 @@ CREATE TABLE sm_hourly (
     t4_c_avg real,
     t4_c_avg_f character(1),
     t4_c_avg_qc real,
-  
-  VWC_12_Avg real,
-  VWC_24_Avg real,
-  VWC_50_Avg real,
-  EC12 real,
-  EC24 real,
-  EC50 real,
-  T12_C_Avg real,
-  T24_C_Avg real,
-  T50_C_Avg real,
-  vwc4 real,
-  ws_mph_max real,
-  ws_mph_tmx timestamptz,
-  encrh_avg real,
-  battv_min real,
+
+    vwc_12_avg real,
+    vwc_24_avg real,
+    vwc_50_avg real,
+    ec12 real,
+    ec24 real,
+    ec50 real,
+    t12_c_avg real,
+    t24_c_avg real,
+    t50_c_avg real,
+    vwc4 real,
+    ws_mph_max real,
+    ws_mph_tmx timestamptz,
+    encrh_avg real,
+    battv_min real,
 
     vwc_12_avg_f character(1),
-      vwc_12_avg_qc real,
+    vwc_12_avg_qc real,
     vwc_24_avg_f character(1),
     vwc_24_avg_qc real,
     vwc_50_avg_f character(1),
@@ -453,129 +461,129 @@ CREATE TABLE sm_hourly (
     sv_vwc42 real, sv_vwc42_qc real, sv_vwc42_f char(1),
     sv_vwc52 real, sv_vwc52_qc real, sv_vwc52_f char(1),
 
-lwmdry_lowbare_tot real,
-lwmdry_lowbare_tot_qc real,
-lwmdry_lowbare_tot_f char(1),
-lwmcon_lowbare_tot real,
-lwmcon_lowbare_tot_qc real,
-lwmcon_lowbare_tot_f char(1),
-lwmwet_lowbare_tot real,
-lwmwet_lowbare_tot_qc real,
-lwmwet_lowbare_tot_f char(1),
-lwmdry_highbare_tot real,
-lwmdry_highbare_tot_qc real,
-lwmdry_highbare_tot_f char(1),
-lwmcon_highbare_tot real,
-lwmcon_highbare_tot_qc real,
-lwmcon_highbare_tot_f char(1),
-lwmwet_highbare_tot real,
-lwmwet_highbare_tot_qc real,
-lwmwet_highbare_tot_f char(1),
-obs_count int,
+    lwmdry_lowbare_tot real,
+    lwmdry_lowbare_tot_qc real,
+    lwmdry_lowbare_tot_f char(1),
+    lwmcon_lowbare_tot real,
+    lwmcon_lowbare_tot_qc real,
+    lwmcon_lowbare_tot_f char(1),
+    lwmwet_lowbare_tot real,
+    lwmwet_lowbare_tot_qc real,
+    lwmwet_lowbare_tot_f char(1),
+    lwmdry_highbare_tot real,
+    lwmdry_highbare_tot_qc real,
+    lwmdry_highbare_tot_f char(1),
+    lwmcon_highbare_tot real,
+    lwmcon_highbare_tot_qc real,
+    lwmcon_highbare_tot_f char(1),
+    lwmwet_highbare_tot real,
+    lwmwet_highbare_tot_qc real,
+    lwmwet_highbare_tot_f char(1),
+    obs_count int,
 
-  -- Solar Radiation
-  slrkj_tot real,
-  slrkj_tot_f char(1),
-  slrkj_tot_qc real
+    -- Solar Radiation
+    slrkj_tot real,
+    slrkj_tot_f char(1),
+    slrkj_tot_qc real
 );
-alter table sm_hourly owner to mesonet;
-CREATE UNIQUE index sm_hourly_idx on sm_hourly(station, valid);
-GRANT SELECT on sm_hourly to nobody;
+ALTER TABLE sm_hourly OWNER TO mesonet;
+CREATE UNIQUE INDEX sm_hourly_idx ON sm_hourly (station, valid);
+GRANT SELECT ON sm_hourly TO nobody;
 
 --- Soil Moisture Stations
 CREATE TABLE sm_minute (
-  station char(5),
-  valid timestamp with time zone,
+    station char(5),
+    valid timestamp with time zone,
 
-  -- Air Temperature
-  TAir_C_Avg real,
-  TAir_C_Avg_qc real,
-  TAir_C_Avg_f char(1),
+    -- Air Temperature
+    tair_c_avg real,
+    tair_c_avg_qc real,
+    tair_c_avg_f char(1),
 
-  -- Relative Humidity
-  rh_avg real,
-  rh_avg_qc real,
-  rh_avg_f char(1),
+    -- Relative Humidity
+    rh_avg real,
+    rh_avg_qc real,
+    rh_avg_f char(1),
 
-  -- Solar Rad total kJ over 1 minute
-  SlrkJ_Tot real,
-  SlrkJ_Tot_qc real,
-  SlrkJ_Tot_f char(1),
+    -- Solar Rad total kJ over 1 minute
+    slrkj_tot real,
+    slrkj_tot_qc real,
+    slrkj_tot_f char(1),
 
-  -- Precip total
-  Rain_in_Tot real,
-  Rain_in_Tot_qc real,
-  Rain_in_Tot_f char(1),
+    -- Precip total
+    rain_in_tot real,
+    rain_in_tot_qc real,
+    rain_in_tot_f char(1),
 
-  -- Precip total from second bucket
-  rain_in_2_tot real,
-  rain_in_2_tot_qc real,
-  rain_in_2_tot_f char(1),
+    -- Precip total from second bucket
+    rain_in_2_tot real,
+    rain_in_2_tot_qc real,
+    rain_in_2_tot_f char(1),
 
-  -- 4 inch soil
-  T4_C_Avg real,
-  T4_C_Avg_qc real,
-  T4_C_Avg_f char(1),
+    -- 4 inch soil
+    t4_c_avg real,
+    t4_c_avg_qc real,
+    t4_c_avg_f char(1),
 
-  -- wind speed mph
-  WS_mph real,
-  WS_mph_qc real,
-  WS_mph_f char(1),
+    -- wind speed mph
+    ws_mph real,
+    ws_mph_qc real,
+    ws_mph_f char(1),
 
-  -- wind speed max
-  WS_mph_max real,
-  WS_mph_max_qc real,
-  WS_mph_max_f char(1),
+    -- wind speed max
+    ws_mph_max real,
+    ws_mph_max_qc real,
+    ws_mph_max_f char(1),
 
-  -- wind direction
-  WindDir_D1_WVT real,
-  WindDir_D1_WVT_qc real,
-  WindDir_D1_WVT_f char(1),
+    -- wind direction
+    winddir_d1_wvt real,
+    winddir_d1_wvt_qc real,
+    winddir_d1_wvt_f char(1),
 
-  -- 4 inch VWC
-  vwc4 real,
-  vwc4_qc real,
-  vwc4_f char(1),
+    -- 4 inch VWC
+    vwc4 real,
+    vwc4_qc real,
+    vwc4_f char(1),
 
-  -- 12 inch VWC
-  vwc12 real,
-  vwc12_qc real,
-  vwc12_f char(1),
+    -- 12 inch VWC
+    vwc12 real,
+    vwc12_qc real,
+    vwc12_f char(1),
 
-  -- 24 inch VWC
-  vwc24 real,
-  vwc24_qc real,
-  vwc24_f char(1),
+    -- 24 inch VWC
+    vwc24 real,
+    vwc24_qc real,
+    vwc24_f char(1),
 
-  -- 50 inch VWC
-  vwc50 real,
-  vwc50_qc real,
-  vwc50_f char(1),
+    -- 50 inch VWC
+    vwc50 real,
+    vwc50_qc real,
+    vwc50_f char(1),
 
-  -- 12 inch temp
-  T12_C_Avg real,
-  T12_C_Avg_qc real,
-  T12_C_Avg_f char(1),
+    -- 12 inch temp
+    t12_c_avg real,
+    t12_c_avg_qc real,
+    t12_c_avg_f char(1),
 
-  -- 24 inch temp
-  T24_C_Avg real,
-  T24_C_Avg_qc real,
-  T24_C_Avg_f char(1),
+    -- 24 inch temp
+    t24_c_avg real,
+    t24_c_avg_qc real,
+    t24_c_avg_f char(1),
 
-  -- 30 inch temp
-  T30_C_Avg real,
-  T30_C_Avg_qc real,
-  T30_C_Avg_f char(1),
+    -- 30 inch temp
+    t30_c_avg real,
+    t30_c_avg_qc real,
+    t30_c_avg_f char(1),
 
-  -- 40 inch temp
-  T40_C_Avg real,
-  T40_C_Avg_qc real,
-  T40_C_Avg_f char(1),
+    -- 40 inch temp
+    t40_c_avg real,
+    t40_c_avg_qc real,
+    t40_c_avg_f char(1),
 
-  -- 50 inch temp
-  T50_C_Avg real,
-  T50_C_Avg_qc real,
-  T50_C_Avg_f char(1),
+    -- 50 inch temp
+    t50_c_avg real,
+    t50_c_avg_qc real,
+    t50_c_avg_f char(1),
 
     -- SoilVue  EC Values
     sv_ec2 real, sv_ec2_qc real, sv_ec2_f char(1),
@@ -651,37 +659,37 @@ CREATE TABLE sm_minute (
     lwmwet_2_tot_qc real,
     lwmwet_2_tot_f character(1),
 
-lwmdry_lowbare_tot real,
-lwmdry_lowbare_tot_qc real,
-lwmdry_lowbare_tot_f char(1),
-lwmcon_lowbare_tot real,
-lwmcon_lowbare_tot_qc real,
-lwmcon_lowbare_tot_f char(1),
-lwmwet_lowbare_tot real,
-lwmwet_lowbare_tot_qc real,
-lwmwet_lowbare_tot_f char(1),
-lwmdry_highbare_tot real,
-lwmdry_highbare_tot_qc real,
-lwmdry_highbare_tot_f char(1),
-lwmcon_highbare_tot real,
-lwmcon_highbare_tot_qc real,
-lwmcon_highbare_tot_f char(1),
-lwmwet_highbare_tot real,
-lwmwet_highbare_tot_qc real,
-lwmwet_highbare_tot_f char(1),
+    lwmdry_lowbare_tot real,
+    lwmdry_lowbare_tot_qc real,
+    lwmdry_lowbare_tot_f char(1),
+    lwmcon_lowbare_tot real,
+    lwmcon_lowbare_tot_qc real,
+    lwmcon_lowbare_tot_f char(1),
+    lwmwet_lowbare_tot real,
+    lwmwet_lowbare_tot_qc real,
+    lwmwet_lowbare_tot_f char(1),
+    lwmdry_highbare_tot real,
+    lwmdry_highbare_tot_qc real,
+    lwmdry_highbare_tot_f char(1),
+    lwmcon_highbare_tot real,
+    lwmcon_highbare_tot_qc real,
+    lwmcon_highbare_tot_f char(1),
+    lwmwet_highbare_tot real,
+    lwmwet_highbare_tot_qc real,
+    lwmwet_highbare_tot_f char(1),
 
-  bp_mb real,
-  bp_mb_qc real,
-  bp_mb_f char(1),
-  duration smallint DEFAULT 1
-) PARTITION by range(valid);
-ALTER TABLE sm_minute OWNER to mesonet;
-GRANT SELECT on sm_minute to nobody;
-GRANT ALL on sm_minute to ldm;
-CREATE INDEX on sm_minute(station, valid);
+    bp_mb real,
+    bp_mb_qc real,
+    bp_mb_f char(1),
+    duration smallint DEFAULT 1
+) PARTITION BY RANGE (valid);
+ALTER TABLE sm_minute OWNER TO mesonet;
+GRANT SELECT ON sm_minute TO nobody;
+GRANT ALL ON sm_minute TO ldm;
+CREATE INDEX ON sm_minute (station, valid);
 
 
-do
+DO
 $do$
 declare
      year int;
@@ -746,9 +754,9 @@ CREATE TABLE daily (
     c930 real,
     c930_f character(1)
 );
-alter table daily owner to mesonet;
+ALTER TABLE daily OWNER TO mesonet;
 CREATE UNIQUE INDEX daily_idx ON daily USING btree (station, valid);
-grant select on daily to nobody;
+GRANT SELECT ON daily TO nobody;
 
 CREATE TABLE hourly (
     station character varying(7),
@@ -772,11 +780,11 @@ CREATE TABLE hourly (
     c900 real,
     c900_f character(1)
 );
-alter table hourly owner to mesonet;
+ALTER TABLE hourly OWNER TO mesonet;
 CREATE UNIQUE INDEX hourly_idx ON hourly USING btree (station, valid);
-grant select on hourly to nobody;
+GRANT SELECT ON hourly TO nobody;
 
-CREATE TABLE sm_inversion(
+CREATE TABLE sm_inversion (
     station varchar(5),
     valid timestamptz,
     tair_15_c_avg real,
@@ -797,14 +805,19 @@ CREATE TABLE sm_inversion(
     ws_ms_max_f char(1),
     duration smallint DEFAULT 1
 );
-ALTER TABLE sm_inversion OWNER to mesonet;
-GRANT SELECT on sm_inversion to nobody;
-CREATE UNIQUE INDEX sm_inversion_idx on sm_inversion(station, valid);
+ALTER TABLE sm_inversion OWNER TO mesonet;
+GRANT SELECT ON sm_inversion TO nobody;
+CREATE UNIQUE INDEX sm_inversion_idx ON sm_inversion (station, valid);
 
 --- Clever hack to map data around!
-create or replace view alldata as 
-    select station, valid, ws_mph * 1.15 as sknt,
-    winddir_d1_wvt as drct, rain_in_tot as phour,
-    c2f(tair_c_avg) as tmpf, rh_avg as relh
-    from sm_hourly;
-grant select on alldata to nobody;
+CREATE OR REPLACE VIEW alldata AS
+SELECT
+    station,
+    valid,
+    winddir_d1_wvt AS drct,
+    rain_in_tot AS phour,
+    rh_avg AS relh,
+    ws_mph * 1.15 AS sknt,
+    c2f(tair_c_avg) AS tmpf
+FROM sm_hourly;
+GRANT SELECT ON alldata TO nobody;

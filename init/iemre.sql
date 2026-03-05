@@ -2,32 +2,38 @@
 CREATE EXTENSION postgis;
 
 -- bandaid
-insert into spatial_ref_sys
- select 9311, 'EPSG', 9311, srtext, proj4text from spatial_ref_sys
- where srid = 2163;
+INSERT INTO spatial_ref_sys
+SELECT
+    9311 AS srid,
+    'EPSG' AS auth_name,
+    9311 AS auth_srid,
+    srtext,
+    proj4text
+FROM spatial_ref_sys
+WHERE srid = 2163;
 
 -- Boilerplate IEM schema_manager_version, the version gets incremented each
 -- time we make an upgrade script
-CREATE TABLE iem_schema_manager_version(
+CREATE TABLE iem_schema_manager_version (
     version int,
     updated timestamptz
 );
-INSERT into iem_schema_manager_version values (4, now());
+INSERT INTO iem_schema_manager_version VALUES (4, now());
 
 -- Our baseline grid
-CREATE TABLE iemre_grid(
+CREATE TABLE iemre_grid (
     gid int NOT NULL, -- (gridx + gridy * 488) - 1
-    cell_center geometry(Point, 4326),
-    cell_polygon geometry(Polygon, 4326),
+    cell_center GEOMETRY (POINT, 4326),
+    cell_polygon GEOMETRY (POLYGON, 4326),
     hasdata boolean,
     gridx int,
     gridy int
 );
-GRANT ALL on iemre_grid to mesonet,ldm;
-GRANT SELECT on iemre_grid to nobody;
+GRANT ALL ON iemre_grid TO mesonet, ldm;
+GRANT SELECT ON iemre_grid TO nobody;
 
 -- fill out the grid, since we can
-do
+DO
 $do$
 declare
      x int;
@@ -66,15 +72,15 @@ $do$;
 
 
 -- Create indices
-CREATE INDEX iemre_grid_gix ON iemre_grid USING GIST (cell_center);
-CREATE INDEX iemre_grid_cell_gix ON iemre_grid USING GIST (cell_polygon);
-CREATE UNIQUE INDEX iemre_grid_gid_idx on iemre_grid(gid);
-CREATE UNIQUE INDEX iemre_grid_idx on iemre_grid(gridx, gridy);
+CREATE INDEX iemre_grid_gix ON iemre_grid USING gist (cell_center);
+CREATE INDEX iemre_grid_cell_gix ON iemre_grid USING gist (cell_polygon);
+CREATE UNIQUE INDEX iemre_grid_gid_idx ON iemre_grid (gid);
+CREATE UNIQUE INDEX iemre_grid_idx ON iemre_grid (gridx, gridy);
 
 -- _______________________________________________________________________
 -- Storage of daily analysis
-CREATE TABLE iemre_daily(
-    gid int REFERENCES iemre_grid(gid),
+CREATE TABLE iemre_daily (
+    gid int REFERENCES iemre_grid (gid),
     valid date,
     high_tmpk real,
     low_tmpk real,
@@ -92,16 +98,16 @@ CREATE TABLE iemre_daily(
     max_rh real,
     high_soil4t real,
     low_soil4t real
-) PARTITION by RANGE (valid);
-ALTER TABLE iemre_daily OWNER to mesonet;
-GRANT ALL on iemre_daily to ldm;
-GRANT SELECT on iemre_daily to nobody;
+) PARTITION BY RANGE (valid);
+ALTER TABLE iemre_daily OWNER TO mesonet;
+GRANT ALL ON iemre_daily TO ldm;
+GRANT SELECT ON iemre_daily TO nobody;
 
-CREATE INDEX on iemre_daily(valid);
-CREATE INDEX on iemre_daily(gid);
+CREATE INDEX ON iemre_daily (valid);
+CREATE INDEX ON iemre_daily (gid);
 
 
-do
+DO
 $do$
 declare
      year int;
@@ -124,33 +130,33 @@ $do$;
 
 -- _______________________________________________________________________
 -- Storage of CFS forecast
-CREATE TABLE iemre_daily_forecast(
-    gid int REFERENCES iemre_grid(gid),
+CREATE TABLE iemre_daily_forecast (
+    gid int REFERENCES iemre_grid (gid),
     valid date,
     high_tmpk real,
     low_tmpk real,
     p01d real,
     rsds real
 );
-ALTER TABLE iemre_daily_forecast OWNER to mesonet;
-GRANT ALL on iemre_daily_forecast to mesonet,ldm;
-GRANT SELECT on iemre_daily_forecast to nobody;
+ALTER TABLE iemre_daily_forecast OWNER TO mesonet;
+GRANT ALL ON iemre_daily_forecast TO mesonet, ldm;
+GRANT SELECT ON iemre_daily_forecast TO nobody;
 
-CREATE INDEX on iemre_daily_forecast(valid);
-CREATE INDEX on iemre_daily_forecast(gid);
+CREATE INDEX ON iemre_daily_forecast (valid);
+CREATE INDEX ON iemre_daily_forecast (gid);
 
 -- _______________________________________________________________________
 -- Storage of daily climatology
-CREATE TABLE iemre_dailyc(
-    gid int REFERENCES iemre_grid(gid),
+CREATE TABLE iemre_dailyc (
+    gid int REFERENCES iemre_grid (gid),
     valid date,
     high_tmpk real,
     low_tmpk real,
     p01d real
 );
-ALTER TABLE iemre_dailyc OWNER to mesonet;
-GRANT ALL on iemre_dailyc to mesonet,ldm;
-GRANT SELECT on iemre_dailyc to nobody;
+ALTER TABLE iemre_dailyc OWNER TO mesonet;
+GRANT ALL ON iemre_dailyc TO mesonet, ldm;
+GRANT SELECT ON iemre_dailyc TO nobody;
 
-CREATE INDEX on iemre_dailyc(valid);
-CREATE INDEX on iemre_dailyc(gid);
+CREATE INDEX ON iemre_dailyc (valid);
+CREATE INDEX ON iemre_dailyc (gid);

@@ -3,29 +3,29 @@ CREATE EXTENSION postgis;
 
 -- Boilerplate IEM schema_manager_version, the version gets incremented each
 -- time we make an upgrade script
-CREATE TABLE iem_schema_manager_version(
-    "version" int,
+CREATE TABLE iem_schema_manager_version (
+    version int,
     updated timestamptz
 );
-ALTER TABLE iem_schema_manager_version OWNER to mesonet;
-insert into iem_schema_manager_version values (-1, now());
+ALTER TABLE iem_schema_manager_version OWNER TO mesonet;
+INSERT INTO iem_schema_manager_version VALUES (-1, now());
 
 -- Storage of DEP versioning dailyerosion/dep#179
-create table dep_version(
-    label text unique not null,
-    wepp text not null,
-    acpf text not null,
-    flowpath text not null,
-    gssurgo text not null,
-    software text not null,
-    tillage text not null
+CREATE TABLE dep_version (
+    label text UNIQUE NOT NULL,
+    wepp text NOT NULL,
+    acpf text NOT NULL,
+    flowpath text NOT NULL,
+    gssurgo text NOT NULL,
+    software text NOT NULL,
+    tillage text NOT NULL
 );
-alter table dep_version owner to mesonet;
-grant select on dep_version to nobody;
-create unique index dep_version_idx
-on dep_version(label, wepp, acpf, flowpath, gssurgo, software);
+ALTER TABLE dep_version OWNER TO mesonet;
+GRANT SELECT ON dep_version TO nobody;
+CREATE UNIQUE INDEX dep_version_idx
+ON dep_version (label, wepp, acpf, flowpath, gssurgo, software);
 
-create table scenarios(
+CREATE TABLE scenarios (
     id int UNIQUE,
     label varchar,
     climate_scenario int,
@@ -33,42 +33,42 @@ create table scenarios(
     flowpath_scenario int,
     dep_version_label text
 );
-GRANT SELECT on scenarios to nobody;
-ALTER TABLE scenarios OWNER to mesonet;
+GRANT SELECT ON scenarios TO nobody;
+ALTER TABLE scenarios OWNER TO mesonet;
 
 -- Storage of DEP Climate Files
-create table climate_files(
-    id serial primary key,
-    scenario int references scenarios(id),
+CREATE TABLE climate_files (
+    id serial PRIMARY KEY,
+    scenario int REFERENCES scenarios (id),
     filepath text,
-    geom geometry(Point,4326)
+    geom GEOMETRY (POINT, 4326)
 );
-alter table climate_files owner to mesonet;
-grant select on climate_files to nobody;
+ALTER TABLE climate_files OWNER TO mesonet;
+GRANT SELECT ON climate_files TO nobody;
 
 -- storage of yearly summaries
-create table climate_file_yearly_summary(
-    climate_file_id int references climate_files(id),
-    "year" int,
+CREATE TABLE climate_file_yearly_summary (
+    climate_file_id int REFERENCES climate_files (id),
+    year int,
     rfactor real,
     rfactor_storms int
 );
-create index climate_file_yearly_summary_climate_file_id_idx
-    on climate_file_yearly_summary(climate_file_id);
-alter table climate_file_yearly_summary owner to mesonet;
-grant select on climate_file_yearly_summary to nobody;
+CREATE INDEX climate_file_yearly_summary_climate_file_id_idx
+ON climate_file_yearly_summary (climate_file_id);
+ALTER TABLE climate_file_yearly_summary OWNER TO mesonet;
+GRANT SELECT ON climate_file_yearly_summary TO nobody;
 
 -- Log clifile requests
-create table clifile_requests(
-    "valid" timestamptz default now(),
-    climate_file_id int references climate_files(id),
+CREATE TABLE clifile_requests (
+    valid timestamptz DEFAULT now(),
+    climate_file_id int REFERENCES climate_files (id),
     client_addr text,
-    geom geometry(Point, 4326),
+    geom GEOMETRY (POINT, 4326),
     distance_degrees float
 );
-alter table clifile_requests owner to mesonet;
-grant insert on clifile_requests to nobody;
+ALTER TABLE clifile_requests OWNER TO mesonet;
+GRANT INSERT ON clifile_requests TO nobody;
 
 -- Default entry that is used for testing.
-insert into scenarios values (0, 'Production', 0, 0, 0);
-insert into scenarios values (-1, 'Testing', 0, 0, 0);
+INSERT INTO scenarios VALUES (0, 'Production', 0, 0, 0);
+INSERT INTO scenarios VALUES (-1, 'Testing', 0, 0, 0);

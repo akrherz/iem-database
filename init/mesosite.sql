@@ -1,41 +1,48 @@
 CREATE EXTENSION postgis;
 
 -- bandaid
-insert into spatial_ref_sys
-    select 9311, 'EPSG', 9311, srtext, proj4text from spatial_ref_sys
-    where srid = 2163;
+INSERT INTO spatial_ref_sys
+SELECT
+    9311 AS srid,
+    'EPSG' AS auth_name,
+    9311 AS auth_srid,
+    srtext,
+    proj4text
+FROM spatial_ref_sys
+WHERE srid = 2163;
 
 -- Boilerplate IEM schema_manager_version, the version gets incremented each
 -- time we make an upgrade script
-CREATE TABLE iem_schema_manager_version(
+CREATE TABLE iem_schema_manager_version (
     version int,
-    updated timestamptz);
-INSERT into iem_schema_manager_version values (30, now());
+    updated timestamptz
+);
+INSERT INTO iem_schema_manager_version VALUES (30, now());
 
 --- ==== TABLES TO investigate deleting
 --- counties
 --- states
 
 -- Storage of DOT Roadway cam metadata
-create table dot_roadway_cams(
-    cam_id serial unique not null,
-    device_id text not null,
-    name text not null,
-    archive_begin timestamptz not null,
+CREATE TABLE dot_roadway_cams (
+    cam_id serial UNIQUE NOT NULL,
+    device_id text NOT NULL,
+    name text NOT NULL,
+    archive_begin timestamptz NOT NULL,
     archive_end timestamptz,
-    geom geometry(Point,4326)
+    geom GEOMETRY (POINT, 4326)
 );
-alter table dot_roadway_cams owner to mesonet;
-grant select on dot_roadway_cams to nobody;
+ALTER TABLE dot_roadway_cams OWNER TO mesonet;
+GRANT SELECT ON dot_roadway_cams TO nobody;
 
-create table dot_roadway_cams_log(
-    cam_id int references dot_roadway_cams(cam_id),
+CREATE TABLE dot_roadway_cams_log (
+    cam_id int REFERENCES dot_roadway_cams (cam_id),
     valid timestamp with time zone
-) partition by range(valid);
-alter table dot_roadway_cams_log owner to mesonet;
-grant select on dot_roadway_cams_log to nobody;
+) PARTITION BY RANGE (valid);
+ALTER TABLE dot_roadway_cams_log OWNER TO mesonet;
+GRANT SELECT ON dot_roadway_cams_log TO nobody;
 
-do
+DO
 $do$
 declare
      year int;
@@ -63,28 +70,28 @@ end;
 $do$;
 
 -- Storage of citations of the website
-create table website_citations (
-    publication_date date not null,
-    title text not null,
+CREATE TABLE website_citations (
+    publication_date date NOT NULL,
+    title text NOT NULL,
     link text,
     iem_resource text
 );
-alter table website_citations owner to mesonet;
-grant select,insert on website_citations to nobody;
+ALTER TABLE website_citations OWNER TO mesonet;
+GRANT SELECT, INSERT ON website_citations TO nobody;
 
 --
-create table tz_world(
-    gid serial unique not null,
+CREATE TABLE tz_world (
+    gid serial UNIQUE NOT NULL,
     tzid varchar(30),
-    geom geometry(MultiPolygon,4326)
+    geom GEOMETRY (MULTIPOLYGON, 4326)
 );
-create index tz_world_geom_idx on tz_world using gist(geom);
-alter table tz_world owner to mesonet;
-grant select on tz_world to ldm, nobody;
+CREATE INDEX tz_world_geom_idx ON tz_world USING gist (geom);
+ALTER TABLE tz_world OWNER TO mesonet;
+GRANT SELECT ON tz_world TO ldm, nobody;
 
 --
-create table website_telemetry(
-    valid timestamptz not null default now(),
+CREATE TABLE website_telemetry (
+    valid timestamptz NOT NULL DEFAULT now(),
     timing real,
     status_code integer,
     client_addr inet,
@@ -92,14 +99,14 @@ create table website_telemetry(
     request_uri text,
     vhost text
 );
-create index website_telemetry_valid_idx on
-  website_telemetry(valid);
-alter table website_telemetry owner to mesonet;
-grant all on website_telemetry to nobody;
+CREATE INDEX website_telemetry_valid_idx ON
+website_telemetry (valid);
+ALTER TABLE website_telemetry OWNER TO mesonet;
+GRANT ALL ON website_telemetry TO nobody;
 
 ---
 --- Store 404s for downstream analysis
-CREATE TABLE weblog(
+CREATE TABLE weblog (
     valid timestamptz DEFAULT now(),
     client_addr inet,
     uri text,
@@ -108,114 +115,115 @@ CREATE TABLE weblog(
     x_forwarded_for text,
     domain text
 );
-ALTER TABLE weblog OWNER to mesonet;
-GRANT ALL on weblog to nobody;
+ALTER TABLE weblog OWNER TO mesonet;
+GRANT ALL ON weblog TO nobody;
 
-create table weblog_block_queue(
+CREATE TABLE weblog_block_queue (
     protocol smallint,
     client_addr inet,
     target text,
     x_forwarded_for text,
     banned boolean DEFAULT 'f'
 );
-alter table weblog_block_queue owner to mesonet;
+ALTER TABLE weblog_block_queue OWNER TO mesonet;
 
 ---
 --- Store metadata used to drive the /timemachine/
 ---
-CREATE TABLE archive_products(
-    id SERIAL,
+CREATE TABLE archive_products (
+    id serial,
     name varchar,
     template varchar,
     sts timestamptz,
     interval int,
     groupname varchar,
     time_offset int,
-    avail_lag int);
-alter table archive_products owner to mesonet;
-GRANT SELECT on archive_products to nobody;
-
+    avail_lag int
+);
+ALTER TABLE archive_products OWNER TO mesonet;
+GRANT SELECT ON archive_products TO nobody;
 
 
 ---
 --- networks we process!
 ---
-CREATE TABLE networks(
-  id varchar(12) unique,
-  name varchar,
-  tzname varchar(32),
-  extent geometry(Polygon,4326),
-  windrose_update timestamptz
+CREATE TABLE networks (
+    id varchar(12) UNIQUE,
+    name varchar,
+    tzname varchar(32),
+    extent GEOMETRY (POLYGON, 4326),
+    windrose_update timestamptz
 );
-CREATE UNIQUE index networks_id_idx on networks(id);
-ALTER TABLE networks OWNER to mesonet;
-GRANT ALL on networks to ldm;
-GRANT SELECT on networks to nobody;
+CREATE UNIQUE INDEX networks_id_idx ON networks (id);
+ALTER TABLE networks OWNER TO mesonet;
+GRANT ALL ON networks TO ldm;
+GRANT SELECT ON networks TO nobody;
 
 ---
 --- Missing table: news
 ---
-CREATE TABLE news(
-  id serial not null,
-  entered timestamptz default now(),
-  body text,
-  author varchar(100),
-  title varchar(100),
-  url varchar,
-  views int default 0,
-  tags varchar(128)[]);
-CREATE INDEX news_entered_idx on news(entered);
-GRANT ALL on news to nobody;
-GRANT ALL on news_id_seq to nobody;
+CREATE TABLE news (
+    id serial NOT NULL,
+    entered timestamptz DEFAULT now(),
+    body text,
+    author varchar(100),
+    title varchar(100),
+    url varchar,
+    views int DEFAULT 0,
+    tags varchar(128) []
+);
+CREATE INDEX news_entered_idx ON news (entered);
+GRANT ALL ON news TO nobody;
+GRANT ALL ON news_id_seq TO nobody;
 
 ---
 --- Racoon Work Tasks
 ---
-CREATE TABLE racoon_jobs(
-  jobid varchar(32) default md5(random()::text),
-  wfo varchar(3),
-  sts timestamp with time zone,
-  ets timestamp with time zone,
-  radar varchar(3),
-  processed boolean default false,
-  nexrad_product char(3),
-  wtype varchar(32)
+CREATE TABLE racoon_jobs (
+    jobid varchar(32) DEFAULT md5(random()::text),
+    wfo varchar(3),
+    sts timestamp with time zone,
+    ets timestamp with time zone,
+    radar varchar(3),
+    processed boolean DEFAULT false,
+    nexrad_product char(3),
+    wtype varchar(32)
 );
-GRANT all on racoon_jobs to nobody;
+GRANT ALL ON racoon_jobs TO nobody;
 
 ---
 --- IEM Apps Database!
 ---
-CREATE TABLE iemapps(
-  appid serial unique,
-  name varchar(256) unique not null,
-  description text,
-  url varchar(256) not null
+CREATE TABLE iemapps (
+    appid serial UNIQUE,
+    name varchar(256) UNIQUE NOT NULL,
+    description text,
+    url varchar(256) NOT NULL
 );
-GRANT ALL on iemapps to nobody;
+GRANT ALL ON iemapps TO nobody;
 
-CREATE TABLE iemapps_tags(
-    appid int references iemapps(appid),
-    tag varchar(24) not null
+CREATE TABLE iemapps_tags (
+    appid int REFERENCES iemapps (appid),
+    tag varchar(24) NOT NULL
 );
-CREATE UNIQUE INDEX iemapps_tags_idx on iemapps_tags(appid,tag);
-GRANT ALL on iemapps_tags to nobody;
+CREATE UNIQUE INDEX iemapps_tags_idx ON iemapps_tags (appid, tag);
+GRANT ALL ON iemapps_tags TO nobody;
 
 
 ---
 --- webcam logs
 ---
-CREATE TABLE camera_log(
+CREATE TABLE camera_log (
     cam varchar(11),
     valid timestamp with time zone,
     drct smallint
-) PARTITION by range(valid);
-ALTER TABLE camera_log OWNER to mesonet;
-GRANT ALL on camera_log to ldm;
-GRANT SELECT on camera_log to nobody;
+) PARTITION BY RANGE (valid);
+ALTER TABLE camera_log OWNER TO mesonet;
+GRANT ALL ON camera_log TO ldm;
+GRANT SELECT ON camera_log TO nobody;
 
 
-do
+DO
 $do$
 declare
      year int;
@@ -249,46 +257,51 @@ $do$;
 ---
 --- webcam currents
 ---
-CREATE TABLE camera_current(
+CREATE TABLE camera_current (
     cam varchar(11) UNIQUE,
     valid timestamp with time zone,
-    drct smallint);
-GRANT SELECT on camera_current to nobody;
-GRANT ALL on camera_current to mesonet,ldm;
+    drct smallint
+);
+GRANT SELECT ON camera_current TO nobody;
+GRANT ALL ON camera_current TO mesonet, ldm;
 
 ---
 --- Webcam scheduling
 ---
-CREATE TABLE webcam_scheduler(
+CREATE TABLE webcam_scheduler (
     cid varchar(10),
     begints timestamp with time zone,
     endts timestamp with time zone,
     is_daily boolean,
     filename varchar,
-    movie_seconds smallint);
-CREATE UNIQUE index webcam_scheduler_filename_idx on
-    webcam_scheduler(filename);
-GRANT ALL on webcam_scheduler to nobody;
+    movie_seconds smallint
+);
+CREATE UNIQUE INDEX webcam_scheduler_filename_idx ON
+webcam_scheduler (filename);
+GRANT ALL ON webcam_scheduler TO nobody;
 
 ---
 --- Store IEM settings
 ---
-CREATE TABLE properties(
-  propname varchar,
-  propvalue varchar
+CREATE TABLE properties (
+    propname varchar,
+    propvalue varchar
 );
-ALTER TABLE properties OWNER to mesonet;
+ALTER TABLE properties OWNER TO mesonet;
 -- TODO: fix this permissions
-GRANT ALL on properties to nobody,ldm;
-CREATE UNIQUE index properties_idx on properties(propname, propvalue);
+GRANT ALL ON properties TO nobody, ldm;
+CREATE UNIQUE INDEX properties_idx ON properties (propname, propvalue);
 
 --- Alias for pyWWA nwschat support
-create view nwschat_properties as select * from properties;
+CREATE VIEW nwschat_properties AS SELECT
+    propname,
+    propvalue
+FROM properties;
 
 ---
 --- Webcam configurations
 ---
-CREATE TABLE webcams(
+CREATE TABLE webcams (
     id varchar(11),
     ip inet,
     name varchar,
@@ -311,13 +324,13 @@ CREATE TABLE webcams(
     scrape_url varchar,
     is_vapix boolean,
     fullres varchar(9) DEFAULT '640x480' NOT NULL,
-  fqdn varchar
-    );
-SELECT AddGeometryColumn('webcams', 'geom', 4326, 'POINT', 2);
-GRANT all on webcams to mesonet,ldm;
-GRANT select on webcams to nobody;
+    fqdn varchar
+);
+SELECT addgeometrycolumn('webcams', 'geom', 4326, 'POINT', 2);
+GRANT ALL ON webcams TO mesonet, ldm;
+GRANT SELECT ON webcams TO nobody;
 
-CREATE TABLE stations(
+CREATE TABLE stations (
     id varchar(64),
     synop int,
     name varchar(64),
@@ -325,7 +338,7 @@ CREATE TABLE stations(
     country char(2),
     elevation real,
     network varchar(20),
-    online boolean NOT NULL default 't',
+    online boolean NOT NULL DEFAULT 't',
     params varchar(300),
     county varchar(50),
     plot_name varchar(64),
@@ -336,9 +349,9 @@ CREATE TABLE stations(
     wfo varchar(3),
     archive_begin date,
     archive_end date,
-    modified timestamptz default now(),
+    modified timestamptz DEFAULT now(),
     tzname varchar(32),
-    iemid SERIAL UNIQUE NOT NULL,
+    iemid serial UNIQUE NOT NULL,
     metasite boolean,
     sigstage_low real,
     sigstage_action real,
@@ -355,149 +368,158 @@ CREATE TABLE stations(
     precip24_hour smallint,
     wigos varchar(64)
 );
-ALTER TABLE stations OWNER to mesonet;
+ALTER TABLE stations OWNER TO mesonet;
 -- no commas in name please
-alter table stations add constraint stations_nocommas check(strpos(name, ',') = 0);
-CREATE UNIQUE index stations_idx on stations(id, network);
-create UNIQUE index stations_iemid_idx on stations(iemid);
-SELECT AddGeometryColumn('stations', 'geom', 4326, 'POINT', 2);
-GRANT SELECT on stations to nobody;
-grant all on stations_iemid_seq to nobody;
-GRANT ALL on stations to mesonet,ldm;
-GRANT ALL on stations_iemid_seq to mesonet,ldm;
+ALTER TABLE stations ADD CONSTRAINT stations_nocommas CHECK (
+    strpos(name, ',') = 0
+);
+CREATE UNIQUE INDEX stations_idx ON stations (id, network);
+CREATE UNIQUE INDEX stations_iemid_idx ON stations (iemid);
+SELECT addgeometrycolumn('stations', 'geom', 4326, 'POINT', 2);
+GRANT SELECT ON stations TO nobody;
+GRANT ALL ON stations_iemid_seq TO nobody;
+GRANT ALL ON stations TO mesonet, ldm;
+GRANT ALL ON stations_iemid_seq TO mesonet, ldm;
 
 CREATE OR REPLACE FUNCTION update_modified_column()
-    RETURNS TRIGGER AS $$
+RETURNS trigger AS $$
     BEGIN
        NEW.modified = now(); 
        RETURN NEW;
     END;
-    $$ language 'plpgsql';
-    
+    $$ LANGUAGE plpgsql;
+
 CREATE TRIGGER update_stations_modtime BEFORE UPDATE
-        ON stations FOR EACH ROW EXECUTE PROCEDURE 
-        update_modified_column();
+ON stations FOR EACH ROW EXECUTE PROCEDURE
+update_modified_column();
 
 -- Storage of how stations are threaded together
-CREATE TABLE station_threading(
-    iemid int REFERENCES stations(iemid),
-    source_iemid int REFERENCES stations(iemid),
+CREATE TABLE station_threading (
+    iemid int REFERENCES stations (iemid),
+    source_iemid int REFERENCES stations (iemid),
     begin_date date NOT NULL,
     end_date date
 );
-ALTER TABLE station_threading OWNER to mesonet;
-GRANT ALL on station_threading to ldm;
-GRANT SELECT on station_threading to nobody;
+ALTER TABLE station_threading OWNER TO mesonet;
+GRANT ALL ON station_threading TO ldm;
+GRANT SELECT ON station_threading TO nobody;
 
 -- Storage of station attributes
-CREATE TABLE station_attributes(
-    iemid int REFERENCES stations(iemid),
+CREATE TABLE station_attributes (
+    iemid int REFERENCES stations (iemid),
     attr varchar(128) NOT NULL,
-  value varchar NOT NULL);
-GRANT ALL on station_attributes to mesonet,ldm;
-CREATE UNIQUE index station_attributes_idx on station_attributes(iemid, attr);
-create index station_attributes_iemid_idx on station_attributes(iemid);
-GRANT SELECT on station_attributes to nobody;
+    value varchar NOT NULL
+);
+GRANT ALL ON station_attributes TO mesonet, ldm;
+CREATE UNIQUE INDEX station_attributes_idx ON station_attributes (iemid, attr);
+CREATE INDEX station_attributes_iemid_idx ON station_attributes (iemid);
+GRANT SELECT ON station_attributes TO nobody;
 
 ---
-create table iemmaps(
-  id SERIAL,
-  title varchar(256),
-  entered timestamp with time zone DEFAULT now(),
-  description text,
-  keywords varchar(256),
-  views int,
-  ref varchar(32),
-  category varchar(24)
+CREATE TABLE iemmaps (
+    id serial,
+    title varchar(256),
+    entered timestamp with time zone DEFAULT now(),
+    description text,
+    keywords varchar(256),
+    views int,
+    ref varchar(32),
+    category varchar(24)
 );
-GRANT all on iemmaps to nobody;
-GRANT all on iemmaps_id_seq to nobody;
+GRANT ALL ON iemmaps TO nobody;
+GRANT ALL ON iemmaps_id_seq TO nobody;
 
-CREATE table feature(
-  valid timestamp with time zone DEFAULT now(),
-  title varchar(256),
-  story text,
-  caption varchar(256),
-  good smallint default 0,
-  bad smallint default 0,
-  abstain smallint default 0,
-  voting boolean default true,
-  tags varchar(1024),
-  fbid bigint,
-  appurl varchar(1024),
-  javascripturl varchar(1024),
-  views int default 0,
-  mediasuffix varchar(8) DEFAULT 'png',
-  media_height int,
-  media_width int
+CREATE TABLE feature (
+    valid timestamp with time zone DEFAULT now(),
+    title varchar(256),
+    story text,
+    caption varchar(256),
+    good smallint DEFAULT 0,
+    bad smallint DEFAULT 0,
+    abstain smallint DEFAULT 0,
+    voting boolean DEFAULT true,
+    tags varchar(1024),
+    fbid bigint,
+    appurl varchar(1024),
+    javascripturl varchar(1024),
+    views int DEFAULT 0,
+    mediasuffix varchar(8) DEFAULT 'png',
+    media_height int,
+    media_width int
 );
-CREATE unique index feature_title_check_idx on feature(title);
-CREATE index feature_valid_idx on feature(valid);
-GRANT all on feature to nobody;
-GRANT all on feature to mesonet,ldm;
+CREATE UNIQUE INDEX feature_title_check_idx ON feature (title);
+CREATE INDEX feature_valid_idx ON feature (valid);
+GRANT ALL ON feature TO nobody;
+GRANT ALL ON feature TO mesonet, ldm;
 
-CREATE table shef_physical_codes(
-  code char(2),
-  name varchar(128),
-  units varchar(64));
-GRANT select on shef_physical_codes to nobody;
+CREATE TABLE shef_physical_codes (
+    code char(2),
+    name varchar(128),
+    units varchar(64)
+);
+GRANT SELECT ON shef_physical_codes TO nobody;
 
-CREATE table shef_duration_codes(
-  code char(1),
-  name varchar(128));
-GRANT select on shef_duration_codes to nobody;
+CREATE TABLE shef_duration_codes (
+    code char(1),
+    name varchar(128)
+);
+GRANT SELECT ON shef_duration_codes TO nobody;
 
-CREATE table shef_extremum_codes(
-  code char(1),
-  name varchar(128));
-GRANT select on shef_extremum_codes to nobody;
+CREATE TABLE shef_extremum_codes (
+    code char(1),
+    name varchar(128)
+);
+GRANT SELECT ON shef_extremum_codes TO nobody;
 
 -- Storage of metadata
-CREATE TABLE iemrasters(
-  id SERIAL UNIQUE,
-  name varchar,
-  description text,
-  archive_start timestamptz,
-  archive_end   timestamptz,
-  units varchar(12),
-  interval int,
-  filename_template varchar,
-  cf_long_name varchar
+CREATE TABLE iemrasters (
+    id serial UNIQUE,
+    name varchar,
+    description text,
+    archive_start timestamptz,
+    archive_end timestamptz,
+    units varchar(12),
+    interval int,
+    filename_template varchar,
+    cf_long_name varchar
 );
-alter table iemrasters owner to mesonet;
-GRANT SELECT on iemrasters to nobody,ldm;
+ALTER TABLE iemrasters OWNER TO mesonet;
+GRANT SELECT ON iemrasters TO nobody, ldm;
 
 -- Storage of color tables and values
-CREATE TABLE iemrasters_lookup(
-  iemraster_id int REFERENCES iemrasters(id),
-  coloridx smallint,
-  value real,
-  r smallint,
-  g smallint,
-  b smallint
+CREATE TABLE iemrasters_lookup (
+    iemraster_id int REFERENCES iemrasters (id),
+    coloridx smallint,
+    value real,
+    r smallint,
+    g smallint,
+    b smallint
 );
-alter table iemrasters_lookup owner to mesonet;
-GRANT SELECT on iemrasters_lookup to nobody,ldm;
+ALTER TABLE iemrasters_lookup OWNER TO mesonet;
+GRANT SELECT ON iemrasters_lookup TO nobody, ldm;
 
 -- Storage of Autoplot timings and such
-CREATE TABLE autoplot_timing(
+CREATE TABLE autoplot_timing (
     appid smallint NOT NULL,
     valid timestamptz NOT NULL,
     timing real NOT NULL,
     uri varchar,
-    hostname varchar(24) NOT NULL);
-alter table autoplot_timing owner to mesonet;
-GRANT SELECT on autoplot_timing to nobody;
-CREATE INDEX autoplot_timing_idx on autoplot_timing(appid);
+    hostname varchar(24) NOT NULL
+);
+ALTER TABLE autoplot_timing OWNER TO mesonet;
+GRANT SELECT ON autoplot_timing TO nobody;
+CREATE INDEX autoplot_timing_idx ON autoplot_timing (appid);
 
 -- Storage of talltowers analog request queue
 CREATE TABLE talltowers_analog_queue
-    (stations varchar(32),
+(
+    stations varchar(32),
     sts timestamptz,
     ets timestamptz,
     fmt varchar(32),
     email varchar(128),
     aff varchar(256),
     filled boolean DEFAULT 'f',
-    valid timestamptz DEFAULT now());
-GRANT ALL on talltowers_analog_queue to nobody, mesonet;
+    valid timestamptz DEFAULT now()
+);
+GRANT ALL ON talltowers_analog_queue TO nobody, mesonet;

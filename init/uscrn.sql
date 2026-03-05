@@ -1,29 +1,30 @@
 -- US Climate Reference Network
 
-CREATE TABLE alldata(
-  station varchar(5),
-  valid timestamptz,
-  tmpc real,
-  precip_mm real,
-  srad real,
-  srad_flag char(1),
-  skinc real,
-  skinc_flag char(1),
-  skinc_type char(1),
-  rh real,
-  rh_flag real,
-  vsm5 real,
-  soilc5 real,
-  wetness real,
-  wetness_flag char(1),
-  wind_mps real,
-  wind_mps_flag char(1))
-  PARTITION by range(valid);
-ALTER TABLE alldata OWNER to mesonet;
-GRANT ALL on alldata to ldm;
-GRANT SELECT on alldata to nobody;
+CREATE TABLE alldata (
+    station varchar(5),
+    valid timestamptz,
+    tmpc real,
+    precip_mm real,
+    srad real,
+    srad_flag char(1),
+    skinc real,
+    skinc_flag char(1),
+    skinc_type char(1),
+    rh real,
+    rh_flag real,
+    vsm5 real,
+    soilc5 real,
+    wetness real,
+    wetness_flag char(1),
+    wind_mps real,
+    wind_mps_flag char(1)
+)
+PARTITION BY RANGE (valid);
+ALTER TABLE alldata OWNER TO mesonet;
+GRANT ALL ON alldata TO ldm;
+GRANT SELECT ON alldata TO nobody;
 
-do
+DO
 $do$
 declare
      year int;

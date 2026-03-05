@@ -1,9 +1,10 @@
 -- Boilerplate IEM schema_manager_version, the version gets incremented each
 -- time we make an upgrade script
-CREATE TABLE iem_schema_manager_version(
+CREATE TABLE iem_schema_manager_version (
     version int,
-    updated timestamptz);
-INSERT into iem_schema_manager_version values (4, now());
+    updated timestamptz
+);
+INSERT INTO iem_schema_manager_version VALUES (4, now());
 
 CREATE TABLE dump (
     station character varying(5),
@@ -48,11 +49,11 @@ CREATE TABLE alldata (
     relh real,
     alti real,
     gust real
-) PARTITION by range(valid);
-alter table alldata owner to mesonet;
-GRANT SELECT on alldata to nobody;
+) PARTITION BY RANGE (valid);
+ALTER TABLE alldata OWNER TO mesonet;
+GRANT SELECT ON alldata TO nobody;
 
-do
+DO
 $do$
 declare
      year int;

@@ -1,25 +1,25 @@
-
 -- Boilerplate IEM schema_manager_version, the version gets incremented each
 -- time we make an upgrade script
-CREATE TABLE iem_schema_manager_version(
+CREATE TABLE iem_schema_manager_version (
     version int,
-    updated timestamptz);
-INSERT into iem_schema_manager_version values (10, now());
+    updated timestamptz
+);
+INSERT INTO iem_schema_manager_version VALUES (10, now());
 
-CREATE TABLE products(
+CREATE TABLE products (
     data text,
-    pil char(6) not null,
+    pil char(6) NOT NULL,
     entered timestamptz,
     source char(4),
     wmo char(6),
     bbb varchar(3)
-) PARTITION by RANGE (entered);
-ALTER TABLE products OWNER to mesonet;
-GRANT ALL on products to ldm;
-GRANT SELECT on products to nobody;
+) PARTITION BY RANGE (entered);
+ALTER TABLE products OWNER TO mesonet;
+GRANT ALL ON products TO ldm;
+GRANT SELECT ON products TO nobody;
 
 
-do
+DO
 $do$
 declare
      year int;

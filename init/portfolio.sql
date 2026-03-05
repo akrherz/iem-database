@@ -1,10 +1,11 @@
 -- Boilerplate IEM schema_manager_version, the version gets incremented each
 -- time we make an upgrade script
-CREATE TABLE iem_schema_manager_version(
+CREATE TABLE iem_schema_manager_version (
     version int,
-    updated timestamptz);
-INSERT into iem_schema_manager_version values (0, now());
-GRANT ALL on iem_schema_manager_version to ldm,mesonet;
+    updated timestamptz
+);
+INSERT INTO iem_schema_manager_version VALUES (0, now());
+GRANT ALL ON iem_schema_manager_version TO ldm, mesonet;
 
 --
 -- Name: abuse; Type: TABLE; Schema: public; Owner: ldm,mesonet
@@ -15,7 +16,7 @@ CREATE TABLE public.abuse (
 );
 
 
-ALTER TABLE public.abuse OWNER to mesonet;
+ALTER TABLE public.abuse OWNER TO mesonet;
 
 --
 -- Name: admins; Type: TABLE; Schema: public; Owner: ldm,mesonet
@@ -27,7 +28,7 @@ CREATE TABLE public.admins (
 );
 
 
-ALTER TABLE public.admins OWNER to mesonet;
+ALTER TABLE public.admins OWNER TO mesonet;
 
 --
 -- Name: afc_days; Type: TABLE; Schema: public; Owner: mesonet
@@ -57,7 +58,9 @@ CREATE TABLE public.afc_forecasts (
     qpf00 smallint,
     qpf12 smallint,
     pop00 smallint,
-    entered timestamp with time zone DEFAULT ('now'::text)::timestamp(6) with time zone,
+    entered timestamp with time zone DEFAULT ('now'::text)::timestamp(
+        6
+    ) with time zone,
     pop12 smallint,
     wind14 smallint,
     ceil02 smallint,
@@ -92,7 +95,9 @@ ALTER TABLE public.appregistry OWNER TO mesonet;
 CREATE TABLE public.biosketch (
     username character varying(50),
     body text,
-    updated timestamp with time zone DEFAULT ('now'::text)::timestamp without time zone
+    updated timestamp with time zone DEFAULT (
+        'now'::text
+    )::timestamp without time zone
 );
 
 
@@ -104,13 +109,15 @@ ALTER TABLE public.biosketch OWNER TO mesonet;
 
 CREATE TABLE public.calendar (
     portfolio character varying(50),
-    valid timestamp with time zone DEFAULT ('now'::text)::timestamp without time zone,
+    valid timestamp with time zone DEFAULT (
+        'now'::text
+    )::timestamp without time zone,
     description text,
     url character varying(126)
 );
 
 
-ALTER TABLE public.calendar OWNER to mesonet;
+ALTER TABLE public.calendar OWNER TO mesonet;
 
 --
 -- Name: dialog; Type: TABLE; Schema: public; Owner: ldm,mesonet
@@ -120,14 +127,16 @@ CREATE TABLE public.dialog (
     username character varying(50),
     name text,
     gid integer,
-    date timestamp with time zone DEFAULT ('now'::text)::timestamp without time zone,
+    date timestamp with time zone DEFAULT (
+        'now'::text
+    )::timestamp without time zone,
     subject text,
     body text,
     threadid integer,
     second integer,
     oidid oid,
     mimetype text,
-    idnum numeric(40,0),
+    idnum numeric(40, 0),
     portfolio character varying(50),
     type character varying(50),
     security character varying(50),
@@ -144,7 +153,7 @@ CREATE TABLE public.dialog (
 );
 
 
-ALTER TABLE public.dialog OWNER to mesonet;
+ALTER TABLE public.dialog OWNER TO mesonet;
 
 --
 -- Name: dialog_1996; Type: TABLE; Schema: public; Owner: ldm,mesonet
@@ -167,7 +176,7 @@ CREATE TABLE public.dialog_1996 (
 );
 
 
-ALTER TABLE public.dialog_1996 OWNER to mesonet;
+ALTER TABLE public.dialog_1996 OWNER TO mesonet;
 
 --
 -- Name: dialog_1997; Type: TABLE; Schema: public; Owner: ldm,mesonet
@@ -190,7 +199,7 @@ CREATE TABLE public.dialog_1997 (
 );
 
 
-ALTER TABLE public.dialog_1997 OWNER to mesonet;
+ALTER TABLE public.dialog_1997 OWNER TO mesonet;
 
 --
 -- Name: dialog_1998; Type: TABLE; Schema: public; Owner: ldm,mesonet
@@ -212,7 +221,7 @@ CREATE TABLE public.dialog_1998 (
 );
 
 
-ALTER TABLE public.dialog_1998 OWNER to mesonet;
+ALTER TABLE public.dialog_1998 OWNER TO mesonet;
 
 --
 -- Name: dialog_1999; Type: TABLE; Schema: public; Owner: ldm,mesonet
@@ -229,7 +238,7 @@ CREATE TABLE public.dialog_1999 (
 );
 
 
-ALTER TABLE public.dialog_1999 OWNER to mesonet;
+ALTER TABLE public.dialog_1999 OWNER TO mesonet;
 
 --
 -- Name: dialog_2000; Type: TABLE; Schema: public; Owner: ldm,mesonet
@@ -248,7 +257,7 @@ CREATE TABLE public.dialog_2000 (
 );
 
 
-ALTER TABLE public.dialog_2000 OWNER to mesonet;
+ALTER TABLE public.dialog_2000 OWNER TO mesonet;
 
 --
 -- Name: forecast_answers; Type: TABLE; Schema: public; Owner: ldm,mesonet
@@ -272,7 +281,7 @@ CREATE TABLE public.forecast_answers (
 );
 
 
-ALTER TABLE public.forecast_answers OWNER to mesonet;
+ALTER TABLE public.forecast_answers OWNER TO mesonet;
 
 --
 -- Name: forecast_climo; Type: TABLE; Schema: public; Owner: ldm,mesonet
@@ -296,7 +305,7 @@ CREATE TABLE public.forecast_climo (
 );
 
 
-ALTER TABLE public.forecast_climo OWNER to mesonet;
+ALTER TABLE public.forecast_climo OWNER TO mesonet;
 
 --
 -- Name: forecast_days; Type: TABLE; Schema: public; Owner: ldm,mesonet
@@ -311,7 +320,7 @@ CREATE TABLE public.forecast_days (
 );
 
 
-ALTER TABLE public.forecast_days OWNER to mesonet;
+ALTER TABLE public.forecast_days OWNER TO mesonet;
 
 --
 -- Name: forecast_grades; Type: TABLE; Schema: public; Owner: ldm,mesonet
@@ -336,7 +345,7 @@ CREATE TABLE public.forecast_grades (
 );
 
 
-ALTER TABLE public.forecast_grades OWNER to mesonet;
+ALTER TABLE public.forecast_grades OWNER TO mesonet;
 
 --
 -- Name: forecast_totals; Type: TABLE; Schema: public; Owner: ldm,mesonet
@@ -362,7 +371,7 @@ CREATE TABLE public.forecast_totals (
 );
 
 
-ALTER TABLE public.forecast_totals OWNER to mesonet;
+ALTER TABLE public.forecast_totals OWNER TO mesonet;
 
 --
 -- Name: forecasts; Type: TABLE; Schema: public; Owner: ldm,mesonet
@@ -387,7 +396,7 @@ CREATE TABLE public.forecasts (
 );
 
 
-ALTER TABLE public.forecasts OWNER to mesonet;
+ALTER TABLE public.forecasts OWNER TO mesonet;
 
 --
 -- Name: iem_calibration; Type: TABLE; Schema: public; Owner: mesonet
@@ -412,11 +421,11 @@ ALTER TABLE public.iem_calibration OWNER TO mesonet;
 --
 
 CREATE SEQUENCE public.iem_calibration_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
+START WITH 1
+INCREMENT BY 1
+NO MINVALUE
+NO MAXVALUE
+CACHE 1;
 
 
 ALTER TABLE public.iem_calibration_id_seq OWNER TO mesonet;
@@ -433,7 +442,9 @@ ALTER SEQUENCE public.iem_calibration_id_seq OWNED BY public.iem_calibration.id;
 --
 
 CREATE TABLE public.iem_sensor (
-    id integer DEFAULT nextval(('"iem_sensor_id_seq"'::text)::regclass) NOT NULL,
+    id integer DEFAULT nextval(
+        ('"iem_sensor_id_seq"'::text)::regclass
+    ) NOT NULL,
     portfolio character varying(30),
     r_id integer,
     purchased timestamp with time zone,
@@ -463,11 +474,11 @@ ALTER TABLE public.iem_sensor_history OWNER TO mesonet;
 --
 
 CREATE SEQUENCE public.iem_sensor_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    MAXVALUE 2147483647
-    CACHE 1;
+START WITH 1
+INCREMENT BY 1
+NO MINVALUE
+MAXVALUE 2147483647
+CACHE 1;
 
 
 ALTER TABLE public.iem_sensor_id_seq OWNER TO mesonet;
@@ -477,7 +488,9 @@ ALTER TABLE public.iem_sensor_id_seq OWNER TO mesonet;
 --
 
 CREATE TABLE public.iem_sensors (
-    id integer DEFAULT nextval(('"iem_sensors_id_seq"'::text)::regclass) NOT NULL,
+    id integer DEFAULT nextval(
+        ('"iem_sensors_id_seq"'::text)::regclass
+    ) NOT NULL,
     portfolio character varying(30),
     r_name character varying(30),
     r_hid character varying(20),
@@ -494,11 +507,11 @@ ALTER TABLE public.iem_sensors OWNER TO mesonet;
 --
 
 CREATE SEQUENCE public.iem_sensors_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    MAXVALUE 2147483647
-    CACHE 1;
+START WITH 1
+INCREMENT BY 1
+NO MINVALUE
+MAXVALUE 2147483647
+CACHE 1;
 
 
 ALTER TABLE public.iem_sensors_id_seq OWNER TO mesonet;
@@ -508,7 +521,9 @@ ALTER TABLE public.iem_sensors_id_seq OWNER TO mesonet;
 --
 
 CREATE TABLE public.iem_site_contacts (
-    id integer DEFAULT nextval(('"iem_site_contacts_id_seq"'::text)::regclass) NOT NULL,
+    id integer DEFAULT nextval(
+        ('"iem_site_contacts_id_seq"'::text)::regclass
+    ) NOT NULL,
     portfolio character varying(30),
     s_mid character varying(10),
     name character varying(256),
@@ -522,11 +537,11 @@ ALTER TABLE public.iem_site_contacts OWNER TO mesonet;
 --
 
 CREATE SEQUENCE public.iem_site_contacts_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    MAXVALUE 2147483647
-    CACHE 1;
+START WITH 1
+INCREMENT BY 1
+NO MINVALUE
+MAXVALUE 2147483647
+CACHE 1;
 
 
 ALTER TABLE public.iem_site_contacts_id_seq OWNER TO mesonet;
@@ -558,11 +573,11 @@ ALTER TABLE public.iem_sites OWNER TO mesonet;
 --
 
 CREATE SEQUENCE public.iem_sites_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    MAXVALUE 2147483647
-    CACHE 1;
+START WITH 1
+INCREMENT BY 1
+NO MINVALUE
+MAXVALUE 2147483647
+CACHE 1;
 
 
 ALTER TABLE public.iem_sites_id_seq OWNER TO mesonet;
@@ -573,27 +588,29 @@ ALTER TABLE public.iem_sites_id_seq OWNER TO mesonet;
 
 CREATE TABLE public.motd (
     portfolio character varying(50),
-    issue timestamp with time zone DEFAULT ('now'::text)::timestamp without time zone,
+    issue timestamp with time zone DEFAULT (
+        'now'::text
+    )::timestamp without time zone,
     body text,
     id integer DEFAULT nextval(('motd_id_seq'::text)::regclass) NOT NULL
 );
 
 
-ALTER TABLE public.motd OWNER to mesonet;
+ALTER TABLE public.motd OWNER TO mesonet;
 
 --
 -- Name: motd_id_seq; Type: SEQUENCE; Schema: public; Owner: ldm,mesonet
 --
 
 CREATE SEQUENCE public.motd_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    MAXVALUE 2147483647
-    CACHE 1;
+START WITH 1
+INCREMENT BY 1
+NO MINVALUE
+MAXVALUE 2147483647
+CACHE 1;
 
 
-ALTER TABLE public.motd_id_seq OWNER to mesonet;
+ALTER TABLE public.motd_id_seq OWNER TO mesonet;
 
 --
 -- Name: notify; Type: TABLE; Schema: public; Owner: mesonet
@@ -604,8 +621,12 @@ CREATE TABLE public.notify (
     portfolio character varying(50),
     program character varying(300),
     message text,
-    idnum integer DEFAULT nextval(('"notify_idnum_seq"'::text)::regclass) NOT NULL,
-    entered timestamp with time zone DEFAULT ('now'::text)::timestamp without time zone
+    idnum integer DEFAULT nextval(
+        ('"notify_idnum_seq"'::text)::regclass
+    ) NOT NULL,
+    entered timestamp with time zone DEFAULT (
+        'now'::text
+    )::timestamp without time zone
 );
 
 
@@ -630,11 +651,11 @@ ALTER TABLE public.notify2 OWNER TO mesonet;
 --
 
 CREATE SEQUENCE public.notify_idnum_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    MAXVALUE 2147483647
-    CACHE 1;
+START WITH 1
+INCREMENT BY 1
+NO MINVALUE
+MAXVALUE 2147483647
+CACHE 1;
 
 
 ALTER TABLE public.notify_idnum_seq OWNER TO mesonet;
@@ -649,7 +670,7 @@ CREATE TABLE public.pga_forms (
 );
 
 
-ALTER TABLE public.pga_forms OWNER to mesonet;
+ALTER TABLE public.pga_forms OWNER TO mesonet;
 
 --
 -- Name: pga_layout; Type: TABLE; Schema: public; Owner: ldm,mesonet
@@ -663,7 +684,7 @@ CREATE TABLE public.pga_layout (
 );
 
 
-ALTER TABLE public.pga_layout OWNER to mesonet;
+ALTER TABLE public.pga_layout OWNER TO mesonet;
 
 --
 -- Name: pga_queries; Type: TABLE; Schema: public; Owner: ldm,mesonet
@@ -680,7 +701,7 @@ CREATE TABLE public.pga_queries (
 );
 
 
-ALTER TABLE public.pga_queries OWNER to mesonet;
+ALTER TABLE public.pga_queries OWNER TO mesonet;
 
 --
 -- Name: pga_reports; Type: TABLE; Schema: public; Owner: ldm,mesonet
@@ -695,7 +716,7 @@ CREATE TABLE public.pga_reports (
 );
 
 
-ALTER TABLE public.pga_reports OWNER to mesonet;
+ALTER TABLE public.pga_reports OWNER TO mesonet;
 
 --
 -- Name: pga_schema; Type: TABLE; Schema: public; Owner: ldm,mesonet
@@ -708,7 +729,7 @@ CREATE TABLE public.pga_schema (
 );
 
 
-ALTER TABLE public.pga_schema OWNER to mesonet;
+ALTER TABLE public.pga_schema OWNER TO mesonet;
 
 --
 -- Name: pga_scripts; Type: TABLE; Schema: public; Owner: ldm,mesonet
@@ -720,7 +741,7 @@ CREATE TABLE public.pga_scripts (
 );
 
 
-ALTER TABLE public.pga_scripts OWNER to mesonet;
+ALTER TABLE public.pga_scripts OWNER TO mesonet;
 
 --
 -- Name: portfolios; Type: TABLE; Schema: public; Owner: ldm,mesonet
@@ -734,14 +755,16 @@ CREATE TABLE public.portfolios (
     passwd character varying(50),
     homepage text,
     fxtime integer,
-    porthome character varying(100) DEFAULT '/jportfolio/servlet/'::character varying,
+    porthome character varying(
+        100
+    ) DEFAULT '/jportfolio/servlet/'::character varying,
     usesgcp boolean DEFAULT false,
     groupp character varying(50),
     active boolean DEFAULT true
 );
 
 
-ALTER TABLE public.portfolios OWNER to mesonet;
+ALTER TABLE public.portfolios OWNER TO mesonet;
 
 --
 -- Name: questions; Type: TABLE; Schema: public; Owner: ldm,mesonet
@@ -764,21 +787,21 @@ CREATE TABLE public.questions (
 );
 
 
-ALTER TABLE public.questions OWNER to mesonet;
+ALTER TABLE public.questions OWNER TO mesonet;
 
 --
 -- Name: questions_qid_seq; Type: SEQUENCE; Schema: public; Owner: ldm,mesonet
 --
 
 CREATE SEQUENCE public.questions_qid_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    MAXVALUE 2147483647
-    CACHE 1;
+START WITH 1
+INCREMENT BY 1
+NO MINVALUE
+MAXVALUE 2147483647
+CACHE 1;
 
 
-ALTER TABLE public.questions_qid_seq OWNER to mesonet;
+ALTER TABLE public.questions_qid_seq OWNER TO mesonet;
 
 --
 -- Name: quizattempts; Type: TABLE; Schema: public; Owner: ldm,mesonet
@@ -795,11 +818,13 @@ CREATE TABLE public.quizattempts (
     question2id integer,
     question3id integer,
     attempt integer DEFAULT 1,
-    entered timestamp with time zone DEFAULT ('now'::text)::timestamp without time zone
+    entered timestamp with time zone DEFAULT (
+        'now'::text
+    )::timestamp without time zone
 );
 
 
-ALTER TABLE public.quizattempts OWNER to mesonet;
+ALTER TABLE public.quizattempts OWNER TO mesonet;
 
 --
 -- Name: quizes; Type: TABLE; Schema: public; Owner: ldm,mesonet
@@ -807,7 +832,9 @@ ALTER TABLE public.quizattempts OWNER to mesonet;
 
 CREATE TABLE public.quizes (
     qname character varying(256),
-    quiznum integer DEFAULT nextval(('quizes_quiznum_seq'::text)::regclass) NOT NULL,
+    quiznum integer DEFAULT nextval(
+        ('quizes_quiznum_seq'::text)::regclass
+    ) NOT NULL,
     portfolio character varying(50),
     question1 integer,
     question2 integer,
@@ -819,21 +846,21 @@ CREATE TABLE public.quizes (
 );
 
 
-ALTER TABLE public.quizes OWNER to mesonet;
+ALTER TABLE public.quizes OWNER TO mesonet;
 
 --
 -- Name: quizes_quiznum_seq; Type: SEQUENCE; Schema: public; Owner: ldm,mesonet
 --
 
 CREATE SEQUENCE public.quizes_quiznum_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    MAXVALUE 2147483647
-    CACHE 1;
+START WITH 1
+INCREMENT BY 1
+NO MINVALUE
+MAXVALUE 2147483647
+CACHE 1;
 
 
-ALTER TABLE public.quizes_quiznum_seq OWNER to mesonet;
+ALTER TABLE public.quizes_quiznum_seq OWNER TO mesonet;
 
 --
 -- Name: roles; Type: TABLE; Schema: public; Owner: mesonet
@@ -848,13 +875,13 @@ CREATE TABLE public.roles (
 
 ALTER TABLE public.roles OWNER TO mesonet;
 
-INSERT into roles values (-1, 'Site Admin', 't');
-INSERT into roles values (1, 'Portfolio Admin', 't');
-INSERT into roles values (2, 'User', 'f');
-INSERT into roles values (3, 'Guest', 'f');
-INSERT into roles values (4, 'Anonymous', 'f');
-INSERT into roles values (5, 'GC Alumni', 'f');
-INSERT into roles values (6, 'ICT Guest', 'f');
+INSERT INTO roles VALUES (-1, 'Site Admin', 't');
+INSERT INTO roles VALUES (1, 'Portfolio Admin', 't');
+INSERT INTO roles VALUES (2, 'User', 'f');
+INSERT INTO roles VALUES (3, 'Guest', 'f');
+INSERT INTO roles VALUES (4, 'Anonymous', 'f');
+INSERT INTO roles VALUES (5, 'GC Alumni', 'f');
+INSERT INTO roles VALUES (6, 'ICT Guest', 'f');
 
 
 --
@@ -871,7 +898,7 @@ CREATE TABLE public.scores (
 );
 
 
-ALTER TABLE public.scores OWNER to mesonet;
+ALTER TABLE public.scores OWNER TO mesonet;
 
 --
 -- Name: sessions; Type: TABLE; Schema: public; Owner: mesonet
@@ -879,7 +906,9 @@ ALTER TABLE public.scores OWNER to mesonet;
 
 CREATE TABLE public.sessions (
     username character varying(50),
-    login timestamp with time zone DEFAULT ('now'::text)::timestamp without time zone,
+    login timestamp with time zone DEFAULT (
+        'now'::text
+    )::timestamp without time zone,
     logout timestamp with time zone
 );
 
@@ -913,7 +942,7 @@ CREATE TABLE public.temp (
 );
 
 
-ALTER TABLE public.temp OWNER to mesonet;
+ALTER TABLE public.temp OWNER TO mesonet;
 
 --
 -- Name: transfer; Type: TABLE; Schema: public; Owner: ldm,mesonet
@@ -935,7 +964,7 @@ CREATE TABLE public.transfer (
 );
 
 
-ALTER TABLE public.transfer OWNER to mesonet;
+ALTER TABLE public.transfer OWNER TO mesonet;
 
 --
 -- Name: tt_base; Type: TABLE; Schema: public; Owner: mesonet
@@ -960,11 +989,11 @@ ALTER TABLE public.tt_base OWNER TO mesonet;
 --
 
 CREATE SEQUENCE public.tt_base_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    MAXVALUE 2147483647
-    CACHE 1;
+START WITH 1
+INCREMENT BY 1
+NO MINVALUE
+MAXVALUE 2147483647
+CACHE 1;
 
 
 ALTER TABLE public.tt_base_id_seq OWNER TO mesonet;
@@ -989,11 +1018,11 @@ ALTER TABLE public.tt_flags OWNER TO mesonet;
 --
 
 CREATE SEQUENCE public.tt_flags_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
+START WITH 1
+INCREMENT BY 1
+NO MINVALUE
+NO MAXVALUE
+CACHE 1;
 
 
 ALTER TABLE public.tt_flags_id_seq OWNER TO mesonet;
@@ -1028,11 +1057,11 @@ ALTER TABLE public.tt_log OWNER TO mesonet;
 --
 
 CREATE SEQUENCE public.tt_log_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    MAXVALUE 2147483647
-    CACHE 1;
+START WITH 1
+INCREMENT BY 1
+NO MINVALUE
+MAXVALUE 2147483647
+CACHE 1;
 
 
 ALTER TABLE public.tt_log_id_seq OWNER TO mesonet;
@@ -1042,7 +1071,9 @@ ALTER TABLE public.tt_log_id_seq OWNER TO mesonet;
 --
 
 CREATE TABLE public.units (
-    idnum integer DEFAULT nextval(('"units_idnum_seq"'::text)::regclass) NOT NULL,
+    idnum integer DEFAULT nextval(
+        ('"units_idnum_seq"'::text)::regclass
+    ) NOT NULL,
     blockid integer,
     unitid integer,
     title character varying(256),
@@ -1053,21 +1084,21 @@ CREATE TABLE public.units (
 );
 
 
-ALTER TABLE public.units OWNER to mesonet;
+ALTER TABLE public.units OWNER TO mesonet;
 
 --
 -- Name: units_idnum_seq; Type: SEQUENCE; Schema: public; Owner: ldm,mesonet
 --
 
 CREATE SEQUENCE public.units_idnum_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    MAXVALUE 2147483647
-    CACHE 1;
+START WITH 1
+INCREMENT BY 1
+NO MINVALUE
+MAXVALUE 2147483647
+CACHE 1;
 
 
-ALTER TABLE public.units_idnum_seq OWNER to mesonet;
+ALTER TABLE public.units_idnum_seq OWNER TO mesonet;
 
 --
 -- Name: users; Type: TABLE; Schema: public; Owner: ldm,mesonet
@@ -1084,40 +1115,50 @@ CREATE TABLE public.users (
 );
 
 
-ALTER TABLE public.users OWNER to mesonet;
+ALTER TABLE public.users OWNER TO mesonet;
 
 --
 -- Name: iem_calibration id; Type: DEFAULT; Schema: public; Owner: mesonet
 --
 
-ALTER TABLE ONLY public.iem_calibration ALTER COLUMN id SET DEFAULT nextval('public.iem_calibration_id_seq'::regclass);
+ALTER TABLE ONLY public.iem_calibration ALTER COLUMN id SET DEFAULT nextval(
+    'public.iem_calibration_id_seq'::regclass
+);
 
 
 --
 -- Name: tt_flags id; Type: DEFAULT; Schema: public; Owner: mesonet
 --
 
-ALTER TABLE ONLY public.tt_flags ALTER COLUMN id SET DEFAULT nextval('public.tt_flags_id_seq'::regclass);
+ALTER TABLE ONLY public.tt_flags ALTER COLUMN id SET DEFAULT nextval(
+    'public.tt_flags_id_seq'::regclass
+);
 
 --
 -- Name: afc_days_idx; Type: INDEX; Schema: public; Owner: mesonet
 --
 
-CREATE UNIQUE INDEX afc_days_idx ON public.afc_days USING btree (portfolio, day);
+CREATE UNIQUE INDEX afc_days_idx ON public.afc_days USING btree (
+    portfolio, day
+);
 
 
 --
 -- Name: afc_forecasts_idx; Type: INDEX; Schema: public; Owner: mesonet
 --
 
-CREATE UNIQUE INDEX afc_forecasts_idx ON public.afc_forecasts USING btree (username, portfolio, day);
+CREATE UNIQUE INDEX afc_forecasts_idx ON public.afc_forecasts USING btree (
+    username, portfolio, day
+);
 
 
 --
 -- Name: appregistry_portfolio_key; Type: INDEX; Schema: public; Owner: mesonet
 --
 
-CREATE UNIQUE INDEX appregistry_portfolio_key ON public.appregistry USING btree (portfolio);
+CREATE UNIQUE INDEX appregistry_portfolio_key ON public.appregistry USING btree (
+    portfolio
+);
 
 
 --
@@ -1152,14 +1193,18 @@ CREATE INDEX dialog_portfolio_idx ON public.dialog USING btree (portfolio);
 -- Name: forecasts_portfolio_idx; Type: INDEX; Schema: public; Owner: ldm,mesonet
 --
 
-CREATE INDEX forecasts_portfolio_idx ON public.forecasts USING btree (portfolio);
+CREATE INDEX forecasts_portfolio_idx ON public.forecasts USING btree (
+    portfolio
+);
 
 
 --
 -- Name: iem_calibration_idx; Type: INDEX; Schema: public; Owner: mesonet
 --
 
-CREATE UNIQUE INDEX iem_calibration_idx ON public.iem_calibration USING btree (station, portfolio, valid, parameter);
+CREATE UNIQUE INDEX iem_calibration_idx ON public.iem_calibration USING btree (
+    station, portfolio, valid, parameter
+);
 
 
 --
@@ -1180,7 +1225,9 @@ CREATE UNIQUE INDEX iem_sensors_id_key ON public.iem_sensors USING btree (id);
 -- Name: iem_site_contacts_id_key; Type: INDEX; Schema: public; Owner: mesonet
 --
 
-CREATE UNIQUE INDEX iem_site_contacts_id_key ON public.iem_site_contacts USING btree (id);
+CREATE UNIQUE INDEX iem_site_contacts_id_key ON public.iem_site_contacts USING btree (
+    id
+);
 
 
 --
@@ -1229,7 +1276,9 @@ CREATE INDEX notify_idx ON public.notify USING btree (username, portfolio);
 -- Name: portfolios_portfolio_idx; Type: INDEX; Schema: public; Owner: ldm,mesonet
 --
 
-CREATE INDEX portfolios_portfolio_idx ON public.portfolios USING btree (portfolio);
+CREATE INDEX portfolios_portfolio_idx ON public.portfolios USING btree (
+    portfolio
+);
 
 
 --
@@ -1306,7 +1355,9 @@ CREATE UNIQUE INDEX units_idnum_key ON public.units USING btree (idnum);
 -- Name: units_idx; Type: INDEX; Schema: public; Owner: ldm,mesonet
 --
 
-CREATE UNIQUE INDEX units_idx ON public.units USING btree (blockid, unitid, portfolio);
+CREATE UNIQUE INDEX units_idx ON public.units USING btree (
+    blockid, unitid, portfolio
+);
 
 
 --
@@ -1317,11 +1368,11 @@ CREATE UNIQUE INDEX users_username_idx ON public.users USING btree (username);
 
 
 --
--- Name: students $1; Type: FK CONSTRAINT; Schema: public; Owner: mesonet
+-- Name: students_role_fkey; Type: FK CONSTRAINT; Schema: public; Owner: mesonet
 --
 
 ALTER TABLE ONLY public.students
-    ADD CONSTRAINT "$1" FOREIGN KEY (role) REFERENCES public.roles(id);
+ADD CONSTRAINT students_role_fkey FOREIGN KEY (role) REFERENCES public.roles (id);
 
 
 --
@@ -1566,42 +1617,42 @@ GRANT ALL ON SEQUENCE public.notify_idnum_seq TO nobody;
 -- Name: TABLE pga_forms; Type: ACL; Schema: public; Owner: ldm,mesonet
 --
 
-GRANT ALL ON TABLE public.pga_forms TO PUBLIC;
+GRANT ALL ON TABLE public.pga_forms TO public;
 
 
 --
 -- Name: TABLE pga_layout; Type: ACL; Schema: public; Owner: ldm,mesonet
 --
 
-GRANT ALL ON TABLE public.pga_layout TO PUBLIC;
+GRANT ALL ON TABLE public.pga_layout TO public;
 
 
 --
 -- Name: TABLE pga_queries; Type: ACL; Schema: public; Owner: ldm,mesonet
 --
 
-GRANT ALL ON TABLE public.pga_queries TO PUBLIC;
+GRANT ALL ON TABLE public.pga_queries TO public;
 
 
 --
 -- Name: TABLE pga_reports; Type: ACL; Schema: public; Owner: ldm,mesonet
 --
 
-GRANT ALL ON TABLE public.pga_reports TO PUBLIC;
+GRANT ALL ON TABLE public.pga_reports TO public;
 
 
 --
 -- Name: TABLE pga_schema; Type: ACL; Schema: public; Owner: ldm,mesonet
 --
 
-GRANT ALL ON TABLE public.pga_schema TO PUBLIC;
+GRANT ALL ON TABLE public.pga_schema TO public;
 
 
 --
 -- Name: TABLE pga_scripts; Type: ACL; Schema: public; Owner: ldm,mesonet
 --
 
-GRANT ALL ON TABLE public.pga_scripts TO PUBLIC;
+GRANT ALL ON TABLE public.pga_scripts TO public;
 
 
 --
@@ -1733,20 +1784,20 @@ GRANT ALL ON TABLE public.users TO nobody;
 --
 
 CREATE FUNCTION public.getemail(text) RETURNS text
-    LANGUAGE sql
-    AS $_$SELECT email from users 
+LANGUAGE sql
+AS $_$SELECT email from users 
 WHERE username = $1;$_$;
 
 
-ALTER FUNCTION public.getemail(text) OWNER to mesonet;
+ALTER FUNCTION public.getemail(text) OWNER TO mesonet;
 
 --
 -- Name: getfxtime(text); Type: FUNCTION; Schema: public; Owner: mesonet
 --
 
 CREATE FUNCTION public.getfxtime(text) RETURNS integer
-    LANGUAGE sql
-    AS $_$SELECT fxtime FROM portfolios
+LANGUAGE sql
+AS $_$SELECT fxtime FROM portfolios
     WHERE portfolio = $1;$_$;
 
 
@@ -1757,66 +1808,74 @@ ALTER FUNCTION public.getfxtime(text) OWNER TO mesonet;
 --
 
 CREATE FUNCTION public.getgid4post(numeric) RETURNS text
-    LANGUAGE sql
-    AS $_$SELECT gid::text from dialog
+LANGUAGE sql
+AS $_$SELECT gid::text from dialog
 WHERE idnum = $1;$_$;
 
 
-ALTER FUNCTION public.getgid4post(numeric) OWNER to mesonet;
+ALTER FUNCTION public.getgid4post(numeric) OWNER TO mesonet;
 
 --
 -- Name: getquestiontext(integer); Type: FUNCTION; Schema: public; Owner: ldm,mesonet
 --
 
 CREATE FUNCTION public.getquestiontext(integer) RETURNS text
-    LANGUAGE sql
-    AS $_$SELECT question FROM questions
+LANGUAGE sql
+AS $_$SELECT question FROM questions
     WHERE qid = $1;$_$;
 
 
-ALTER FUNCTION public.getquestiontext(integer) OWNER to mesonet;
+ALTER FUNCTION public.getquestiontext(integer) OWNER TO mesonet;
 
 --
 -- Name: getquizname(integer); Type: FUNCTION; Schema: public; Owner: ldm,mesonet
 --
 
 CREATE FUNCTION public.getquizname(integer) RETURNS text
-    LANGUAGE sql
-    AS $_$SELECT qname::text FROM quizes
+LANGUAGE sql
+AS $_$SELECT qname::text FROM quizes
     WHERE quiznum = $1;$_$;
 
 
-ALTER FUNCTION public.getquizname(integer) OWNER to mesonet;
+ALTER FUNCTION public.getquizname(integer) OWNER TO mesonet;
 
 --
 -- Name: getroleid(character varying, character varying); Type: FUNCTION; Schema: public; Owner: mesonet
 --
 
-CREATE FUNCTION public.getroleid(character varying, character varying) RETURNS smallint
-    LANGUAGE sql
-    AS $_$select r.id from roles r, students s  WHERE s.role = r.id and s.username = $1 and s.portfolio = $2$_$;
+CREATE FUNCTION public.getroleid(
+    character varying, character varying
+) RETURNS smallint
+LANGUAGE sql
+AS $_$select r.id from roles r, students s  WHERE s.role = r.id and s.username = $1 and s.portfolio = $2$_$;
 
 
-ALTER FUNCTION public.getroleid(character varying, character varying) OWNER TO mesonet;
+ALTER FUNCTION public.getroleid(
+    character varying, character varying
+) OWNER TO mesonet;
 
 --
 -- Name: getrolename(character varying, character varying); Type: FUNCTION; Schema: public; Owner: mesonet
 --
 
-CREATE FUNCTION public.getrolename(character varying, character varying) RETURNS character varying
-    LANGUAGE sql
-    AS $_$select r.name from roles r, students s  WHERE s.role = r.id and s.username = $1 and s.portfolio = $2$_$;
+CREATE FUNCTION public.getrolename(
+    character varying, character varying
+) RETURNS character varying
+LANGUAGE sql
+AS $_$select r.name from roles r, students s  WHERE s.role = r.id and s.username = $1 and s.portfolio = $2$_$;
 
 
-ALTER FUNCTION public.getrolename(character varying, character varying) OWNER TO mesonet;
+ALTER FUNCTION public.getrolename(
+    character varying, character varying
+) OWNER TO mesonet;
 
 --
 -- Name: getsitename(text); Type: FUNCTION; Schema: public; Owner: mesonet
 --
 
 CREATE FUNCTION public.getsitename(text) RETURNS text
-    LANGUAGE sql
-    AS $_$SELECT s_name::text from iem_sites
+LANGUAGE sql
+AS $_$SELECT s_name::text from iem_sites
         WHERE s_mid = $1;$_$;
 
 
@@ -1827,8 +1886,8 @@ ALTER FUNCTION public.getsitename(text) OWNER TO mesonet;
 --
 
 CREATE FUNCTION public.getusergid(text, text) RETURNS text
-    LANGUAGE sql
-    AS $_$SELECT gid::text from students
+LANGUAGE sql
+AS $_$SELECT gid::text from students
         WHERE username = $2 and portfolio = $1;$_$;
 
 
@@ -1839,20 +1898,20 @@ ALTER FUNCTION public.getusergid(text, text) OWNER TO mesonet;
 --
 
 CREATE FUNCTION public.getusername(text) RETURNS text
-    LANGUAGE sql
-    AS $_$SELECT fname||' '||lname as name from users 
+LANGUAGE sql
+AS $_$SELECT fname||' '||lname as name from users 
     WHERE username = $1;$_$;
 
 
-ALTER FUNCTION public.getusername(text) OWNER to mesonet;
+ALTER FUNCTION public.getusername(text) OWNER TO mesonet;
 
 --
 -- Name: totalerrorbycase(text, text, real); Type: FUNCTION; Schema: public; Owner: mesonet
 --
 
 CREATE FUNCTION public.totalerrorbycase(text, text, real) RETURNS numeric
-    LANGUAGE sql
-    AS $_$SELECT sum(total_err)::numeric  from forecast_grades WHERE userid = $1 and portfolio = $2 and case_group = $3 ;$_$;
+LANGUAGE sql
+AS $_$SELECT sum(total_err)::numeric  from forecast_grades WHERE userid = $1 and portfolio = $2 and case_group = $3 ;$_$;
 
 
 ALTER FUNCTION public.totalerrorbycase(text, text, real) OWNER TO mesonet;

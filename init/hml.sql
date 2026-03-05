@@ -1,19 +1,26 @@
 CREATE EXTENSION postgis;
 
 -- bandaid
-insert into spatial_ref_sys
-select 9311, 'EPSG', 9311, srtext, proj4text from spatial_ref_sys
-where srid = 2163;
+INSERT INTO spatial_ref_sys
+SELECT
+    9311 AS srid,
+    'EPSG' AS auth_name,
+    9311 AS auth_srid,
+    srtext,
+    proj4text
+FROM spatial_ref_sys
+WHERE srid = 2163;
 
 -- Boilerplate IEM schema_manager_version, the version gets incremented each
 -- time we make an upgrade script
-CREATE TABLE iem_schema_manager_version(
+CREATE TABLE iem_schema_manager_version (
     version int,
-    updated timestamptz);
-ALTER TABLE iem_schema_manager_version OWNER to mesonet;
-INSERT into iem_schema_manager_version values (1, now());
+    updated timestamptz
+);
+ALTER TABLE iem_schema_manager_version OWNER TO mesonet;
+INSERT INTO iem_schema_manager_version VALUES (1, now());
 
-CREATE TABLE stations(
+CREATE TABLE stations (
     id varchar(64),
     synop int,
     name varchar(64),
@@ -34,7 +41,7 @@ CREATE TABLE stations(
     archive_end date,
     modified timestamp with time zone,
     tzname varchar(32),
-    iemid SERIAL,
+    iemid serial,
     metasite boolean,
     sigstage_low real,
     sigstage_action real,
@@ -51,74 +58,75 @@ CREATE TABLE stations(
     precip24_hour smallint,
     wigos varchar(64)
 );
-ALTER TABLE stations OWNER to mesonet;
-CREATE UNIQUE index stations_idx on stations(id, network);
-create UNIQUE index stations_iemid_idx on stations(iemid);
-SELECT AddGeometryColumn('stations', 'geom', 4326, 'POINT', 2);
-GRANT SELECT on stations to nobody;
-grant all on stations_iemid_seq to nobody;
-GRANT ALL on stations to mesonet,ldm;
-GRANT ALL on stations_iemid_seq to mesonet,ldm;
+ALTER TABLE stations OWNER TO mesonet;
+CREATE UNIQUE INDEX stations_idx ON stations (id, network);
+CREATE UNIQUE INDEX stations_iemid_idx ON stations (iemid);
+SELECT addgeometrycolumn('stations', 'geom', 4326, 'POINT', 2);
+GRANT SELECT ON stations TO nobody;
+GRANT ALL ON stations_iemid_seq TO nobody;
+GRANT ALL ON stations TO mesonet, ldm;
+GRANT ALL ON stations_iemid_seq TO mesonet, ldm;
 
 
 -- Storage of HML forecasts
-CREATE TABLE hml_forecast(
-  id SERIAL UNIQUE,
-  station varchar(8),
-  generationtime timestamptz,
-  issued timestamptz,
-  forecast_sts timestamptz,
-  forecast_ets timestamptz,
-  originator varchar(8),
-  product_id varchar(35),
-  primaryname varchar(64),
-  primaryunits varchar(64),
-  secondaryname varchar(64),
-  secondaryunits varchar(64));
-CREATE INDEX hml_forecast_idx on hml_forecast(station, generationtime);
-alter table hml_forecast owner to mesonet;
-grant all on hml_forecast to ldm;
-grant all on hml_forecast_id_seq to ldm;
-GRANT SELECT on hml_forecast to nobody;
-CREATE INDEX hml_forecast_issued_idx on hml_forecast(issued);
+CREATE TABLE hml_forecast (
+    id serial UNIQUE,
+    station varchar(8),
+    generationtime timestamptz,
+    issued timestamptz,
+    forecast_sts timestamptz,
+    forecast_ets timestamptz,
+    originator varchar(8),
+    product_id varchar(35),
+    primaryname varchar(64),
+    primaryunits varchar(64),
+    secondaryname varchar(64),
+    secondaryunits varchar(64)
+);
+CREATE INDEX hml_forecast_idx ON hml_forecast (station, generationtime);
+ALTER TABLE hml_forecast OWNER TO mesonet;
+GRANT ALL ON hml_forecast TO ldm;
+GRANT ALL ON hml_forecast_id_seq TO ldm;
+GRANT SELECT ON hml_forecast TO nobody;
+CREATE INDEX hml_forecast_issued_idx ON hml_forecast (issued);
 
 
-CREATE TABLE hml_observed_keys(
-  id smallint UNIQUE,
-  label varchar(32));
-GRANT SELECT on hml_observed_keys to nobody;
-alter table hml_observed_keys owner to mesonet;
-grant all on hml_observed_keys to ldm;
+CREATE TABLE hml_observed_keys (
+    id smallint UNIQUE,
+    label varchar(32)
+);
+GRANT SELECT ON hml_observed_keys TO nobody;
+ALTER TABLE hml_observed_keys OWNER TO mesonet;
+GRANT ALL ON hml_observed_keys TO ldm;
 
-INSERT into hml_observed_keys values
- (0, 'Depth Below Sfc[ft]'),
- (1, 'Discharge Velocity[mph]'),
- (2, 'Flow[kcfs]'),
- (3, 'Forebay Elevation[ft]'),
- (4, 'Generator Discharge[kcfs]'),
- (5, 'Inflow Discharge[kcfs]'),
- (6, 'Lake Elev Abv Datum[ft]'),
- (7, 'Lake Elevation[ft]'),
- (8, 'Pool[ft]'),
- (9, 'Precip[inches]'),
- (10, 'Reading Height - MSL[ft]'),
- (11, 'Reading Height - Sfc[ft]'),
- (12, 'River Discharge[kcfs]'),
- (13, 'Spillway Tailwater[ft]'),
- (14, 'Stage[ft]'),
- (15, 'Stage Trnd Indicator[code]'),
- (16, 'Tailwater[ft]'),
- (17, 'Tide Height[ft]'),
- (18, 'Total Discharge[kcfs]'),
- (19, 'Water Height (MHHW)[ft]'),
- (20, 'Ceiling Height[ft]'),
- (21, 'Adjusted Discharge[kcfs]'),
- (22, 'Runoff Depth[in]'),
- (23, 'Runoff Volume[kaf]'),
- (24, 'Canal Divers. Dschrg[kcfs]'),
- (25, 'Spillway Discharge[kcfs]'),
- (26, 'Flow Diverted[%]')
-;
+INSERT INTO hml_observed_keys VALUES
+(0, 'Depth Below Sfc[ft]'),
+(1, 'Discharge Velocity[mph]'),
+(2, 'Flow[kcfs]'),
+(3, 'Forebay Elevation[ft]'),
+(4, 'Generator Discharge[kcfs]'),
+(5, 'Inflow Discharge[kcfs]'),
+(6, 'Lake Elev Abv Datum[ft]'),
+(7, 'Lake Elevation[ft]'),
+(8, 'Pool[ft]'),
+(9, 'Precip[inches]'),
+(10, 'Reading Height - MSL[ft]'),
+(11, 'Reading Height - Sfc[ft]'),
+(12, 'River Discharge[kcfs]'),
+(13, 'Spillway Tailwater[ft]'),
+(14, 'Stage[ft]'),
+(15, 'Stage Trnd Indicator[code]'),
+(16, 'Tailwater[ft]'),
+(17, 'Tide Height[ft]'),
+(18, 'Total Discharge[kcfs]'),
+(19, 'Water Height (MHHW)[ft]'),
+(20, 'Ceiling Height[ft]'),
+(21, 'Adjusted Discharge[kcfs]'),
+(22, 'Runoff Depth[in]'),
+(23, 'Runoff Volume[kaf]'),
+(24, 'Canal Divers. Dschrg[kcfs]'),
+(25, 'Spillway Discharge[kcfs]'),
+(26, 'Flow Diverted[%]');
 
 
 CREATE FUNCTION get_hml_observed_key(text)
@@ -128,17 +136,18 @@ AS $_$
   SELECT id from hml_observed_keys where label = $1
 $_$;
 
-CREATE TABLE hml_observed_data(
+CREATE TABLE hml_observed_data (
     station varchar(8),
     valid timestamptz,
-    key smallint REFERENCES hml_observed_keys(id),
-    value real)
-    PARTITION by range(valid);
-ALTER TABLE hml_observed_data OWNER to mesonet;
-GRANT ALL on hml_observed_data to ldm;
-GRANT SELECT on hml_observed_data to nobody;
+    key smallint REFERENCES hml_observed_keys (id),
+    value real
+)
+PARTITION BY RANGE (valid);
+ALTER TABLE hml_observed_data OWNER TO mesonet;
+GRANT ALL ON hml_observed_data TO ldm;
+GRANT SELECT ON hml_observed_data TO nobody;
 
-do
+DO
 $do$
 declare
      year int;
@@ -174,7 +183,7 @@ end;
 $do$;
 
 -- HML forecast data is kind of a one-off with no inheritence
-do
+DO
 $do$
 declare
      year int;
