@@ -1,14 +1,23 @@
 CREATE EXTENSION postgis;
 
 -- bandaid
-insert into spatial_ref_sys select 9311, 'EPSG', 9311, srtext, proj4text from spatial_ref_sys where srid = 2163;
+INSERT INTO spatial_ref_sys
+SELECT
+    9311 AS srid,
+    'EPSG' AS auth_name,
+    9311 AS auth_srid,
+    srtext,
+    proj4text
+FROM spatial_ref_sys
+WHERE srid = 2163;
 
 -- Boilerplate IEM schema_manager_version, the version gets incremented each
 -- time we make an upgrade script
-CREATE TABLE iem_schema_manager_version(
+CREATE TABLE iem_schema_manager_version (
     version int,
-    updated timestamptz);
-INSERT into iem_schema_manager_version values (5, now());
+    updated timestamptz
+);
+INSERT INTO iem_schema_manager_version VALUES (5, now());
 
 --- Tables loaded by shp2pgsql
 ---   + counties
@@ -17,115 +26,121 @@ INSERT into iem_schema_manager_version values (5, now());
 ---   + iacounties
 ---   + iatwp
 
-CREATE TABLE waterbalance(
- run_id bigint,
- valid date,
- vsm real,
- s10cm real,
- s20cm real,
- et real);
- CREATE TABLE waterbalance_by_twp(
-  valid date,
-  model_twp varchar(10),
-  vsm real,
-  vsm_stddev real,
-  vsm_range real,
-  s10cm real,
-  s20cm real,
-  et real);
-
-CREATE TABLE soils(
- soil_id int,
- name varchar(100),
- texture varchar(25),
- layers int,
- albedo real,
- sat real,
- interrill real,
- rill real,
- shear real,
- conduct real,
- kfact real,
- kffact real,
- tfact real);
-CREATE UNIQUE index soils_idx on soils(soil_id);
-
-CREATE TABLE nri(
- id bigint,
- model_twp varchar,
- psu_id int,
- sample int,
- county_id int,
- town_id int,
- range_id int,
- len real,
- steep real,
- soil_id int,
- man_id int,
- ucfact real,
- upfact real,
- soil_depth int,
- slope real);
-CREATE UNIQUE INDEX nri_id_idx on nri(id);
-CREATE INDEX nri_man_id on nri(man_id);
-CREATE INDEX nri_model_twp_idx on nri(model_twp);
-GRANT SELECT on nri to nobody;
-
-CREATE TABLE layers(
- soil_id int,
- depth real,
- sand real,
- clay real,
- om real,
- cec real,
- rock real
+CREATE TABLE waterbalance (
+    run_id bigint,
+    valid date,
+    vsm real,
+    s10cm real,
+    s20cm real,
+    et real
+);
+CREATE TABLE waterbalance_by_twp (
+    valid date,
+    model_twp varchar(10),
+    vsm real,
+    vsm_stddev real,
+    vsm_range real,
+    s10cm real,
+    s20cm real,
+    et real
 );
 
-CREATE TABLE managements(
-  man_id int UNIQUE,
-  name varchar(100)
+CREATE TABLE soils (
+    soil_id int,
+    name varchar(100),
+    texture varchar(25),
+    layers int,
+    albedo real,
+    sat real,
+    interrill real,
+    rill real,
+    shear real,
+    conduct real,
+    kfact real,
+    kffact real,
+    tfact real
+);
+CREATE UNIQUE INDEX soils_idx ON soils (soil_id);
+
+CREATE TABLE nri (
+    id bigint,
+    model_twp varchar,
+    psu_id int,
+    sample int,
+    county_id int,
+    town_id int,
+    range_id int,
+    len real,
+    steep real,
+    soil_id int,
+    man_id int,
+    ucfact real,
+    upfact real,
+    soil_depth int,
+    slope real
+);
+CREATE UNIQUE INDEX nri_id_idx ON nri (id);
+CREATE INDEX nri_man_id ON nri (man_id);
+CREATE INDEX nri_model_twp_idx ON nri (model_twp);
+GRANT SELECT ON nri TO nobody;
+
+CREATE TABLE layers (
+    soil_id int,
+    depth real,
+    sand real,
+    clay real,
+    om real,
+    cec real,
+    rock real
 );
 
-CREATE TABLE mandetails(
- man_id int,
- seq int,
- mon int,
- day int,
- year int,
- op varchar(32),
- type varchar(100),
- comm varchar(64)
+CREATE TABLE managements (
+    man_id int UNIQUE,
+    name varchar(100)
 );
 
-CREATE TABLE job_queue(
-  id SERIAL UNIQUE,
-  combo_id int,
-  queued timestamptz,
-  answered boolean,
-  request_id int
+CREATE TABLE mandetails (
+    man_id int,
+    seq int,
+    mon int,
+    day int,
+    year int,
+    op varchar(32),
+    type varchar(100),
+    comm varchar(64)
 );
-CREATE INDEX job_combo_queue_id_key on job_queue(combo_id);
 
-CREATE TABLE erosion_log(
- valid date UNIQUE);
+CREATE TABLE job_queue (
+    id serial UNIQUE,
+    combo_id int,
+    queued timestamptz,
+    answered boolean,
+    request_id int
+);
+CREATE INDEX job_combo_queue_id_key ON job_queue (combo_id);
+
+CREATE TABLE erosion_log (
+    valid date UNIQUE
+);
 
 ---
 --- Climate Sector wx data
-CREATE TABLE climate_sectors(
-  sector smallint,
-  day date,
-  high real default 0,
-  low real default 0,
-  rad real default 0,
-  wvl real default 0,
-  drct smallint default 0,
-  dewp real default 0);
-CREATE INDEX climate_sectors_idx on climate_sectors(sector,day);
+CREATE TABLE climate_sectors (
+    sector smallint,
+    day date,
+    high real DEFAULT 0,
+    low real DEFAULT 0,
+    rad real DEFAULT 0,
+    wvl real DEFAULT 0,
+    drct smallint DEFAULT 0,
+    dewp real DEFAULT 0
+);
+CREATE INDEX climate_sectors_idx ON climate_sectors (sector, day);
 
 ---
 --- Results by township by year
 ---
-CREATE TABLE results_twp_year(
+CREATE TABLE results_twp_year (
     model_twp varchar(9),
     valid date,
     avg_loss real,
@@ -137,12 +152,12 @@ CREATE TABLE results_twp_year(
     ve_runoff real,
     ve_loss real
 );
-GRANT SELECT on results_twp_year to nobody;
+GRANT SELECT ON results_twp_year TO nobody;
 
 ---
 --- Results by township by month
 ---
-CREATE TABLE results_twp_month(
+CREATE TABLE results_twp_month (
     model_twp varchar(9),
     valid date,
     avg_loss real,
@@ -154,99 +169,99 @@ CREATE TABLE results_twp_month(
     ve_runoff real,
     ve_loss real
 );
-GRANT SELECT on results_twp_month to nobody;
+GRANT SELECT ON results_twp_month TO nobody;
 
 ---
 --- Combinations
 ---
-CREATE TABLE combos(
-    id SERIAL UNIQUE,
+CREATE TABLE combos (
+    id serial UNIQUE,
     nri_id bigint,
     model_twp varchar(9),
     hrap_i int,
     mkrun boolean,
     erosivity_idx real
 );
-CREATE UNIQUE INDEX combos_idx on combos(nri_id, model_twp, hrap_i);
-CREATE INDEX combos_hrap_i_idx on combos(hrap_i);
-CREATE INDEX combos_model_twp_idx on combos(model_twp);
-CREATE INDEX combos_nri_id_idx on combos(nri_id);
-GRANT SELECT on combos to nobody;
+CREATE UNIQUE INDEX combos_idx ON combos (nri_id, model_twp, hrap_i);
+CREATE INDEX combos_hrap_i_idx ON combos (hrap_i);
+CREATE INDEX combos_model_twp_idx ON combos (model_twp);
+CREATE INDEX combos_nri_id_idx ON combos (nri_id);
+GRANT SELECT ON combos TO nobody;
 
 ---
 --- Store run results
 ---
-CREATE TABLE results(
+CREATE TABLE results (
     run_id bigint,
     valid date,
     runoff real,
     loss real,
     precip real
 );
-CREATE INDEX results_run_id_idx on results(run_id);
-CREATE INDEX results_valid_idx on results(valid);
-GRANT SELECT on results to nobody;
+CREATE INDEX results_run_id_idx ON results (run_id);
+CREATE INDEX results_valid_idx ON results (valid);
+GRANT SELECT ON results TO nobody;
 
 ---
 --- Store Results by Township
 ---
-CREATE TABLE results_by_twp(
-  model_twp varchar(9),
-  valid date,
-  avg_precip real,
-  max_precip real,
-  min_loss real,
-  avg_loss real,
-  max_loss real,
-  min_runoff real,
-  max_runoff real,
-  avg_runoff real,
-  bogus real,
-  run_points int,
-  min_precip real,
-  ve_runoff real,
-  ve_loss real
+CREATE TABLE results_by_twp (
+    model_twp varchar(9),
+    valid date,
+    avg_precip real,
+    max_precip real,
+    min_loss real,
+    avg_loss real,
+    max_loss real,
+    min_runoff real,
+    max_runoff real,
+    avg_runoff real,
+    bogus real,
+    run_points int,
+    min_precip real,
+    ve_runoff real,
+    ve_loss real
 );
-CREATE INDEX results_by_twp_model_twp_idx on results_by_twp(model_twp);
-CREATE INDEX results_by_twp_valid_idx on results_by_twp(valid);
-GRANT SELECT on results_by_twp to nobody;
+CREATE INDEX results_by_twp_model_twp_idx ON results_by_twp (model_twp);
+CREATE INDEX results_by_twp_valid_idx ON results_by_twp (valid);
+GRANT SELECT ON results_by_twp TO nobody;
 
 ---
 --- Rainfall log
 ---
-CREATE TABLE rainfall_log(
-  valid date,
-  max_rainfall real
+CREATE TABLE rainfall_log (
+    valid date,
+    max_rainfall real
 );
-GRANT SELECT on rainfall_log to nobody;
+GRANT SELECT ON rainfall_log TO nobody;
 
 ---
 --- Yearly Rainfall
 ---
-CREATE TABLE yearly_rainfall(
-  hrap_i smallint,
-  valid date,
-  rainfall real,
-  peak_15min real,
-  hr_cnt smallint
+CREATE TABLE yearly_rainfall (
+    hrap_i smallint,
+    valid date,
+    rainfall real,
+    peak_15min real,
+    hr_cnt smallint
 );
-GRANT SELECT on yearly_rainfall to nobody;
+GRANT SELECT ON yearly_rainfall TO nobody;
 
 ---
 --- Monthly Rainfall
 ---
-CREATE TABLE monthly_rainfall(
-  hrap_i smallint,
-  valid date,
-  rainfall real,
-  peak_15min real,
-  hr_cnt smallint
-) PARTITION by range(valid);
-ALTER TABLE monthly_rainfall OWNER to mesonet;
-GRANT SELECT on monthly_rainfall to nobody;
+CREATE TABLE monthly_rainfall (
+    hrap_i smallint,
+    valid date,
+    rainfall real,
+    peak_15min real,
+    hr_cnt smallint
+) PARTITION BY RANGE (valid);
+ALTER TABLE monthly_rainfall OWNER TO mesonet;
+GRANT SELECT ON monthly_rainfall TO nobody;
 
 
- do
+DO
 $do$
 declare
      year int;
@@ -280,17 +295,17 @@ $do$;
 ---
 --- Daily Rainfall
 ---
-CREATE TABLE daily_rainfall(
-  hrap_i smallint,
-  valid date,
-  rainfall real,
-  peak_15min real,
-  hr_cnt smallint
-) PARTITION by range(valid);
-ALTER TABLE daily_rainfall OWNER to mesonet;
-GRANT SELECT on daily_rainfall to nobody;
+CREATE TABLE daily_rainfall (
+    hrap_i smallint,
+    valid date,
+    rainfall real,
+    peak_15min real,
+    hr_cnt smallint
+) PARTITION BY RANGE (valid);
+ALTER TABLE daily_rainfall OWNER TO mesonet;
+GRANT SELECT ON daily_rainfall TO nobody;
 
- do
+DO
 $do$
 declare
      year int;

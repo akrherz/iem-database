@@ -1,3 +1,5 @@
 [sqlfluff]
-dialect = "postgres"
+dialect = postgres
 large_file_skip_byte_limit = 0
+exclude_rules = RF04, LT05
+ignore = data/*, upgrade/*

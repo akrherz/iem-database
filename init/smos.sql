@@ -1,52 +1,59 @@
 CREATE EXTENSION postgis;
 
 -- bandaid
-insert into spatial_ref_sys select 9311, 'EPSG', 9311, srtext, proj4text
-    from spatial_ref_sys where srid = 2163;
+INSERT INTO spatial_ref_sys SELECT
+    9311 AS srid,
+    'EPSG' AS auth_name,
+    9311 AS auth_srid,
+    srtext,
+    proj4text
+FROM spatial_ref_sys
+WHERE srid = 2163;
 
 -- Boilerplate IEM schema_manager_version, the version gets incremented each
 -- time we make an upgrade script
-CREATE TABLE iem_schema_manager_version(
+CREATE TABLE iem_schema_manager_version (
     version int,
-    updated timestamptz);
-INSERT into iem_schema_manager_version values (5, now());
+    updated timestamptz
+);
+INSERT INTO iem_schema_manager_version VALUES (5, now());
 
 ---
 --- Store grid point geometries
 ---
-CREATE TABLE grid(
-  idx int UNIQUE,
-  gridx int,
-  gridy int,
-  geom geometry(Point, 4326)
+CREATE TABLE grid (
+    idx int UNIQUE,
+    gridx int,
+    gridy int,
+    geom GEOMETRY (POINT, 4326)
 );
-alter table grid owner to mesonet;
-CREATE index grid_idx on grid(idx);
-GRANT SELECT on grid to nobody;
+ALTER TABLE grid OWNER TO mesonet;
+CREATE INDEX grid_idx ON grid (idx);
+GRANT SELECT ON grid TO nobody;
 
 ---
 --- Lookup table of observation events
 ---
-CREATE TABLE obtimes(
-   valid timestamp with time zone UNIQUE
+CREATE TABLE obtimes (
+    valid timestamp with time zone UNIQUE
 );
-alter table obtimes owner to mesonet;
-GRANT SELECT on obtimes to nobody;
+ALTER TABLE obtimes OWNER TO mesonet;
+GRANT SELECT ON obtimes TO nobody;
 
 ---
 --- Store the actual data, will have partitioned tables
 --- 
-CREATE TABLE data(
-   grid_idx int REFERENCES grid(idx),
-   valid timestamp with time zone,
-   soil_moisture real,
-   optical_depth real
-) PARTITION by range(valid);
-ALTER TABLE data OWNER to mesonet;
-GRANT ALL on data to ldm;
-GRANT SELECT on data to nobody;
+CREATE TABLE data (
+    grid_idx int REFERENCES grid (idx),
+    valid timestamp with time zone,
+    soil_moisture real,
+    optical_depth real
+) PARTITION BY RANGE (valid);
+ALTER TABLE data OWNER TO mesonet;
+GRANT ALL ON data TO ldm;
+GRANT SELECT ON data TO nobody;
 
-do
+DO
 $do$
 declare
      year int;

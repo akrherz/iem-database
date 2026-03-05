@@ -1,87 +1,96 @@
 CREATE EXTENSION postgis;
 
 -- bandaid
-insert into spatial_ref_sys select 9311, 'EPSG', 9311, srtext, proj4text from spatial_ref_sys where srid = 2163;
+INSERT INTO spatial_ref_sys
+SELECT
+    9311 AS srid,
+    'EPSG' AS auth_name,
+    9311 AS auth_srid,
+    srtext,
+    proj4text
+FROM spatial_ref_sys
+WHERE srid = 2163;
 
 -- Boilerplate IEM schema_manager_version, the version gets incremented each
 -- time we make an upgrade script
-CREATE TABLE iem_schema_manager_version(
-	version int,
-	updated timestamptz);
-INSERT into iem_schema_manager_version values (17, now());
+CREATE TABLE iem_schema_manager_version (
+    version int,
+    updated timestamptz
+);
+INSERT INTO iem_schema_manager_version VALUES (17, now());
 
-CREATE TABLE stations(
-	id varchar(64),
-	synop int,
-	name varchar(64),
-	state char(2),
-	country char(2),
-	elevation real,
-	network varchar(20),
-	online boolean,
-	params varchar(300),
-	county varchar(50),
-	plot_name varchar(64),
-	climate_site varchar(6),
-	remote_id int,
-	nwn_id int,
-	spri smallint,
-	wfo varchar(3),
-	archive_begin date,
-	archive_end date,
-	modified timestamp with time zone,
-	tzname varchar(32),
-	iemid SERIAL,
-	metasite boolean,
-	sigstage_low real,
-	sigstage_action real,
-	sigstage_bankfull real,
-	sigstage_flood real,
-	sigstage_moderate real,
-	sigstage_major real,
-	sigstage_record real,
-	ugc_county char(6),
-	ugc_zone char(6),
-	ncdc81 varchar(11),
+CREATE TABLE stations (
+    id varchar(64),
+    synop int,
+    name varchar(64),
+    state char(2),
+    country char(2),
+    elevation real,
+    network varchar(20),
+    online boolean,
+    params varchar(300),
+    county varchar(50),
+    plot_name varchar(64),
+    climate_site varchar(6),
+    remote_id int,
+    nwn_id int,
+    spri smallint,
+    wfo varchar(3),
+    archive_begin date,
+    archive_end date,
+    modified timestamp with time zone,
+    tzname varchar(32),
+    iemid serial,
+    metasite boolean,
+    sigstage_low real,
+    sigstage_action real,
+    sigstage_bankfull real,
+    sigstage_flood real,
+    sigstage_moderate real,
+    sigstage_major real,
+    sigstage_record real,
+    ugc_county char(6),
+    ugc_zone char(6),
+    ncdc81 varchar(11),
     ncei91 varchar(11),
-	temp24_hour smallint,
-	precip24_hour smallint,
-	wigos varchar(64)
+    temp24_hour smallint,
+    precip24_hour smallint,
+    wigos varchar(64)
 );
-CREATE UNIQUE index stations_idx on stations(id, network);
-create UNIQUE index stations_iemid_idx on stations(iemid);
-SELECT AddGeometryColumn('stations', 'geom', 4326, 'POINT', 2);
-GRANT SELECT on stations to nobody;
-grant all on stations_iemid_seq to nobody;
-GRANT ALL on stations to mesonet,ldm;
-GRANT ALL on stations_iemid_seq to mesonet,ldm;
+CREATE UNIQUE INDEX stations_idx ON stations (id, network);
+CREATE UNIQUE INDEX stations_iemid_idx ON stations (iemid);
+SELECT addgeometrycolumn('stations', 'geom', 4326, 'POINT', 2);
+GRANT SELECT ON stations TO nobody;
+GRANT ALL ON stations_iemid_seq TO nobody;
+GRANT ALL ON stations TO mesonet, ldm;
+GRANT ALL ON stations_iemid_seq TO mesonet, ldm;
 
 
-CREATE TABLE unknown(
-	nwsli varchar(8),
-	product varchar(64),
-	network varchar(24)
+CREATE TABLE unknown (
+    nwsli varchar(8),
+    product varchar(64),
+    network varchar(24)
 );
-alter table unknown owner to mesonet;
-grant all on unknown to ldm;
-grant select on unknown to nobody;
+ALTER TABLE unknown OWNER TO mesonet;
+GRANT ALL ON unknown TO ldm;
+GRANT SELECT ON unknown TO nobody;
 
-CREATE TABLE raw_inbound(
-	station varchar(8),
-	valid timestamptz,
-	key varchar(11),
-	value real,
+CREATE TABLE raw_inbound (
+    station varchar(8),
+    valid timestamptz,
+    key varchar(11),
+    value real,
     depth smallint,
     unit_convention char(1),
     qualifier char(1),
     dv_interval interval,
-    updated timestamptz default now()
+    updated timestamptz DEFAULT now()
 );
-ALTER TABLE raw_inbound OWNER to mesonet;
-GRANT ALL on raw_inbound to ldm;
+ALTER TABLE raw_inbound OWNER TO mesonet;
+GRANT ALL ON raw_inbound TO ldm;
 
 -- Create the raw partitioned tables
-CREATE TABLE raw(
+CREATE TABLE raw (
     station varchar(8),
     valid timestamptz,
     key varchar(11),
@@ -90,12 +99,12 @@ CREATE TABLE raw(
     unit_convention char(1),
     qualifier char(1),
     dv_interval interval
-) PARTITION by range(valid);
-ALTER TABLE raw OWNER to mesonet;
-GRANT ALL on raw to ldm;
-GRANT SELECT on raw to nobody;
+) PARTITION BY RANGE (valid);
+ALTER TABLE raw OWNER TO mesonet;
+GRANT ALL ON raw TO ldm;
+GRANT SELECT ON raw TO nobody;
 
-do
+DO
 $do$
 declare
      year int;
@@ -153,19 +162,20 @@ end;
 $do$;
 
 -- Storage of common / instantaneous data values
-CREATE TABLE alldata(
-	station varchar(8),
-	valid timestamptz,
-	tmpf real,
-	dwpf real,
-	sknt real,
-	drct real)
-    PARTITION by range(valid);
-ALTER TABLE alldata OWNER to mesonet;
-GRANT ALL on alldata to ldm;
-GRANT SELECT on alldata to nobody;
+CREATE TABLE alldata (
+    station varchar(8),
+    valid timestamptz,
+    tmpf real,
+    dwpf real,
+    sknt real,
+    drct real
+)
+PARTITION BY RANGE (valid);
+ALTER TABLE alldata OWNER TO mesonet;
+GRANT ALL ON alldata TO ldm;
+GRANT SELECT ON alldata TO nobody;
 
-do
+DO
 $do$
 declare
      year int;

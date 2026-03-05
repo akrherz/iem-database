@@ -1,207 +1,218 @@
 -- Boilerplate IEM schema_manager_version, the version gets incremented each
 -- time we make an upgrade script
-CREATE TABLE iem_schema_manager_version(
+CREATE TABLE iem_schema_manager_version (
     version int,
-    updated timestamptz);
-INSERT into iem_schema_manager_version values (32, now());
+    updated timestamptz
+);
+INSERT INTO iem_schema_manager_version VALUES (32, now());
 
 -- Storage of Water Quality Data
-CREATE TABLE waterquality_data(
-  uniqueid varchar(24),
-  plotid varchar(24),
-  valid timestamp with time zone,
-  sample_type varchar(32),
-  varname varchar(8),
-  value real);
-alter table waterquality_data owner to mesonet;
-GRANT ALL on waterquality_data to mesonet;
-GRANT SELECT on waterquality_data to nobody;
+CREATE TABLE waterquality_data (
+    uniqueid varchar(24),
+    plotid varchar(24),
+    valid timestamp with time zone,
+    sample_type varchar(32),
+    varname varchar(8),
+    value real
+);
+ALTER TABLE waterquality_data OWNER TO mesonet;
+GRANT ALL ON waterquality_data TO mesonet;
+GRANT SELECT ON waterquality_data TO nobody;
 
 
 -- Storage of downloads
-CREATE TABLE website_downloads(
-  email varchar,
-  valid timestamptz default now()
+CREATE TABLE website_downloads (
+    email varchar,
+    valid timestamptz DEFAULT now()
 );
-alter table website_downloads owner to mesonet;
-GRANT ALL on website_downloads to nobody;
+ALTER TABLE website_downloads OWNER TO mesonet;
+GRANT ALL ON website_downloads TO nobody;
 
-CREATE TABLE dwm(
- uniqueid varchar,
- plotid varchar,
- cropyear varchar,
- cashcrop varchar,
- boxstructure varchar,
- outletdepth varchar,
- outletdate date,
- comments varchar,
- updated varchar,
- editedby varchar
+CREATE TABLE dwm (
+    uniqueid varchar,
+    plotid varchar,
+    cropyear varchar,
+    cashcrop varchar,
+    boxstructure varchar,
+    outletdepth varchar,
+    outletdate date,
+    comments varchar,
+    updated varchar,
+    editedby varchar
 );
-alter table dwm owner to mesonet;
-GRANT SELECT on dwm to nobody;
+ALTER TABLE dwm OWNER TO mesonet;
+GRANT SELECT ON dwm TO nobody;
 
-CREATE TABLE notes(
- uniqueid varchar,
- calendaryear int,
- cropyear int,
- notes varchar,
- updated varchar,
- editedby varchar
+CREATE TABLE notes (
+    uniqueid varchar,
+    calendaryear int,
+    cropyear int,
+    notes varchar,
+    updated varchar,
+    editedby varchar
 );
-alter table notes owner to mesonet;
-GRANT SELECT on notes to nobody;
+ALTER TABLE notes OWNER TO mesonet;
+GRANT SELECT ON notes TO nobody;
 
 -- Storage of IPM
-CREATE TABLE ipm_data(
-  uniqueid varchar(32),
-  plotid varchar(32),
-  year smallint,
-  date date,
-  ipm01 varchar,
-  ipm02 varchar,
-  ipm03 varchar,
-  ipm04 varchar,
-  ipm05 varchar,
-  ipm06 varchar,
-  ipm07 varchar,
-  ipm08 varchar,
-  ipm09 varchar,
-  ipm10 varchar,
-  ipm11 varchar,
-  ipm12 varchar,
-  ipm13 varchar,
-  ipm14 varchar);
-CREATE INDEX ipm_data_uniqueid_idx on ipm_data(uniqueid);
-alter table ipm_data owner to mesonet;
-GRANT SELECT on ipm_data to nobody;
-GRANT ALL on ipm_data to mesonet;
+CREATE TABLE ipm_data (
+    uniqueid varchar(32),
+    plotid varchar(32),
+    year smallint,
+    date date,
+    ipm01 varchar,
+    ipm02 varchar,
+    ipm03 varchar,
+    ipm04 varchar,
+    ipm05 varchar,
+    ipm06 varchar,
+    ipm07 varchar,
+    ipm08 varchar,
+    ipm09 varchar,
+    ipm10 varchar,
+    ipm11 varchar,
+    ipm12 varchar,
+    ipm13 varchar,
+    ipm14 varchar
+);
+CREATE INDEX ipm_data_uniqueid_idx ON ipm_data (uniqueid);
+ALTER TABLE ipm_data OWNER TO mesonet;
+GRANT SELECT ON ipm_data TO nobody;
+GRANT ALL ON ipm_data TO mesonet;
 
 -- Storage of GHG Data
-CREATE TABLE ghg_data(
-  uniqueid varchar(32),
-  plotid varchar(32),
-  year int,
-  date date,
-  ghg01 varchar(64),
-  ghg02 varchar(64),
-  ghg03 real,
-  ghg04 real,
-  ghg05 real,
-  ghg06 real,
-  ghg07 real,
-  ghg08 real,
-  ghg09 real,
-  ghg10 real,
-  ghg11 real,
-  ghg12 real,
-  ghg13 real,
-  ghg14 real,
-  ghg15 real,
-  ghg16 real,
-  method varchar(16),
-  position varchar(32),
-  subsample varchar(16));
-CREATE INDEX ghg_data_uniqueid_idx on ghg_data(uniqueid);
-alter table ghg_data owner to mesonet;
-GRANT SELECT on ghg_data to nobody;
-GRANT ALL on ghg_data to mesonet;
+CREATE TABLE ghg_data (
+    uniqueid varchar(32),
+    plotid varchar(32),
+    year int,
+    date date,
+    ghg01 varchar(64),
+    ghg02 varchar(64),
+    ghg03 real,
+    ghg04 real,
+    ghg05 real,
+    ghg06 real,
+    ghg07 real,
+    ghg08 real,
+    ghg09 real,
+    ghg10 real,
+    ghg11 real,
+    ghg12 real,
+    ghg13 real,
+    ghg14 real,
+    ghg15 real,
+    ghg16 real,
+    method varchar(16),
+    position varchar(32),
+    subsample varchar(16)
+);
+CREATE INDEX ghg_data_uniqueid_idx ON ghg_data (uniqueid);
+ALTER TABLE ghg_data OWNER TO mesonet;
+GRANT SELECT ON ghg_data TO nobody;
+GRANT ALL ON ghg_data TO mesonet;
 
 
 -- Storage of website edits metadata
-CREATE TABLE website_edits(
-  username varchar(128),
-  edit_ts timestamptz DEFAULT now(),
-  edit_table varchar(64),
-  uniqueid varchar,
-  plotid varchar,
-  valid timestamptz,
-  edit_column varchar(64),
-  newvalue real,
-  comment text);
-alter table website_edits owner to mesonet;
-GRANT ALL on website_edits to nobody;
+CREATE TABLE website_edits (
+    username varchar(128),
+    edit_ts timestamptz DEFAULT now(),
+    edit_table varchar(64),
+    uniqueid varchar,
+    plotid varchar,
+    valid timestamptz,
+    edit_column varchar(64),
+    newvalue real,
+    comment text
+);
+ALTER TABLE website_edits OWNER TO mesonet;
+GRANT ALL ON website_edits TO nobody;
 
 
 -- Finer grain permissions
-CREATE TABLE website_access_levels(
-  access_level smallint UNIQUE NOT NULL,
-  appid varchar,
-  label varchar);
-GRANT SELECT on website_access_levels to nobody;
-INSERT into website_access_levels VALUES (0, 'admin', 'Administrators');
-INSERT into website_access_levels VALUES (1, 'cscap', 'Sustainable Corn CAP');
-INSERT into website_access_levels VALUES (2, 'td', 'Transforming Drainage');
+CREATE TABLE website_access_levels (
+    access_level smallint UNIQUE NOT NULL,
+    appid varchar,
+    label varchar
+);
+GRANT SELECT ON website_access_levels TO nobody;
+INSERT INTO website_access_levels VALUES (0, 'admin', 'Administrators');
+INSERT INTO website_access_levels VALUES (1, 'cscap', 'Sustainable Corn CAP');
+INSERT INTO website_access_levels VALUES (2, 'td', 'Transforming Drainage');
 
 -- Storage of authorized Google OpenID users
-CREATE TABLE website_users(
-  email varchar NOT NULL UNIQUE,
-  last_usage timestamptz,
-  access_level smallint);
-alter table website_users owner to mesonet;
-GRANT ALL on website_users to nobody;
+CREATE TABLE website_users (
+    email varchar NOT NULL UNIQUE,
+    last_usage timestamptz,
+    access_level smallint
+);
+ALTER TABLE website_users OWNER TO mesonet;
+GRANT ALL ON website_users TO nobody;
 ALTER TABLE website_users ADD CONSTRAINT distfk FOREIGN KEY (access_level)
-  REFERENCES website_access_levels(access_level);
+REFERENCES website_access_levels (access_level);
 ALTER TABLE website_users DROP CONSTRAINT website_users_email_key;
 
 -- Storage of Tile Flow
-CREATE TABLE tileflow_data(
-  uniqueid varchar(24),
-  plotid varchar(24),
-  valid timestamptz,
-  discharge_m3 real,
-  discharge_m3_qcflag char(1),
-  discharge_m3_qc real,
-  discharge_mm real,
-  discharge_mm_qcflag char(1),
-  discharge_mm_qc real);
-alter table tileflow_data owner to mesonet;
-CREATE INDEX tileflow_data_idx on tileflow_data(uniqueid, plotid, valid);
-GRANT SELECT on tileflow_data to nobody;
+CREATE TABLE tileflow_data (
+    uniqueid varchar(24),
+    plotid varchar(24),
+    valid timestamptz,
+    discharge_m3 real,
+    discharge_m3_qcflag char(1),
+    discharge_m3_qc real,
+    discharge_mm real,
+    discharge_mm_qcflag char(1),
+    discharge_mm_qc real
+);
+ALTER TABLE tileflow_data OWNER TO mesonet;
+CREATE INDEX tileflow_data_idx ON tileflow_data (uniqueid, plotid, valid);
+GRANT SELECT ON tileflow_data TO nobody;
 
 
 -- Storage of water table data
-CREATE TABLE watertable_data(
-  uniqueid varchar(24),
-  plotid varchar(24),
-  valid timestamptz,
-  depth_mm real,
-  depth_mm_qcflag char(1),
-  depth_mm_qc real);
-alter table watertable_data owner to mesonet;
-CREATE INDEX watertable_data_idx on watertable_data(uniqueid, plotid, valid);
-GRANT SELECT on watertable_data to nobody;
+CREATE TABLE watertable_data (
+    uniqueid varchar(24),
+    plotid varchar(24),
+    valid timestamptz,
+    depth_mm real,
+    depth_mm_qcflag char(1),
+    depth_mm_qc real
+);
+ALTER TABLE watertable_data OWNER TO mesonet;
+CREATE INDEX watertable_data_idx ON watertable_data (uniqueid, plotid, valid);
+GRANT SELECT ON watertable_data TO nobody;
 
 
 -- Storage of weather data
-CREATE TABLE weather_data_daily(
-  station varchar(32),
-  valid date,
-  high real,
-  low real,
-  precip real,
-  sknt real,
-  drct real);
-alter table weather_data_daily owner to mesonet;
-GRANT SELECT on weather_data_daily to nobody;
-CREATE INDEX weather_data_daily_idx on weather_data_daily(station, valid);
+CREATE TABLE weather_data_daily (
+    station varchar(32),
+    valid date,
+    high real,
+    low real,
+    precip real,
+    sknt real,
+    drct real
+);
+ALTER TABLE weather_data_daily OWNER TO mesonet;
+GRANT SELECT ON weather_data_daily TO nobody;
+CREATE INDEX weather_data_daily_idx ON weather_data_daily (station, valid);
 
-CREATE TABLE weather_data_obs(
-  station varchar(32),
-  valid timestamptz,
-  tmpf real,
-  dwpf real,
-  drct real,
-  sknt real,
-  srad_mj real,
-  precip real,
-  srad real);
-alter table weather_data_obs owner to mesonet;
-GRANT SELECT on weather_data_obs to nobody;
-CREATE INDEX weather_data_obs_idx on weather_data_obs(station, valid);
+CREATE TABLE weather_data_obs (
+    station varchar(32),
+    valid timestamptz,
+    tmpf real,
+    dwpf real,
+    drct real,
+    sknt real,
+    srad_mj real,
+    precip real,
+    srad real
+);
+ALTER TABLE weather_data_obs OWNER TO mesonet;
+GRANT SELECT ON weather_data_obs TO nobody;
+CREATE INDEX weather_data_obs_idx ON weather_data_obs (station, valid);
 
 -- Add Decagon Data Storage
-CREATE TABLE decagon_data(
+CREATE TABLE decagon_data (
     uniqueid varchar(24),
     plotid varchar(24),
     valid timestamptz,
@@ -251,15 +262,15 @@ CREATE TABLE decagon_data(
     d7temp_qcflag char(1),
     d7temp_qc real
 );
-alter table decagon_data owner to mesonet;
-CREATE INDEX decagon_valid_idx on decagon_data(valid);
-GRANT SELECT on decagon_data to nobody;
-create index decagon_data_idx on decagon_data(uniqueid, plotid);
+ALTER TABLE decagon_data OWNER TO mesonet;
+CREATE INDEX decagon_valid_idx ON decagon_data (valid);
+GRANT SELECT ON decagon_data TO nobody;
+CREATE INDEX decagon_data_idx ON decagon_data (uniqueid, plotid);
 
 
 --- Storage of Plot Identifiers
 ---
-CREATE TABLE plotids(
+CREATE TABLE plotids (
     uniqueid varchar,
     rep varchar,
     tillage varchar,
@@ -298,14 +309,14 @@ CREATE TABLE plotids(
     ipmusb varchar(3),
     timing varchar
 );
-CREATE UNIQUE INDEX plotids_idx on plotids(uniqueid, plotid);
-alter table plotids owner to mesonet;
-GRANT SELECT on plotids to nobody;
+CREATE UNIQUE INDEX plotids_idx ON plotids (uniqueid, plotid);
+ALTER TABLE plotids OWNER TO mesonet;
+GRANT SELECT ON plotids TO nobody;
 
 ---=========================================================================
 --- Storage of Management
 ---
-CREATE TABLE management(
+CREATE TABLE management (
     updated varchar,
     irrigationmethod varchar,
     residuebiomassmoisture varchar,
@@ -324,11 +335,11 @@ CREATE TABLE management(
     irrigationamount varchar,
     editedby varchar
 );
-GRANT SELECT on management to nobody;
+GRANT SELECT ON management TO nobody;
 
 --- Storage of Pesticides
 ---
-CREATE TABLE pesticides(
+CREATE TABLE pesticides (
     target8 varchar,
     reference varchar,
     cropapplied varchar,
@@ -373,11 +384,11 @@ CREATE TABLE pesticides(
     cashcrop varchar,
     croprot varchar
 );
-GRANT SELECT on pesticides to nobody;
+GRANT SELECT ON pesticides TO nobody;
 
 --- Storage of Operations
 ---
-CREATE TABLE operations(
+CREATE TABLE operations (
     valid date,
     uniqueid varchar,
     updated varchar,
@@ -437,8 +448,8 @@ CREATE TABLE operations(
     croprot varchar,
     categories varchar
 );
-alter table operations owner to mesonet;
-GRANT SELECT on operations to nobody;
+ALTER TABLE operations OWNER TO mesonet;
+GRANT SELECT ON operations TO nobody;
 
 CREATE TABLE metadata_master (
     leadpi character varying,
@@ -486,39 +497,39 @@ GRANT SELECT ON TABLE public.metadata_master TO nobody;
 --- ========================================================================
 --- Storage of Soil Data
 ---
-CREATE TABLE soil_data(
-  uniqueid varchar(24),
-  plotid varchar(24),
-  depth varchar(24),
-  varname varchar(24),
-  year smallint,
-  value varchar(32),
-  subsample varchar(12),
-  updated timestamptz default now(),
-  sampledate date
+CREATE TABLE soil_data (
+    uniqueid varchar(24),
+    plotid varchar(24),
+    depth varchar(24),
+    varname varchar(24),
+    year smallint,
+    value varchar(32),
+    subsample varchar(12),
+    updated timestamptz DEFAULT now(),
+    sampledate date
 );
-CREATE INDEX soil_data_site_idx on soil_data(uniqueid);
-CREATE UNIQUE index soil_data_idx on 
-    soil_data(uniqueid, plotid, varname, year, depth, subsample, sampledate);
+CREATE INDEX soil_data_site_idx ON soil_data (uniqueid);
+CREATE UNIQUE INDEX soil_data_idx ON
+soil_data (uniqueid, plotid, varname, year, depth, subsample, sampledate);
 
-alter table soil_data owner to mesonet;
-grant select on soil_data to nobody;
+ALTER TABLE soil_data OWNER TO mesonet;
+GRANT SELECT ON soil_data TO nobody;
 
-CREATE TABLE soil_data_log(
-  uniqueid varchar(24),
-  plotid varchar(24),
-  depth varchar(24),
-  varname varchar(24),
-  year smallint,
-  value varchar(32),
-  subsample varchar(12),
-  updated timestamptz default now(),
-  sampledate date
+CREATE TABLE soil_data_log (
+    uniqueid varchar(24),
+    plotid varchar(24),
+    depth varchar(24),
+    varname varchar(24),
+    year smallint,
+    value varchar(32),
+    subsample varchar(12),
+    updated timestamptz DEFAULT now(),
+    sampledate date
 );
 
-CREATE OR REPLACE FUNCTION soil_insert_before_F()
-RETURNS TRIGGER
- AS $BODY$
+CREATE OR REPLACE FUNCTION soil_insert_before_f()
+RETURNS trigger
+AS $BODY$
 DECLARE
     result INTEGER; 
 BEGIN
@@ -560,48 +571,47 @@ BEGIN
     RETURN new;
 
 END; $BODY$
-LANGUAGE 'plpgsql' SECURITY DEFINER;
+LANGUAGE plpgsql SECURITY DEFINER;
 
 
-CREATE TRIGGER soil_insert_before_T
-   before insert
-   ON soil_data
-   FOR EACH ROW
-   EXECUTE PROCEDURE soil_insert_before_F();
-  
-GRANT SELECT on soil_data to nobody;
+CREATE TRIGGER soil_insert_before_t
+BEFORE INSERT
+ON soil_data
+FOR EACH ROW
+EXECUTE PROCEDURE soil_insert_before_f();
 
+GRANT SELECT ON soil_data TO nobody;
 
 
 --- ==========================================================================
 --- Storage of Agronomic Data
 ---
-CREATE TABLE agronomic_data(
-  uniqueid varchar(24),
-  plotid varchar(24),
-  varname varchar(24),
-  year smallint,
-  value varchar(32),
-  updated timestamptz default now()
+CREATE TABLE agronomic_data (
+    uniqueid varchar(24),
+    plotid varchar(24),
+    varname varchar(24),
+    year smallint,
+    value varchar(32),
+    updated timestamptz DEFAULT now()
 );
-alter table agronomic_data owner to mesonet;
-grant select on agronomic_data to nobody;
-CREATE UNIQUE index agronomic_data_idx on 
-    agronomic_data(uniqueid, plotid, varname, year);
-GRANT SELECT on agronomic_data to nobody;
+ALTER TABLE agronomic_data OWNER TO mesonet;
+GRANT SELECT ON agronomic_data TO nobody;
+CREATE UNIQUE INDEX agronomic_data_idx ON
+agronomic_data (uniqueid, plotid, varname, year);
+GRANT SELECT ON agronomic_data TO nobody;
 
-CREATE TABLE agronomic_data_log(
-  uniqueid varchar(24),
-  plotid varchar(24),
-  varname varchar(24),
-  year smallint,
-  value varchar(32),
-  updated timestamptz default now()
+CREATE TABLE agronomic_data_log (
+    uniqueid varchar(24),
+    plotid varchar(24),
+    varname varchar(24),
+    year smallint,
+    value varchar(32),
+    updated timestamptz DEFAULT now()
 );
 
-CREATE OR REPLACE FUNCTION agronomic_insert_before_F()
-RETURNS TRIGGER
- AS $BODY$
+CREATE OR REPLACE FUNCTION agronomic_insert_before_f()
+RETURNS trigger
+AS $BODY$
 DECLARE
     result INTEGER; 
 BEGIN
@@ -639,11 +649,11 @@ BEGIN
     RETURN new;
 
 END; $BODY$
-LANGUAGE 'plpgsql' SECURITY DEFINER;
+LANGUAGE plpgsql SECURITY DEFINER;
 
 
-CREATE TRIGGER agronomic_insert_before_T
-   before insert
-   ON agronomic_data
-   FOR EACH ROW
-   EXECUTE PROCEDURE agronomic_insert_before_F();
+CREATE TRIGGER agronomic_insert_before_t
+BEFORE INSERT
+ON agronomic_data
+FOR EACH ROW
+EXECUTE PROCEDURE agronomic_insert_before_f();

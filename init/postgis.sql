@@ -1,16 +1,23 @@
 CREATE EXTENSION postgis;
 
 -- bandaid
-insert into spatial_ref_sys
-    select 9311, 'EPSG', 9311, srtext, proj4text from spatial_ref_sys
-    where srid = 2163;
+INSERT INTO spatial_ref_sys
+SELECT
+    9311 AS srid,
+    'EPSG' AS auth_name,
+    9311 AS auth_srid,
+    srtext,
+    proj4text
+FROM spatial_ref_sys
+WHERE srid = 2163;
 
 -- Boilerplate IEM schema_manager_version, the version gets incremented each
 -- time we make an upgrade script
-CREATE TABLE iem_schema_manager_version(
+CREATE TABLE iem_schema_manager_version (
     version int,
-    updated timestamptz);
-INSERT into iem_schema_manager_version values (75, now());
+    updated timestamptz
+);
+INSERT INTO iem_schema_manager_version VALUES (75, now());
 
 ---
 --- TABLES THAT ARE LOADED VIA shp2pgsql
@@ -26,16 +33,16 @@ INSERT into iem_schema_manager_version values (75, now());
 
 -- FEMA Regions
 -- Manual load from https://www.fema.gov/api/open/v2/FemaRegions.geojson
-create table fema_regions(
+CREATE TABLE fema_regions (
     region int,
-    states varchar[],
-    geom geometry(MultiPolygon, 4326)
+    states varchar [],
+    geom GEOMETRY (MULTIPOLYGON, 4326)
 );
-alter table fema_regions owner to mesonet;
-grant select on fema_regions to nobody;
+ALTER TABLE fema_regions OWNER TO mesonet;
+GRANT SELECT ON fema_regions TO nobody;
 
 -- Placeholder as it is bootstrapped via shp2psql
-create table rfc(
+CREATE TABLE rfc (
     gid serial,
     objectid real,
     site_id varchar(3),
@@ -43,43 +50,43 @@ create table rfc(
     rfc_name varchar(18),
     rfc_city varchar(25),
     basin_id varchar(5),
-    geom geometry(MultiPolygon, 4326)
+    geom GEOMETRY (MULTIPOLYGON, 4326)
 );
-ALTER TABLE rfc OWNER to mesonet;
-GRANT ALL on rfc to ldm;
-GRANT SELECT on rfc to nobody;
+ALTER TABLE rfc OWNER TO mesonet;
+GRANT ALL ON rfc TO ldm;
+GRANT SELECT ON rfc TO nobody;
 
 -- Bootstraped via scripts in akrherz/DEV repo, pireps folder
-CREATE TABLE airspaces(
+CREATE TABLE airspaces (
     ident varchar(8),
-    type_code varchar(8) not null,
+    type_code varchar(8) NOT NULL,
     name text,
-    geom geography(multipolygon)
+    geom GEOGRAPHY (MULTIPOLYGON)
 );
-ALTER TABLE airspaces OWNER to mesonet;
-GRANT ALL on airspaces to ldm;
-GRANT SELECT on airspaces to nobody;
+ALTER TABLE airspaces OWNER TO mesonet;
+GRANT ALL ON airspaces TO ldm;
+GRANT SELECT ON airspaces TO nobody;
 
 -- Storage of Center Weather Advisories
 
-CREATE TABLE cwas(
+CREATE TABLE cwas (
     center varchar(4),
     issue timestamptz,
     expire timestamptz,
     product_id varchar(35),
     narrative text,
     num smallint,
-    geom geometry(Polygon,4326)
+    geom GEOMETRY (POLYGON, 4326)
 );
-ALTER TABLE cwas OWNER to mesonet;
+ALTER TABLE cwas OWNER TO mesonet;
 GRANT SELECT ON TABLE cwas TO nobody;
-GRANT ALL ON TABLE cwas to ldm;
-CREATE INDEX cwas_issue_idx on cwas(issue);
-CREATE INDEX cwas_gist_idx on cwas USING GIST(geom);
+GRANT ALL ON TABLE cwas TO ldm;
+CREATE INDEX cwas_issue_idx ON cwas (issue);
+CREATE INDEX cwas_gist_idx ON cwas USING gist (geom);
 
 -- Storage of AIRMETs / Graphical AIRMET
 
-CREATE TABLE airmets(
+CREATE TABLE airmets (
     gml_id varchar(32),
     label varchar(4) NOT NULL,
     valid_from timestamptz,
@@ -88,127 +95,128 @@ CREATE TABLE airmets(
     issuetime timestamptz,
     product_id text,
     hazard_type text,
-    weather_conditions text[],
+    weather_conditions text [],
     status text,
-    geom geometry(Polygon, 4326)
+    geom GEOMETRY (POLYGON, 4326)
 );
-CREATE INDEX airmets_idx on airmets(label, valid_at);
-CREATE INDEX airmets_geom_idx on airmets USING gist(geom);
-CREATE INDEX airmets_product_id_idx on airmets(product_id);
-ALTER TABLE airmets OWNER to mesonet;
+CREATE INDEX airmets_idx ON airmets (label, valid_at);
+CREATE INDEX airmets_geom_idx ON airmets USING gist (geom);
+CREATE INDEX airmets_product_id_idx ON airmets (product_id);
+ALTER TABLE airmets OWNER TO mesonet;
 GRANT SELECT ON TABLE airmets TO nobody;
-GRANT ALL on TABLE airmets to ldm;
+GRANT ALL ON TABLE airmets TO ldm;
 
 -- Storage of Freezing Level found in AIRMETs
 
-CREATE TABLE airmet_freezing_levels(
+CREATE TABLE airmet_freezing_levels (
     gml_id varchar(32),
     valid_at timestamptz,
     product_id text,
     level int,
     lower_level int,
     upper_level int,
-    geom geometry(MultiLineString, 4326)
+    geom GEOMETRY (MULTILINESTRING, 4326)
 );
-CREATE INDEX airmet_freezing_levels_idx on airmet_freezing_levels(valid_at);
-ALTER TABLE airmet_freezing_levels OWNER to mesonet;
+CREATE INDEX airmet_freezing_levels_idx ON airmet_freezing_levels (valid_at);
+ALTER TABLE airmet_freezing_levels OWNER TO mesonet;
 GRANT SELECT ON TABLE airmet_freezing_levels TO nobody;
-GRANT ALL on TABLE airmet_freezing_levels to ldm;
+GRANT ALL ON TABLE airmet_freezing_levels TO ldm;
 
 
 -- Grid Population of the World
--- https://sedac.ciesin.columbia.edu/data/set/gpw-v4-population-count-rev11/data-download
-CREATE TABLE gpw2020(
-    geom geometry(Point,4326),
+-- https://sedac.ciesin.columbia.edu
+-- /data/set/gpw-v4-population-count-rev11/data-download
+CREATE TABLE gpw2020 (
+    geom GEOMETRY (POINT, 4326),
     population int
 );
-create index gpw2020_gix on gpw2020 USING GIST(geom);
-ALTER TABLE gpw2020 OWNER to mesonet;
-GRANT ALL on gpw2020 to ldm;
-GRANT SELECT on gpw2020 to nobody;
+CREATE INDEX gpw2020_gix ON gpw2020 USING gist (geom);
+ALTER TABLE gpw2020 OWNER TO mesonet;
+GRANT ALL ON gpw2020 TO ldm;
+GRANT SELECT ON gpw2020 TO nobody;
 
 --
-CREATE TABLE gpw2015(
-    geom geometry(Point,4326),
+CREATE TABLE gpw2015 (
+    geom GEOMETRY (POINT, 4326),
     population int
 );
-create index gpw2015_gix on gpw2015 USING GIST(geom);
-ALTER TABLE gpw2015 OWNER to mesonet;
-GRANT ALL on gpw2015 to ldm;
-GRANT SELECT on gpw2015 to nobody;
+CREATE INDEX gpw2015_gix ON gpw2015 USING gist (geom);
+ALTER TABLE gpw2015 OWNER TO mesonet;
+GRANT ALL ON gpw2015 TO ldm;
+GRANT SELECT ON gpw2015 TO nobody;
 
 --
-CREATE TABLE gpw2010(
-    geom geometry(Point,4326),
+CREATE TABLE gpw2010 (
+    geom GEOMETRY (POINT, 4326),
     population int
 );
-create index gpw2010_gix on gpw2010 USING GIST(geom);
-ALTER TABLE gpw2010 OWNER to mesonet;
-GRANT ALL on gpw2010 to ldm;
-GRANT SELECT on gpw2010 to nobody;
+CREATE INDEX gpw2010_gix ON gpw2010 USING gist (geom);
+ALTER TABLE gpw2010 OWNER TO mesonet;
+GRANT ALL ON gpw2010 TO ldm;
+GRANT SELECT ON gpw2010 TO nobody;
 
 --
-CREATE TABLE gpw2005(
-    geom geometry(Point,4326),
+CREATE TABLE gpw2005 (
+    geom GEOMETRY (POINT, 4326),
     population int
 );
-create index gpw2005_gix on gpw2005 USING GIST(geom);
-ALTER TABLE gpw2005 OWNER to mesonet;
-GRANT ALL on gpw2005 to ldm;
-GRANT SELECT on gpw2005 to nobody;
+CREATE INDEX gpw2005_gix ON gpw2005 USING gist (geom);
+ALTER TABLE gpw2005 OWNER TO mesonet;
+GRANT ALL ON gpw2005 TO ldm;
+GRANT SELECT ON gpw2005 TO nobody;
 
 --
-CREATE TABLE gpw2000(
-    geom geometry(Point,4326),
+CREATE TABLE gpw2000 (
+    geom GEOMETRY (POINT, 4326),
     population int
 );
-create index gpw2000_gix on gpw2000 USING GIST(geom);
-ALTER TABLE gpw2000 OWNER to mesonet;
-GRANT ALL on gpw2000 to ldm;
-GRANT SELECT on gpw2000 to nobody;
+CREATE INDEX gpw2000_gix ON gpw2000 USING gist (geom);
+ALTER TABLE gpw2000 OWNER TO mesonet;
+GRANT ALL ON gpw2000 TO ldm;
+GRANT SELECT ON gpw2000 TO nobody;
 
 --
-CREATE TABLE cwa(
-  gid int,
-  wfo varchar,
-  cwa varchar,
-  lon numeric,
-  lat numeric,
-  the_geom geometry(MultiPolygon, 4326),
-  avg_county_size real,
-  region varchar(2)
+CREATE TABLE cwa (
+    gid int,
+    wfo varchar,
+    cwa varchar,
+    lon numeric,
+    lat numeric,
+    the_geom GEOMETRY (MULTIPOLYGON, 4326),
+    avg_county_size real,
+    region varchar(2)
 );
-ALTER TABLE cwa OWNER to mesonet;
-GRANT ALL on cwa to ldm;
-GRANT SELECT on cwa to nobody;
+ALTER TABLE cwa OWNER TO mesonet;
+GRANT ALL ON cwa TO ldm;
+GRANT SELECT ON cwa TO nobody;
 
 --- states table is loaded by some shp2pgsql load that has unknown origins :(
-CREATE TABLE states(
-  gid int,
-  state_name varchar,
-  state_fips varchar,
-  state_abbr varchar,
-  the_geom geometry(MultiPolygon, 4326),
-  simple_geom geometry(MultiPolygon, 4326)
+CREATE TABLE states (
+    gid int,
+    state_name varchar,
+    state_fips varchar,
+    state_abbr varchar,
+    the_geom GEOMETRY (MULTIPOLYGON, 4326),
+    simple_geom GEOMETRY (MULTIPOLYGON, 4326)
 );
-alter table states owner to mesonet;
-GRANT ALL on states to ldm;
-GRANT SELECT on states to nobody;
+ALTER TABLE states OWNER TO mesonet;
+GRANT ALL ON states TO ldm;
+GRANT SELECT ON states TO nobody;
 
 -- CWSU Boundaries, circa 2005 providence
-CREATE TABLE cwsu(
+CREATE TABLE cwsu (
     gid serial,
     id varchar(3),
-    geom geometry(MultiPolygon, 4326)
+    geom GEOMETRY (MULTIPOLYGON, 4326)
 );
-ALTER TABLE cwsu OWNER to mesonet;
-GRANT ALL on cwsu to ldm;
-GRANT SELECT on cwsu to nobody;
+ALTER TABLE cwsu OWNER TO mesonet;
+GRANT ALL ON cwsu TO ldm;
+GRANT SELECT ON cwsu TO nobody;
 
 ---
 --- Quasi synced from mesosite database
 ---
-CREATE TABLE stations(
+CREATE TABLE stations (
     id varchar(64),
     synop int,
     name varchar(64),
@@ -229,7 +237,7 @@ CREATE TABLE stations(
     archive_end date,
     modified timestamp with time zone,
     tzname varchar(32),
-    iemid SERIAL,
+    iemid serial,
     metasite boolean,
     sigstage_low real,
     sigstage_action real,
@@ -246,64 +254,65 @@ CREATE TABLE stations(
     precip24_hour smallint,
     wigos varchar(64)
 );
-CREATE UNIQUE index stations_idx on stations(id, network);
-create UNIQUE index stations_iemid_idx on stations(iemid);
-SELECT AddGeometryColumn('stations', 'geom', 4326, 'POINT', 2);
-GRANT SELECT on stations to nobody;
-grant all on stations_iemid_seq to nobody;
-GRANT ALL on stations to mesonet,ldm;
-GRANT ALL on stations_iemid_seq to mesonet,ldm;
+CREATE UNIQUE INDEX stations_idx ON stations (id, network);
+CREATE UNIQUE INDEX stations_iemid_idx ON stations (iemid);
+SELECT addgeometrycolumn('stations', 'geom', 4326, 'POINT', 2);
+GRANT SELECT ON stations TO nobody;
+GRANT ALL ON stations_iemid_seq TO nobody;
+GRANT ALL ON stations TO mesonet, ldm;
+GRANT ALL ON stations_iemid_seq TO mesonet, ldm;
 
 
 ---
 --- Cruft from the old days
 ---
-CREATE TABLE iemchat_room_participation(
-  room varchar(100),
-  valid timestamptz,
-  users smallint
+CREATE TABLE iemchat_room_participation (
+    room varchar(100),
+    valid timestamptz,
+    users smallint
 );
 
 ---
 --- Bot Warnings
 ---
-CREATE TABLE bot_warnings(
-  issue timestamptz,
-  expire timestamptz,
-  report text,
-  type char(3),
-  gtype char(1),
-  wfo char(3),
-  eventid smallint,
-  status char(3),
-  fips int,
-  updated timestamptz,
-  fcster varchar(24),
-  svs text,
-  ugc varchar(6),
-  phenomena char(2),
-  significance char(1),
-  hvtec_nwsli varchar(5),
-  hailtag int,
-  windtag int
+CREATE TABLE bot_warnings (
+    issue timestamptz,
+    expire timestamptz,
+    report text,
+    type char(3),
+    gtype char(1),
+    wfo char(3),
+    eventid smallint,
+    status char(3),
+    fips int,
+    updated timestamptz,
+    fcster varchar(24),
+    svs text,
+    ugc varchar(6),
+    phenomena char(2),
+    significance char(1),
+    hvtec_nwsli varchar(5),
+    hailtag int,
+    windtag int
 );
-SELECT AddGeometryColumn('bot_warnings', 'geom', 4326, 'MULTIPOLYGON', 2);
-GRANT SELECT on bot_warnings to nobody;
+SELECT addgeometrycolumn('bot_warnings', 'geom', 4326, 'MULTIPOLYGON', 2);
+GRANT SELECT ON bot_warnings TO nobody;
 
-CREATE TABLE robins(
-  id SERIAL,
-  name varchar,
-  city varchar,
-  day date);
-alter table robins owner to mesonet;
-grant select on robins to nobody;
-SELECT AddGeometryColumn('robins', 'the_geom', 4326, 'POINT', 2);
+CREATE TABLE robins (
+    id serial,
+    name varchar,
+    city varchar,
+    day date
+);
+ALTER TABLE robins OWNER TO mesonet;
+GRANT SELECT ON robins TO nobody;
+SELECT addgeometrycolumn('robins', 'the_geom', 4326, 'POINT', 2);
 
 ---
 --- NWS Forecast / WWA Zones / Boundaries
 ---
-CREATE TABLE ugcs(
-    gid SERIAL UNIQUE NOT NULL,
+CREATE TABLE ugcs (
+    gid serial UNIQUE NOT NULL,
     ugc char(6) NOT NULL,
     name varchar(256),
     state char(2),
@@ -312,24 +321,24 @@ CREATE TABLE ugcs(
     begin_ts timestamptz NOT NULL,
     end_ts timestamptz,
     area2163 real,
-    source varchar(2) not null,
+    source varchar(2) NOT NULL,
     gpw_population_2000 int,
     gpw_population_2005 int,
     gpw_population_2010 int,
     gpw_population_2015 int,
     gpw_population_2020 int
 );
-ALTER TABLE ugcs OWNER to mesonet;
-GRANT ALL on ugcs to ldm;
-GRANT ALL on ugcs_gid_seq to ldm;
-SELECT AddGeometryColumn('ugcs', 'geom', 4326, 'MULTIPOLYGON', 2);
-SELECT AddGeometryColumn('ugcs', 'simple_geom', 4326, 'MULTIPOLYGON', 2);
-SELECT AddGeometryColumn('ugcs', 'centroid', 4326, 'POINT', 2);
-GRANT SELECT on ugcs to nobody;
-CREATE INDEX ugcs_ugc_idx on ugcs(ugc);
-create index ugcs_gix on ugcs USING GIST(geom);
-alter table ugcs add constraint _ugcs_no_ampersand_in_name
-    check (strpos(name, '&') = 0);
+ALTER TABLE ugcs OWNER TO mesonet;
+GRANT ALL ON ugcs TO ldm;
+GRANT ALL ON ugcs_gid_seq TO ldm;
+SELECT addgeometrycolumn('ugcs', 'geom', 4326, 'MULTIPOLYGON', 2);
+SELECT addgeometrycolumn('ugcs', 'simple_geom', 4326, 'MULTIPOLYGON', 2);
+SELECT addgeometrycolumn('ugcs', 'centroid', 4326, 'POINT', 2);
+GRANT SELECT ON ugcs TO nobody;
+CREATE INDEX ugcs_ugc_idx ON ugcs (ugc);
+CREATE INDEX ugcs_gix ON ugcs USING gist (geom);
+ALTER TABLE ugcs ADD CONSTRAINT _ugcs_no_ampersand_in_name
+CHECK (strpos(name, '&') = 0);
 
 ---
 --- Helper function to find a GID for a given UGC code and date!
@@ -387,27 +396,27 @@ $_$;
 ---
 --- Store IDOT dashcam stuff
 ---
-CREATE TABLE idot_dashcam_current(
-    label varchar(20) UNIQUE not null,
+CREATE TABLE idot_dashcam_current (
+    label varchar(20) UNIQUE NOT NULL,
     valid timestamptz,
-    geom geometry(Point, 4326)
+    geom GEOMETRY (POINT, 4326)
 );
-alter table idot_dashcam_current owner to mesonet;
-GRANT SELECT on idot_dashcam_current to nobody;
+ALTER TABLE idot_dashcam_current OWNER TO mesonet;
+GRANT SELECT ON idot_dashcam_current TO nobody;
 
-CREATE TABLE idot_dashcam_log(
-    label varchar(20) not null,
+CREATE TABLE idot_dashcam_log (
+    label varchar(20) NOT NULL,
     valid timestamptz,
-    geom geometry(Point, 4326)
+    geom GEOMETRY (POINT, 4326)
 );
-alter table idot_dashcam_log owner to mesonet;
-CREATE INDEX idot_dashcam_log_valid_idx on idot_dashcam_log(valid);
-CREATE INDEX idot_dashcam_log_label_idx on idot_dashcam_log(label);
-GRANT SELECT on idot_dashcam_current to nobody;
+ALTER TABLE idot_dashcam_log OWNER TO mesonet;
+CREATE INDEX idot_dashcam_log_valid_idx ON idot_dashcam_log (valid);
+CREATE INDEX idot_dashcam_log_label_idx ON idot_dashcam_log (label);
+GRANT SELECT ON idot_dashcam_current TO nobody;
 
-CREATE OR REPLACE FUNCTION idot_dashcam_insert_before_F()
-RETURNS TRIGGER
- AS $BODY$
+CREATE OR REPLACE FUNCTION idot_dashcam_insert_before_f()
+RETURNS trigger
+AS $BODY$
 DECLARE
     result INTEGER; 
 BEGIN
@@ -434,20 +443,20 @@ BEGIN
     RETURN new;
 
 END; $BODY$
-LANGUAGE 'plpgsql' SECURITY DEFINER;
+LANGUAGE plpgsql SECURITY DEFINER;
 
-CREATE TRIGGER idot_dashcam_current_insert_before_T
-   before insert
-   ON idot_dashcam_current
-   FOR EACH ROW
-   EXECUTE PROCEDURE idot_dashcam_insert_before_F();
+CREATE TRIGGER idot_dashcam_current_insert_before_t
+BEFORE INSERT
+ON idot_dashcam_current
+FOR EACH ROW
+EXECUTE PROCEDURE idot_dashcam_insert_before_f();
 
 ---
 --- Store DOT snowplow data
 ---
-CREATE TABLE idot_snowplow_current(
-    label varchar(20) UNIQUE not null,
-    valid timestamptz not null,
+CREATE TABLE idot_snowplow_current (
+    label varchar(20) UNIQUE NOT NULL,
+    valid timestamptz NOT NULL,
     heading real,
     velocity real,
     roadtemp real,
@@ -465,13 +474,13 @@ CREATE TABLE idot_snowplow_current(
     solid_spread_code smallint,
     road_temp_code smallint
 );
-alter table idot_snowplow_current owner to mesonet;
-SELECT AddGeometryColumn('idot_snowplow_current', 'geom', 4326, 'POINT', 2);
-GRANT SELECT on idot_snowplow_current to nobody;
+ALTER TABLE idot_snowplow_current OWNER TO mesonet;
+SELECT addgeometrycolumn('idot_snowplow_current', 'geom', 4326, 'POINT', 2);
+GRANT SELECT ON idot_snowplow_current TO nobody;
 
-CREATE TABLE idot_snowplow_archive(
-    label varchar(20) not null,
-    valid timestamptz not null,
+CREATE TABLE idot_snowplow_archive (
+    label varchar(20) NOT NULL,
+    valid timestamptz NOT NULL,
     heading real,
     velocity real,
     roadtemp real,
@@ -488,15 +497,15 @@ CREATE TABLE idot_snowplow_archive(
     underbellyplowstate smallint,
     solid_spread_code smallint,
     road_temp_code smallint,
-    geom geometry(Point, 4326)
-) PARTITION by RANGE (valid);
-CREATE INDEX on idot_snowplow_archive(label);
-CREATE INDEX on idot_snowplow_archive(valid);
-ALTER TABLE idot_snowplow_archive OWNER to mesonet;
-GRANT ALL on idot_snowplow_archive to ldm;
-GRANT SELECT on idot_snowplow_archive to nobody;
+    geom GEOMETRY (POINT, 4326)
+) PARTITION BY RANGE (valid);
+CREATE INDEX ON idot_snowplow_archive (label);
+CREATE INDEX ON idot_snowplow_archive (valid);
+ALTER TABLE idot_snowplow_archive OWNER TO mesonet;
+GRANT ALL ON idot_snowplow_archive TO ldm;
+GRANT SELECT ON idot_snowplow_archive TO nobody;
 
-do
+DO
 $do$
 declare
      year int;
@@ -520,43 +529,43 @@ $do$;
 ---
 --- Missing VTEC eventids
 ---
-CREATE TABLE vtec_missing_events(
-  year smallint,
-  wfo char(3),
-  phenomena char(2),
-  significance char(1),
-  eventid int
+CREATE TABLE vtec_missing_events (
+    year smallint,
+    wfo char(3),
+    phenomena char(2),
+    significance char(1),
+    eventid int
 );
-GRANT ALL on vtec_missing_events to mesonet,ldm;
-GRANT select on vtec_missing_events to nobody;
+GRANT ALL ON vtec_missing_events TO mesonet, ldm;
+GRANT SELECT ON vtec_missing_events TO nobody;
 
 -- Legacy table supporting NWSChat, sigh
 CREATE TABLE text_products (
     product_id varchar(35),
-    geom geometry(MultiPolygon, 4326),
+    geom GEOMETRY (MULTIPOLYGON, 4326),
     issue timestamptz,
     expire timestamptz,
     pil char(6)
 );
-ALTER TABLE text_products OWNER to mesonet;
-GRANT ALL on text_products to ldm;
-grant select on text_products to nobody;
+ALTER TABLE text_products OWNER TO mesonet;
+GRANT ALL ON text_products TO ldm;
+GRANT SELECT ON text_products TO nobody;
 
-create index text_products_idx  on text_products(product_id);
-CREATE INDEX text_products_issue_idx on text_products(issue);
-CREATE INDEX text_products_expire_idx on text_products(expire);
-create index text_products_pil_idx  on text_products(pil);
+CREATE INDEX text_products_idx ON text_products (product_id);
+CREATE INDEX text_products_issue_idx ON text_products (issue);
+CREATE INDEX text_products_expire_idx ON text_products (expire);
+CREATE INDEX text_products_pil_idx ON text_products (pil);
 
 -- Special Weather Statements
-CREATE TABLE sps(
+CREATE TABLE sps (
     product_id varchar(35),
     segmentnum smallint,
     pil char(6),
     wfo char(3),
     issue timestamptz,
     expire timestamptz,
-    geom geometry(Polygon, 4326),
-    ugcs char(6)[],
+    geom GEOMETRY (POLYGON, 4326),
+    ugcs char(6) [],
     landspout text,
     waterspout text,
     max_hail_size text,
@@ -564,14 +573,14 @@ CREATE TABLE sps(
     tml_valid timestamp with time zone,
     tml_direction smallint,
     tml_sknt smallint,
-    tml_geom geometry(Point, 4326),
-    tml_geom_line geometry(Linestring, 4326)
-) PARTITION by range(issue);
-ALTER TABLE sps OWNER to mesonet;
-GRANT ALL on sps to ldm;
-GRANT SELECT on sps to nobody;
+    tml_geom GEOMETRY (POINT, 4326),
+    tml_geom_line GEOMETRY (LINESTRING, 4326)
+) PARTITION BY RANGE (issue);
+ALTER TABLE sps OWNER TO mesonet;
+GRANT ALL ON sps TO ldm;
+GRANT SELECT ON sps TO nobody;
 
-do
+DO
 $do$
 declare
      year int;
@@ -621,27 +630,18 @@ CREATE TABLE riverpro (
     severity character(1),
     impact_text text
 );
-alter table riverpro owner to mesonet;
-grant select on riverpro to nobody;
+ALTER TABLE riverpro OWNER TO mesonet;
+GRANT SELECT ON riverpro TO nobody;
 
 CREATE UNIQUE INDEX riverpro_nwsli_idx ON riverpro USING btree (nwsli);
-
-CREATE RULE replace_riverpro
- AS ON INSERT TO riverpro WHERE
- (EXISTS (SELECT 1 FROM riverpro
- WHERE ((riverpro.nwsli)::text = (new.nwsli)::text)))
- DO INSTEAD UPDATE riverpro SET stage_text = new.stage_text,
- flood_text = new.flood_text, forecast_text = new.forecast_text,
- severity = new.severity, impact_text = new.impact_text
- WHERE ((riverpro.nwsli)::text = (new.nwsli)::text);
 
 ---
 --- VTEC Table
 ---
 CREATE TABLE warnings (
-    issue timestamp with time zone not null,
-    expire timestamp with time zone not null,
-    updated timestamp with time zone not null,
+    issue timestamp with time zone NOT NULL,
+    expire timestamp with time zone NOT NULL,
+    updated timestamp with time zone NOT NULL,
     wfo character(3) NOT NULL,
     eventid smallint NOT NULL,
     status character(3) NOT NULL,
@@ -653,20 +653,20 @@ CREATE TABLE warnings (
     hvtec_severity char(1),
     hvtec_cause char(2),
     hvtec_record char(2),
-    gid int references ugcs(gid) not null,
-    init_expire timestamp with time zone not null,
-    product_issue timestamp with time zone not null,
+    gid int REFERENCES ugcs (gid) NOT NULL,
+    init_expire timestamp with time zone NOT NULL,
+    product_issue timestamp with time zone NOT NULL,
     is_emergency boolean,
     is_pds boolean,
     purge_time timestamptz,
-    product_ids varchar(36)[] not null default '{}',
-    vtec_year smallint not null
-) partition by list(vtec_year);
-ALTER TABLE warnings OWNER to mesonet;
-GRANT ALL on warnings to ldm;
-grant select on warnings to nobody;
+    product_ids varchar(36) [] NOT NULL DEFAULT '{}',
+    vtec_year smallint NOT NULL
+) PARTITION BY LIST (vtec_year);
+ALTER TABLE warnings OWNER TO mesonet;
+GRANT ALL ON warnings TO ldm;
+GRANT SELECT ON warnings TO nobody;
 
-do
+DO
 $do$
 declare
      year int;
@@ -734,52 +734,52 @@ $do$;
 ---
 --- Storm Based Warnings Geo Tables
 ---
-create table sbw(
-  wfo char(3),
-  eventid smallint,
-  significance char(1),
-  phenomena char(2),
-  status char(3),
-  issue timestamp with time zone,
-  init_expire timestamp with time zone,
-  expire timestamp with time zone,
-  polygon_begin timestamp with time zone,
-  polygon_end timestamp with time zone,
-  windtag real,
-  hailtag real,
-  tornadotag varchar(64),
-  damagetag text,
-  waterspouttag varchar(64),
-  tml_valid timestamp with time zone,
-  tml_direction smallint,
-  tml_sknt smallint,
-  updated timestamptz,
-  is_emergency boolean,
-  is_pds boolean,
-  floodtag_heavyrain varchar(64),
-  floodtag_flashflood varchar(64),
-  floodtag_damage varchar(64),
-  floodtag_leeve varchar(64),
-  floodtag_dam varchar(64),
-  geom geometry(MultiPolygon, 4326),
-  tml_geom geometry(Point, 4326),
-  tml_geom_line geometry(Linestring, 4326),
-  hvtec_nwsli text,
-  hvtec_severity char(1),
-  hvtec_cause char(2),
-  hvtec_record char(2),
-  windthreat text,
-  hailthreat text,
-  squalltag text,
-  product_id varchar(36),
-  vtec_year smallint not null,
-  product_signature text
-) partition by list(vtec_year);
-ALTER TABLE sbw OWNER to mesonet;
-GRANT ALL on sbw to ldm;
-grant select on sbw to nobody;
+CREATE TABLE sbw (
+    wfo char(3),
+    eventid smallint,
+    significance char(1),
+    phenomena char(2),
+    status char(3),
+    issue timestamp with time zone,
+    init_expire timestamp with time zone,
+    expire timestamp with time zone,
+    polygon_begin timestamp with time zone,
+    polygon_end timestamp with time zone,
+    windtag real,
+    hailtag real,
+    tornadotag varchar(64),
+    damagetag text,
+    waterspouttag varchar(64),
+    tml_valid timestamp with time zone,
+    tml_direction smallint,
+    tml_sknt smallint,
+    updated timestamptz,
+    is_emergency boolean,
+    is_pds boolean,
+    floodtag_heavyrain varchar(64),
+    floodtag_flashflood varchar(64),
+    floodtag_damage varchar(64),
+    floodtag_leeve varchar(64),
+    floodtag_dam varchar(64),
+    geom GEOMETRY (MULTIPOLYGON, 4326),
+    tml_geom GEOMETRY (POINT, 4326),
+    tml_geom_line GEOMETRY (LINESTRING, 4326),
+    hvtec_nwsli text,
+    hvtec_severity char(1),
+    hvtec_cause char(2),
+    hvtec_record char(2),
+    windthreat text,
+    hailthreat text,
+    squalltag text,
+    product_id varchar(36),
+    vtec_year smallint NOT NULL,
+    product_signature text
+) PARTITION BY LIST (vtec_year);
+ALTER TABLE sbw OWNER TO mesonet;
+GRANT ALL ON sbw TO ldm;
+GRANT SELECT ON sbw TO nobody;
 
-do
+DO
 $do$
 declare
      year int;
@@ -827,7 +827,7 @@ $do$;
 -- Local Storm Reports
 CREATE TABLE lsrs (
     valid timestamp with time zone,
-    type character(1) not null,
+    type character(1) NOT NULL,
     magnitude numeric,
     city character varying(32),
     county character varying(32),
@@ -835,21 +835,21 @@ CREATE TABLE lsrs (
     source character varying(32),
     remark text,
     wfo character(3),
-    typetext character varying(40) not null,
-    geom geometry(Point, 4326),
+    typetext character varying(40) NOT NULL,
+    geom GEOMETRY (POINT, 4326),
     product_id text,
     product_id_summary text,
     updated timestamptz DEFAULT now(),
     unit varchar(32),
     qualifier char(1),
-    gid int references ugcs(gid)
-) PARTITION by range(valid);
-ALTER TABLE lsrs OWNER to mesonet;
-GRANT ALL on lsrs to ldm;
-grant select on lsrs to nobody;
+    gid int REFERENCES ugcs (gid)
+) PARTITION BY RANGE (valid);
+ALTER TABLE lsrs OWNER TO mesonet;
+GRANT ALL ON lsrs TO ldm;
+GRANT SELECT ON lsrs TO nobody;
 
 
-do
+DO
 $do$
 declare
      year int;
@@ -891,11 +891,11 @@ CREATE TABLE hvtec_nwsli (
     proximity character varying(16),
     name character varying(128),
     state character(2),
-    geom geometry(Point, 4326)
+    geom GEOMETRY (POINT, 4326)
 );
-ALTER TABLE hvtec_nwsli OWNER to mesonet;
-GRANT ALL on hvtec_nwsli to ldm;
-grant select on hvtec_nwsli to nobody;
+ALTER TABLE hvtec_nwsli OWNER TO mesonet;
+GRANT ALL ON hvtec_nwsli TO ldm;
+GRANT SELECT ON hvtec_nwsli TO nobody;
 
 ---
 --- UGC Lookup Table
@@ -909,29 +909,29 @@ CREATE TABLE nws_ugc (
     time_zone character varying(2),
     wfo character varying(9),
     fe_area character varying(2),
-    geom geometry(MultiPolygon, 4326),
-    centroid geometry(Point, 4326),
-    simple_geom geometry(MultiPolygon, 4326)
+    geom GEOMETRY (MULTIPOLYGON, 4326),
+    centroid GEOMETRY (POINT, 4326),
+    simple_geom GEOMETRY (MULTIPOLYGON, 4326)
 );
 
-grant select on nws_ugc to nobody;
+GRANT SELECT ON nws_ugc TO nobody;
 
 -- SIGMETs
-create table alldata_sigmets(
-    sigmet_type char(1) not null,
-    label varchar(16) not null,
-    issue timestamp with time zone not null,
-    expire timestamp with time zone not null,
-    product_id varchar(36) not null,
-    geom geometry(Polygon, 4326) not null,
+CREATE TABLE alldata_sigmets (
+    sigmet_type char(1) NOT NULL,
+    label varchar(16) NOT NULL,
+    issue timestamp with time zone NOT NULL,
+    expire timestamp with time zone NOT NULL,
+    product_id varchar(36) NOT NULL,
+    geom GEOMETRY (POLYGON, 4326) NOT NULL,
     narrative text
-) partition by range(issue);
-alter table alldata_sigmets owner to mesonet;
-grant all on alldata_sigmets to ldm;
-grant select on alldata_sigmets to nobody;
-create index alldata_sigmets_idx on alldata_sigmets(issue);
+) PARTITION BY RANGE (issue);
+ALTER TABLE alldata_sigmets OWNER TO mesonet;
+GRANT ALL ON alldata_sigmets TO ldm;
+GRANT SELECT ON alldata_sigmets TO nobody;
+CREATE INDEX alldata_sigmets_idx ON alldata_sigmets (issue);
 
-do
+DO
 $do$
 declare
      year int;
@@ -960,37 +960,41 @@ $do$;
 ---
 --- NEXRAD N0R Composites 
 ---
-CREATE TABLE nexrad_n0r_tindex(
- datetime timestamp without time zone,
- filepath varchar,
- the_geom geometry(MultiPolygon, 4326)
- );
-alter table nexrad_n0r_tindex owner to mesonet;
-grant all on nexrad_n0r_tindex to ldm;
-GRANT SELECT on nexrad_n0r_tindex to nobody;
-CREATE INDEX nexrad_n0r_tindex_idx on nexrad_n0r_tindex(datetime);
-create index nexrad_n0r_tindex_date_trunc on nexrad_n0r_tindex( date_trunc('minute', datetime) );
+CREATE TABLE nexrad_n0r_tindex (
+    datetime timestamp without time zone,
+    filepath varchar,
+    the_geom GEOMETRY (MULTIPOLYGON, 4326)
+);
+ALTER TABLE nexrad_n0r_tindex OWNER TO mesonet;
+GRANT ALL ON nexrad_n0r_tindex TO ldm;
+GRANT SELECT ON nexrad_n0r_tindex TO nobody;
+CREATE INDEX nexrad_n0r_tindex_idx ON nexrad_n0r_tindex (datetime);
+CREATE INDEX nexrad_n0r_tindex_date_trunc ON nexrad_n0r_tindex (
+    date_trunc('minute', datetime)
+);
 
 
 ---
 --- NEXRAD N0Q Composites 
 ---
-CREATE TABLE nexrad_n0q_tindex(
- datetime timestamp without time zone,
- filepath varchar,
- the_geom geometry(MultiPolygon, 4326)
- );
-alter table nexrad_n0q_tindex owner to mesonet;
-grant all on nexrad_n0q_tindex to ldm;
-GRANT SELECT on nexrad_n0q_tindex to nobody;
-CREATE INDEX nexrad_n0q_tindex_idx on nexrad_n0q_tindex(datetime);
-create index nexrad_n0q_tindex_date_trunc on nexrad_n0q_tindex( date_trunc('minute', datetime) );
+CREATE TABLE nexrad_n0q_tindex (
+    datetime timestamp without time zone,
+    filepath varchar,
+    the_geom GEOMETRY (MULTIPOLYGON, 4326)
+);
+ALTER TABLE nexrad_n0q_tindex OWNER TO mesonet;
+GRANT ALL ON nexrad_n0q_tindex TO ldm;
+GRANT SELECT ON nexrad_n0q_tindex TO nobody;
+CREATE INDEX nexrad_n0q_tindex_idx ON nexrad_n0q_tindex (datetime);
+CREATE INDEX nexrad_n0q_tindex_date_trunc ON nexrad_n0q_tindex (
+    date_trunc('minute', datetime)
+);
 
 ---
 ---
 ---
-CREATE table roads_base(
-    segid SERIAL unique,
+CREATE TABLE roads_base (
+    segid serial UNIQUE,
     major varchar(32),
     minor varchar(128),
     us1 smallint,
@@ -1003,48 +1007,51 @@ CREATE table roads_base(
     archive_begin timestamptz,
     archive_end timestamptz
 );
-alter table roads_base owner to mesonet;
-SELECT AddGeometryColumn('roads_base', 'geom', 26915, 'MULTILINESTRING', 2);
-SELECT AddGeometryColumn('roads_base', 'simple_geom', 26915, 'MULTILINESTRING', 2);
+ALTER TABLE roads_base OWNER TO mesonet;
+SELECT addgeometrycolumn('roads_base', 'geom', 26915, 'MULTILINESTRING', 2);
+SELECT addgeometrycolumn(
+    'roads_base', 'simple_geom', 26915, 'MULTILINESTRING', 2
+);
 
-GRANT SELECT on roads_base to nobody;
+GRANT SELECT ON roads_base TO nobody;
 
-CREATE TABLE roads_conditions(
-  code smallint unique,
-  label varchar(128),
-  color char(7) DEFAULT '#000000' NOT NULL
-  );
-ALTER TABLE roads_conditions OWNER to mesonet;
-GRANT SELECT on roads_conditions TO nobody;
+CREATE TABLE roads_conditions (
+    code smallint UNIQUE,
+    label varchar(128),
+    color char(7) DEFAULT '#000000' NOT NULL
+);
+ALTER TABLE roads_conditions OWNER TO mesonet;
+GRANT SELECT ON roads_conditions TO nobody;
 
-CREATE TABLE roads_current(
-  segid int REFERENCES roads_base(segid),
-  valid timestamp with time zone,
-  cond_code smallint REFERENCES roads_conditions(code),
-  towing_prohibited boolean,
-  limited_vis boolean,
-  raw varchar);
-alter table roads_current owner to mesonet;
-GRANT SELECT on roads_current to nobody;
+CREATE TABLE roads_current (
+    segid int REFERENCES roads_base (segid),
+    valid timestamp with time zone,
+    cond_code smallint REFERENCES roads_conditions (code),
+    towing_prohibited boolean,
+    limited_vis boolean,
+    raw varchar
+);
+ALTER TABLE roads_current OWNER TO mesonet;
+GRANT SELECT ON roads_current TO nobody;
 
 ---
 --- road conditions archive
 ---
-CREATE TABLE roads_log(
-    segid int REFERENCES roads_base(segid),
+CREATE TABLE roads_log (
+    segid int REFERENCES roads_base (segid),
     valid timestamptz,
-    cond_code smallint REFERENCES roads_conditions(code),
+    cond_code smallint REFERENCES roads_conditions (code),
     towing_prohibited bool,
     limited_vis bool,
     raw text
-) PARTITION by range(valid);
-CREATE INDEX on roads_log(valid);
-CREATE INDEX on roads_log(segid);
-ALTER TABLE roads_log OWNER to mesonet;
-GRANT ALL on roads_log to ldm;
-GRANT SELECT on roads_log to nobody;
+) PARTITION BY RANGE (valid);
+CREATE INDEX ON roads_log (valid);
+CREATE INDEX ON roads_log (segid);
+ALTER TABLE roads_log OWNER TO mesonet;
+GRANT ALL ON roads_log TO ldm;
+GRANT SELECT ON roads_log TO nobody;
 
-do
+DO
 $do$
 declare
      year int;
@@ -1072,8 +1079,8 @@ $do$;
 
 --
 -- SPC Convective Outlooks
-CREATE TABLE spc_outlook(
-    id SERIAL UNIQUE NOT NULL,
+CREATE TABLE spc_outlook (
+    id serial UNIQUE NOT NULL,
     issue timestamptz NOT NULL,
     product_issue timestamptz NOT NULL,
     expire timestamptz NOT NULL,
@@ -1083,87 +1090,104 @@ CREATE TABLE spc_outlook(
     day smallint NOT NULL,
     cycle smallint NOT NULL
 );
-alter table spc_outlook add constraint issue_abs check
-    (abs(product_issue - issue) < '10 days'::interval);
-alter table spc_outlook add constraint expire_abs check
-    (abs(product_issue - expire) < '10 days'::interval);
+ALTER TABLE spc_outlook ADD CONSTRAINT issue_abs CHECK
+(abs(product_issue - issue) < '10 days'::interval);
+ALTER TABLE spc_outlook ADD CONSTRAINT expire_abs CHECK
+(abs(product_issue - expire) < '10 days'::interval);
 
-CREATE INDEX spc_outlook_product_issue on spc_outlook(product_issue);
-CREATE INDEX spc_outlook_issue on spc_outlook(issue);
-CREATE INDEX spc_outlook_expire on spc_outlook(expire);
-create index spc_outlook_combo_idx
-     on spc_outlook(outlook_type, day, cycle);
-ALTER TABLE spc_outlook OWNER to mesonet;
-GRANT ALL on spc_outlook to ldm;
-GRANT SELECT on spc_outlook to nobody;
-GRANT ALL on spc_outlook_id_seq to mesonet,ldm;
+CREATE INDEX spc_outlook_product_issue ON spc_outlook (product_issue);
+CREATE INDEX spc_outlook_issue ON spc_outlook (issue);
+CREATE INDEX spc_outlook_expire ON spc_outlook (expire);
+CREATE INDEX spc_outlook_combo_idx
+ON spc_outlook (outlook_type, day, cycle);
+ALTER TABLE spc_outlook OWNER TO mesonet;
+GRANT ALL ON spc_outlook TO ldm;
+GRANT SELECT ON spc_outlook TO nobody;
+GRANT ALL ON spc_outlook_id_seq TO mesonet, ldm;
 
 -- Numeric prioritization of SPC Outlook Thresholds
-CREATE TABLE spc_outlook_thresholds(
-  priority smallint UNIQUE,
-  threshold varchar(4) UNIQUE);
-alter table spc_outlook_thresholds owner to mesonet;
-GRANT SELECT on spc_outlook_thresholds to nobody;
-GRANT ALL on spc_outlook_thresholds to ldm,mesonet;
+CREATE TABLE spc_outlook_thresholds (
+    priority smallint UNIQUE,
+    threshold varchar(4) UNIQUE
+);
+ALTER TABLE spc_outlook_thresholds OWNER TO mesonet;
+GRANT SELECT ON spc_outlook_thresholds TO nobody;
+GRANT ALL ON spc_outlook_thresholds TO ldm, mesonet;
 
-INSERT into spc_outlook_thresholds VALUES 
- (2, '0.02'),
- (5, '0.05'),
- (10, '0.10'),
- (15, '0.15'),
- (25, '0.25'),
- (30, '0.30'),
- (35, '0.35'),
- (40, '0.40'),
- (45, '0.45'),
- (60, '0.60'),
- (75, '0.75'),
- (90, '0.90'),
- (101, 'CIG1'),
- (102, 'CIG2'),
- (103, 'CIG3'),
- (104, 'SIGN'),
- (110, 'TSTM'),
- (120, 'MRGL'),
- (130, 'SLGT'),
- (140, 'ENH'),
- (150, 'MDT'),
- (160, 'HIGH'),
- (165, 'ELEV'),
- (170, 'CRIT'),
- (180, 'EXTM'),
- (185, 'IDRT'),
- (190, 'SDRT');
+INSERT INTO spc_outlook_thresholds VALUES
+(2, '0.02'),
+(5, '0.05'),
+(10, '0.10'),
+(15, '0.15'),
+(25, '0.25'),
+(30, '0.30'),
+(35, '0.35'),
+(40, '0.40'),
+(45, '0.45'),
+(60, '0.60'),
+(75, '0.75'),
+(90, '0.90'),
+(101, 'CIG1'),
+(102, 'CIG2'),
+(103, 'CIG3'),
+(104, 'SIGN'),
+(110, 'TSTM'),
+(120, 'MRGL'),
+(130, 'SLGT'),
+(140, 'ENH'),
+(150, 'MDT'),
+(160, 'HIGH'),
+(165, 'ELEV'),
+(170, 'CRIT'),
+(180, 'EXTM'),
+(185, 'IDRT'),
+(190, 'SDRT');
 
-CREATE TABLE spc_outlook_geometries(
-    spc_outlook_id int REFERENCES spc_outlook(id),
-    threshold varchar(4) REFERENCES spc_outlook_thresholds(threshold),
+CREATE TABLE spc_outlook_geometries (
+    spc_outlook_id int REFERENCES spc_outlook (id),
+    threshold varchar(4) REFERENCES spc_outlook_thresholds (threshold),
     category varchar(64),
-    geom geometry(MultiPolygon, 4326) CONSTRAINT _sog_geom_isvalid CHECK (ST_IsValid(geom)),
-    geom_layers geometry(MultiPolygon, 4326) CONSTRAINT _sog_geom_layers_isvalid CHECK (ST_IsValid(geom_layers))
+    geom GEOMETRY (MULTIPOLYGON, 4326) CONSTRAINT _sog_geom_isvalid CHECK (
+        st_isvalid(geom)
+    ),
+    geom_layers GEOMETRY (
+        MULTIPOLYGON, 4326
+    ) CONSTRAINT _sog_geom_layers_isvalid CHECK (st_isvalid(geom_layers))
 );
 CREATE INDEX spc_outlook_geometries_idx
-    on spc_outlook_geometries(spc_outlook_id);
+ON spc_outlook_geometries (spc_outlook_id);
 CREATE INDEX spc_outlook_geometries_gix
-    ON spc_outlook_geometries USING GIST (geom);
+ON spc_outlook_geometries USING gist (geom);
 CREATE INDEX spc_outlook_geometries_layers_gix
-    ON spc_outlook_geometries USING GIST (geom_layers);
-create index spc_outlook_geometries_combo_idx
-    on spc_outlook_geometries(threshold, category);
-ALTER TABLE spc_outlook_geometries OWNER to mesonet;
-GRANT ALL on spc_outlook_geometries to ldm;
-GRANT SELECT on spc_outlook_geometries to nobody;
+ON spc_outlook_geometries USING gist (geom_layers);
+CREATE INDEX spc_outlook_geometries_combo_idx
+ON spc_outlook_geometries (threshold, category);
+ALTER TABLE spc_outlook_geometries OWNER TO mesonet;
+GRANT ALL ON spc_outlook_geometries TO ldm;
+GRANT SELECT ON spc_outlook_geometries TO nobody;
 
 --
 -- SPC Outlooks View joining the two tables together
 CREATE OR REPLACE VIEW spc_outlooks AS
-    select id, issue, product_issue, expire, threshold, category, day,
-    outlook_type, geom, geom_layers, product_id, updated, cycle,
-    date(expire at time zone 'UTC' - '24 hours'::interval) as outlook_date
-    from spc_outlook o LEFT JOIN spc_outlook_geometries g
-    on (o.id = g.spc_outlook_id);
-ALTER VIEW spc_outlooks OWNER to mesonet;
-GRANT SELECT on spc_outlooks to ldm,nobody;
+SELECT
+    o.id,
+    o.issue,
+    o.product_issue,
+    o.expire,
+    g.threshold,
+    g.category,
+    o.day,
+    o.outlook_type,
+    g.geom,
+    g.geom_layers,
+    o.product_id,
+    o.updated,
+    o.cycle,
+    date(o.expire AT TIME ZONE 'UTC' - '24 hours'::interval) AS outlook_date
+FROM spc_outlook AS o LEFT JOIN spc_outlook_geometries AS g
+    ON (o.id = g.spc_outlook_id);
+ALTER VIEW spc_outlooks OWNER TO mesonet;
+GRANT SELECT ON spc_outlooks TO ldm, nobody;
 
 --
 -- Convective Watches
@@ -1174,7 +1198,7 @@ CREATE TABLE watches (
     expired timestamp with time zone,
     type character(3),
     num smallint,
-    geom geometry(MultiPolygon, 4326),
+    geom GEOMETRY (MULTIPOLYGON, 4326),
     tornadoes_2m smallint,
     tornadoes_1m_strong smallint,
     wind_10m smallint,
@@ -1187,15 +1211,15 @@ CREATE TABLE watches (
     max_tops_feet int,
     storm_motion_drct int,
     storm_motion_sknt int,
-    is_pds bool not null default 'f',
+    is_pds bool NOT NULL DEFAULT 'f',
     product_id_wwp varchar(36),
     product_id_saw varchar(36),
     product_id_sel varchar(36)
 );
-ALTER TABLE watches OWNER to mesonet;
-GRANT ALL on watches to ldm;
-grant all on watches_fid_seq to ldm;
-grant select on watches to nobody;
+ALTER TABLE watches OWNER TO mesonet;
+GRANT ALL ON watches TO ldm;
+GRANT ALL ON watches_fid_seq TO ldm;
+GRANT SELECT ON watches TO nobody;
 
 CREATE UNIQUE INDEX watches_idx ON watches USING btree (issued, num);
 
@@ -1206,29 +1230,30 @@ CREATE TABLE watches_current (
     type character(3),
     report text,
     num smallint,
-    geom geometry(MultiPolygon, 4326)
+    geom GEOMETRY (MULTIPOLYGON, 4326)
 );
-GRANT ALL on watches_current to mesonet,ldm;
-grant select on watches_current to nobody;
+GRANT ALL ON watches_current TO mesonet, ldm;
+GRANT SELECT ON watches_current TO nobody;
 
 --
 -- Storage of PIREPs
 --
-CREATE TABLE pireps(
-  valid timestamptz,
-  geom geography(POINT,4326),
-  is_urgent boolean,
-  aircraft_type text,
-  report text,
-  artcc varchar(3),
-  flight_level int,
-  product_id varchar(36))
-  PARTITION by range(valid);
-ALTER TABLE pireps OWNER to mesonet;
-GRANT SELECT on pireps to nobody;
-GRANT ALL on pireps to ldm;
+CREATE TABLE pireps (
+    valid timestamptz,
+    geom GEOGRAPHY (POINT, 4326),
+    is_urgent boolean,
+    aircraft_type text,
+    report text,
+    artcc varchar(3),
+    flight_level int,
+    product_id varchar(36)
+)
+PARTITION BY RANGE (valid);
+ALTER TABLE pireps OWNER TO mesonet;
+GRANT SELECT ON pireps TO nobody;
+GRANT ALL ON pireps TO ldm;
 
-do
+DO
 $do$
 declare
      year int;
@@ -1262,20 +1287,21 @@ end;
 $do$;
 
 --
-CREATE TABLE ffg(
-  ugc char(6),
-  valid timestamptz,
-  hour01 real,
-  hour03 real,
-  hour06 real,
-  hour12 real,
-  hour24 real)
-  PARTITION by range(valid);
-ALTER TABLE ffg OWNER to mesonet;
-GRANT SELECT on ffg to nobody;
-GRANT ALL on ffg to ldm;
+CREATE TABLE ffg (
+    ugc char(6),
+    valid timestamptz,
+    hour01 real,
+    hour03 real,
+    hour06 real,
+    hour12 real,
+    hour24 real
+)
+PARTITION BY RANGE (valid);
+ALTER TABLE ffg OWNER TO mesonet;
+GRANT SELECT ON ffg TO nobody;
+GRANT ALL ON ffg TO ldm;
 
-do
+DO
 $do$
 declare
      year int;
@@ -1309,20 +1335,20 @@ end;
 $do$;
 
 
-
 -- Storage of USDM
-CREATE TABLE usdm(
-  valid date,
-  dm smallint,
-  geom geometry(MultiPolygon, 4326));
-CREATE INDEX usdm_valid_idx on usdm(valid);
-GRANT SELECT on usdm to nobody;
-GRANT ALL on usdm to mesonet,ldm;
+CREATE TABLE usdm (
+    valid date,
+    dm smallint,
+    geom GEOMETRY (MULTIPOLYGON, 4326)
+);
+CREATE INDEX usdm_valid_idx ON usdm (valid);
+GRANT SELECT ON usdm TO nobody;
+GRANT ALL ON usdm TO mesonet, ldm;
 
 -- Storage of MCDs
-CREATE TABLE mcd(
+CREATE TABLE mcd (
     product_id varchar(35),
-    geom geometry(Polygon,4326),
+    geom GEOMETRY (POLYGON, 4326),
     product text,
     year int NOT NULL,
     num int NOT NULL,
@@ -1334,19 +1360,19 @@ CREATE TABLE mcd(
     most_prob_gust text,
     most_prob_hail text
 );
-ALTER TABLE mcd OWNER to mesonet;
-GRANT ALL on mcd to ldm;
-GRANT SELECT on mcd to nobody;
+ALTER TABLE mcd OWNER TO mesonet;
+GRANT ALL ON mcd TO ldm;
+GRANT SELECT ON mcd TO nobody;
 
-CREATE INDEX ON mcd(issue);
-CREATE INDEX ON mcd(num);
-CREATE INDEX mcd_geom_index on mcd USING GIST(geom);
-create unique index mcd_idx on mcd(year, num);
+CREATE INDEX ON mcd (issue);
+CREATE INDEX ON mcd (num);
+CREATE INDEX mcd_geom_index ON mcd USING gist (geom);
+CREATE UNIQUE INDEX mcd_idx ON mcd (year, num);
 
 -- Storage of MPDs
-CREATE TABLE mpd(
+CREATE TABLE mpd (
     product_id varchar(35),
-    geom geometry(Polygon,4326),
+    geom GEOMETRY (POLYGON, 4326),
     product text,
     year int NOT NULL,
     num int NOT NULL,
@@ -1358,10 +1384,10 @@ CREATE TABLE mpd(
     most_prob_gust text,
     most_prob_hail text
 );
-ALTER TABLE mpd OWNER to mesonet;
-GRANT ALL on mpd to ldm;
-GRANT SELECT on mpd to nobody;
+ALTER TABLE mpd OWNER TO mesonet;
+GRANT ALL ON mpd TO ldm;
+GRANT SELECT ON mpd TO nobody;
 
-CREATE INDEX ON mpd(issue);
-CREATE INDEX ON mpd(num);
-CREATE INDEX mpd_geom_index on mpd USING GIST(geom);
+CREATE INDEX ON mpd (issue);
+CREATE INDEX ON mpd (num);
+CREATE INDEX mpd_geom_index ON mpd USING gist (geom);

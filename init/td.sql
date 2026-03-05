@@ -1,28 +1,37 @@
 CREATE EXTENSION postgis;
 
 -- bandaid
-insert into spatial_ref_sys select 9311, 'EPSG', 9311, srtext, proj4text from spatial_ref_sys where srid = 2163;
+INSERT INTO spatial_ref_sys
+SELECT
+    9311 AS srid,
+    'EPSG' AS auth_name,
+    9311 AS auth_srid,
+    srtext,
+    proj4text
+FROM spatial_ref_sys
+WHERE srid = 2163;
 
 -- Storage of Tile Flow
-CREATE TABLE tileflow_data(
-  uniqueid varchar(24),
-  plotid varchar(24),
-  valid timestamptz,
-  discharge_m3 real,
-  discharge_m3_qcflag char(1),
-  discharge_m3_qc real,
-  discharge_mm real,
-  discharge_mm_qcflag char(1),
-  discharge_mm_qc real);
-CREATE INDEX tileflow_data_idx on tileflow_data(uniqueid, plotid, valid);
-GRANT SELECT on tileflow_data to nobody;
+CREATE TABLE tileflow_data (
+    uniqueid varchar(24),
+    plotid varchar(24),
+    valid timestamptz,
+    discharge_m3 real,
+    discharge_m3_qcflag char(1),
+    discharge_m3_qc real,
+    discharge_mm real,
+    discharge_mm_qcflag char(1),
+    discharge_mm_qc real
+);
+CREATE INDEX tileflow_data_idx ON tileflow_data (uniqueid, plotid, valid);
+GRANT SELECT ON tileflow_data TO nobody;
 CREATE TABLE public.water_stage_data (
     siteid text,
     location text,
     date date,
     stage real
 );
-grant select on water_stage_data to nobody;
+GRANT SELECT ON water_stage_data TO nobody;
 ALTER TABLE public.water_stage_data OWNER TO mesonet;
 CREATE TABLE public.water_quality_data (
     siteid text,
@@ -42,14 +51,14 @@ CREATE TABLE public.water_quality_data (
     ph real,
     water_ec real
 );
-grant select on water_quality_data to nobody;
+GRANT SELECT ON water_quality_data TO nobody;
 ALTER TABLE public.water_quality_data OWNER TO mesonet;
 
 CREATE TABLE public.td_data_dictionary (
     sheet_name character varying,
     "primary" character varying,
     scope_td_tab character varying,
-    "#_td_sites_collecting_v._12.2015_*est." character varying,
+    td_sites_collecting_v_122015_est character varying,
     american_units character varying,
     bmp_db character varying,
     code_column_heading character varying,
@@ -61,7 +70,7 @@ CREATE TABLE public.td_data_dictionary (
     data_type character varying,
     frequency character varying,
     icasa_code character varying,
-    "included_in_m&m_export_text" character varying,
+    included_in_mm_export_text character varying,
     methodology_of_cscap_team character varying,
     methodology_of_td_team character varying,
     modified character varying,
@@ -72,8 +81,8 @@ CREATE TABLE public.td_data_dictionary (
     stewards_code character varying,
     stewards_method_name character varying,
     stewards_sample_types character varying,
-    "stewards_units format" character varying,
-    "td_sites_collecting_v._12.2015" character varying,
+    stewards_units_format character varying,
+    td_sites_collecting_v_122015 character varying,
     td_sorting_column character varying,
     td_team__requirement_status character varying,
     team character varying,
@@ -81,7 +90,7 @@ CREATE TABLE public.td_data_dictionary (
     value_range character varying,
     value_range_american_units character varying
 );
-grant select on td_data_dictionary to nobody;
+GRANT SELECT ON td_data_dictionary TO nobody;
 ALTER TABLE public.td_data_dictionary OWNER TO mesonet;
 
 
@@ -101,7 +110,7 @@ CREATE TABLE public.weather_data (
     et real,
     et_method text
 );
-grant select on weather_data to nobody;
+GRANT SELECT ON weather_data TO nobody;
 ALTER TABLE public.weather_data OWNER TO mesonet;
 
 
@@ -119,9 +128,8 @@ CREATE TABLE public.tile_flow_and_n_loads_data (
     nitrate_n_load_filled real,
     comments text
 );
-grant select on tile_flow_and_n_loads_data to nobody;
+GRANT SELECT ON tile_flow_and_n_loads_data TO nobody;
 ALTER TABLE public.tile_flow_and_n_loads_data OWNER TO mesonet;
-
 
 
 CREATE TABLE public.soil_moisture_data (
@@ -134,7 +142,7 @@ CREATE TABLE public.soil_moisture_data (
     soil_temperature real,
     soil_ec real
 );
-grant select on soil_moisture_data to nobody;
+GRANT SELECT ON soil_moisture_data TO nobody;
 ALTER TABLE public.soil_moisture_data OWNER TO mesonet;
 
 
@@ -146,7 +154,7 @@ CREATE TABLE public.water_table_data (
     date date,
     water_table_depth real
 );
-grant select on water_table_data to nobody;
+GRANT SELECT ON water_table_data TO nobody;
 ALTER TABLE public.water_table_data OWNER TO mesonet;
 
 
@@ -197,8 +205,8 @@ CREATE TABLE public.soil_properties_data (
     p_m3_concentration real,
     p_b1_amount real
 );
-alter table soil_properties_data owner to mesonet;
-grant select on soil_properties_data to nobody;
+ALTER TABLE soil_properties_data OWNER TO mesonet;
+GRANT SELECT ON soil_properties_data TO nobody;
 
 CREATE TABLE public.agronomic_data (
     siteid text,
@@ -227,7 +235,7 @@ CREATE TABLE public.agronomic_data (
     grain_total_c real,
     corn_cob_total_c real
 );
-alter table agronomic_data owner to mesonet;
+ALTER TABLE agronomic_data OWNER TO mesonet;
 ALTER TABLE public.agronomic_data OWNER TO mesonet;
 
 CREATE TABLE public.agronomic_data_log (
@@ -242,8 +250,8 @@ CREATE TABLE public.agronomic_data_log (
 
 ALTER TABLE public.agronomic_data_log OWNER TO mesonet;
 CREATE FUNCTION public.agronomic_insert_before_f() RETURNS trigger
-    LANGUAGE plpgsql SECURITY DEFINER
-    AS $$
+LANGUAGE plpgsql SECURITY DEFINER
+AS $$
 DECLARE
     result INTEGER;
 BEGIN
@@ -293,18 +301,18 @@ CREATE TABLE public.meta_treatment_identifier (
     irrigation text,
     comments text
 );
-alter table meta_treatment_identifier owner to mesonet;
+ALTER TABLE meta_treatment_identifier OWNER TO mesonet;
 ALTER TABLE public.meta_treatment_identifier OWNER TO mesonet;
 
 
 -- Storage of water table data
-CREATE TABLE watertable_data(
-  uniqueid varchar(24),
-  plotid varchar(24),
-  valid timestamptz,
-  depth_mm real,
-  depth_mm_qcflag char(1),
-  depth_mm_qc real);
-CREATE INDEX watertable_data_idx on watertable_data(uniqueid, plotid, valid);
-GRANT SELECT on watertable_data to nobody;
-
+CREATE TABLE watertable_data (
+    uniqueid varchar(24),
+    plotid varchar(24),
+    valid timestamptz,
+    depth_mm real,
+    depth_mm_qcflag char(1),
+    depth_mm_qc real
+);
+CREATE INDEX watertable_data_idx ON watertable_data (uniqueid, plotid, valid);
+GRANT SELECT ON watertable_data TO nobody;

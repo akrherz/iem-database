@@ -240,7 +240,9 @@ $do$;
 CREATE TABLE taf (
     id serial UNIQUE,
     station char(4),
-    valid timestamptz, -- noqa
+    valid timestamptz,
+    issue timestamptz,
+    expire timestamptz,
     product_id varchar(35),
     is_amendment boolean
 );

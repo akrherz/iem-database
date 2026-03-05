@@ -1,15 +1,15 @@
-
 -- Boilerplate IEM schema_manager_version, the version gets incremented each
 -- time we make an upgrade script
-CREATE TABLE iem_schema_manager_version(
+CREATE TABLE iem_schema_manager_version (
     version int,
-    updated timestamptz);
-INSERT into iem_schema_manager_version values (0, now());
+    updated timestamptz
+);
+INSERT INTO iem_schema_manager_version VALUES (0, now());
 
 ---
 --- Main table that all children inherit from
 ---
-CREATE TABLE alldata(
+CREATE TABLE alldata (
     station varchar(5),
     valid timestamptz,
     tmpf smallint,
@@ -27,12 +27,12 @@ CREATE TABLE alldata(
     vsby real,
     alti real,
     qc varchar(5)
-) PARTITION by range(valid);
-ALTER TABLE alldata OWNER to mesonet;
-GRANT ALL on alldata to ldm;
-GRANT SELECT on alldata to nobody;
+) PARTITION BY RANGE (valid);
+ALTER TABLE alldata OWNER TO mesonet;
+GRANT ALL ON alldata TO ldm;
+GRANT SELECT ON alldata TO nobody;
 
-do
+DO
 $do$
 declare
      year int;
