@@ -4,7 +4,7 @@ create table iem_schema_manager_version (
     version int,  -- noqa
     updated timestamptz
 );
-insert into iem_schema_manager_version values (1, now());
+insert into iem_schema_manager_version values (2, now());
 
 -- A global account identifier for IEMBot, referenced by the various tables
 -- and subscriptions
@@ -114,7 +114,9 @@ create table iembot_slack_teams (
     team_name text,
     access_token text not null,
     bot_user_id text,
-    installed_at timestamptz default now()
+    installed_at timestamptz default now(),
+    iem_owned bool default 'f',
+    disabled bool default 'f'
 );
 alter table iembot_slack_teams owner to mesonet;
 grant all on iembot_slack_teams_id_seq to nobody;
