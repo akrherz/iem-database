@@ -12,5 +12,7 @@ repos:
     hooks:
       - id: sqlfluff-lint
         args: [--config=.sqlfluff]
+        exclude: ^data/|^upgrade/
       - id: sqlfluff-fix
         args: [--config=.sqlfluff]
+        exclude: ^data/|^upgrade/
