@@ -119,6 +119,7 @@ postgis__000spc_outlook.sql | SPC/WPC Outlook 1-8 Aug 2024
 postgis__airmets.sql | Some AIRMETs from 10 Aug 2024
 postgis__cwas.sql | Some Center Weather Advisories from 10 Aug 2024
 postgis__fema_regions.sql.gz | Simplified FEMA Regions
+postgis__mpd.sql | WPC MPDs from March 2026
 postgis__sigmets_archive.sql | Some SIGMETs from 10 Aug 2024
 postgis__spc_outlook_geometries.sql.gz | SPC/WPC Outlooks 1-8 Aug 2024
 postgis__sps2024.sql.gz | SPSs from Aug 2024
