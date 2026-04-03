@@ -17,7 +17,7 @@ CREATE TABLE iem_schema_manager_version (
     version int,
     updated timestamptz
 );
-INSERT INTO iem_schema_manager_version VALUES (75, now());
+INSERT INTO iem_schema_manager_version VALUES (76, now());
 
 ---
 --- TABLES THAT ARE LOADED VIA shp2pgsql
@@ -773,7 +773,8 @@ CREATE TABLE sbw (
     squalltag text,
     product_id varchar(36),
     vtec_year smallint NOT NULL,
-    product_signature text
+    product_signature text,
+    shared_border_pct real
 ) PARTITION BY LIST (vtec_year);
 ALTER TABLE sbw OWNER TO mesonet;
 GRANT ALL ON sbw TO ldm;
