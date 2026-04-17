@@ -17,7 +17,7 @@ CREATE TABLE iem_schema_manager_version (
     version int,  -- noqa
     updated timestamptz
 );
-INSERT INTO iem_schema_manager_version VALUES (35, now());
+INSERT INTO iem_schema_manager_version VALUES (36, now());
 
 -- Storage of WPC national high low
 CREATE TABLE wpc_national_high_low (
@@ -301,7 +301,8 @@ CREATE TABLE current_shef (
     dv_interval interval,
     qualifier char(1),
     unit_convention char(1),
-    product_id varchar(35)
+    product_id varchar(35),
+    comment text
 );
 CREATE UNIQUE INDEX ON current_shef (
     station, physical_code, duration, source, type, extremum,
