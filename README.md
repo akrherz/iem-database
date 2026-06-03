@@ -114,14 +114,14 @@ postgis__00ugcs.sql.gz | NWS UGC database as of 30 Jul 2025, with hard coded 198
 postgis_00ugcs.sql | A faked UGC entry to match warnings below
 postgis_mcd.sql.gz | MCDs for much of July 2024
 postgis_pireps.sql | A few PIREPs on 31 July 2024
-postgis__000spc_outlook.sql | SPC/WPC Outlook 1-8 Aug 2024
+postgis__000spc_outlook.sql | SPC/WPC Outlook 1-8 Aug 2024 and May 2024
 postgis__airmets.sql | Some AIRMETs from 10 Aug 2024
 postgis__cwa.sql.gz | NWS CWA Borders Simplified circa 2026
 postgis__cwas.sql | Some Center Weather Advisories from 10 Aug 2024
 postgis__fema_regions.sql.gz | Simplified FEMA Regions
 postgis__mpd.sql | WPC MPDs from March 2026
 postgis__sigmets_archive.sql | Some SIGMETs from 10 Aug 2024
-postgis__spc_outlook_geometries.sql.gz | SPC/WPC Outlooks 1-8 Aug 2024
+postgis__spc_outlook_geometries.sql.gz | SPC/WPC Outlooks 1-8 Aug 2024 and May 2024
 postgis__sps2024.sql.gz | SPSs from Aug 2024
 postgis_lsrs.sql | DMX LSRs from 2018-06-20,2018-06-21,2024-05-21, One BGM LSR from 2023
 postgis_sbw.sql | DMX,OAX 21 May 2024 polygons, some 2018 stuff, DMX 2024 FF.W
