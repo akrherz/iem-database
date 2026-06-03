@@ -8,7 +8,6 @@ This repo serves three purposes.
 
 [![pre-commit.ci status](https://results.pre-commit.ci/badge/github/akrherz/iem-database/main.svg)](https://results.pre-commit.ci/latest/github/akrherz/iem-database/main)
 
-
 ## Docker Images
 
 See [GHCR](https://github.com/akrherz/iem-database/pkgs/container/iem_database)
@@ -117,15 +116,15 @@ postgis_mcd.sql.gz | MCDs for much of July 2024
 postgis_pireps.sql | A few PIREPs on 31 July 2024
 postgis__000spc_outlook.sql | SPC/WPC Outlook 1-8 Aug 2024
 postgis__airmets.sql | Some AIRMETs from 10 Aug 2024
-postgis__cwas.sql | Some Center Weather Advisories from 10 Aug 2024
 postgis__cwa.sql.gz | NWS CWA Borders Simplified circa 2026
+postgis__cwas.sql | Some Center Weather Advisories from 10 Aug 2024
 postgis__fema_regions.sql.gz | Simplified FEMA Regions
 postgis__mpd.sql | WPC MPDs from March 2026
 postgis__sigmets_archive.sql | Some SIGMETs from 10 Aug 2024
 postgis__spc_outlook_geometries.sql.gz | SPC/WPC Outlooks 1-8 Aug 2024
 postgis__sps2024.sql.gz | SPSs from Aug 2024
 postgis_lsrs.sql | DMX LSRs from 2018-06-20,2018-06-21,2024-05-21, One BGM LSR from 2023
-postgis_sbw.sql | DMX,OAX 21 May 2024 polygons, some 2018 stuff
+postgis_sbw.sql | DMX,OAX 21 May 2024 polygons, some 2018 stuff, DMX 2024 FF.W
 postgis_states.sql | Simplified 0.01 us states
 postgis__text_products_oct24.sql.gz | NWS misc polygons for Oct 2024
 postgis__usdm.sql.gz | US Drought Monitor for 2024 till 8 Aug
