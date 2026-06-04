@@ -17,7 +17,7 @@ CREATE TABLE iem_schema_manager_version (
     version int,
     updated timestamptz
 );
-INSERT INTO iem_schema_manager_version VALUES (30, now());
+INSERT INTO iem_schema_manager_version VALUES (31, now());
 
 --- ==== TABLES TO investigate deleting
 --- counties
@@ -196,10 +196,15 @@ GRANT ALL ON racoon_jobs TO nobody;
 ---
 CREATE TABLE iemapps (
     appid serial UNIQUE,
-    name varchar(256) UNIQUE NOT NULL,
+    name text UNIQUE NOT NULL,
     description text,
-    url varchar(256) NOT NULL
+    url text NOT NULL,
+    category text NOT NULL DEFAULT '',
+    subcategory text NOT NULL DEFAULT '',
+    tags text [] NOT NULL DEFAULT '{}',
+    importance int NOT NULL DEFAULT 0
 );
+ALTER TABLE iemapps OWNER TO mesonet;
 GRANT ALL ON iemapps TO nobody;
 
 CREATE TABLE iemapps_tags (
