@@ -17,7 +17,7 @@ CREATE TABLE iem_schema_manager_version (
     version int,
     updated timestamptz
 );
-INSERT INTO iem_schema_manager_version VALUES (22, now());
+INSERT INTO iem_schema_manager_version VALUES (23, now());
 
 CREATE TABLE ncei_climdiv (
     station char(6),
@@ -112,8 +112,12 @@ CREATE TABLE alldata (
     era5land_srad real,
     hrrr_srad real,
     era5land_soilt4_avg real,
+    era5land_soilt4_min real,
+    era5land_soilt4_max real,
     era5land_soilm4_avg real,
     nldas_soilt4_avg real,
+    nldas_soilt4_min real,
+    nldas_soilt4_max real,
     nldas_soilm4_avg real,
     era5land_soilm1m_avg real,
     nldas_soilm1m_avg real,
