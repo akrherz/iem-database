@@ -447,6 +447,7 @@ CREATE TABLE ncdc_climate71 (
     min_range smallint,
     hdd65 real,
     cdd65 real,
+    srad real,
     sgdd32 real,
     sgdd50 real,
     sgdd52 real

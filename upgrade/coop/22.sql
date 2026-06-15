@@ -26,3 +26,6 @@ ALTER TABLE ncdc_climate71 ADD sgdd52 real;
 ALTER TABLE ncei_climate91 ADD sgdd32 real;
 ALTER TABLE ncei_climate91 ADD sgdd50 real;
 ALTER TABLE ncei_climate91 ADD sgdd52 real;
+
+-- Missed during a previous migration
+ALTER TABLE ncdc_climate71 ADD srad real;
