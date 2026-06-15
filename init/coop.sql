@@ -17,7 +17,7 @@ CREATE TABLE iem_schema_manager_version (
     version int,
     updated timestamptz
 );
-INSERT INTO iem_schema_manager_version VALUES (21, now());
+INSERT INTO iem_schema_manager_version VALUES (22, now());
 
 CREATE TABLE ncei_climdiv (
     station char(6),
@@ -328,7 +328,10 @@ CREATE TABLE climate (
     min_range smallint,
     hdd65 real,
     cdd65 real,
-    srad real
+    srad real,
+    sgdd32 real,
+    sgdd50 real,
+    sgdd52 real
 );
 ALTER TABLE climate OWNER TO mesonet;
 CREATE UNIQUE INDEX climate_idx ON climate (station, valid);
@@ -364,7 +367,10 @@ CREATE TABLE climate51 (
     min_range smallint,
     hdd65 real,
     cdd65 real,
-    srad real
+    srad real,
+    sgdd32 real,
+    sgdd50 real,
+    sgdd52 real
 );
 ALTER TABLE climate51 OWNER TO mesonet;
 CREATE UNIQUE INDEX climate51_idx ON climate51 (station, valid);
@@ -402,7 +408,10 @@ CREATE TABLE climate71 (
     min_range smallint,
     hdd65 real,
     cdd65 real,
-    srad real
+    srad real,
+    sgdd32 real,
+    sgdd50 real,
+    sgdd52 real
 );
 ALTER TABLE climate71 OWNER TO mesonet;
 CREATE UNIQUE INDEX climate71_idx ON climate71 (station, valid);
@@ -437,7 +446,10 @@ CREATE TABLE ncdc_climate71 (
     max_range smallint,
     min_range smallint,
     hdd65 real,
-    cdd65 real
+    cdd65 real,
+    sgdd32 real,
+    sgdd50 real,
+    sgdd52 real
 );
 ALTER TABLE ncdc_climate71 OWNER TO mesonet;
 CREATE UNIQUE INDEX ncdc_climate71_idx ON ncdc_climate71 (station, valid);
@@ -473,7 +485,10 @@ CREATE TABLE ncdc_climate81 (
     min_range smallint,
     hdd65 real,
     cdd65 real,
-    srad real
+    srad real,
+    sgdd32 real,
+    sgdd50 real,
+    sgdd52 real
 );
 ALTER TABLE ncdc_climate81 OWNER TO mesonet;
 CREATE UNIQUE INDEX ncdc_climate81_idx ON ncdc_climate81 (station, valid);
@@ -509,7 +524,10 @@ CREATE TABLE ncei_climate91 (
     min_range smallint,
     hdd65 real,
     cdd65 real,
-    srad real
+    srad real,
+    sgdd32 real,
+    sgdd50 real,
+    sgdd52 real
 );
 ALTER TABLE ncei_climate91 OWNER TO mesonet;
 CREATE UNIQUE INDEX ncei_climate91_idx ON ncei_climate91 (station, valid);
@@ -545,7 +563,10 @@ CREATE TABLE climate81 (
     min_range smallint,
     hdd65 real,
     cdd65 real,
-    srad real
+    srad real,
+    sgdd32 real,
+    sgdd50 real,
+    sgdd52 real
 );
 ALTER TABLE climate81 OWNER TO mesonet;
 CREATE UNIQUE INDEX climate81_idx ON climate81 (station, valid);
