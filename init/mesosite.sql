@@ -206,6 +206,7 @@ CREATE TABLE iemapps (
 );
 ALTER TABLE iemapps OWNER TO mesonet;
 GRANT ALL ON iemapps TO nobody;
+GRANT ALL ON iemapps_appid_seq TO nobody;
 
 CREATE TABLE iemapps_tags (
     appid int REFERENCES iemapps (appid),
