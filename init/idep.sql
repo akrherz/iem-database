@@ -335,7 +335,6 @@ CREATE TABLE flowpath_ofes (
     geom GEOMETRY (LINESTRINGZ, 5070),
     bulk_slope real,
     max_slope real,
-    fbndid int,
     management varchar(32),
     landuse varchar(32),
     gssurgo_id int REFERENCES gssurgo (id),
