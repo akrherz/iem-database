@@ -1,5 +1,5 @@
--- NOTE: The provenance of the schema was not clean, thus the upgrade scripts
--- are generally all now empty.
+-- NOTE: On 22 Jun 2026, the legacy `idep` database was forklifted to this
+-- schema.
 CREATE EXTENSION postgis;
 
 -- bandaid
@@ -20,7 +20,7 @@ CREATE TABLE iem_schema_manager_version (
     updated timestamptz
 );
 ALTER TABLE iem_schema_manager_version OWNER TO mesonet;
-INSERT INTO iem_schema_manager_version VALUES (36, now());
+INSERT INTO iem_schema_manager_version VALUES (0, now());
 
 -- Storage of DEP versioning dailyerosion/dep#179
 CREATE TABLE dep_version (
@@ -107,7 +107,8 @@ INSERT INTO scenarios VALUES (0, 'Production', 0, 0, 0);
 INSERT INTO scenarios VALUES (-1, 'Testing', 0, 0, 0);
 
 CREATE TABLE huc12 (
-    huc_12 varchar(12),
+    huc12_id int GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    huc_12 char(12) NOT NULL,
     name text,
     states text,
     geom GEOMETRY (MULTIPOLYGON, 5070),
@@ -126,7 +127,7 @@ GRANT SELECT ON huc12 TO nobody;
 --- Storage of raw results, temp table, more-or-less
 ---
 CREATE TABLE results (
-    huc_12 varchar(12),
+    huc12_id int REFERENCES huc12 (huc12_id),
     scenario int REFERENCES scenarios (id),
     hs_id int,
     valid date,
@@ -137,25 +138,25 @@ CREATE TABLE results (
 );
 ALTER TABLE results OWNER TO mesonet;
 CREATE INDEX results_valid_idx ON results (valid);
-CREATE INDEX results_huc_12_idx ON results (huc_12);
+CREATE INDEX results_huc12_id_idx ON results (huc12_id);
 
 -- Wind Erosion
 CREATE TABLE wind_results_by_huc12 (
-    huc_12 char(12),
+    huc12_id int REFERENCES huc12 (huc12_id),
     scenario int REFERENCES scenarios (id),
     valid date,
     avg_loss real
 );
 ALTER TABLE wind_results_by_huc12 OWNER TO mesonet;
 GRANT SELECT ON wind_results_by_huc12 TO nobody;
-CREATE INDEX wind_results_by_huc12_huc_12_idx ON wind_results_by_huc12 (huc_12);
+CREATE INDEX wind_results_by_huc12_huc12_id_idx ON wind_results_by_huc12 (huc12_id);
 CREATE INDEX wind_results_by_huc12_valid_idx ON wind_results_by_huc12 (valid);
 
 ---
 --- Storage of huc12 level results
 ---
 CREATE TABLE results_by_huc12 (
-    huc_12 varchar(12),
+    huc12_id int REFERENCES huc12 (huc12_id),
     scenario int REFERENCES scenarios (id),
     valid date,
     min_precip real,
@@ -175,7 +176,7 @@ CREATE TABLE results_by_huc12 (
     qc_precip real
 ) PARTITION BY RANGE (scenario);
 ALTER TABLE results_by_huc12 OWNER TO mesonet;
-CREATE INDEX results_by_huc12_huc_12_idx ON results_by_huc12 (huc_12);
+CREATE INDEX results_by_huc12_huc12_id_idx ON results_by_huc12 (huc12_id);
 CREATE INDEX results_by_huc12_valid_idx ON results_by_huc12 (valid);
 GRANT SELECT ON results_by_huc12 TO nobody;
 
@@ -213,7 +214,7 @@ ALTER TABLE results_by_huc12_1000_2000 OWNER TO mesonet;
 CREATE TABLE flowpaths (
     fid serial UNIQUE,
     scenario int REFERENCES scenarios (id),
-    huc_12 char(12),
+    huc12_id int REFERENCES huc12 (huc12_id),
     fpath int,
     climate_file_id int REFERENCES climate_files (id),
     geom GEOMETRY (LINESTRING, 5070),
@@ -224,7 +225,7 @@ CREATE TABLE flowpaths (
     real_length real
 );
 ALTER TABLE flowpaths OWNER TO mesonet;
-CREATE INDEX flowpaths_huc12_fpath_idx ON flowpaths (huc_12, fpath);
+CREATE INDEX flowpaths_huc12_fpath_idx ON flowpaths (huc12_id, fpath);
 GRANT SELECT ON flowpaths TO nobody;
 CREATE INDEX flowpaths_idx ON flowpaths USING gist (geom);
 
@@ -250,14 +251,14 @@ GRANT SELECT ON properties TO nobody;
 -- Storage of harvest information
 CREATE TABLE harvest (
     valid date,
-    huc12 char(12),
+    huc12_id int REFERENCES huc12 (huc12_id),
     fpath smallint,
     ofe smallint,
     scenario smallint REFERENCES scenarios (id),
     crop varchar(32),
     yield_kgm2 real
 );
-CREATE INDEX harvest_huc12_idx ON harvest (huc12);
+CREATE INDEX ON harvest (huc12_id);
 CREATE INDEX harvest_valid_idx ON harvest (valid);
 ALTER TABLE harvest OWNER TO mesonet;
 GRANT SELECT ON harvest TO nobody;
@@ -267,7 +268,7 @@ GRANT SELECT ON harvest TO nobody;
 CREATE TABLE fields (
     field_id serial UNIQUE,
     scenario smallint REFERENCES scenarios (id),
-    huc12 char(12),
+    huc12_id int REFERENCES huc12 (huc12_id),
     fbndid int,
     acres real,
     geom GEOMETRY (MULTIPOLYGON, 5070),
@@ -285,7 +286,7 @@ CREATE TABLE fields (
 );
 ALTER TABLE fields OWNER TO mesonet;
 GRANT SELECT ON fields TO nobody;
-CREATE INDEX fields_huc12_idx ON fields (huc12);
+CREATE INDEX ON fields (huc12_id);
 CREATE INDEX fields_geom_idx ON fields USING gist (geom);
 
 -- Storage of wind results by field

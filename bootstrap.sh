@@ -1,3 +1,4 @@
+#!/bin/bash
 # setup databases
 # we want this script to exit 2 so that CI will report any failures
 
@@ -10,7 +11,7 @@ done
 for db in afos mesosite postgis snet talltowers iembot \
 asos asos1min hads hml mos rwis squaw \
 awos iem other scan wepp raob id3b iemre_china iemre_europe iemre_sa \
-coop isuag portfolio smos iemre radar nldn sustainablecorn td idep uscrn \
+coop isuag portfolio smos iemre radar nldn sustainablecorn td dep uscrn \
 dep_china dep_europe dep_sa
 do
 /usr/bin/psql -v "ON_ERROR_STOP=1" -c "create database $db;" -h localhost -U postgres || exit 2
