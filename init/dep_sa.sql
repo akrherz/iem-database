@@ -24,7 +24,7 @@ ALTER TABLE dep_version OWNER TO mesonet;
 GRANT SELECT ON dep_version TO nobody;
 
 
-CREATE TABLE scenarios (
+CREATE TABLE scenario (
     scenario_id int UNIQUE,
     label varchar,
     climate_scenario int,
@@ -32,18 +32,19 @@ CREATE TABLE scenarios (
     flowpath_scenario int,
     dep_version_label text
 );
-GRANT SELECT ON scenarios TO nobody;
-ALTER TABLE scenarios OWNER TO mesonet;
+GRANT SELECT ON scenario TO nobody;
+ALTER TABLE scenario OWNER TO mesonet;
 
 -- Storage of DEP Climate Files
 CREATE TABLE climate_file (
-    climate_file_id serial PRIMARY KEY,
-    scenario_id int REFERENCES scenarios (scenario_id),
-    filepath text,
+    climate_file_id int GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    scenario_id int REFERENCES scenario (scenario_id) NOT NULL,
+    filepath text NOT NULL,
     geom GEOMETRY (POINT, 4326)
 );
 ALTER TABLE climate_file OWNER TO mesonet;
 GRANT SELECT ON climate_file TO nobody;
+CREATE UNIQUE INDEX ON climate_file (scenario_id, filepath);
 
 -- storage of yearly summaries
 CREATE TABLE climate_file_yearly_summary (
@@ -68,5 +69,5 @@ ALTER TABLE clifile_requests OWNER TO mesonet;
 GRANT INSERT ON clifile_requests TO nobody;
 
 -- Default entry that is used for testing.
-INSERT INTO scenarios VALUES (0, 'Production', 0, 0, 0);
-INSERT INTO scenarios VALUES (-1, 'Testing', 0, 0, 0);
+INSERT INTO scenario VALUES (0, 'Production', 0, 0, 0);
+INSERT INTO scenario VALUES (-1, 'Testing', 0, 0, 0);
