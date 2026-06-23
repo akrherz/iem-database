@@ -24,7 +24,7 @@ INSERT INTO iem_schema_manager_version VALUES (0, now());
 
 -- Storage of DEP versioning dailyerosion/dep#179
 CREATE TABLE dep_version (
-    label text UNIQUE NOT NULL,
+    label text PRIMARY KEY,
     wepp text NOT NULL,
     acpf text NOT NULL,
     flowpath text NOT NULL,
@@ -34,58 +34,65 @@ CREATE TABLE dep_version (
 );
 ALTER TABLE dep_version OWNER TO mesonet;
 GRANT SELECT ON dep_version TO nobody;
-CREATE UNIQUE INDEX dep_version_idx
-ON dep_version (label, wepp, acpf, flowpath, gssurgo, software);
 
-CREATE TABLE scenarios (
-    id int UNIQUE,
+-- Just some placeholder stuff
+INSERT INTO dep_version VALUES
+('20260612', '20260612', '20260612', '20260612', '20260612', '20260612', '20260612');
+
+-- The scenario id is fully controlled
+CREATE TABLE scenario (
+    scenario_id int PRIMARY KEY,
     label varchar,
     climate_scenario int,
     huc12_scenario int,
     flowpath_scenario int,
-    dep_version_label text
+    dep_version_label text REFERENCES dep_version (label)
 );
-GRANT SELECT ON scenarios TO nobody;
-ALTER TABLE scenarios OWNER TO mesonet;
+GRANT SELECT ON scenario TO nobody;
+ALTER TABLE scenario OWNER TO mesonet;
+
+-- Default entry that is used for testing.
+INSERT INTO scenario VALUES (0, 'Production', 0, 0, 0, '20260612');
+INSERT INTO scenario VALUES (-1, 'Testing', 0, 0, 0, '20260612');
+
 
 -- Storage of DEP Climate Files
-CREATE TABLE climate_files (
-    id serial PRIMARY KEY,
-    scenario int REFERENCES scenarios (id),
+CREATE TABLE climate_file (
+    climate_file_id int GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    scenario_id int REFERENCES scenario (scenario_id),
     filepath text,
     geom GEOMETRY (POINT, 4326)
 );
-ALTER TABLE climate_files OWNER TO mesonet;
-GRANT SELECT ON climate_files TO nobody;
+ALTER TABLE climate_file OWNER TO mesonet;
+GRANT SELECT ON climate_file TO nobody;
 
 -- storage of yearly summaries
 CREATE TABLE climate_file_yearly_summary (
-    climate_file_id int REFERENCES climate_files (id),
+    climate_file_id int REFERENCES climate_file (climate_file_id),
     year int,
     rfactor real,
     rfactor_storms int
 );
-CREATE INDEX climate_file_yearly_summary_climate_file_id_idx
-ON climate_file_yearly_summary (climate_file_id);
+CREATE UNIQUE INDEX ON climate_file_yearly_summary (climate_file_id, year);
 ALTER TABLE climate_file_yearly_summary OWNER TO mesonet;
 GRANT SELECT ON climate_file_yearly_summary TO nobody;
 
--- Log clifile requests
-CREATE TABLE clifile_requests (
+-- Log climate file requests
+CREATE TABLE climate_file_requests (
     valid timestamptz DEFAULT now(),
-    climate_file_id int REFERENCES climate_files (id),
-    client_addr text,
+    climate_file_id int REFERENCES climate_file (climate_file_id),
+    client_addr inet,
     geom GEOMETRY (POINT, 4326),
     distance_degrees float
 );
-ALTER TABLE clifile_requests OWNER TO mesonet;
-GRANT INSERT ON clifile_requests TO nobody;
+ALTER TABLE climate_file_requests OWNER TO mesonet;
+GRANT INSERT ON climate_file_requests TO nobody;
 
 -- GSSURGO Metadata
 CREATE TABLE gssurgo (
-    id serial UNIQUE NOT NULL,
-    fiscal_year int,
-    mukey int,
+    gssurgo_id int GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    fiscal_year int NOT NULL,
+    mukey int NOT NULL,
     label text,
     kwfact real,
     hydrogroup varchar(8),
@@ -98,145 +105,112 @@ CREATE TABLE gssurgo (
 );
 ALTER TABLE gssurgo OWNER TO mesonet;
 GRANT SELECT ON gssurgo TO nobody;
-CREATE INDEX gssurgo_idx ON gssurgo (id);
 CREATE UNIQUE INDEX gssurgo_mukey_idx ON gssurgo (fiscal_year, mukey);
-
-
--- Default entry that is used for testing.
-INSERT INTO scenarios VALUES (0, 'Production', 0, 0, 0);
-INSERT INTO scenarios VALUES (-1, 'Testing', 0, 0, 0);
 
 CREATE TABLE huc12 (
     huc12_id int GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    huc_12 char(12) NOT NULL,
+    huc12_code char(12) NOT NULL,
     name text,
     states text,
     geom GEOMETRY (MULTIPOLYGON, 5070),
     simple_geom GEOMETRY (POLYGON, 5070),
-    scenario int REFERENCES scenarios (id),
+    scenario_id int REFERENCES scenario (scenario_id),
     ugc char(6),
     mlra_id smallint,
     dominant_tillage smallint,
-    average_slope_ratio real
+    avg_slope_ratio real
 );
 ALTER TABLE huc12 OWNER TO mesonet;
-CREATE UNIQUE INDEX huc12_idx ON huc12 (huc_12, scenario);
+CREATE UNIQUE INDEX huc12_idx ON huc12 (huc12_code, scenario_id);
 GRANT SELECT ON huc12 TO nobody;
-
----
---- Storage of raw results, temp table, more-or-less
----
-CREATE TABLE results (
-    huc12_id int REFERENCES huc12 (huc12_id),
-    scenario int REFERENCES scenarios (id),
-    hs_id int,
-    valid date,
-    runoff real,
-    loss real,
-    precip real,
-    delivery real
-);
-ALTER TABLE results OWNER TO mesonet;
-CREATE INDEX results_valid_idx ON results (valid);
-CREATE INDEX results_huc12_id_idx ON results (huc12_id);
 
 -- Wind Erosion
 CREATE TABLE wind_results_by_huc12 (
-    huc12_id int REFERENCES huc12 (huc12_id),
-    scenario int REFERENCES scenarios (id),
-    valid date,
+    huc12_id int REFERENCES huc12 (huc12_id) NOT NULL,
+    scenario_id int REFERENCES scenario (scenario_id) NOT NULL,
+    valid date NOT NULL,
     avg_loss real
 );
 ALTER TABLE wind_results_by_huc12 OWNER TO mesonet;
 GRANT SELECT ON wind_results_by_huc12 TO nobody;
-CREATE INDEX wind_results_by_huc12_huc12_id_idx ON wind_results_by_huc12 (huc12_id);
-CREATE INDEX wind_results_by_huc12_valid_idx ON wind_results_by_huc12 (valid);
+CREATE INDEX ON wind_results_by_huc12 (huc12_id);
+CREATE INDEX ON wind_results_by_huc12 (valid);
 
 ---
 --- Storage of huc12 level results
 ---
-CREATE TABLE results_by_huc12 (
-    huc12_id int REFERENCES huc12 (huc12_id),
-    scenario int REFERENCES scenarios (id),
-    valid date,
-    min_precip real,
-    avg_precip real,
-    max_precip real,
-    min_loss real,
-    avg_loss real,
-    max_loss real,
-    ve_loss real,
-    min_runoff real,
-    avg_runoff real,
-    max_runoff real,
-    ve_runoff real,
-    min_delivery real,
-    avg_delivery real,
-    max_delivery real,
-    qc_precip real
-) PARTITION BY RANGE (scenario);
-ALTER TABLE results_by_huc12 OWNER TO mesonet;
-CREATE INDEX results_by_huc12_huc12_id_idx ON results_by_huc12 (huc12_id);
-CREATE INDEX results_by_huc12_valid_idx ON results_by_huc12 (valid);
-GRANT SELECT ON results_by_huc12 TO nobody;
+CREATE TABLE water_results_by_huc12 (
+    huc12_id int REFERENCES huc12 (huc12_id) NOT NULL,
+    scenario_id int REFERENCES scenario (scenario_id) NOT NULL,
+    valid date NOT NULL,
+    min_precip_mm real,
+    avg_precip_mm real,
+    max_precip_mm real,
+    min_loss_kgm2 real,
+    avg_loss_kgm2 real,
+    max_loss_kgm2 real,
+    min_runoff_mm real,
+    avg_runoff_mm real,
+    max_runoff_mm real,
+    min_delivery_mm real,
+    avg_delivery_mm real,
+    max_delivery_mm real,
+    qc_precip_mm real
+) PARTITION BY RANGE (scenario_id);
+ALTER TABLE water_results_by_huc12 OWNER TO mesonet;
+CREATE INDEX ON water_results_by_huc12 (huc12_id);
+CREATE INDEX ON water_results_by_huc12 (valid);
+GRANT SELECT ON water_results_by_huc12 TO nobody;
 
-CREATE TABLE results_by_huc12_neg PARTITION OF results_by_huc12 FOR VALUES FROM (
+CREATE TABLE water_results_by_huc12_neg PARTITION OF water_results_by_huc12 FOR VALUES FROM (
     -1000
 ) TO (0);
-GRANT SELECT ON results_by_huc12_neg TO nobody;
-ALTER TABLE results_by_huc12_neg OWNER TO mesonet;
+GRANT SELECT ON water_results_by_huc12_neg TO nobody;
+ALTER TABLE water_results_by_huc12_neg OWNER TO mesonet;
 
 
-CREATE TABLE results_by_huc12_0 PARTITION OF results_by_huc12 FOR VALUES FROM (
+CREATE TABLE water_results_by_huc12_0 PARTITION OF water_results_by_huc12 FOR VALUES FROM (
     0
 ) TO (1);
-GRANT SELECT ON results_by_huc12_0 TO nobody;
-ALTER TABLE results_by_huc12_0 OWNER TO mesonet;
+GRANT SELECT ON water_results_by_huc12_0 TO nobody;
+ALTER TABLE water_results_by_huc12_0 OWNER TO mesonet;
 
-CREATE TABLE results_by_huc12_1_1000 PARTITION OF results_by_huc12 FOR VALUES FROM (
+CREATE TABLE water_results_by_huc12_1_1000 PARTITION OF water_results_by_huc12 FOR VALUES FROM (
     1
 ) TO (1000);
-CREATE INDEX results_by_huc12_1_1000_scenario_idx ON results_by_huc12_1_1000 (
-    scenario
-);
-GRANT SELECT ON results_by_huc12_1_1000 TO nobody;
-ALTER TABLE results_by_huc12_1_1000 OWNER TO mesonet;
+CREATE INDEX ON water_results_by_huc12_1_1000 (scenario_id);
+GRANT SELECT ON water_results_by_huc12_1_1000 TO nobody;
+ALTER TABLE water_results_by_huc12_1_1000 OWNER TO mesonet;
 
-CREATE TABLE results_by_huc12_1000_2000 PARTITION OF results_by_huc12 FOR VALUES FROM (
+CREATE TABLE water_results_by_huc12_1000_2000 PARTITION OF water_results_by_huc12 FOR VALUES FROM (
     1000
 ) TO (2000);
-CREATE INDEX results_by_huc12_1000_2000_scenario_idx ON results_by_huc12_1000_2000 (
-    scenario
-);
-GRANT SELECT ON results_by_huc12_1000_2000 TO nobody;
-ALTER TABLE results_by_huc12_1000_2000 OWNER TO mesonet;
+CREATE INDEX ON water_results_by_huc12_1000_2000 (scenario_id);
+GRANT SELECT ON water_results_by_huc12_1000_2000 TO nobody;
+ALTER TABLE water_results_by_huc12_1000_2000 OWNER TO mesonet;
 
-CREATE TABLE flowpaths (
-    fid serial UNIQUE,
-    scenario int REFERENCES scenarios (id),
+CREATE TABLE flowpath (
+    flowpath_id int GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    scenario_id int REFERENCES scenario (scenario_id),
     huc12_id int REFERENCES huc12 (huc12_id),
-    fpath int,
-    climate_file_id int REFERENCES climate_files (id),
+    huc12_fpath_num int NOT NULL,
+    climate_file_id int REFERENCES climate_file (climate_file_id),
     geom GEOMETRY (LINESTRING, 5070),
-    bulk_slope real,
-    max_slope real,
+    avg_slope_ratio real,
+    max_slope_ratio real,
     irrigated boolean DEFAULT false,
-    ofe_count smallint,
-    real_length real
+    length_m real
 );
-ALTER TABLE flowpaths OWNER TO mesonet;
-CREATE INDEX flowpaths_huc12_fpath_idx ON flowpaths (huc12_id, fpath);
-GRANT SELECT ON flowpaths TO nobody;
-CREATE INDEX flowpaths_idx ON flowpaths USING gist (geom);
+ALTER TABLE flowpath OWNER TO mesonet;
+CREATE UNIQUE INDEX ON flowpath (huc12_id, huc12_fpath_num);
+GRANT SELECT ON flowpath TO nobody;
+CREATE INDEX flowpath_idx ON flowpath USING gist (geom);
 
---
--- genlu column in flowpath_points
 --
 CREATE TABLE general_landuse (
-    id smallint NOT NULL,
+    general_landuse_id int GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     label text NOT NULL
 );
-CREATE UNIQUE INDEX general_landuse_idx ON general_landuse (id);
 ALTER TABLE general_landuse OWNER TO mesonet;
 GRANT SELECT ON general_landuse TO nobody;
 
@@ -248,63 +222,51 @@ CREATE TABLE properties (
 ALTER TABLE properties OWNER TO mesonet;
 GRANT SELECT ON properties TO nobody;
 
--- Storage of harvest information
-CREATE TABLE harvest (
-    valid date,
-    huc12_id int REFERENCES huc12 (huc12_id),
-    fpath smallint,
-    ofe smallint,
-    scenario smallint REFERENCES scenarios (id),
-    crop varchar(32),
-    yield_kgm2 real
-);
-CREATE INDEX ON harvest (huc12_id);
-CREATE INDEX harvest_valid_idx ON harvest (valid);
-ALTER TABLE harvest OWNER TO mesonet;
-GRANT SELECT ON harvest TO nobody;
-
 --
 -- Field Boundaries
-CREATE TABLE fields (
-    field_id serial UNIQUE,
-    scenario smallint REFERENCES scenarios (id),
+CREATE TABLE field (
+    field_id int GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    scenario_id int REFERENCES scenario (scenario_id),
     huc12_id int REFERENCES huc12 (huc12_id),
-    fbndid int,
+    huc12_fbndid_num int NOT NULL,
     acres real,
     geom GEOMETRY (MULTIPOLYGON, 5070),
     landuse varchar(32),
     management varchar(32),
-    genlu smallint REFERENCES general_landuse (id) NOT NULL,
-    man_2017_2022 char(6),
-    residue2017 smallint,
-    residue2018 smallint,
-    residue2019 smallint,
-    residue2020 smallint,
-    residue2021 smallint,
-    residue2022 smallint,
-    isag int
+    general_landuse_id int REFERENCES general_landuse (general_landuse_id) NOT NULL,
+    management_2017_2022 char(6),
+    agriculture_code smallint
 );
-ALTER TABLE fields OWNER TO mesonet;
-GRANT SELECT ON fields TO nobody;
-CREATE INDEX ON fields (huc12_id);
-CREATE INDEX fields_geom_idx ON fields USING gist (geom);
+ALTER TABLE field OWNER TO mesonet;
+GRANT SELECT ON field TO nobody;
+CREATE INDEX ON field (huc12_id);
+CREATE INDEX field_geom_idx ON field USING gist (geom);
+
+-- Storage of computed residue values
+CREATE TABLE field_residue (
+    field_id int REFERENCES field (field_id),
+    scenario_id int REFERENCES scenario (scenario_id),
+    year int NOT NULL,
+    residue_percent smallint
+);
+CREATE UNIQUE INDEX ON field_residue (field_id, scenario_id, year);
+ALTER TABLE field_residue OWNER TO mesonet;
+GRANT SELECT ON field_residue TO nobody;
 
 -- Storage of wind results by field
 CREATE TABLE field_wind_erosion_results (
-    field_id int REFERENCES fields (field_id),
-    scenario int REFERENCES scenarios (id),
-    valid date,
+    field_id int REFERENCES field (field_id),
+    scenario_id int REFERENCES scenario (scenario_id),
+    valid date NOT NULL,
     erosion_kgm2 real,
-    avg_wmps real,
-    max_wmps real,
+    avg_wind_speed_mps real,
+    max_wind_speed_mps real,
     drct real
 ) PARTITION BY RANGE (valid);
 ALTER TABLE field_wind_erosion_results OWNER TO mesonet;
 GRANT SELECT ON field_wind_erosion_results TO nobody;
-CREATE INDEX field_wind_erosion_results_valid_idx
-ON field_wind_erosion_results (valid);
-CREATE INDEX field_wind_erosion_results_field_idx
-ON field_wind_erosion_results (field_id);
+CREATE INDEX ON field_wind_erosion_results (valid);
+CREATE INDEX ON field_wind_erosion_results (field_id);
 
 DO
 $do$
@@ -329,29 +291,29 @@ $do$;
 
 
 -- Store of Flowpath OFE information
-CREATE TABLE flowpath_ofes (
-    flowpath int REFERENCES flowpaths (fid),
-    field_id int REFERENCES fields (field_id) NOT NULL,
-    ofe smallint NOT NULL,
+CREATE TABLE flowpath_ofe (
+    flowpath_ofe_id int GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    flowpath_id int REFERENCES flowpath (flowpath_id) NOT NULL,
+    field_id int REFERENCES field (field_id) NOT NULL,
+    ofe smallint NOT NULL CHECK (ofe > 0),
     geom GEOMETRY (LINESTRINGZ, 5070),
-    bulk_slope real,
-    max_slope real,
-    management varchar(32),
-    landuse varchar(32),
-    gssurgo_id int REFERENCES gssurgo (id),
-    real_length real,
+    avg_slope_ratio real,
+    max_slope_ratio real,
+    gssurgo_id int REFERENCES gssurgo (gssurgo_id),
+    length_m real,
     groupid text
 );
-ALTER TABLE flowpath_ofes OWNER TO mesonet;
-GRANT SELECT ON flowpath_ofes TO nobody;
-CREATE INDEX ON flowpath_ofes (field_id);
-CREATE INDEX flowpath_ofes_idx ON flowpath_ofes (flowpath);
+COMMENT ON COLUMN flowpath_ofe.ofe IS 'WEPP Overland Flow Element (starts at 1).';
+ALTER TABLE flowpath_ofe OWNER TO mesonet;
+GRANT SELECT ON flowpath_ofe TO nobody;
+CREATE INDEX ON flowpath_ofe (field_id);
+CREATE INDEX flowpath_ofe_idx ON flowpath_ofe (flowpath_id);
 
 --
 -- Dates of tillage and planting operations
 CREATE TABLE field_operations (
-    field_id int REFERENCES fields (field_id),
-    year int,
+    field_id int REFERENCES field (field_id) NOT NULL,
+    year int NOT NULL,
     till1 date,
     till2 date,
     till3 date,
@@ -359,4 +321,4 @@ CREATE TABLE field_operations (
 );
 ALTER TABLE field_operations OWNER TO mesonet;
 GRANT SELECT ON field_operations TO nobody;
-CREATE INDEX field_operations_idx ON field_operations (field_id);
+CREATE UNIQUE INDEX ON field_operations (field_id, year);
