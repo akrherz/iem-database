@@ -22,11 +22,10 @@ CREATE TABLE dep_version (
 );
 ALTER TABLE dep_version OWNER TO mesonet;
 GRANT SELECT ON dep_version TO nobody;
-CREATE UNIQUE INDEX dep_version_idx
-ON dep_version (label, wepp, acpf, flowpath, gssurgo, software);
+
 
 CREATE TABLE scenarios (
-    id int UNIQUE,
+    scenario_id int UNIQUE,
     label varchar,
     climate_scenario int,
     huc12_scenario int,
@@ -37,31 +36,30 @@ GRANT SELECT ON scenarios TO nobody;
 ALTER TABLE scenarios OWNER TO mesonet;
 
 -- Storage of DEP Climate Files
-CREATE TABLE climate_files (
-    id serial PRIMARY KEY,
-    scenario int REFERENCES scenarios (id),
+CREATE TABLE climate_file (
+    climate_file_id serial PRIMARY KEY,
+    scenario_id int REFERENCES scenarios (scenario_id),
     filepath text,
     geom GEOMETRY (POINT, 4326)
 );
-ALTER TABLE climate_files OWNER TO mesonet;
-GRANT SELECT ON climate_files TO nobody;
+ALTER TABLE climate_file OWNER TO mesonet;
+GRANT SELECT ON climate_file TO nobody;
 
 -- storage of yearly summaries
 CREATE TABLE climate_file_yearly_summary (
-    climate_file_id int REFERENCES climate_files (id),
+    climate_file_id int REFERENCES climate_file (climate_file_id),
     year int,
     rfactor real,
     rfactor_storms int
 );
-CREATE INDEX climate_file_yearly_summary_climate_file_id_idx
-ON climate_file_yearly_summary (climate_file_id);
+CREATE UNIQUE INDEX ON climate_file_yearly_summary (climate_file_id, year);
 ALTER TABLE climate_file_yearly_summary OWNER TO mesonet;
 GRANT SELECT ON climate_file_yearly_summary TO nobody;
 
 -- Log clifile requests
 CREATE TABLE clifile_requests (
     valid timestamptz DEFAULT now(),
-    climate_file_id int REFERENCES climate_files (id),
+    climate_file_id int REFERENCES climate_file (climate_file_id),
     client_addr text,
     geom GEOMETRY (POINT, 4326),
     distance_degrees float

@@ -69,7 +69,7 @@ coop__ncei_climdiv_IA0000.sql | NCEI Climdiv data for Iowa Statewide
 coop_ncei_climate71_ames.sql | NCEI 71 Climatology for Ames
 coop_ncei_climate81_ames.sql | NCEI 81 Climatology for Ames
 coop_ncei_climate91_ames.sql | NCEI 91 Climatology for Ames
-dep_china__pydeptesting.sql | pydep test entry for climate_files
+dep_china__pydeptesting.sql | pydep test entry for climate_file
 hads_aesi4_sep2025.sql | AESI4 obs for 1-2 Sep 2025
 hads_alldata.sql.gz | 2024 weather variables for EOKI4
 hads_snowfall.sql | 10 Nov 2023 12 UTC fake entries for DNKI4
@@ -77,8 +77,7 @@ hml__000hml_forecast.sql | Guttenburg GTTI4 20-23 Aug 2024
 hml__hml_forecast_data.sql | Guttenburg GTTI4 20-23 Aug 2024
 hml__hml_observed_data.sql | Guttenburg GTTI4 20-23 Aug 2024
 id3b__product_log_nob.sql.gz | ldm_product_log of N0B that gets updated to RT
-idep__pydeptesting.sql | test data run with dailyerosion/dep (pydep) repo
-idep__00? | DEP scenario=-1 test data for `070801050902`
+dep__00? | DEP scenario=-1 test data for `070801050902`
 iembot__testdata.sql | Stuff to iembot to use in CI testing.
 iem__hourly.sql.gz | DSM,AMW hourly precip 2024 precip till 4 Sept
 iem__AMWDSM.sql.gz | IEM current,current_log,summary_2024 (14 Aug) for AMW+DSM

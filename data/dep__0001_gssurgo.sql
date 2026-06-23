@@ -1,0 +1,29 @@
+copy gssurgo(gssurgo_id,fiscal_year,mukey,label,kwfact,hydrogroup,plastic_limit,wepp_min_sw,wepp_max_sw,wepp_min_sw1,wepp_max_sw1,textureclass) from stdin;
+1057852	2025	2916771	Belview	0.24	B	24.138	\N	\N	\N	\N	\N
+1055142	2025	2800480	Nicollet	0.28	B/D	31.892	\N	\N	\N	\N	\N
+904656	2025	411299	Lester	0.32	C	23.295	\N	\N	\N	\N	\N
+904680	2025	411330	Zook	0.28	C/D	34.131	\N	\N	\N	\N	\N
+904644	2025	411285	Spillville	0.24	B/D	28.223	\N	\N	\N	\N	\N
+1055685	2025	2835194	Harps	0.28	C/D	34.142	\N	\N	\N	\N	\N
+1055597	2025	2834849	Nicollet	0.28	B/D	31.892	\N	\N	\N	\N	\N
+1057844	2025	2916730	Storden	0.28	B	22.755	\N	\N	\N	\N	\N
+904652	2025	411293	Coland	0.28	C/D	31.877	\N	\N	\N	\N	\N
+1057916	2025	2922007	Canisteo	0.28	C/D	34.091	\N	\N	\N	\N	\N
+1057812	2025	2916637	Clarion	0.28	B	22.755	\N	\N	\N	\N	\N
+904690	2025	411345	Okoboji	0.32	C/D	53.795	\N	\N	\N	\N	\N
+1034248	2025	2550308	Okoboji	0.32	C/D	50.15	\N	\N	\N	\N	\N
+1057834	2025	2916702	Storden	0.28	B	22.755	\N	\N	\N	\N	\N
+1055633	2025	2835021	Webster	0.28	C/D	33.998	\N	\N	\N	\N	\N
+1056451	2025	2877291	Clarion	0.24	B	25.602	\N	\N	\N	\N	\N
+1055624	2025	2835012	Webster	0.28	C/D	33.998	\N	\N	\N	\N	\N
+1056475	2025	2877334	Clarion	0.28	B	22.755	\N	\N	\N	\N	\N
+1055662	2025	2835146	Harps	0.28	C/D	34.142	\N	\N	\N	\N	\N
+1051563	2025	2765537	Clarion	0.24	B	25.602	\N	\N	\N	\N	\N
+904676	2025	411325	Wacousta	0.32	C/D	38.303	\N	\N	\N	\N	\N
+1051549	2025	2765522	Clarion	0.24	B	25.602	\N	\N	\N	\N	\N
+904639	2025	411279	Coland	0.32	C/D	34.019	\N	\N	\N	\N	\N
+904682	2025	411333	Okoboji	0.32	C/D	37.818	\N	\N	\N	\N	\N
+1057928	2025	2922031	Canisteo	0.28	C/D	34.091	\N	\N	\N	\N	\N
+904675	2025	411320	Spillville	0.28	B/D	25.773	\N	\N	\N	\N	\N
+\.
+

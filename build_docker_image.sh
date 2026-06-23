@@ -1,3 +1,4 @@
+#!/bin/bash
 set -e -x
 
 # Here lies how we build a docker image that contains the IEM testing database
@@ -13,7 +14,7 @@ until pg_isready -h localhost -U postgres; do
   sleep 2
 done
 
-sh bootstrap.sh
+bash bootstrap.sh
 
 # Now we need to stop and save off this container as an image without test data
 # 10 seconds is too short and may corrupt the database
