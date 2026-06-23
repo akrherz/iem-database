@@ -124,6 +124,10 @@ ALTER TABLE huc12 OWNER TO mesonet;
 CREATE UNIQUE INDEX huc12_idx ON huc12 (huc12_code, scenario_id);
 GRANT SELECT ON huc12 TO nobody;
 
+CREATE FUNCTION get_huc12_id(huc12_code char(12), scenario_id int) RETURNS int AS $$
+    SELECT huc12_id from huc12 WHERE huc12_code = $1 and scenario_id = $2
+$$ LANGUAGE sql STABLE;
+
 -- Wind Erosion
 CREATE TABLE wind_results_by_huc12 (
     huc12_id int REFERENCES huc12 (huc12_id) NOT NULL,
@@ -194,6 +198,7 @@ CREATE TABLE flowpath (
     scenario_id int REFERENCES scenario (scenario_id),
     huc12_id int REFERENCES huc12 (huc12_id),
     huc12_fpath_num int NOT NULL,
+    ofe_count int,
     climate_file_id int REFERENCES climate_file (climate_file_id),
     geom GEOMETRY (LINESTRING, 5070),
     avg_slope_ratio real,
