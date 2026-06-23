@@ -59,12 +59,13 @@ INSERT INTO scenario VALUES (-1, 'Testing', 0, 0, 0, '20260612');
 -- Storage of DEP Climate Files
 CREATE TABLE climate_file (
     climate_file_id int GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    scenario_id int REFERENCES scenario (scenario_id),
-    filepath text,
+    scenario_id int REFERENCES scenario (scenario_id) NOT NULL,
+    filepath text NOT NULL,
     geom GEOMETRY (POINT, 4326)
 );
 ALTER TABLE climate_file OWNER TO mesonet;
 GRANT SELECT ON climate_file TO nobody;
+CREATE UNIQUE INDEX ON climate_file (scenario_id, filepath);
 
 -- storage of yearly summaries
 CREATE TABLE climate_file_yearly_summary (
