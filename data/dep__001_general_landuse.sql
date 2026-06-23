@@ -147,7 +147,7 @@ copy general_landuse(general_landuse_id,label) from stdin;
 157	Corn/Wheat/Developed
 158	Sod/Soybeans
 159	Soybeans/Sod
-160	
+160	Bogus
 161	OtherCrops rotation
 162	Soybeans/OtherCrops
 163	OtherCrops/Soybeans

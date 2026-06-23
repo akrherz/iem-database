@@ -52,8 +52,7 @@ CREATE TABLE climate_file_yearly_summary (
     rfactor real,
     rfactor_storms int
 );
-CREATE INDEX climate_file_yearly_summary_climate_file_id_idx
-ON climate_file_yearly_summary (climate_file_id);
+CREATE UNIQUE INDEX ON climate_file_yearly_summary (climate_file_id, year);
 ALTER TABLE climate_file_yearly_summary OWNER TO mesonet;
 GRANT SELECT ON climate_file_yearly_summary TO nobody;
 

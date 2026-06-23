@@ -1,11 +1,11 @@
 #!/bin/bash
 # setup databases
 # we want this script to exit 2 so that CI will report any failures
+set -euo pipefail
 
-for myuser in nobody mesonet ldm apiuser \
-tt_web tt_admin tt_script
+for myuser in nobody mesonet ldm apiuser tt_web tt_admin tt_script
 do
-/usr/bin/psql -v "ON_ERROR_STOP=1" -c "create user $myuser;" -h localhost -U postgres
+/usr/bin/psql -v "ON_ERROR_STOP=1" -c "create user $myuser;" -h localhost -U postgres || exit 2
 done
 
 for db in afos mesosite postgis snet talltowers iembot \
