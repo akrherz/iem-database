@@ -156,9 +156,9 @@ CREATE TABLE water_results_by_huc12 (
     min_runoff_mm real,
     avg_runoff_mm real,
     max_runoff_mm real,
-    min_delivery_mm real,
-    avg_delivery_mm real,
-    max_delivery_mm real,
+    min_delivery_kgm2 real,
+    avg_delivery_kgm2 real,
+    max_delivery_kgm2 real,
     qc_precip_mm real
 ) PARTITION BY RANGE (scenario_id);
 ALTER TABLE water_results_by_huc12 OWNER TO mesonet;
