@@ -20,7 +20,7 @@ CREATE TABLE iem_schema_manager_version (
     updated timestamptz
 );
 ALTER TABLE iem_schema_manager_version OWNER TO mesonet;
-INSERT INTO iem_schema_manager_version VALUES (0, now());
+INSERT INTO iem_schema_manager_version VALUES (1, now());
 
 -- Storage of DEP versioning dailyerosion/dep#179
 CREATE TABLE dep_version (
@@ -242,7 +242,10 @@ CREATE TABLE field (
     general_landuse_id int REFERENCES general_landuse (general_landuse_id) NOT NULL,
     management_2017_2022 char(6),
     agriculture_code smallint,
-    tillage_direction real
+    tillage_direction real,
+    rectangle_length_m real,
+    rectangle_width_m real,
+    rectangle_rotation_deg real
 );
 ALTER TABLE field OWNER TO mesonet;
 GRANT SELECT ON field TO nobody;
