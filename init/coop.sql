@@ -111,7 +111,6 @@ CREATE TABLE alldata (
     merra_srad real,
     era5land_srad real,
     hrrr_srad real,
-    era5land_soilt4_avg real,
     era5land_soilt4_min real,
     era5land_soilt4_max real,
     era5land_soilm4_avg real,
