@@ -35,7 +35,7 @@ INSERT INTO iem_schema_manager_version VALUES (76, now());
 -- Manual load from https://www.fema.gov/api/open/v2/FemaRegions.geojson
 CREATE TABLE fema_regions (
     region int,
-    states varchar [],
+    states varchar[],
     geom GEOMETRY (MULTIPOLYGON, 4326)
 );
 ALTER TABLE fema_regions OWNER TO mesonet;
@@ -95,7 +95,7 @@ CREATE TABLE airmets (
     issuetime timestamptz,
     product_id text,
     hazard_type text,
-    weather_conditions text [],
+    weather_conditions text[],
     status text,
     geom GEOMETRY (POLYGON, 4326)
 );
@@ -565,7 +565,7 @@ CREATE TABLE sps (
     issue timestamptz,
     expire timestamptz,
     geom GEOMETRY (POLYGON, 4326),
-    ugcs char(6) [],
+    ugcs char(6)[],
     landspout text,
     waterspout text,
     max_hail_size text,
@@ -659,7 +659,7 @@ CREATE TABLE warnings (
     is_emergency boolean,
     is_pds boolean,
     purge_time timestamptz,
-    product_ids varchar(36) [] NOT NULL DEFAULT '{}',
+    product_ids varchar(36)[] NOT NULL DEFAULT '{}',
     vtec_year smallint NOT NULL
 ) PARTITION BY LIST (vtec_year);
 ALTER TABLE warnings OWNER TO mesonet;

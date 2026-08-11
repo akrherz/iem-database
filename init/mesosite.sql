@@ -170,7 +170,7 @@ CREATE TABLE news (
     title varchar(100),
     url varchar,
     views int DEFAULT 0,
-    tags varchar(128) []
+    tags varchar(128)[]
 );
 CREATE INDEX news_entered_idx ON news (entered);
 GRANT ALL ON news TO nobody;
@@ -201,7 +201,7 @@ CREATE TABLE iemapps (
     url text NOT NULL,
     category text NOT NULL DEFAULT '',
     subcategory text NOT NULL DEFAULT '',
-    tags text [] NOT NULL DEFAULT '{}',
+    tags text[] NOT NULL DEFAULT '{}',
     importance int NOT NULL DEFAULT 0
 );
 ALTER TABLE iemapps OWNER TO mesonet;
