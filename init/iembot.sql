@@ -183,6 +183,7 @@ create table iembot_social_log (
 );
 alter table iembot_social_log owner to mesonet;
 create index iembot_social_log_valid_idx on iembot_social_log (valid);
+grant select on iembot_social_log to nobody;
 
 -- _______________________________________________________________________
 -- Atmosphere/Bluesky
