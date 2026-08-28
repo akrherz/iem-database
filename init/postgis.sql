@@ -837,13 +837,18 @@ CREATE TABLE lsrs (
     remark text,
     wfo character(3),
     typetext character varying(40) NOT NULL,
-    geom GEOMETRY (POINT, 4326),
+    geom GEOMETRY (POINT, 4326) NOT NULL,
     product_id text,
     product_id_summary text,
     updated timestamptz DEFAULT now(),
     unit varchar(32),
     qualifier char(1),
-    gid int REFERENCES ugcs (gid)
+    gid int REFERENCES ugcs (gid),
+    CONSTRAINT check_point_coords_not_null CHECK (
+        NOT st_isempty(geom)
+        AND st_x(geom) IS NOT NULL
+        AND st_y(geom) IS NOT NULL
+    )
 ) PARTITION BY RANGE (valid);
 ALTER TABLE lsrs OWNER TO mesonet;
 GRANT ALL ON lsrs TO ldm;
