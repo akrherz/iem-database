@@ -18,7 +18,7 @@ CREATE TABLE iem_schema_manager_version (
     version int,
     updated timestamptz
 );
-INSERT INTO iem_schema_manager_version VALUES (-1, now());
+INSERT INTO iem_schema_manager_version VALUES (0, now());
 
 -- Our baseline grid
 CREATE TABLE iemre_grid (
@@ -127,6 +127,21 @@ begin
     end loop;
 end;
 $do$;
+
+-- Storage of GEFS Forecast
+CREATE TABLE iemre_gefs (
+    gid int REFERENCES iemre_grid (gid),
+    ens_member smallint,
+    model_valid timestamptz,
+    valid date,
+    high_tmpk real,
+    low_tmpk real,
+    avg_rh real
+);
+ALTER TABLE iemre_gefs OWNER TO mesonet;
+GRANT SELECT ON iemre_gefs TO nobody;
+CREATE INDEX ON iemre_gefs (gid);
+CREATE INDEX ON iemre_gefs (model_valid);
 
 -- _______________________________________________________________________
 -- Storage of CFS forecast
