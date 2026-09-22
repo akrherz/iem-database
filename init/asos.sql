@@ -158,6 +158,12 @@ CREATE TABLE alldata (
 ALTER TABLE alldata OWNER TO mesonet;
 GRANT ALL ON alldata TO ldm;
 GRANT SELECT ON alldata TO nobody;
+CREATE INDEX alldata_station_report_type3_idx
+ON alldata (station) WHERE report_type = 3;
+CREATE INDEX alldata_valid_idx
+ON alldata (valid);
+CREATE INDEX alldata_station_idx
+ON alldata (station);
 
 DO
 $do$
@@ -179,13 +185,6 @@ begin
         execute format($f$
             GRANT SELECT on t%s to nobody
         $f$, year);
-        -- Indices
-        execute format($f$
-            CREATE INDEX t%s_valid_idx on t%s(valid)
-        $f$, year, year);
-        execute format($f$
-            CREATE INDEX t%s_station_idx on t%s(station)
-        $f$, year, year);
     end loop;
 end;
 $do$;
