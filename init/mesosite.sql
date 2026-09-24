@@ -131,14 +131,14 @@ ALTER TABLE weblog_block_queue OWNER TO mesonet;
 --- Store metadata used to drive the /timemachine/
 ---
 CREATE TABLE archive_products (
-    id serial,
-    name varchar,
-    template varchar,
-    sts timestamptz,
-    interval int,
-    groupname varchar,
-    time_offset int,
-    avail_lag int
+id serial,
+name varchar,
+template varchar,
+sts timestamptz,
+interval int,
+groupname varchar,
+time_offset int,
+avail_lag int
 );
 ALTER TABLE archive_products OWNER TO mesonet;
 GRANT SELECT ON archive_products TO nobody;
@@ -148,11 +148,11 @@ GRANT SELECT ON archive_products TO nobody;
 --- networks we process!
 ---
 CREATE TABLE networks (
-    id varchar(12) UNIQUE,
-    name varchar,
-    tzname varchar(32),
-    extent GEOMETRY (POLYGON, 4326),
-    windrose_update timestamptz
+id varchar(12) UNIQUE,
+name varchar,
+tzname varchar(32),
+extent GEOMETRY (POLYGON, 4326),
+windrose_update timestamptz
 );
 CREATE UNIQUE INDEX networks_id_idx ON networks (id);
 ALTER TABLE networks OWNER TO mesonet;
@@ -163,14 +163,14 @@ GRANT SELECT ON networks TO nobody;
 --- Missing table: news
 ---
 CREATE TABLE news (
-    id serial NOT NULL,
-    entered timestamptz DEFAULT now(),
-    body text,
-    author varchar(100),
-    title varchar(100),
-    url varchar,
-    views int DEFAULT 0,
-    tags varchar(128)[]
+id serial NOT NULL,
+entered timestamptz DEFAULT now(),
+body text,
+author varchar(100),
+title varchar(100),
+url varchar,
+views int DEFAULT 0,
+tags varchar(128)[]
 );
 CREATE INDEX news_entered_idx ON news (entered);
 GRANT ALL ON news TO nobody;
@@ -180,14 +180,14 @@ GRANT ALL ON news_id_seq TO nobody;
 --- Racoon Work Tasks
 ---
 CREATE TABLE racoon_jobs (
-    jobid varchar(32) DEFAULT md5(random()::text),
-    wfo varchar(3),
-    sts timestamp with time zone,
-    ets timestamp with time zone,
-    radar varchar(3),
-    processed boolean DEFAULT false,
-    nexrad_product char(3),
-    wtype varchar(32)
+jobid varchar(32) DEFAULT md5(random()::text),
+wfo varchar(3),
+sts timestamp with time zone,
+ets timestamp with time zone,
+radar varchar(3),
+processed boolean DEFAULT false,
+nexrad_product char(3),
+wtype varchar(32)
 );
 GRANT ALL ON racoon_jobs TO nobody;
 
@@ -195,22 +195,22 @@ GRANT ALL ON racoon_jobs TO nobody;
 --- IEM Apps Database!
 ---
 CREATE TABLE iemapps (
-    appid serial UNIQUE,
-    name text UNIQUE NOT NULL,
-    description text,
-    url text NOT NULL,
-    category text NOT NULL DEFAULT '',
-    subcategory text NOT NULL DEFAULT '',
-    tags text[] NOT NULL DEFAULT '{}',
-    importance int NOT NULL DEFAULT 0
+appid serial UNIQUE,
+name text UNIQUE NOT NULL,
+description text,
+url text NOT NULL,
+category text NOT NULL DEFAULT '',
+subcategory text NOT NULL DEFAULT '',
+tags text[] NOT NULL DEFAULT '{}',
+importance int NOT NULL DEFAULT 0
 );
 ALTER TABLE iemapps OWNER TO mesonet;
 GRANT ALL ON iemapps TO nobody;
 GRANT ALL ON iemapps_appid_seq TO nobody;
 
 CREATE TABLE iemapps_tags (
-    appid int REFERENCES iemapps (appid),
-    tag varchar(24) NOT NULL
+appid int REFERENCES iemapps (appid),
+tag varchar(24) NOT NULL
 );
 CREATE UNIQUE INDEX iemapps_tags_idx ON iemapps_tags (appid, tag);
 GRANT ALL ON iemapps_tags TO nobody;
@@ -220,9 +220,9 @@ GRANT ALL ON iemapps_tags TO nobody;
 --- webcam logs
 ---
 CREATE TABLE camera_log (
-    cam varchar(11),
-    valid timestamp with time zone,
-    drct smallint
+cam varchar(11),
+valid timestamp with time zone,
+drct smallint
 ) PARTITION BY RANGE (valid);
 ALTER TABLE camera_log OWNER TO mesonet;
 GRANT ALL ON camera_log TO ldm;
@@ -264,9 +264,9 @@ $do$;
 --- webcam currents
 ---
 CREATE TABLE camera_current (
-    cam varchar(11) UNIQUE,
-    valid timestamp with time zone,
-    drct smallint
+cam varchar(11) UNIQUE,
+valid timestamp with time zone,
+drct smallint
 );
 GRANT SELECT ON camera_current TO nobody;
 GRANT ALL ON camera_current TO mesonet, ldm;
@@ -275,12 +275,12 @@ GRANT ALL ON camera_current TO mesonet, ldm;
 --- Webcam scheduling
 ---
 CREATE TABLE webcam_scheduler (
-    cid varchar(10),
-    begints timestamp with time zone,
-    endts timestamp with time zone,
-    is_daily boolean,
-    filename varchar,
-    movie_seconds smallint
+cid varchar(10),
+begints timestamp with time zone,
+endts timestamp with time zone,
+is_daily boolean,
+filename varchar,
+movie_seconds smallint
 );
 CREATE UNIQUE INDEX webcam_scheduler_filename_idx ON
 webcam_scheduler (filename);
@@ -290,8 +290,8 @@ GRANT ALL ON webcam_scheduler TO nobody;
 --- Store IEM settings
 ---
 CREATE TABLE properties (
-    propname varchar,
-    propvalue varchar
+propname varchar,
+propvalue varchar
 );
 ALTER TABLE properties OWNER TO mesonet;
 -- TODO: fix this permissions
@@ -300,84 +300,84 @@ CREATE UNIQUE INDEX properties_idx ON properties (propname, propvalue);
 
 --- Alias for pyWWA nwschat support
 CREATE VIEW nwschat_properties AS SELECT
-    propname,
-    propvalue
+propname,
+propvalue
 FROM properties;
 
 ---
 --- Webcam configurations
 ---
 CREATE TABLE webcams (
-    id varchar(11),
-    ip inet,
-    name varchar,
-    pan0 smallint,
-    online boolean,
-    port int,
-    network varchar(10),
-    iservice varchar,
-    iserviceurl varchar,
-    sts timestamp with time zone,
-    ets timestamp with time zone,
-    county varchar,
-    hosted varchar,
-    hostedurl varchar,
-    sponsor varchar,
-    sponsorurl varchar,
-    removed boolean,
-    state varchar(2),
-    moviebase varchar,
-    scrape_url varchar,
-    is_vapix boolean,
-    fullres varchar(9) DEFAULT '640x480' NOT NULL,
-    fqdn varchar
+id varchar(11),
+ip inet,
+name varchar,
+pan0 smallint,
+online boolean,
+port int,
+network varchar(10),
+iservice varchar,
+iserviceurl varchar,
+sts timestamp with time zone,
+ets timestamp with time zone,
+county varchar,
+hosted varchar,
+hostedurl varchar,
+sponsor varchar,
+sponsorurl varchar,
+removed boolean,
+state varchar(2),
+moviebase varchar,
+scrape_url varchar,
+is_vapix boolean,
+fullres varchar(9) DEFAULT '640x480' NOT NULL,
+fqdn varchar
 );
 SELECT addgeometrycolumn('webcams', 'geom', 4326, 'POINT', 2);
 GRANT ALL ON webcams TO mesonet, ldm;
 GRANT SELECT ON webcams TO nobody;
 
 CREATE TABLE stations (
-    id varchar(64),
-    synop int,
-    name varchar(64),
-    state char(2),
-    country char(2),
-    elevation real,
-    network varchar(20),
-    online boolean NOT NULL DEFAULT 't',
-    params varchar(300),
-    county varchar(50),
-    plot_name varchar(64),
-    climate_site varchar(6),
-    remote_id int,
-    nwn_id int,
-    spri smallint,
-    wfo varchar(3),
-    archive_begin date,
-    archive_end date,
-    modified timestamptz DEFAULT now(),
-    tzname varchar(32),
-    iemid serial UNIQUE NOT NULL,
-    metasite boolean,
-    sigstage_low real,
-    sigstage_action real,
-    sigstage_bankfull real,
-    sigstage_flood real,
-    sigstage_moderate real,
-    sigstage_major real,
-    sigstage_record real,
-    ugc_county char(6),
-    ugc_zone char(6),
-    ncdc81 varchar(11),
-    ncei91 varchar(11),
-    temp24_hour smallint,
-    precip24_hour smallint,
-    wigos varchar(64)
+id varchar(64),
+synop int,
+name varchar(64),
+state char(2),
+country char(2),
+elevation real,
+network varchar(20),
+online boolean NOT NULL DEFAULT 't',
+params varchar(300),
+county varchar(50),
+plot_name varchar(64),
+climate_site varchar(6),
+remote_id int,
+nwn_id int,
+spri smallint,
+wfo varchar(3),
+archive_begin date,
+archive_end date,
+modified timestamptz DEFAULT now(),
+tzname varchar(32),
+iemid serial UNIQUE NOT NULL,
+metasite boolean,
+sigstage_low real,
+sigstage_action real,
+sigstage_bankfull real,
+sigstage_flood real,
+sigstage_moderate real,
+sigstage_major real,
+sigstage_record real,
+ugc_county char(6),
+ugc_zone char(6),
+ncdc81 varchar(11),
+ncei91 varchar(11),
+temp24_hour smallint,
+precip24_hour smallint,
+wigos varchar(64)
 );
 ALTER TABLE stations OWNER TO mesonet;
 -- no commas in name please
 ALTER TABLE stations ADD CONSTRAINT stations_nocommas CHECK (
-    strpos(name, ',') = 0
+strpos(name, ',') = 0
 );
 CREATE UNIQUE INDEX stations_idx ON stations (id, network);
 CREATE UNIQUE INDEX stations_iemid_idx ON stations (iemid);
@@ -401,10 +401,10 @@ update_modified_column();
 
 -- Storage of how stations are threaded together
 CREATE TABLE station_threading (
-    iemid int REFERENCES stations (iemid),
-    source_iemid int REFERENCES stations (iemid),
-    begin_date date NOT NULL,
-    end_date date
+iemid int REFERENCES stations (iemid),
+source_iemid int REFERENCES stations (iemid),
+begin_date date NOT NULL,
+end_date date
 );
 ALTER TABLE station_threading OWNER TO mesonet;
 GRANT ALL ON station_threading TO ldm;
@@ -412,9 +412,9 @@ GRANT SELECT ON station_threading TO nobody;
 
 -- Storage of station attributes
 CREATE TABLE station_attributes (
-    iemid int REFERENCES stations (iemid),
-    attr varchar(128) NOT NULL,
-    value varchar NOT NULL
+iemid int REFERENCES stations (iemid),
+attr varchar(128) NOT NULL,
+value varchar NOT NULL
 );
 GRANT ALL ON station_attributes TO mesonet, ldm;
 CREATE UNIQUE INDEX station_attributes_idx ON station_attributes (iemid, attr);
@@ -423,35 +423,35 @@ GRANT SELECT ON station_attributes TO nobody;
 
 ---
 CREATE TABLE iemmaps (
-    id serial,
-    title varchar(256),
-    entered timestamp with time zone DEFAULT now(),
-    description text,
-    keywords varchar(256),
-    views int,
-    ref varchar(32),
-    category varchar(24)
+id serial,
+title varchar(256),
+entered timestamp with time zone DEFAULT now(),
+description text,
+keywords varchar(256),
+views int,
+ref varchar(32),
+category varchar(24)
 );
 GRANT ALL ON iemmaps TO nobody;
 GRANT ALL ON iemmaps_id_seq TO nobody;
 
 CREATE TABLE feature (
-    valid timestamp with time zone DEFAULT now(),
-    title varchar(256),
-    story text,
-    caption varchar(256),
-    good smallint DEFAULT 0,
-    bad smallint DEFAULT 0,
-    abstain smallint DEFAULT 0,
-    voting boolean DEFAULT true,
-    tags varchar(1024),
-    fbid bigint,
-    appurl varchar(1024),
-    javascripturl varchar(1024),
-    views int DEFAULT 0,
-    mediasuffix varchar(8) DEFAULT 'png',
-    media_height int,
-    media_width int
+valid timestamp with time zone DEFAULT now(),
+title varchar(256),
+story text,
+caption varchar(256),
+good smallint DEFAULT 0,
+bad smallint DEFAULT 0,
+abstain smallint DEFAULT 0,
+voting boolean DEFAULT true,
+tags varchar(1024),
+fbid bigint,
+appurl varchar(1024),
+javascripturl varchar(1024),
+views int DEFAULT 0,
+mediasuffix varchar(8) DEFAULT 'png',
+media_height int,
+media_width int
 );
 CREATE UNIQUE INDEX feature_title_check_idx ON feature (title);
 CREATE INDEX feature_valid_idx ON feature (valid);
@@ -459,58 +459,58 @@ GRANT ALL ON feature TO nobody;
 GRANT ALL ON feature TO mesonet, ldm;
 
 CREATE TABLE shef_physical_codes (
-    code char(2),
-    name varchar(128),
-    units varchar(64)
+code char(2),
+name varchar(128),
+units varchar(64)
 );
 GRANT SELECT ON shef_physical_codes TO nobody;
 
 CREATE TABLE shef_duration_codes (
-    code char(1),
-    name varchar(128)
+code char(1),
+name varchar(128)
 );
 GRANT SELECT ON shef_duration_codes TO nobody;
 
 CREATE TABLE shef_extremum_codes (
-    code char(1),
-    name varchar(128)
+code char(1),
+name varchar(128)
 );
 GRANT SELECT ON shef_extremum_codes TO nobody;
 
 -- Storage of metadata
 CREATE TABLE iemrasters (
-    id serial UNIQUE,
-    name varchar,
-    description text,
-    archive_start timestamptz,
-    archive_end timestamptz,
-    units varchar(12),
-    interval int,
-    filename_template varchar,
-    cf_long_name varchar
+id serial UNIQUE,
+name varchar,
+description text,
+archive_start timestamptz,
+archive_end timestamptz,
+units varchar(12),
+interval int,
+filename_template varchar,
+cf_long_name varchar
 );
 ALTER TABLE iemrasters OWNER TO mesonet;
 GRANT SELECT ON iemrasters TO nobody, ldm;
 
 -- Storage of color tables and values
 CREATE TABLE iemrasters_lookup (
-    iemraster_id int REFERENCES iemrasters (id),
-    coloridx smallint,
-    value real,
-    r smallint,
-    g smallint,
-    b smallint
+iemraster_id int REFERENCES iemrasters (id),
+coloridx smallint,
+value real,
+r smallint,
+g smallint,
+b smallint
 );
 ALTER TABLE iemrasters_lookup OWNER TO mesonet;
 GRANT SELECT ON iemrasters_lookup TO nobody, ldm;
 
 -- Storage of Autoplot timings and such
 CREATE TABLE autoplot_timing (
-    appid smallint NOT NULL,
-    valid timestamptz NOT NULL,
-    timing real NOT NULL,
-    uri varchar,
-    hostname varchar(24) NOT NULL
+appid smallint NOT NULL,
+valid timestamptz NOT NULL,
+timing real NOT NULL,
+uri varchar,
+hostname varchar(24) NOT NULL
 );
 ALTER TABLE autoplot_timing OWNER TO mesonet;
 GRANT SELECT ON autoplot_timing TO nobody;
@@ -519,13 +519,13 @@ CREATE INDEX autoplot_timing_idx ON autoplot_timing (appid);
 -- Storage of talltowers analog request queue
 CREATE TABLE talltowers_analog_queue
 (
-    stations varchar(32),
-    sts timestamptz,
-    ets timestamptz,
-    fmt varchar(32),
-    email varchar(128),
-    aff varchar(256),
-    filled boolean DEFAULT 'f',
-    valid timestamptz DEFAULT now()
+stations varchar(32),
+sts timestamptz,
+ets timestamptz,
+fmt varchar(32),
+email varchar(128),
+aff varchar(256),
+filled boolean DEFAULT 'f',
+valid timestamptz DEFAULT now()
 );
 GRANT ALL ON talltowers_analog_queue TO nobody, mesonet;

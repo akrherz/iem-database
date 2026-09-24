@@ -147,8 +147,9 @@ CREATE TABLE website_users (
 );
 ALTER TABLE website_users OWNER TO mesonet;
 GRANT ALL ON website_users TO nobody;
-ALTER TABLE website_users ADD CONSTRAINT distfk FOREIGN KEY (access_level)
-REFERENCES website_access_levels (access_level);
+ALTER TABLE website_users ADD CONSTRAINT distfk
+    FOREIGN KEY (access_level)
+    REFERENCES website_access_levels (access_level);
 ALTER TABLE website_users DROP CONSTRAINT website_users_email_key;
 
 -- Storage of Tile Flow
