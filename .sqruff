@@ -1,5 +1,5 @@
-[sqlfluff]
+[sqruff]
 dialect = postgres
 large_file_skip_byte_limit = 0
-exclude_rules = RF04, LT05, PG01, LT01
+exclude_rules = RF04, LT05, LT01
 ignore = data/*, upgrade/*
