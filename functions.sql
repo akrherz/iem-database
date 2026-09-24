@@ -23,9 +23,9 @@ $$;
 
 
 create aggregate sumtxt (text)(
-    sfunc = textcat,
-    stype = text,
-    initcond = ''
+sfunc = textcat,
+stype = text,
+initcond = ''
 );
 
 
