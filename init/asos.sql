@@ -184,24 +184,26 @@ begin
         execute format($f$
             GRANT SELECT on t%s to nobody
         $f$, year);
-        -- create partition for HFMETAR report_type=1
-        execute format($f$
-            create table t%s_hfmetar partition of t%s
-            for values in (1)
-            $f$, year, year);
-        execute format($f$
-            ALTER TABLE t%s_hfmetar OWNER to mesonet
-        $f$, year);
-        execute format($f$
-            GRANT ALL on t%s_hfmetar to ldm
-        $f$, year);
-        execute format($f$
-            GRANT SELECT on t%s_hfmetar to nobody
-        $f$, year);
+        -- create partition for HFMETAR report_type=1, only a thing after 2015
+        if year >= 2016 then
+            execute format($f$
+                create table t%s_hfmetar partition of t%s
+                for values in (1)
+                $f$, year, year);
+            execute format($f$
+                ALTER TABLE t%s_hfmetar OWNER to mesonet
+            $f$, year);
+            execute format($f$
+                GRANT ALL on t%s_hfmetar to ldm
+            $f$, year);
+            execute format($f$
+                GRANT SELECT on t%s_hfmetar to nobody
+            $f$, year);
+        end if;
         -- create default for everything else
         execute format($f$
             create table t%s_default partition of t%s
-            for values default
+            default
             $f$, year, year);
         execute format($f$
             ALTER TABLE t%s_default OWNER to mesonet
