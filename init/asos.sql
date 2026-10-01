@@ -143,7 +143,7 @@ CREATE TABLE alldata (
     mslp real,
     p01i real,
     wxcodes varchar(12)[],
-    report_type smallint REFERENCES alldata_report_type (id),
+    report_type smallint REFERENCES alldata_report_type (id) NOT NULL,
     ice_accretion_1hr real,
     ice_accretion_3hr real,
     ice_accretion_6hr real,
@@ -158,8 +158,6 @@ CREATE TABLE alldata (
 ALTER TABLE alldata OWNER TO mesonet;
 GRANT ALL ON alldata TO ldm;
 GRANT SELECT ON alldata TO nobody;
-CREATE INDEX alldata_station_report_type3_idx
-ON alldata (station) WHERE report_type = 3;
 CREATE INDEX alldata_valid_idx
 ON alldata (valid);
 CREATE INDEX alldata_station_idx
@@ -175,6 +173,7 @@ begin
         execute format($f$
             create table t%s partition of alldata
             for values from ('%s-01-01 00:00+00') to ('%s-01-01 00:00+00')
+            partition by list(report_type)
             $f$, year, year, year + 1);
         execute format($f$
             ALTER TABLE t%s OWNER to mesonet
@@ -184,6 +183,36 @@ begin
         $f$, year);
         execute format($f$
             GRANT SELECT on t%s to nobody
+        $f$, year);
+        -- create partition for HFMETAR report_type=1, only a thing after 2015
+        if year >= 2016 then
+            execute format($f$
+                create table t%s_hfmetar partition of t%s
+                for values in (1)
+                $f$, year, year);
+            execute format($f$
+                ALTER TABLE t%s_hfmetar OWNER to mesonet
+            $f$, year);
+            execute format($f$
+                GRANT ALL on t%s_hfmetar to ldm
+            $f$, year);
+            execute format($f$
+                GRANT SELECT on t%s_hfmetar to nobody
+            $f$, year);
+        end if;
+        -- create default for everything else
+        execute format($f$
+            create table t%s_default partition of t%s
+            default
+            $f$, year, year);
+        execute format($f$
+            ALTER TABLE t%s_default OWNER to mesonet
+        $f$, year);
+        execute format($f$
+            GRANT ALL on t%s_default to ldm
+        $f$, year);
+        execute format($f$
+            GRANT SELECT on t%s_default to nobody
         $f$, year);
     end loop;
 end;
