@@ -103,6 +103,7 @@ CREATE TABLE raw (
 ALTER TABLE raw OWNER TO mesonet;
 GRANT ALL ON raw TO ldm;
 GRANT SELECT ON raw TO nobody;
+CREATE INDEX ON raw(station, valid);
 
 DO
 $do$
@@ -127,13 +128,6 @@ begin
         execute format($f$
             GRANT SELECT on raw%s to nobody
         $f$, year);
-        -- Indices
-        execute format($f$
-            CREATE INDEX raw%s_idx on raw%s(station, valid)
-        $f$, year, year);
-        execute format($f$
-            CREATE INDEX raw%s_station_idx on raw%s(station)
-        $f$, year, year);
         for month in 1..12
         loop
             mytable := format($f$raw%s_%s$f$,
