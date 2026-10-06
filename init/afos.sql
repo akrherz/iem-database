@@ -17,7 +17,9 @@ CREATE TABLE products (
 ALTER TABLE products OWNER TO mesonet;
 GRANT ALL ON products TO ldm;
 GRANT SELECT ON products TO nobody;
-
+CREATE INDEX ON products(substr(pil, 1, 3), entered);
+CREATE INDEX ON products(pil, entered);
+CREATE INDEX ON products(source, entered);
 
 DO
 $do$
@@ -49,22 +51,6 @@ begin
             execute format($f$
                 GRANT SELECT on %s to nobody
             $f$, mytable);
-            -- Indices
-            execute format($f$
-                CREATE INDEX on %s(substr(pil, 1, 3))
-            $f$, mytable);
-            execute format($f$
-                CREATE INDEX %s_pil_idx on %s(pil)
-            $f$, mytable, mytable);
-            execute format($f$
-                CREATE INDEX %s_entered_idx on %s(entered)
-            $f$, mytable, mytable);
-            execute format($f$
-                CREATE INDEX %s_source_idx on %s(source)
-            $f$, mytable, mytable);
-            execute format($f$
-                CREATE INDEX %s_pe_idx on %s(pil, entered)
-            $f$, mytable, mytable);
         end loop;
     end loop;
 end;
