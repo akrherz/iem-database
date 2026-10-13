@@ -129,7 +129,8 @@ end;
 $do$;
 
 -- Storage of GEFS Forecast
-CREATE TABLE iemre_gefs (
+-- This is unlogged as the data is too massive to replicate and emphemeral
+CREATE UNLOGGED TABLE iemre_gefs (
     gid int REFERENCES iemre_grid (gid),
     ens_member smallint,
     model_valid timestamptz,
