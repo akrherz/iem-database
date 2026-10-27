@@ -23,7 +23,7 @@ jobs:
       # We need to match postgresql version with tools found in this runner :/
       run: |
         sudo apt install -y postgresql-common
-        sudo /usr/share/postgresql-common/pgdg/apt.postgresql.org.sh
+        sudo /usr/share/postgresql-common/pgdg/apt.postgresql.org.sh -y
         sudo apt-get -qq update || true
         sudo apt-get -qq install -y --no-install-suggests --no-install-recommends postgresql-client-18 python3-pip
         pip3 install psycopg
