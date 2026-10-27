@@ -6,7 +6,7 @@ NSTL11,99999,NSTL11 Soy/Corn Residue,IA,US,316,NSTLFLUX,t,tmpf,Story,Corn Residu
 \.
 
 -- WMO BUFR Station
-copy stations(id,synop,name,state,country,elevation,network,online,params,county,plot_name,climate_site,remote_id,nwn_id,spri,wfo,archive_begin,archive_end,modified,tzname,iemid,metasite,sigstage_action,sigstage_minor,sigstage_flood,sigstage_moderate,sigstage_major,sigstage_record,ugc_county,ugc_zone,ncdc81,ncei91,temp24_hour,precip24_hour,wigos,geom) FROM STDIN (FORMAT CSV);
+copy stations(id,synop,name,state,country,elevation,network,online,params,county,plot_name,climate_site,remote_id,nwn_id,spri,wfo,archive_begin,archive_end,modified,tzname,iemid,metasite,sigstage_action,sigstage_minor,sigstage_moderate,sigstage_major,sigstage_record,ugc_county,ugc_zone,ncdc81,ncei91,temp24_hour,precip24_hour,wigos,geom) FROM STDIN (FORMAT CSV);
 0-756-1-456700,,Taminatal / Wildseehorn,,UN,2690,WMO_BUFR_SRF,t,,,Taminatal / Wildseehorn,,,,,,2023-12-06,,2023-12-10 07:17:29.094614-06,Europe/Zurich,301346,f,,,,,,,,,,,,0-756-1-456700,0101000020E61000005CCEA5B8AACC224064E94317D47B4740
 \.
 
