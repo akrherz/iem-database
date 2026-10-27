@@ -17,7 +17,7 @@ CREATE TABLE iem_schema_manager_version (
     version int,  -- noqa
     updated timestamptz
 );
-INSERT INTO iem_schema_manager_version VALUES (36, now());
+INSERT INTO iem_schema_manager_version VALUES (37, now());
 
 -- Storage of WPC national high low
 CREATE TABLE wpc_national_high_low (
@@ -115,10 +115,8 @@ CREATE TABLE stations (
     tzname varchar(32),
     iemid serial,
     metasite boolean,
-    sigstage_low real,
     sigstage_action real,
-    sigstage_bankfull real,
-    sigstage_flood real,
+    sigstage_minor real,
     sigstage_moderate real,
     sigstage_major real,
     sigstage_record real,

@@ -5,7 +5,7 @@ CREATE TABLE iem_schema_manager_version (
     version int, -- noqa
     updated timestamptz
 );
-INSERT INTO iem_schema_manager_version VALUES (10, now());
+INSERT INTO iem_schema_manager_version VALUES (11, now());
 
 CREATE TABLE stations (
     id varchar(64),
@@ -30,10 +30,8 @@ CREATE TABLE stations (
     tzname varchar(32),
     iemid serial,
     metasite boolean,
-    sigstage_low real,
     sigstage_action real,
-    sigstage_bankfull real,
-    sigstage_flood real,
+    sigstage_minor real,
     sigstage_moderate real,
     sigstage_major real,
     sigstage_record real,
