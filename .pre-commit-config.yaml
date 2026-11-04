@@ -8,7 +8,7 @@ repos:
         args: [--fix, --exit-non-zero-on-fix]
       - id: ruff-format
   - repo: https://github.com/concur1/sqruff-pre-commit
-    rev: v0.43.0
+    rev: v0.44.0
     hooks:
       # Run the formatter.
       - id: sqruff-fix

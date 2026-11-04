@@ -17,7 +17,7 @@ CREATE TABLE iem_schema_manager_version (
     version int,
     updated timestamptz
 );
-INSERT INTO iem_schema_manager_version VALUES (32, now());
+INSERT INTO iem_schema_manager_version VALUES (33, now());
 
 --- ==== TABLES TO investigate deleting
 --- counties
@@ -97,7 +97,9 @@ CREATE TABLE website_telemetry (
     client_addr inet,
     app text,
     request_uri text,
-    vhost text
+    vhost text,
+    xff text,
+    http_agent text
 );
 CREATE INDEX website_telemetry_valid_idx ON
 website_telemetry (valid);
