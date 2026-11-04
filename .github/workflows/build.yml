@@ -19,6 +19,11 @@ jobs:
     steps:
     - uses: actions/checkout@v7
 
+    # Lots of daryl's codes use aliases defined in /etc/hosts
+    - name: Add /etc/hosts entries
+      run: |
+        cat .github/workflows/etchosts.txt | sudo tee -a /etc/hosts
+
     - name: Setup micromamba
       uses: mamba-org/setup-micromamba@v3
       with:

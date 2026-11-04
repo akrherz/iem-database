@@ -6,18 +6,17 @@
 127.0.0.1 iemdb-dep_china.local
 127.0.0.1 iemdb-dep_europe.local
 127.0.0.1 iemdb-dep_sa.local
+127.0.0.1 iemdb-iembot.local
 127.0.0.1 iemdb-iemre.local
-127.0.0.1 iemdb-iemre_europe.local
 127.0.0.1 iemdb-iemre_china.local
+127.0.0.1 iemdb-iemre_europe.local
 127.0.0.1 iemdb-iemre_sa.local
-127.0.0.1 iemdb2.local
 127.0.0.1 iemdb-postgis.local
 127.0.0.1 iemdb-mesosite.local
 127.0.0.1 iemdb-afos.local
 127.0.0.1 iemdb-asos.local
 127.0.0.1 iemdb-hml.local
 127.0.0.1 iemdb-id3b.local
-127.0.0.1 iemdb-iembot.local
 127.0.0.1 iemdb-nldn.local
 127.0.0.1 iemdb-snet.local
 127.0.0.1 iemdb-mos.local
@@ -41,4 +40,5 @@
 127.0.0.1 iemdb-asos1min.local
 127.0.0.1 iem-memcached3
 127.0.0.1 iem-memcached
-127.0.0.1 iem-web-services.local
+127.0.0.1 iem-web-services
+127.0.0.1 iem-web-services.agron.iastate.edu
