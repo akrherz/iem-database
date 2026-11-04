@@ -38,8 +38,10 @@ until pg_isready -h localhost -U postgres; do
 done
 
 psql -f data/postgis/cwsu.db -U mesonet -h localhost postgis
-python3 schema_manager.py
-python3 store_test_data.py
+python scripts/schema_manager.py
+python scripts/store_test_data.py
+# This is copied in from IEM repo
+python scripts/sync_stations.py
 
 # vacuum full should not be necessary
 vacuumdb -a -U postgres -h localhost

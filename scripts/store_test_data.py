@@ -1,9 +1,8 @@
 """Provide some basic data to allow for better testing"""
 
-import glob
-import os
 import subprocess
 import sys
+from pathlib import Path
 
 import psycopg
 import requests
@@ -39,6 +38,7 @@ def do_stations(network: str):
         f"http://mesonet.agron.iastate.edu/api/1/network/{network}.json",
         timeout=60,
     )
+    req.raise_for_status()
     data = req.json()
     for dbname in "mesosite iem coop rwis asos".split():
         pgconn = psycopg.connect(
@@ -108,30 +108,32 @@ def add_webcam():
 
 def process_dbfiles(psql):
     """Process the DB files."""
-    files = glob.glob(os.path.dirname(__file__) + "/data/*.sql*")
-    files.sort()
+    datadir = Path(__file__).resolve().parent.parent / "data"
+    files = sorted(datadir.glob("*.sql*"))
     args = ["-v", "ON_ERROR_STOP=1", "-U", "mesonet", "-h", "localhost"]
     for fn in files:
         # Le Sigh for iemre_china and iemre_europe
-        sep = "__" if fn.find("__") > 0 else "_"
-        dbname = os.path.basename(fn).split(sep)[0]
-        if fn.endswith(".gz"):
-            with subprocess.Popen(
-                ["zcat", fn], stdout=subprocess.PIPE
-            ) as zproc:
-                with subprocess.Popen(
+        sep = "__" if "__" in fn.name[1:] else "_"
+        dbname = fn.name.split(sep)[0]
+        if fn.suffix == ".gz":
+            with (
+                subprocess.Popen(
+                    ["/usr/bin/zcat", str(fn)], stdout=subprocess.PIPE
+                ) as zproc,
+                subprocess.Popen(
                     [psql, *args, dbname],
                     stdin=zproc.stdout,
                     stdout=subprocess.PIPE,
                     stderr=subprocess.PIPE,
-                ) as proc:
-                    proc.wait()
-                    print(f"{fn} {proc.stderr.read()} {proc.stdout.read()}")
-                    if proc.returncode != 0:
-                        raise ValueError(f"{psql} returned non-zero!")
+                ) as proc,
+            ):
+                proc.wait()
+                print(f"{fn} {proc.stderr.read()} {proc.stdout.read()}")
+                if proc.returncode != 0:
+                    raise ValueError(f"{psql} returned non-zero!")
             continue
         with subprocess.Popen(
-            [psql, *args, "-f", fn, dbname],
+            [psql, *args, "-f", str(fn), dbname],
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
         ) as proc:

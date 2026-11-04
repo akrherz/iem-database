@@ -19,15 +19,32 @@ jobs:
     steps:
     - uses: actions/checkout@v7
 
-    - name: Install Host Dependencies
-      # We need to match postgresql version with tools found in this runner :/
+    # Lots of daryl's codes use aliases defined in /etc/hosts
+    - name: Add /etc/hosts entries
       run: |
-        sudo apt install -y postgresql-common
-        sudo /usr/share/postgresql-common/pgdg/apt.postgresql.org.sh -y
-        sudo apt-get -qq update || true
-        sudo apt-get -qq install -y --no-install-suggests --no-install-recommends postgresql-client-18 python3-pip
-        pip3 install psycopg
-        python3 -c "import psycopg; print(psycopg.__version__)"
+        cat .github/workflows/etchosts.txt | sudo tee -a /etc/hosts
+
+    - name: Setup micromamba
+      uses: mamba-org/setup-micromamba@v3
+      with:
+        environment-file: environment.yml
+        init-shell: >-
+          bash
+        condarc: |
+          channels:
+            - conda-forge
+        create-args: >-
+          python=3.14
+          mamba
+        environment-name: prod
+        cache-environment: true
+
+    - name: Copy IEM sync_stations.py script
+      run: |
+        curl --fail --silent --show-error --location \
+          --retry 5 --retry-delay 5 --retry-all-errors \
+          --connect-timeout 15 --max-time 120 \
+          -o scripts/sync_stations.py https://raw.githubusercontent.com/akrherz/iem/main/scripts/dbutil/sync_stations.py
 
     - name: Run Docker build script
       run: bash build_docker_image.sh
