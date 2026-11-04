@@ -1,3 +1,5 @@
 dependencies:
   - psycopg
+  # Discipline here to not do things in unreleased version
+  - pyiem
   - requests
