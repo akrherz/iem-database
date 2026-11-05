@@ -512,7 +512,7 @@ CREATE TABLE autoplot_timing (
     uri varchar,
     hostname varchar(24) NOT NULL,
     client_addr text,
-    user_agent text,
+    http_agent text,
     xff text
 );
 ALTER TABLE autoplot_timing OWNER TO mesonet;
