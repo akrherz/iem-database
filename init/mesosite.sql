@@ -17,7 +17,7 @@ CREATE TABLE iem_schema_manager_version (
     version int,
     updated timestamptz
 );
-INSERT INTO iem_schema_manager_version VALUES (33, now());
+INSERT INTO iem_schema_manager_version VALUES (34, now());
 
 --- ==== TABLES TO investigate deleting
 --- counties
@@ -510,7 +510,10 @@ CREATE TABLE autoplot_timing (
     valid timestamptz NOT NULL,
     timing real NOT NULL,
     uri varchar,
-    hostname varchar(24) NOT NULL
+    hostname varchar(24) NOT NULL,
+    client_addr text,
+    user_agent text,
+    xff text
 );
 ALTER TABLE autoplot_timing OWNER TO mesonet;
 GRANT SELECT ON autoplot_timing TO nobody;
