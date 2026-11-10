@@ -304,12 +304,6 @@ INSERT INTO properties VALUES
 ('internal.baseurl', 'http://mesonet.agron.iastate.edu'),
 ('external.baseurl', 'https://mesonet.agron.iastate.edu');
 
---- Alias for pyWWA nwschat support
-CREATE VIEW nwschat_properties AS SELECT
-    propname,
-    propvalue
-FROM properties;
-
 ---
 --- Webcam configurations
 ---
