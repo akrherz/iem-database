@@ -300,10 +300,9 @@ ALTER TABLE properties OWNER TO mesonet;
 GRANT ALL ON properties TO nobody, ldm;
 CREATE UNIQUE INDEX properties_idx ON properties (propname, propvalue);
 
-INSERT INTO properties VALUES (
-    ('internal.baseurl', 'http://mesonet.agron.iastate.edu'),
-    ('external.baseurl', 'https://mesonet.agron.iastate.edu')
-);
+INSERT INTO properties VALUES
+('internal.baseurl', 'http://mesonet.agron.iastate.edu'),
+('external.baseurl', 'https://mesonet.agron.iastate.edu');
 
 --- Alias for pyWWA nwschat support
 CREATE VIEW nwschat_properties AS SELECT
