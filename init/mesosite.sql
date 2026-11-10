@@ -17,7 +17,7 @@ CREATE TABLE iem_schema_manager_version (
     version int,
     updated timestamptz
 );
-INSERT INTO iem_schema_manager_version VALUES (34, now());
+INSERT INTO iem_schema_manager_version VALUES (35, now());
 
 --- ==== TABLES TO investigate deleting
 --- counties
@@ -292,13 +292,18 @@ GRANT ALL ON webcam_scheduler TO nobody;
 --- Store IEM settings
 ---
 CREATE TABLE properties (
-    propname varchar,
-    propvalue varchar
+    propname text NOT NULL,
+    propvalue text NOT NULL
 );
 ALTER TABLE properties OWNER TO mesonet;
 -- TODO: fix this permissions
 GRANT ALL ON properties TO nobody, ldm;
 CREATE UNIQUE INDEX properties_idx ON properties (propname, propvalue);
+
+INSERT INTO properties VALUES (
+    ('internal.baseurl', 'http://mesonet.agron.iastate.edu'),
+    ('external.baseurl', 'https://mesonet.agron.iastate.edu')
+);
 
 --- Alias for pyWWA nwschat support
 CREATE VIEW nwschat_properties AS SELECT
