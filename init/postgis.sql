@@ -17,7 +17,7 @@ CREATE TABLE iem_schema_manager_version (
     version int,
     updated timestamptz
 );
-INSERT INTO iem_schema_manager_version VALUES (77, now());
+INSERT INTO iem_schema_manager_version VALUES (78, now());
 
 ---
 --- TABLES THAT ARE LOADED VIA shp2pgsql
@@ -828,13 +828,13 @@ CREATE TABLE lsrs (
     valid timestamp with time zone,
     type character(1) NOT NULL,
     magnitude numeric,
-    city character varying(32),
-    county character varying(32),
+    city character varying(32) CHECK (strpos(city, ',') = 0),
+    county character varying(32) CHECK (strpos(county, ',') = 0),
     state character(2),
-    source character varying(32),
+    source character varying(32) CHECK (strpos(source, ',') = 0),
     remark text,
     wfo character(3),
-    typetext character varying(40) NOT NULL,
+    typetext character varying(40) NOT NULL CHECK (strpos(typetext, ',') = 0),
     geom GEOMETRY (POINT, 4326) NOT NULL,
     product_id text,
     product_id_summary text,
