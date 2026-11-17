@@ -20,7 +20,7 @@ CREATE TABLE iem_schema_manager_version (
     updated timestamptz
 );
 ALTER TABLE iem_schema_manager_version OWNER TO mesonet;
-INSERT INTO iem_schema_manager_version VALUES (1, now());
+INSERT INTO iem_schema_manager_version VALUES (2, now());
 
 -- Storage of DEP versioning dailyerosion/dep#179
 CREATE TABLE dep_version (
@@ -271,7 +271,10 @@ CREATE TABLE field_wind_erosion_results (
     erosion_kgm2 real,
     avg_wind_speed_mps real,
     max_wind_speed_mps real,
-    drct real
+    drct real,
+    pm10_kgm2 real,
+    pm2_5_kgm2 real,
+    salt_creep_kgm2 real
 ) PARTITION BY RANGE (valid);
 ALTER TABLE field_wind_erosion_results OWNER TO mesonet;
 GRANT SELECT ON field_wind_erosion_results TO nobody;
