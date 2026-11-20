@@ -17,7 +17,7 @@ CREATE TABLE iem_schema_manager_version (
     version int,
     updated timestamptz
 );
-INSERT INTO iem_schema_manager_version VALUES (1, now());
+INSERT INTO iem_schema_manager_version VALUES (2, now());
 
 ---
 --- Quasi synced from mesosite database
@@ -118,11 +118,13 @@ CREATE TABLE raob_flights (
 ALTER TABLE raob_flights OWNER TO mesonet;
 GRANT ALL ON raob_flights TO ldm, mesonet;
 CREATE UNIQUE INDEX raob_flights_idx ON raob_flights (valid, station);
+CREATE UNIQUE INDEX raob_flights_fid_valid_idx ON raob_flights (fid, valid);
 GRANT SELECT ON raob_flights TO nobody;
 
 CREATE TABLE raob_profile (
-    fid int REFERENCES raob_flights (fid) ON DELETE CASCADE ON UPDATE CASCADE,
-    ts timestamptz,
+    fid int NOT NULL,
+    valid timestamptz NOT NULL,  -- Standard observation time from raob_flights
+    ts timestamptz,  -- Measurement time; may cross a UTC year boundary
     levelcode smallint,
     pressure real, -- mb
     height real, -- m
@@ -131,29 +133,33 @@ CREATE TABLE raob_profile (
     drct real, -- deg
     smps real, -- wind speed in MPS
     bearing real, -- deg
-    range_miles real -- miles
-);
+    range_miles real, -- miles
+    FOREIGN KEY (fid, valid) REFERENCES raob_flights (fid, valid)
+    ON DELETE CASCADE ON UPDATE CASCADE
+) PARTITION BY RANGE (valid);
 ALTER TABLE raob_profile OWNER TO mesonet;
 CREATE INDEX raob_profile_fid_idx ON raob_profile (fid);
 GRANT SELECT ON raob_profile TO nobody;
 
+-- UTC year boundaries, independent of the session timezone.
 DO
 $do$
 declare
      y int;
+     next_y int;
 begin
     for y in 1946..2030
     loop
-    execute format($f$
-        CREATE TABLE raob_profile_%s
-            (LIKE raob_profile INCLUDING all);
-        ALTER TABLE raob_profile_%s INHERIT raob_profile;
-        ALTER TABLE raob_profile_%s OWNER to mesonet;
-        alter table raob_profile_%s add constraint fid_fk FOREIGN KEY (fid)
-            REFERENCES raob_flights(fid) ON DELETE CASCADE ON UPDATE CASCADE;
-        GRANT SELECT on raob_profile_%s to nobody;
-    $f$, y, y, y, y, y
-    );
+        next_y := y + 1;
+        execute format($f$
+            CREATE TABLE raob_profile_%s
+                PARTITION OF raob_profile
+                FOR VALUES FROM (%L) TO (%L);
+            ALTER TABLE raob_profile_%s OWNER to mesonet;
+            GRANT SELECT on raob_profile_%s to nobody;
+        $f$, y, format('%s-01-01 00:00:00+00', y),
+        format('%s-01-01 00:00:00+00', next_y), y, y
+        );
     end loop;
 end;
 $do$;
